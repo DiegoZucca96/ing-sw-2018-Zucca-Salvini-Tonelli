@@ -2,6 +2,7 @@ package ingsw;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Set;
 
 
 public class Match {
@@ -9,10 +10,10 @@ public class Match {
     private int currentRound;
     private Player[] players;
     private int nPlayers;
-    private ArrayList<Integer> tools;       //3 tools che contengono effettivamente tutte le informazioni
-    //private int[] idTools;   //12 tool card che contengono il riferimento all'asset e nient altro
-    private ArrayList<Integer> pbCard;   //3 PB scelte randomicamente
-    //private int[] idPb; //10 pb card che contengono il riferimento
+    private ArrayList<ToolCard> tools;       //3 tools che contengono effettivamente tutte le informazioni
+
+    private ArrayList<PBObjectiveCard> pbCard;   //3 PB scelte randomicamente
+    private Set<Integer> alreadyUsed;
     private ArrayList<Integer> wp;
     private RoundTrack roundtrack;  
 
@@ -29,21 +30,27 @@ public class Match {
         }
         nPlayers=players.size();
 
-        tools = new ArrayList<Integer>();
-        for (int idx = 1; idx <= 3; ++idx){
-            if(!tools.contains(randomChooseTool()))
-                tools.add(idx, randomChooseTool());
-            else idx--;
+        tools = new ArrayList<ToolCard>();
+        ArrayList<Integer> toolvalues = new ArrayList<>();
+        for(int i=1; i<=12; i++){
+            toolvalues.add(i);
         }
+        for(int n=12; n>9; n--){ tools.add(new ToolCard(randomChoose(n, toolvalues))); }
 
-        pbCard = new ArrayList<Integer>();
-        for (int idx = 1; idx <= 3; ++idx){
-            if(!pbCard.contains(randomChoosePB()))
-                pbCard.add(idx, randomChoosePB());
-            else idx--;
+
+        pbCard = new ArrayList<PBObjectiveCard>();
+        ArrayList<Integer> pbvalues = new ArrayList<>();
+        for(int i=1; i<=10; i++){
+            pbvalues.add(i);
         }
+        for(int n=10; n>7; n--){ pbCard.add(new PBObjectiveCard(randomChoose(n, pbvalues))); }
 
-        wp = new ArrayList<Integer>();
+
+
+
+
+
+        wp = new ArrayList<WindowPFactory>();
         for(Player p: players){
             for (int idx = 1; idx <= 4; ++idx){
                 if(!players.wp.contains(randomChooseWP()))
@@ -52,25 +59,40 @@ public class Match {
             }
         }
 
+        for(Player p: players){
+            do {
+                players.pvCard = randomChoosePV();
+                alreadyUsed.add(randomChoosePV());
+            }while(alreadyUsed.contains(randomChoosePV());
+        }
+
         roundtrack= new RoundTrack();
 
 
 
     }
 
-    int getCode(){ return id; }
+    int getId(){ return id; }
 
     int getNumOfPlayers(){ return nPlayers; }
 
 
 
-    int randomChooseTool(){
-        Random randomGenerator = new Random();
-        int randomInt = randomGenerator.nextInt(12);
-        return randomInt;
+    int randomChoose(int n, ArrayList<Integer> values){
+        int result;
+        /*ArrayList<Integer> values = new ArrayList<>();
+        for(int i=1; i<=12; i++){
+            values.add(i);
+        }*/
+
+        RandomGenerator rg = new RandomGenerator(values);
+        result = rg.random(n);
+        return result;
+
+
     }
 
-    int randomChoosePB(){
+    int randomChoosePB(int n){
         Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(10);
         return randomInt;
@@ -87,6 +109,7 @@ public class Match {
         int randomInt = randomGenerator.nextInt(24);
         return randomInt;
     }
+
     void updateRound(){
         if (){      //se siamo all'inizio o alla fine dell'array players devo aggiornare il round
             currentRound++;
