@@ -7,9 +7,11 @@ public class RandomGenerator extends ArrayList<Integer>{
 
     private ArrayList<Integer> values;
 
-    public RandomGenerator(ArrayList<Integer> possibleValues){
-
-        this.values = possibleValues;
+    public RandomGenerator(int n){
+        values = new ArrayList<>();
+        for(int i=1; i<=n; i++){
+            values.add(i);
+        }
     }
 
     @Override
@@ -22,12 +24,11 @@ public class RandomGenerator extends ArrayList<Integer>{
         return value == values.remove(values.indexOf(value));
     }
 
-    public int random(int n){
-        if (n!=values.size()) return 0;
-        Random randomGenerator = new Random();
-        int index = randomGenerator.nextInt(n);
+    public int random(){
+        Random r = new Random();
+        int index = r.nextInt(values.size());
         int result=values.get(index-1);
-        remove(index-1);
+        remove(result);
         return result;
 
     }

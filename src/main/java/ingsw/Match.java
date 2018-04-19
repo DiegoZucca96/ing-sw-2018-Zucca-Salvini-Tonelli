@@ -30,13 +30,13 @@ public class Match {
         }
         nPlayers=players.size();
 
+        // Inizializzazione delle tre carte utensili sfruttando tre numeri diversi generati casualmente
         tools = new ArrayList<ToolCard>();
-        ArrayList<Integer> toolvalues = new ArrayList<>();
-        for(int i=1; i<=12; i++){
-            toolvalues.add(i);
-        }
-        for(int n=12; n>9; n--){ tools.add(new ToolCard(randomChoose(n, toolvalues))); }
+        RandomGenerator rg = new RandomGenerator(12);
 
+        tools.add(new ToolCard(rg.random()));
+        tools.add(new ToolCard(rg.random()));
+        tools.add(new ToolCard(rg.random()));
 
         pbCard = new ArrayList<PBObjectiveCard>();
         ArrayList<Integer> pbvalues = new ArrayList<>();
@@ -77,7 +77,7 @@ public class Match {
     int getNumOfPlayers(){ return nPlayers; }
 
 
-
+    //inutilizzato, non necessario, i metodi RandomChoose possono essere sostituiti dalla classe RandomGenerator
     int randomChoose(int n, ArrayList<Integer> values){
         int result;
         /*ArrayList<Integer> values = new ArrayList<>();
