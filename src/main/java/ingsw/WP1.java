@@ -9,8 +9,6 @@ public class WP1 implements WindowPattern {
     private final Cell[][] cellMatrix;
 
 
-    private int x;
-
     public WP1(){
 
         cellMatrix = new Cell[][]{
@@ -31,20 +29,27 @@ public class WP1 implements WindowPattern {
     }
 
     @Override
-    public void addDie(Coordinate coordinate, Die die) {
-        if(verifyCellConstraint(coordinate) && verifyDieConstraint(coordinate)){
-            cellMatrix[coordinate.getX()][coordinate.getY()].setEmpty(false);
-            cellMatrix[coordinate.getX()][coordinate.getY()].insertDie(die);
-        }
-        else {
-            System.out.println("Non puoi inserire il dado in questa posizione");
-        }
+    public void addDie(Coordinate destination, Die die) {
+        if (cellMatrix[destination.getX()][destination.getY()].isEmpty()){
+            if(verifyCellConstraint(destination, die) && verifyDieConstraint(destination, die)){
+                cellMatrix[destination.getX()][destination.getY()].setEmpty(false);
+                cellMatrix[destination.getX()][destination.getY()].insertDie(die);
+            }
+            else {
+                System.out.println("Non puoi inserire il dado in questa posizione");
+            }
+        }else
+            System.out.println("Posizione già occupata da un altro dado");
+
     }
 
     @Override
-    public void removeDie(Coordinate coordinate) {
-
+    public void removeDie(Coordinate destination) {
+        if (cellMatrix[destination.getX()][destination.getY()].isEmpty()) {
+            System.out.println("Cella vuota");
+        }else cellMatrix[destination.getX()][destination.getY()].takeDie();
     }
+
 
     @Override
     public Cell getCell(Coordinate coordinate) {
@@ -52,18 +57,26 @@ public class WP1 implements WindowPattern {
     }
 
 
-
-    private boolean verifyCellConstraint(Coordinate coordinate){
-        if (cellMatrix[coordinate.getX()][coordinate.getY()].isEmpty()) {
-
-
+//VERIFICA CHE LA CELLA DI DESTINAZIONE ABBIA COLORE O NUMERO UGUALE AL DADO
+    private boolean verifyCellConstraint(Coordinate destination, Die die){
+        if(cellMatrix[destination.getX()][destination.getY()].getColor()==null &&cellMatrix[destination.getX()][destination.getY()].getNumber()==0)
             return true;
-        }
+        else if (cellMatrix[destination.getX()][destination.getY()].getColor()== die.getColor() && cellMatrix[destination.getX()][destination.getY()].getNumber()== 0) {
+            return true;
+        } else if (cellMatrix[destination.getX()][destination.getY()].getColor()== null && cellMatrix[destination.getX()][destination.getY()].getNumber()== die.getNumber())
+            return true;
         else
             return false;
     }
 
-    private boolean verifyDieConstraint(Coordinate coordinate){
-        if
+//VERIFICA CHE LE CELLE ORTOGONALMENTE ADIACENTI AL DADO CHE SI VUOLE POSIZIONARE NON ABBIANO DADI CON LO STESSO COLORE O CON LO STESSO NUMERO
+    private boolean verifyDieConstraint(Coordinate destination, Die die){
+
+        if(cellMatrix[destination.getX()+1][destination.getY()].getColor()==die.getColor() || cellMatrix[destination.getX()][destination.getY()+1].getColor()==die.getColor() || cellMatrix[destination.getX()-1][destination.getY()].getColor()==die.getColor() || cellMatrix[destination.getX()][destination.getY()-1].getColor()==die.getColor())
+            return false;
+        else if(cellMatrix[destination.getX()+1][destination.getY()].getNumber()==die.getNumber() || cellMatrix[destination.getX()][destination.getY()+1].getNumber()==die.getNumber() || cellMatrix[destination.getX()-1][destination.getY()].getNumber()==die.getNumber() || cellMatrix[destination.getX()][destination.getY()-1].getNumber()==die.getNumber())
+            return false;
+        else
+            return true;
     }
 }

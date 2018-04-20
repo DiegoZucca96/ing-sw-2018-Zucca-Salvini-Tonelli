@@ -1,7 +1,7 @@
 package ingsw;
 
 public interface WindowPattern {
-    void removeDie(int x, int y);
-    void addDie(int x, int y);
+    void removeDie(Coordinate coordinate);
+    void addDie(Coordinate coordinate, Die die);
     Cell getCell(Coordinate coordinate);
 }
