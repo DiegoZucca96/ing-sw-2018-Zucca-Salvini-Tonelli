@@ -72,9 +72,9 @@ public class WP1 implements WindowPattern {
 //VERIFICA CHE LE CELLE ORTOGONALMENTE ADIACENTI AL DADO CHE SI VUOLE POSIZIONARE NON ABBIANO DADI CON LO STESSO COLORE O CON LO STESSO NUMERO
     private boolean verifyDieConstraint(Coordinate destination, Die die){
 
-        if(cellMatrix[destination.getX()+1][destination.getY()].getColor()==die.getColor() || cellMatrix[destination.getX()][destination.getY()+1].getColor()==die.getColor() || cellMatrix[destination.getX()-1][destination.getY()].getColor()==die.getColor() || cellMatrix[destination.getX()][destination.getY()-1].getColor()==die.getColor())
+        if(cellMatrix[destination.getX()+1][destination.getY()].getDie().getColor()==die.getColor() || cellMatrix[destination.getX()][destination.getY()+1].getDie().getColor()==die.getColor() || cellMatrix[destination.getX()-1][destination.getY()].getDie().getColor()==die.getColor() || cellMatrix[destination.getX()][destination.getY()-1].getDie().getColor()==die.getColor())
             return false;
-        else if(cellMatrix[destination.getX()+1][destination.getY()].getNumber()==die.getNumber() || cellMatrix[destination.getX()][destination.getY()+1].getNumber()==die.getNumber() || cellMatrix[destination.getX()-1][destination.getY()].getNumber()==die.getNumber() || cellMatrix[destination.getX()][destination.getY()-1].getNumber()==die.getNumber())
+        else if(cellMatrix[destination.getX()+1][destination.getY()].getDie().getNumber()==die.getNumber() || cellMatrix[destination.getX()][destination.getY()+1].getDie().getNumber()==die.getNumber() || cellMatrix[destination.getX()-1][destination.getY()].getDie().getNumber()==die.getNumber() || cellMatrix[destination.getX()][destination.getY()-1].getDie().getNumber()==die.getNumber())
             return false;
         else
             return true;
