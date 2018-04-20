@@ -4,6 +4,7 @@ public class ToolCard {
 
     private ToolStrategy toolStrategy;
     private String constraint;
+    private boolean alreadyUsed;
 
     public ToolCard(int idCard){
         switch(idCard){
@@ -47,7 +48,7 @@ public class ToolCard {
         }
     }
 
-    public void doStrategy(){
+    public void doToolStrategy(){
         toolStrategy.doOp();
     }
 
