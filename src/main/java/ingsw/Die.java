@@ -31,22 +31,22 @@ public class Die {
         switch (number) {
             case 1: {
                 this.number=6;
-                break;;
+                break;
             }case 2: {
                 this.number=5;
-                break;;
+                break;
             }case 3: {
                 this.number=4;
-                break;;
+                break;
             }case 4: {
                 this.number=3;
-                break;;
+                break;
             }case 5: {
                 this.number=2;
-                break;;
+                break;
             }case 6: {
                 this.number=1;
-                break;;
+                break;
             }
             default: break;
         }
