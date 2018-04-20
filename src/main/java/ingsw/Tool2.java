@@ -1,4 +1,7 @@
 package ingsw;
+
+import static ingsw.Player.*;
+
 //In UML
 public class Tool2 implements ToolStrategy {
     private Die die;
@@ -16,6 +19,6 @@ public class Tool2 implements ToolStrategy {
         die = getCell(getInputCoordinate()).takeDie();
         //Come differenzio la scelta della cella? Serve una sorta di "wait selection"
         destinationCell = getCell(getInputCoordinate());
-        Player.positionDie(die, destinationCell.getCoordinate());
+        positionDie(die, destinationCell.getCoordinate()); //Prova di import, però statico
     }
 }

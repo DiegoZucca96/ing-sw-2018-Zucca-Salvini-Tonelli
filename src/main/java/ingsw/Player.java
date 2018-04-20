@@ -9,6 +9,10 @@ public class Player {
 
     }
 
+    public static boolean positionDie(Die die, Coordinate coordinate){ //Prova di import in Tool2
+        return true;                                                    // Non so perchè mi obbliga a farla static
+    }
+
     public void useToken(idCard){
         if(match.idCard.used)
 

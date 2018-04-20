@@ -44,7 +44,8 @@ public class ToolCard {
             }case 12 : {
                 toolStrategy = new Tool12;
                 break;
-            }
+            } default :
+                System.out.print("Invalid number, launch exception");
         }
     }
 
