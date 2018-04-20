@@ -5,18 +5,15 @@ public class ToolCard {
     private ToolStrategy toolStrategy;
     private String constraint;
 
-    ToolCard(int idCard){
-
+    public ToolCard(int idCard){
         switch(idCard){
             case 1 : {
-                toolStrategy = new Tool1;
+                this.toolStrategy = new Tool1();
                 break;
-            }
-            case 2 : {
-                toolStrategy = new Tool2;
+            }case 2 : {
+                this.toolStrategy = new Tool2();
                 break;
-            }
-            case 3 : {
+            }case 3 : {
                 toolStrategy = new Tool3;
                 break;
             }case 4 : {
@@ -47,14 +44,11 @@ public class ToolCard {
                 toolStrategy = new Tool12;
                 break;
             }
-
-
-
-
-
-
-
         }
-
     }
+
+    public void doStrategy(){
+        toolStrategy.doOp();
+    }
+
 }
