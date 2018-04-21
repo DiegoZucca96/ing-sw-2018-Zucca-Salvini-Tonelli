@@ -16,7 +16,7 @@ public class PB1 implements PBStrategy{
     @Override
     public void doOp() {
         for(int i=0;i<4;i++){
-            int j=0;
+            int j;
             ArrayList<Color> list = new ArrayList<>();
             for(j=0;j<5;j++){
                 Color color = cellMatrix[i][j].getDie().getColor(); //fare riferimento con la WP corrispondente

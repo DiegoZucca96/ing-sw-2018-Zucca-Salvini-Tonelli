@@ -11,8 +11,8 @@ public class Tool1 implements ToolStrategy {
     @Override
     public void doOp(){
         //System.out.println("Sono la carta 1");
-        if(1 <= DraftPool.takeDie(n).getNum() && DraftPool.takeDie(n).getNum()<=5) //Chiamo il metodo takeDie della DraftPool
-            DraftPool.takeDie(n).setNum(getNum()+1);
+        if(1 <= DraftPool.takeDie(n).getNumber() && DraftPool.takeDie(n).getNumber()<=5) //Chiamo il metodo takeDie della DraftPool
+            DraftPool.takeDie(n).setNumber(getNumber()+1);
         else
             System.out.println("Non puoi usare questa carta su questo dado");
     }
