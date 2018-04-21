@@ -5,7 +5,7 @@ package ingsw;
 //COSTRUISCE LE WINDOW PATTERN IN BASE AL PARAMETRO CHE RICEVE IN INGRESSO
 
 
-import WindowPattern.WindowPattern;
+import WindowPattern.*;
 
 public class WindowPFactory {
 

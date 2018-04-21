@@ -2,7 +2,6 @@ package ToolCard;
 
 import ingsw.Cell;
 import ingsw.Die;
-import ToolStrategy;
 
 import static ingsw.Player.*;
 

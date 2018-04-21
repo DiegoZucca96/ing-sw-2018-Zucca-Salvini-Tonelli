@@ -1,18 +1,20 @@
 package ingsw;
 
+import java.util.ArrayList;
+
 public class ToolCard {
 
-    private ToolStrategy toolStrategy;
+    private ToolCard.ToolStrategy toolStrategy;
     private String constraint;
     private boolean alreadyUsed;
 
     public ToolCard(int idCard){
         switch(idCard){
             case 1 : {
-                this.toolStrategy = new ToolCard.Tool1();
+                this.toolStrategy = new Tool1();
                 break;
             }case 2 : {
-                this.toolStrategy = new ToolCard.Tool2();
+                this.toolStrategy = new Tool2();
                 break;
             }case 3 : {
                 toolStrategy = new Tool3;
