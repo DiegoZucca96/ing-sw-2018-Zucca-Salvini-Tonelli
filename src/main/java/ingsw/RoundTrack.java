@@ -5,7 +5,7 @@ import java.util.ArrayList;
 //Classe che rappresenta la round track del gioco, contiene tutti i dadi che avanzano nella draft pool alla fine di ogni round,
 //memorizza il round corrente.
 
-public final class RoundTrack {
+public class RoundTrack {
 
     private int currentRound;                           //round corrente
     private ArrayList<ArrayList<Die>> extraDice;        /*lista di liste di tipo Die che contiene i dadi della round track.
