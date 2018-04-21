@@ -1,7 +1,6 @@
 package PublicCard;
 
 import ingsw.Color;
-import ingsw.PBStrategy;
 import ingsw.Player;
 
 import java.util.ArrayList;

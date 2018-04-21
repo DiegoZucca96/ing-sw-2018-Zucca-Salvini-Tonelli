@@ -1,4 +1,8 @@
-package ingsw;
+package WindowPattern;
+
+import ingsw.Cell;
+import ingsw.Coordinate;
+import ingsw.Die;
 
 public interface WindowPattern {
     void removeDie(Coordinate coordinate);

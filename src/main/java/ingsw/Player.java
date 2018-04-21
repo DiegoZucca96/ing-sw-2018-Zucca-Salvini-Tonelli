@@ -1,5 +1,7 @@
 package ingsw;
 
+import WindowPattern.WindowPattern;
+
 public class Player {
     private String name;
     private int f_token;

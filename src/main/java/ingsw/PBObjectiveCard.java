@@ -1,9 +1,6 @@
 package ingsw;
 
-import PublicCard.PB1;
-import PublicCard.PB2;
-import PublicCard.PB3;
-import PublicCard.PB4;
+import PublicCard.*;
 
 public class PBObjectiveCard {
     private PBStrategy pbStrategy;

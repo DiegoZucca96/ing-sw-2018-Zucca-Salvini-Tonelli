@@ -5,6 +5,8 @@ package ingsw;
 //COSTRUISCE LE WINDOW PATTERN IN BASE AL PARAMETRO CHE RICEVE IN INGRESSO
 
 
+import WindowPattern.WindowPattern;
+
 public class WindowPFactory {
 
     public WindowPattern createWindowPattern(String WpType){
@@ -12,7 +14,7 @@ public class WindowPFactory {
         if(WpType==null)
             return null;
         else if (WpType.equalsIgnoreCase("wp1"))
-            return new WindowPattern.WP1();
+            return new WP1();
         else if(WpType.equalsIgnoreCase("wp2"))
             return new WP2();
         else if(WpType.equalsIgnoreCase("wp3"))

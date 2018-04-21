@@ -1,7 +1,6 @@
 package ToolCard;
 
-import ingsw.ToolCard;
-import ingsw.ToolStrategy;
+import ToolStrategy;
 
 public class Tool1 implements ToolStrategy {
     private String title;
