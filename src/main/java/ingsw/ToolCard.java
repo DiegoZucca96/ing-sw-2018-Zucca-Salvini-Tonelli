@@ -9,10 +9,10 @@ public class ToolCard {
     public ToolCard(int idCard){
         switch(idCard){
             case 1 : {
-                this.toolStrategy = new Tool1();
+                this.toolStrategy = new ToolCard.Tool1();
                 break;
             }case 2 : {
-                this.toolStrategy = new Tool2();
+                this.toolStrategy = new ToolCard.Tool2();
                 break;
             }case 3 : {
                 toolStrategy = new Tool3;
@@ -46,6 +46,7 @@ public class ToolCard {
                 break;
             } default :
                 System.out.print("Invalid number, launch exception");
+                break;
         }
     }
 

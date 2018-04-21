@@ -1,5 +1,10 @@
 package ingsw;
 
+import PublicCard.PB1;
+import PublicCard.PB2;
+import PublicCard.PB3;
+import PublicCard.PB4;
+
 public class PBObjectiveCard {
     private PBStrategy pbStrategy;
     private int points;
@@ -38,6 +43,7 @@ public class PBObjectiveCard {
                 break;
             } default :
                 System.out.print("Invalid number, launch exception");
+                break;
         }
     }
 

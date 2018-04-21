@@ -1,8 +1,12 @@
-package ingsw;
+package PublicCard;
+
+import ingsw.Color;
+import ingsw.PBStrategy;
+import ingsw.Player;
 
 import java.util.ArrayList;
 
-public class PB1 implements PBStrategy{
+public class PB1 implements PBStrategy {
     private String title;
     private String comment;
     private final int points;

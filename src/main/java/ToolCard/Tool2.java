@@ -1,4 +1,9 @@
-package ingsw;
+package ToolCard;
+
+import ingsw.Cell;
+import ingsw.Die;
+import ingsw.ToolCard;
+import ingsw.ToolStrategy;
 
 import static ingsw.Player.*;
 

@@ -1,4 +1,7 @@
-package ingsw;
+package ToolCard;
+
+import ingsw.ToolCard;
+import ingsw.ToolStrategy;
 
 public class Tool1 implements ToolStrategy {
     private String title;

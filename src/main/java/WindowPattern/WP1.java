@@ -1,4 +1,6 @@
-package ingsw;
+package WindowPattern;
+
+import ingsw.*;
 
 public class WP1 implements WindowPattern {
 

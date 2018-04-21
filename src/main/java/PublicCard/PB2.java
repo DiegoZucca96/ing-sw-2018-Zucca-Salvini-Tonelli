@@ -1,34 +1,39 @@
-package ingsw;
+package PublicCard;
+
+import ingsw.Color;
+import ingsw.PBStrategy;
+import ingsw.Player;
 
 import java.util.ArrayList;
 
-public class PB4 implements PBStrategy{
+public class PB2 implements PBStrategy {
     private String title;
     private String comment;
     private final int points;
 
-    public PB4(){
-        this.title = "Sfumature diverse - Colonna";
-        this.comment = "Colonne senza sfumature ripetute";
-        this.points = 4;
+    public PB2(){
+        this.title = "Colori diversi - Colonna";
+        this.comment = "Colonne senza colori ripetuti";
+        this.points = 5;
     }
 
     @Override
     public void doOp() {
         for(int i=0;i<5;i++){
             int j;
-            ArrayList<Integer> list = new ArrayList<>();
+            ArrayList<Color> list = new ArrayList<>();
             for(j=0;j<4;j++){
-                Integer num = cellMatrix[j][i].getDie().getNumber(); //fare riferimento con la WP corrispondente
-                if(list.contains(num) || num==0)
+                Color color = cellMatrix[j][i].getDie().getColor(); //fare riferimento con la WP corrispondente
+                if(list.contains(color) || color==null)
                     j=7;           //Metto un valore alto in modo da differenziare il caso in cui esco perchè trovata la colonna di colori diversi
                 else
-                    list.add(num);
+                    list.add(color);
             }
             if(j==4){
                 i=5;
                 Player.setScore(points);
             }
         }
+
     }
 }

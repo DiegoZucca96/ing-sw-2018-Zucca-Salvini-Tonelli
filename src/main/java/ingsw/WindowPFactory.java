@@ -12,7 +12,7 @@ public class WindowPFactory {
         if(WpType==null)
             return null;
         else if (WpType.equalsIgnoreCase("wp1"))
-            return new WP1();
+            return new WindowPattern.WP1();
         else if(WpType.equalsIgnoreCase("wp2"))
             return new WP2();
         else if(WpType.equalsIgnoreCase("wp3"))
