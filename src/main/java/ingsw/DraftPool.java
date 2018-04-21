@@ -2,7 +2,7 @@ package ingsw;
 
 import java.util.ArrayList;
 
-public class DarftPool {        //Classe che rappresenta la draft pool del gioco, tramite diceBag lancia i dadi e mette
+public class DraftPool {        //Classe che rappresenta la draft pool del gioco, tramite diceBag lancia i dadi e mette
                                 //quelli in eccesso nella RoundTrack.
 
     private ArrayList<Die> diceList;
