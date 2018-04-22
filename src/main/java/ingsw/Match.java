@@ -1,17 +1,16 @@
 package ingsw;
 
 import java.util.ArrayList;
-import java.util.Random;
-import ingsw.*;
+
 
 
 public class Match {
     private int id;
     private int nPlayers;
     private Player currentPlayer;
-    private boolean clockwiseRound;
+    private boolean clockwiseRound;              //verso del round, se true "orario"
     private ArrayList<Player> players;
-    private ArrayList<ToolCard> tools;          //toolcard relative alla partita
+    private ArrayList<ToolCard> tools;           //toolcard relative alla partita
     private ArrayList<PBObjectiveCard> pbCards;  //public objective card relative alla partita
     private RoundTrack roundTrack;
     private DraftPool draftPool;
@@ -62,16 +61,19 @@ public class Match {
         return nPlayers;
     }
 
+    //inizia il round (lancia i dadi), con turno già sul primo giocatore
     public void startRound(){
         draftPool.throwsDice(nPlayers*2+1);
     }
 
+    //termina il round
     public void endRound(){
         roundTrack.nextRound();
         clockwiseRound = true;
     }
 
-    public void nextTurn(){
+    //NB nextTurn va chiamata 7 volte con 4 giocatori, al termine si chiama endRound
+    public void nextTurn(){                         //il turno va al prossimo giocatore
         if(currentPlayer == players.get(players.size()) && clockwiseRound){
             clockwiseRound = false;
         } else{
@@ -84,14 +86,17 @@ public class Match {
         }
     }
 
+    //riceve indice del dado nella draft pool che si vuole posizionare e destinazione sulla WP del currentPlayer
     public void playerMoveDie(int dieIndex, Coordinate destination){
         currentPlayer.positionDie(draftPool.takeDie(dieIndex), destination);
     }
 
+    //usa la toolcard passata come parametro
     public void playerUseTool(ToolCard tool){
         currentPlayer.useToolCard(tool);
     }
 
+    //calcola e setta il punteggio a tutti i giocatori
     public void playersScore(){
         for(Player p : players){
             pbCards.get(0).doPBStrategy(p);
@@ -101,7 +106,8 @@ public class Match {
         }
     }
 
-    public Player findWinner(){              //trova il vincitore, non prevede ancora i pareggi
+    //trova il vincitore, non prevede ancora i pareggi
+    public Player findWinner(){
         Player winner = players.get(0);
         for(Player p: players){
             if(p.getScore>winner.getScore) winner = p;
