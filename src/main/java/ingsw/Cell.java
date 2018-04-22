@@ -1,6 +1,5 @@
 package ingsw;
 
-//MODIFICARE UML PER AGGIUNTA DI COORDINATE
 
 public class Cell {
     private Color color;              //colore della cella, per ora commentato perchè implementata da Diego la Enum
@@ -16,6 +15,7 @@ public class Cell {
         this.color= color;
         this.coordinate=coordinate;
         insertDie(null);
+        this.empty=true;
 
     }
 

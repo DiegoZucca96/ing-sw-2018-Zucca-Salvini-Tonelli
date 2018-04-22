@@ -9,7 +9,7 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
     private DiceBag diceBag;
     private RoundTrack roundTrack;
 
-    public void DraftPool(RoundTrack roundTrack){
+    public  DraftPool(RoundTrack roundTrack){
         diceList = new ArrayList<>();
         diceBag = new DiceBag();
         this.roundTrack = roundTrack;

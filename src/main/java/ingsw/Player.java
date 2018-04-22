@@ -7,11 +7,11 @@ public class Player {
     private int f_token;
     private int score;
     private WindowPattern[] wp;
-    public Player(){
+    public Player(String name){
 
     }
 
-    public static boolean positionDie(Die die, Coordinate coordinate){ //Prova di import in Tool2
+    public boolean positionDie(Die die, Coordinate coordinate){ //Prova di import in Tool2
         return true;                                                    // Non so perchè mi obbliga a farla static
     }
 
@@ -22,7 +22,4 @@ public class Player {
         else
             f_token-;
     }
-
-
-
 }

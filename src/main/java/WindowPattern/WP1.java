@@ -2,8 +2,9 @@ package WindowPattern;
 
 import ingsw.*;
 
-public class WP2 implements WindowPattern {
-    private String title = "Firmitas";
+public class WP1 implements WindowPattern {
+
+    private String title = "Kaleidoscopic Dream";
 
     private int difficulty;
 
@@ -11,17 +12,20 @@ public class WP2 implements WindowPattern {
 
     private boolean wpEmpty;
 
-
-    public WP2(){
+    public WP1(){
 
         cellMatrix = new Cell[][]{
-                {new Cell(0, Color.VIOLET, new Coordinate(0,0)), new Cell(6, null, new Coordinate(0,1)), new Cell(0, null, new Coordinate(0,2)), new Cell(0, null, new Coordinate(0,3)), new Cell(3, null, new Coordinate(0,4))},
-                {new Cell(5, null, new Coordinate(1,0)), new Cell(0, Color.VIOLET, new Coordinate(1,1)), new Cell(3, null, new Coordinate(1,2)), new Cell(0, null, new Coordinate(1,3)), new Cell(0, null, new Coordinate(1,4))},
-                {new Cell(0, null, new Coordinate(2,0)), new Cell(2, null, new Coordinate(2,1)), new Cell(0, Color.VIOLET, new Coordinate(2,2)), new Cell(1, null, new Coordinate(2,3)), new Cell(0, null, new Coordinate(2,4))},
-                {new Cell(0, null, new Coordinate(3,0)), new Cell(1, null, new Coordinate(3,1)), new Cell(5, null, new Coordinate(3,2)), new Cell(0, Color.VIOLET, new Coordinate(3,3)), new Cell(4, null, new Coordinate(3,4))}
+                {new Cell(0, Color.YELLOW, new Coordinate(0,0)), new Cell(0, Color.BLUE, new Coordinate(0,1)), new Cell(0, null, new Coordinate(0,2)), new Cell(0, null, new Coordinate(0,3)), new Cell(1, null, new Coordinate(0,4))},
+                {new Cell(0, Color.GREEN, new Coordinate(1,0)), new Cell(0, null, new Coordinate(1,1)), new Cell(5, null, new Coordinate(1,2)), new Cell(0, null, new Coordinate(1,3)), new Cell(4, null, new Coordinate(1,4))},
+                {new Cell(3, null, new Coordinate(2,0)), new Cell(0, null, new Coordinate(2,1)), new Cell(0, Color.RED, new Coordinate(2,2)), new Cell(0, null, new Coordinate(2,3)), new Cell(0, Color.GREEN, new Coordinate(2,4))},
+                {new Cell(2, null, new Coordinate(3,0)), new Cell(0, null, new Coordinate(3,1)), new Cell(0, null, new Coordinate(3,2)), new Cell(0, Color.BLUE, new Coordinate(3,3)), new Cell(0, Color.YELLOW, new Coordinate(3,4))}
         };
-        this.difficulty=5;
+        this.difficulty=4;
         this.wpEmpty=true;
+    }
+
+    public Cell[][] getCellMatrix() {
+        return cellMatrix;
     }
 
     public boolean isWpEmpty() {
@@ -38,6 +42,7 @@ public class WP2 implements WindowPattern {
 
     @Override
     public void addDie(Coordinate destination, Die die) {
+
         if(wpEmpty){
             if(destination.getX()==0 || destination.getX()==3 || destination.getY()==0 || destination.getY()==4){
                 if (cellMatrix[destination.getX()][destination.getY()].isEmpty()){
@@ -69,7 +74,6 @@ public class WP2 implements WindowPattern {
                 System.out.println("Il dado non tocca nessun altro dado");
         }else
             System.out.println("Posizione già occupata da un altro dado");
-
     }
 
     @Override
