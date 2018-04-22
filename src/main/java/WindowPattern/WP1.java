@@ -10,6 +10,7 @@ public class WP1 implements WindowPattern {
 
     private final Cell[][] cellMatrix;
 
+    private boolean wpEmpty;
 
     public WP1(){
 
@@ -20,6 +21,11 @@ public class WP1 implements WindowPattern {
                 {new Cell(2, null, new Coordinate(3,0)), new Cell(0, null, new Coordinate(3,1)), new Cell(0, null, new Coordinate(3,2)), new Cell(0, Color.BLUE, new Coordinate(3,3)), new Cell(0, Color.YELLOW, new Coordinate(3,4))}
         };
         this.difficulty=4;
+        this.wpEmpty=true;
+    }
+
+    public boolean isWpEmpty() {
+        return wpEmpty;
     }
 
     public int getDifficulty() {
@@ -32,20 +38,38 @@ public class WP1 implements WindowPattern {
 
     @Override
     public void addDie(Coordinate destination, Die die) {
-        if (cellMatrix[destination.getX()][destination.getY()].isEmpty()){
+
+        if(wpEmpty){
+            if(destination.getX()==0 || destination.getX()==3 || destination.getY()==0 || destination.getY()==4){
+                if (cellMatrix[destination.getX()][destination.getY()].isEmpty()){
+                    if(verifyPosition(destination)) {
+                        if(verifyCellConstraint(destination, die) && verifyDieConstraint(destination, die)){
+                            cellMatrix[destination.getX()][destination.getY()].setEmpty(false);
+                            cellMatrix[destination.getX()][destination.getY()].insertDie(die);
+                            this.wpEmpty=false;
+                        }
+                        else
+                            System.out.println("Non puoi inserire il dado in questa posizione");
+                    }else
+                        System.out.println("Il dado non tocca nessun altro dado");
+                }else
+                    System.out.println("Posizione già occupata da un altro dado");
+
+            }else
+                System.out.println("Non puoi inserire il dado in questa posizione perchè non sei sul bordo");
+
+        }else if (cellMatrix[destination.getX()][destination.getY()].isEmpty()){
             if(verifyPosition(destination)) {
                 if(verifyCellConstraint(destination, die) && verifyDieConstraint(destination, die)){
                     cellMatrix[destination.getX()][destination.getY()].setEmpty(false);
                     cellMatrix[destination.getX()][destination.getY()].insertDie(die);
                 }
-                else {
+                else
                     System.out.println("Non puoi inserire il dado in questa posizione");
-                }
-            }
-
+            }else
+                System.out.println("Il dado non tocca nessun altro dado");
         }else
             System.out.println("Posizione già occupata da un altro dado");
-
     }
 
     @Override
