@@ -1,7 +1,8 @@
 package PublicCard;
 
+import ingsw.Cell;
 import ingsw.Player;
-
+import WindowPattern.WP1;
 import java.util.ArrayList;
 
 public class PB3 implements PBStrategy {
@@ -16,7 +17,8 @@ public class PB3 implements PBStrategy {
     }
 
     @Override
-    public void doOp() {
+    public void doOp(Player p, WP1 window) {
+        Cell [][] cellMatrix = window.getCellMatrix();
         for(int i=0;i<4;i++){
             int j;
             ArrayList<Integer> list = new ArrayList<>();
@@ -29,7 +31,7 @@ public class PB3 implements PBStrategy {
             }
             if(j==5){
                 i=4;
-                Player.setScore(points);
+                p.setScore(points);
             }
         }
     }

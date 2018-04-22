@@ -87,7 +87,7 @@ public class WP3 implements WindowPattern {
 
 
     //VERIFICA CHE LA CELLA DI DESTINAZIONE ABBIA COLORE O NUMERO UGUALE AL DADO
-    private boolean verifyCellConstraint(Coordinate destination, Die die){
+    public boolean verifyCellConstraint(Coordinate destination, Die die){
         if(cellMatrix[destination.getX()][destination.getY()].getColor()==null &&cellMatrix[destination.getX()][destination.getY()].getNumber()==0)
             return true;
         else if (cellMatrix[destination.getX()][destination.getY()].getColor()== die.getColor() && cellMatrix[destination.getX()][destination.getY()].getNumber()== 0) {
@@ -99,7 +99,7 @@ public class WP3 implements WindowPattern {
     }
 
     //VERIFICA CHE LE CELLE ORTOGONALMENTE ADIACENTI AL DADO CHE SI VUOLE POSIZIONARE NON ABBIANO DADI CON LO STESSO COLORE O CON LO STESSO NUMERO
-    private boolean verifyDieConstraint(Coordinate destination, Die die){
+    public boolean verifyDieConstraint(Coordinate destination, Die die){
 
         if(cellMatrix[destination.getX()+1][destination.getY()].getDie().getColor()==die.getColor() || cellMatrix[destination.getX()][destination.getY()+1].getDie().getColor()==die.getColor() || cellMatrix[destination.getX()-1][destination.getY()].getDie().getColor()==die.getColor() || cellMatrix[destination.getX()][destination.getY()-1].getDie().getColor()==die.getColor())
             return false;
@@ -110,7 +110,7 @@ public class WP3 implements WindowPattern {
     }
 
     //VERIFICA CHE IL DADO CHE STAI INSERENDO TOCCA ALMENO UN DADO ATTORNO; caso base i vertici della finestra
-    private boolean verifyPosition(Coordinate destination){
+    public boolean verifyPosition(Coordinate destination){
         if(destination.getX()==0 && destination.getY()==0){
             if(!cellMatrix[1][0].isEmpty() || !cellMatrix[0][1].isEmpty() || !cellMatrix[1][1].isEmpty()) return true;
         }else if(destination.getX()==3 && destination.getY()==0){

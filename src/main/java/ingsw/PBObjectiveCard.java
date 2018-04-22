@@ -9,7 +9,7 @@ public class PBObjectiveCard {
     public PBObjectiveCard(int idCard){
         switch(idCard){
             case 1 : {
-                pbStrategy = new PB1();
+                this.pbStrategy = new PB1();
                 break;
             }case 2 : {
                 this.pbStrategy = new PB2();
@@ -45,7 +45,7 @@ public class PBObjectiveCard {
     }
 
     public void doPBStrategy(){
-        pbStrategy.doOp();
+        pbStrategy.doOp(Player p,WP1 window);
     }
 
 }
