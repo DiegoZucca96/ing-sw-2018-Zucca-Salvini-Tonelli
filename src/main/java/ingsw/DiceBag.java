@@ -6,7 +6,7 @@ public class DiceBag{           //classe che tiene traccia dei dati relativi all
     private int totDice;
     private RandomGenerator rg;
 
-    public void DiceBag(){
+    public DiceBag(){
      totDice = 90;
      rg = new RandomGenerator(totDice);
     }

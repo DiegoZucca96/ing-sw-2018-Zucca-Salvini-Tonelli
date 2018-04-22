@@ -2,119 +2,111 @@ package ingsw;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Set;
+import ingsw.*;
 
 
 public class Match {
     private int id;
-    private int currentRound;
-    private Player[] players;
     private int nPlayers;
-    private ArrayList<ToolCard> tools;       //3 tools che contengono effettivamente tutte le informazioni
+    private Player currentPlayer;
+    private boolean clockwiseRound;
+    private ArrayList<Player> players;
+    private ArrayList<ToolCard> tools;          //toolcard relative alla partita
+    private ArrayList<PBObjectiveCard> pbCards;  //public objective card relative alla partita
+    private RoundTrack roundTrack;
+    private DraftPool draftPool;
 
-    private ArrayList<PBObjectiveCard> pbCard;   //3 PB scelte randomicamente
-    private Set<Integer> alreadyUsed;
-    private ArrayList<Integer> wp;
-    private RoundTrack roundtrack;  
-
-    //costruttore
-    public Match(int id){    //viene passato il codice dal Server per tenere traccia di quale partita stiamo parlando
+    public Match(int id, ArrayList<String> playersNames ){    //viene passato l'id dal Server per identificare il match
         this.id=id;
-        this.currentRound=0;
 
-        ArrayList<Player> players= new ArrayList<Player>();
-        for(int i=0; i < server.listOfClient.size(); i++){
+        /*for(int i=0; i < server.listOfClient.size(); i++){
             if(server.listOfClient[i].client.playingAt() = id){
                 players.add(server.listOfClient[i].client);
             }
+        }*/
+
+        players= new ArrayList<>();
+        for(int i=0; i<playersNames.size(); i++){
+            players.add(new Player(playersNames.get(i)));
         }
         nPlayers=players.size();
+        clockwiseRound = true;
+        currentPlayer = players.get(0);
 
         // Inizializzazione delle tre carte utensili sfruttando tre numeri diversi generati casualmente
-        tools = new ArrayList<ToolCard>();
+        tools = new ArrayList<>();
         RandomGenerator rg = new RandomGenerator(12);
 
         tools.add(new ToolCard(rg.random()));
         tools.add(new ToolCard(rg.random()));
         tools.add(new ToolCard(rg.random()));
 
-        pbCard = new ArrayList<PBObjectiveCard>();
-        ArrayList<Integer> pbvalues = new ArrayList<>();
-        for(int i=1; i<=10; i++){
-            pbvalues.add(i);
-        }
-        for(int n=10; n>7; n--){ pbCard.add(new PBObjectiveCard(randomChoose(n, pbvalues))); }
+        //Inizializzazione delle public objective card
+        pbCards = new ArrayList<>();
+        rg = new RandomGenerator(10);
 
+        pbCards.add(new PBObjectiveCard(rg.random()));
+        pbCards.add(new PBObjectiveCard(rg.random()));
+        pbCards.add(new PBObjectiveCard(rg.random()));
 
+        //Inizializzazione di round track e draft pool
+        roundTrack = new RoundTrack();
+        draftPool = new DraftPool(roundTrack);
+    }
 
+    public int getId(){
+        return id;
+    }
 
+    public int getNumOfPlayers(){
+        return nPlayers;
+    }
 
+    public void startRound(){
+        draftPool.throwsDice(nPlayers*2+1);
+    }
 
-        wp = new ArrayList<WindowPFactory>();
-        for(Player p: players){
-            for (int idx = 1; idx <= 4; ++idx){
-                if(!players.wp.contains(randomChooseWP()))
-                    p.wp.add(idx, randomChooseWP());
-                else idx--;
+    public void endRound(){
+        roundTrack.nextRound();
+        clockwiseRound = true;
+    }
+
+    public void nextTurn(){
+        if(currentPlayer == players.get(players.size()) && clockwiseRound){
+            clockwiseRound = false;
+        } else{
+            try{
+                if(clockwiseRound) currentPlayer = players.get(players.indexOf(currentPlayer)+1);
+                else currentPlayer = players.get(players.indexOf(currentPlayer)-1);
+            }catch(IndexOutOfBoundsException e){
+                System.out.println(e.getMessage());
             }
         }
+    }
 
+    public void playerMoveDie(int dieIndex, Coordinate destination){
+        currentPlayer.positionDie(draftPool.takeDie(dieIndex), destination);
+    }
+
+    public void playerUseTool(ToolCard tool){
+        currentPlayer.useToolCard(tool);
+    }
+
+    public void playersScore(){
+        for(Player p : players){
+            pbCards.get(0).doPBStrategy(p);
+            pbCards.get(1).doPBStrategy(p);
+            pbCards.get(2).doPBStrategy(p);
+            p.pvScore();
+        }
+    }
+
+    public Player findWinner(){              //trova il vincitore, non prevede ancora i pareggi
+        Player winner = players.get(0);
         for(Player p: players){
-            do {
-                players.pvCard = randomChoosePV();
-                alreadyUsed.add(randomChoosePV());
-            }while(alreadyUsed.contains(randomChoosePV());
+            if(p.getScore>winner.getScore) winner = p;
         }
-
-        roundtrack= new RoundTrack();
-
-
-
+        return winner;
     }
-
-    int getId(){ return id; }
-
-    int getNumOfPlayers(){ return nPlayers; }
-
-
-    //inutilizzato, non necessario, i metodi RandomChoose possono essere sostituiti dalla classe RandomGenerator
-    int randomChoose(int n, ArrayList<Integer> values){
-        int result;
-        /*ArrayList<Integer> values = new ArrayList<>();
-        for(int i=1; i<=12; i++){
-            values.add(i);
-        }*/
-
-        RandomGenerator rg = new RandomGenerator(values);
-        result = rg.random(n);
-        return result;
-
-
-    }
-
-    int randomChoosePB(int n){
-        Random randomGenerator = new Random();
-        int randomInt = randomGenerator.nextInt(10);
-        return randomInt;
-    }
-
-    int randomChoosePV(){
-        Random randomGenerator = new Random();
-        int randomInt = randomGenerator.nextInt(5);
-        return randomInt;
-    }
-
-    int randomChooseWP(){
-        Random randomGenerator = new Random();
-        int randomInt = randomGenerator.nextInt(24);
-        return randomInt;
-    }
-
-    void updateRound(){
-        if (){      //se siamo all'inizio o alla fine dell'array players devo aggiornare il round
-            currentRound++;
-        }
-    }
-
 
 }
