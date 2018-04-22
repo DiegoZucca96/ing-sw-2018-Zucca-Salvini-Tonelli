@@ -1,7 +1,7 @@
 package ToolCard;
 
-import ingsw.ToolCard;
+import ingsw.Die;
 
 public interface ToolStrategy {
-    void doOp();
+    void doOp(Die die);
 }

@@ -1,10 +1,10 @@
 package ingsw;
 
 import java.util.ArrayList;
-
+import ToolCard.*;
 public class ToolCard {
 
-    private ToolCard.ToolStrategy toolStrategy;
+    private ToolCard toolStrategy;
     private String constraint;
     private boolean alreadyUsed;
 
@@ -53,7 +53,7 @@ public class ToolCard {
     }
 
     public void doToolStrategy(){
-        toolStrategy.doOp();
+        toolStrategy.doOp(die);
     }
 
 }
