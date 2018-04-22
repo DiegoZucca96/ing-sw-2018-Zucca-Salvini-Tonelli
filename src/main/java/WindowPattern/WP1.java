@@ -33,7 +33,7 @@ public class WP1 implements WindowPattern {
     @Override
     public void addDie(Coordinate destination, Die die) {
         if (cellMatrix[destination.getX()][destination.getY()].isEmpty()){
-            if(verifyPosition(destination){
+            if(verifyPosition(destination)) {
                 if(verifyCellConstraint(destination, die) && verifyDieConstraint(destination, die)){
                     cellMatrix[destination.getX()][destination.getY()].setEmpty(false);
                     cellMatrix[destination.getX()][destination.getY()].insertDie(die);
@@ -86,13 +86,29 @@ public class WP1 implements WindowPattern {
     }
 
 
-    //VERIFICA CHE IL DADO CHE STAI INSERENDO TOCCA ALMENO UN DADO ATTORNO
+    //VERIFICA CHE IL DADO CHE STAI INSERENDO TOCCA ALMENO UN DADO ATTORNO; caso base i vertici della finestra
     private boolean verifyPosition(Coordinate destination){
-        if((!cellMatrix[destination.getX()+1][destination.getY()].isEmpty() && destination.getY()<4)){
-            if((!cellMatrix[destination.getX()+1][destination.getY()+1].isEmpty() && destination.getY()<4 && destination.getX()>0)){
-                if((!cellMatrix[destination.getX()][destination.getY()+1].isEmpty() && destination.getX()>0))
-            }
-        }
+        if(destination.getX()==0 && destination.getY()==0){
+            if(!cellMatrix[1][0].isEmpty() || !cellMatrix[0][1].isEmpty() || !cellMatrix[1][1].isEmpty()) return true;
+        }else if(destination.getX()==3 && destination.getY()==0){
+            if(!cellMatrix[2][0].isEmpty() || !cellMatrix[2][1].isEmpty() || !cellMatrix[3][1].isEmpty()) return true;
+        }else if(destination.getX()==0 && destination.getY()==4){
+            if(!cellMatrix[0][3].isEmpty() || !cellMatrix[1][3].isEmpty() || !cellMatrix[1][4].isEmpty()) return true;
+        }else if(destination.getX()==3 && destination.getY()==4){
+            if(!cellMatrix[2][4].isEmpty() || !cellMatrix[2][3].isEmpty() || !cellMatrix[3][3].isEmpty()) return true;
+        }else if(destination.getX()==0){
+            if(!cellMatrix[0][destination.getY()-1].isEmpty() || !cellMatrix[0][destination.getY()+1].isEmpty() || !cellMatrix[1][destination.getY()].isEmpty() || !cellMatrix[1][destination.getY()+1].isEmpty() || !cellMatrix[1][destination.getY()-1].isEmpty()) return true;
+        }else if(destination.getX()==3){
+            if(!cellMatrix[3][destination.getY()-1].isEmpty() || !cellMatrix[3][destination.getY()+1].isEmpty() || !cellMatrix[2][destination.getY()].isEmpty() || !cellMatrix[2][destination.getY()+1].isEmpty() || !cellMatrix[2][destination.getY()-1].isEmpty()) return true;
+        }else if(destination.getY()==0){
+            if(!cellMatrix[destination.getX()-1][0].isEmpty() || !cellMatrix[destination.getX()+1][0].isEmpty() || !cellMatrix[destination.getX()][1].isEmpty() || !cellMatrix[destination.getX()+1][1].isEmpty() || !cellMatrix[destination.getX()-1][1].isEmpty()) return true;
+        }else if(destination.getY()==4){
+            if(!cellMatrix[destination.getX()-1][4].isEmpty() || !cellMatrix[destination.getX()+1][4].isEmpty() || !cellMatrix[destination.getX()][3].isEmpty() || !cellMatrix[destination.getX()+1][3].isEmpty() || !cellMatrix[destination.getX()-1][3].isEmpty()) return true;
+        }else
+            if(!cellMatrix[destination.getX()+1][destination.getY()].isEmpty() || !cellMatrix[destination.getX()+1][destination.getY()-1].isEmpty() || !cellMatrix[destination.getX()][destination.getY()-1].isEmpty() || !cellMatrix[destination.getX()-1][destination.getY()-1].isEmpty() ||
+                    !cellMatrix[destination.getX()-1][destination.getY()].isEmpty() || !cellMatrix[destination.getX()-1][destination.getY()+1].isEmpty() || !cellMatrix[destination.getX()][destination.getY()+1].isEmpty() || !cellMatrix[destination.getX()+1][destination.getY()+1].isEmpty())
+                return true;
+        return false;
     }
 
 }

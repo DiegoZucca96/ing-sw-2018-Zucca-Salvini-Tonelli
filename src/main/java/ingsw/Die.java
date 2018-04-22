@@ -6,8 +6,8 @@ public class Die {
     private Cell cell;
     private int number;
 
-    public Die(Cell cell, Color color){
-        this.setCell(cell);
+    public Die(int number, Color color){
+        this.number=number;
         this.color=color;
     }
 

@@ -34,6 +34,7 @@ public class Cell {
     }
 
     public void insertDie(Die die){
+
         this.die=die;
     }
 
