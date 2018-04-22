@@ -15,6 +15,7 @@ public class Cell {
         this.color= color;
         this.coordinate=coordinate;
         insertDie(null);
+        this.empty=true;
 
     }
 
