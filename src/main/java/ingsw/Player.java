@@ -22,7 +22,4 @@ public class Player {
         else
             f_token-;
     }
-
-
-
 }

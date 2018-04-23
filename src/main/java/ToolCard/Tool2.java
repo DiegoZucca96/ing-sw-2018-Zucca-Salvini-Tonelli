@@ -17,7 +17,7 @@ public class Tool2 implements ToolStrategy {
         this.comment = "Muovi un qualsiasi dado nella tua\n" + "vetrata ignorando le restrizioni\n" + "di colore\n" + "Devi rispettare tutte le altre\n" + "restrizioni di piazzamento"
     }
     @Override
-    public void doOp(){
+    public void doOp(Die die){
         //System.out.println("Sono la carta 2");
         die = getCell(getInputCoordinate()).takeDie();
         //Come differenzio la scelta della cella? Serve una sorta di "wait selection"
