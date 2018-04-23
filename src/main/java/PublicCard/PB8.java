@@ -41,7 +41,7 @@ public class PB8 implements PBStrategy {
             if (min>values[i])
                 min = values[i];
         }
-        p.setScore(points*min);
+        p.addScore(points*min);
 
     }
 }

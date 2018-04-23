@@ -3,11 +3,24 @@ package ingsw;
 import static ingsw.Color.*;
 // A partire dal creare la PVCard, passo il parametro randomico per restituire al Player la PVCard corrispondente
 public class PVObjectiveCard {
-    private String title;
+
     private String comment;
+    private String title;
     private Color color;
 
-    public PVObjectiveCard createPVCard (int idCard){
+    public String getTitle() {
+        return title;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+   /* public PVObjectiveCard createPVCard (int idCard){
         switch (idCard){
             case 1:{
                 return new PVObjectiveCard(RED);
@@ -35,7 +48,7 @@ public class PVObjectiveCard {
                 break;
             }
         }
-    }
+    }*/
 
     public PVObjectiveCard (Color color){
         switch(color){
@@ -63,4 +76,6 @@ public class PVObjectiveCard {
         }
         this.color = color;
     }
+
+
 }

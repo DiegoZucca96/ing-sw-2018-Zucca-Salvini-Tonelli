@@ -28,7 +28,7 @@ public class PB6 implements PBStrategy {
                     num4++;
             }
         }
-        p.setScore(points*min(num3,num4));
+        p.addScore(points*min(num3,num4));
 
     }
 }

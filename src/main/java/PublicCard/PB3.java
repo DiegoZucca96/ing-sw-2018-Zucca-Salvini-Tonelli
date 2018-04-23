@@ -23,7 +23,7 @@ public class PB3 implements PBStrategy {
             int j;
             ArrayList<Integer> list = new ArrayList<>();
             for(j=0;j<5;j++){
-                Integer num = cellMatrix[i][j].getDie().getNumber(); //fare riferimento con la WP corrispondente
+                Integer num = cellMatrix[i][j].getDie().getNumber();
                 if(list.contains(num) || num==0)
                     j=8;           //Metto un valore alto in modo da differenziare il caso in cui esco perchè trovata la colonna di colori diversi
                 else
@@ -31,7 +31,7 @@ public class PB3 implements PBStrategy {
             }
             if(j==5){
                 i=4;
-                p.setScore(points);
+                p.addScore(points);
             }
         }
     }

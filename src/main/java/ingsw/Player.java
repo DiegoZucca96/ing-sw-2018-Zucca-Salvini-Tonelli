@@ -15,7 +15,7 @@ public class Player {       //Classe che rappresenta un giocatore della partita
         score = 0;
         windowPattern = new WindowPFactory().createWindowPattern(wpType);
         nFavoriteTokens = windowPattern.getDifficulty();
-        pvObjectiveCard = new PVObjectiveCard(color);
+        pvObjectiveCard = new PVObjectiveCard(pvColor);
     }
 
     public int getScore(){

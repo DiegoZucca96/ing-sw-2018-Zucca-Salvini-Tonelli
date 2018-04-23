@@ -51,7 +51,7 @@ public class ToolCard {
         }
     }
 
-    public void doToolStrategy(){
+    public void doToolStrategy(Die die){
         toolStrategy.doOp(die);
     }
 

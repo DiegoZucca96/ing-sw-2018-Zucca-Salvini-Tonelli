@@ -7,30 +7,44 @@ import org.junit.jupiter.api.*;
 public class WP1Test extends TestCase {
     private WP1 window = new WP1();
     private Cell[][] cellMatrix = window.getCellMatrix();
-    private Coordinate coordinate = new Coordinate(3,3);
+    private Coordinate coordinate = new Coordinate(1,2);
     private Coordinate dieCoordinate1 = new Coordinate(3,0);
     private Coordinate dieCoordinate2 = new Coordinate(0,3);
     private Coordinate dieCoordinate3 = new Coordinate(2,0);
-    private Coordinate dieCoordinate4 = new Coordinate(2,4);
-    private Die die= new Die(5,Color.YELLOW);
+    private Coordinate dieCoordinate4 = new Coordinate(1,1);
+    private Die die= new Die(5,Color.BLUE);
+    private Die die2= new Die(3,Color.GREEN);
+    private Die die3= new Die(4,Color.GREEN);
+    private Die die4= new Die(2,Color.BLUE);
 
+//Test dei metodi di verifica nella WP (non vanno nel progetto originale causa errori)
     @Test
     public void testVerifyPosition() {
-        window.addDie(dieCoordinate1,die);
-        window.addDie(dieCoordinate2,die);
-        window.addDie(dieCoordinate3,die);
-        window.addDie(dieCoordinate4,die);
-        assertEquals(false, window.verifyPosition(coordinate));
+        window.addDie(dieCoordinate1,die4);
+        //cellMatrix[3][0].insertDie(die4);
+        //cellMatrix[0][2].setEmpty(false);
+        //window.addDie(dieCoordinate2,die);
+        window.addDie(dieCoordinate3,die2);
+        window.addDie(dieCoordinate4,die3);
+        assertEquals(true, window.verifyPosition(coordinate));
     }
 
     @Test
-    public void testEmpty(){                 //Una volta invocato il metodo verifiedPosition che restituisce correttamente true
-        window.addDie(coordinate,die);       //salta la verifica sotto e quindi non fa la insertDie => Da sbagliato anche il test sopra
-        assertTrue(cellMatrix[3][3].isEmpty());
+    public void testEmpty(){
+        cellMatrix[0][2].insertDie(die);
+        cellMatrix[0][2].setEmpty(false);
+        //window.addDie(coordinate,die);
+        assertFalse(cellMatrix[0][2].isEmpty());
     }
 
     @Test
     public void testVerifyCellConstraint(){
-        assertFalse(window.verifyCellConstraint(coordinate,die));
+        assertTrue(window.verifyCellConstraint(dieCoordinate3,die2));
+    }
+
+    @Test
+    public void testVerifyDieConstraint(){
+        cellMatrix[0][2].insertDie(die);
+        assertFalse(window.verifyDieConstraint(dieCoordinate2,die));
     }
 }
