@@ -15,7 +15,7 @@ public class Match {
     private RoundTrack roundTrack;
     private DraftPool draftPool;
 
-    public Match(int id, ArrayList<String> playersNames ){    //viene passato l'id dal Server per identificare il match
+    public Match(int id, ArrayList<String> playersNames, ArrayList<String> playersWP){    //viene passato l'id dal Server per identificare il match
         this.id=id;
 
         /*for(int i=0; i < server.listOfClient.size(); i++){
@@ -24,9 +24,10 @@ public class Match {
             }
         }*/
 
+        //Inizializzazione dei giocatori sulla base dei dati ricevuti dal costruttore
         players= new ArrayList<>();
         for(int i=0; i<playersNames.size(); i++){
-            players.add(new Player(playersNames.get(i)));
+            players.add(new Player(playersNames.get(i), playersWP.get(i), Color.values()[new RandomGenerator(5).random()]));
         }
         nPlayers=players.size();
         clockwiseRound = true;
@@ -110,7 +111,7 @@ public class Match {
     public Player findWinner(){
         Player winner = players.get(0);
         for(Player p: players){
-            if(p.getScore>winner.getScore) winner = p;
+            if(p.getScore()>winner.getScore()) winner = p;
         }
         return winner;
     }
