@@ -1,6 +1,10 @@
 package ingsw;
 
-import WindowPattern.WP1;
+import ingsw.model.windowpattern.WP1;
+import ingsw.model.Cell;
+import ingsw.model.Color;
+import ingsw.model.Coordinate;
+import ingsw.model.Die;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.*;
 
@@ -12,7 +16,7 @@ public class WP1Test extends TestCase {
     private Coordinate dieCoordinate2 = new Coordinate(0,3);
     private Coordinate dieCoordinate3 = new Coordinate(2,0);
     private Coordinate dieCoordinate4 = new Coordinate(1,1);
-    private Die die= new Die(5,Color.BLUE);
+    private Die die= new Die(5, Color.BLUE);
     private Die die2= new Die(3,Color.GREEN);
     private Die die3= new Die(4,Color.GREEN);
     private Die die4= new Die(2,Color.BLUE);

@@ -1,6 +1,7 @@
 package ingsw;
 
-import WindowPattern.WP1;
+import ingsw.model.windowpattern.WP1;
+import ingsw.model.*;
 import org.junit.jupiter.api.*;
 import junit.framework.TestCase;
 
@@ -8,7 +9,7 @@ import junit.framework.TestCase;
 class PBObjectiveCardTest extends TestCase{
     @Test
     public void testDoPBStrategy() {
-        Player p = new Player("io","www",Color.BLUE);
+        Player p = new Player("io","www", Color.BLUE);
         WP1 window = new WP1();
         Coordinate c1 = new Coordinate(0,4);
         Coordinate c2 = new Coordinate(1,4);

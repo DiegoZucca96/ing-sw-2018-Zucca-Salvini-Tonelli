@@ -1,5 +1,7 @@
 package ingsw;
 
+import ingsw.model.DiceBag;
+import ingsw.model.Die;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.*;
 
