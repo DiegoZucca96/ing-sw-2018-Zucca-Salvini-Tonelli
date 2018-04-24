@@ -1,10 +1,13 @@
 package WindowPattern;
 
-import ingsw.*;
+import ingsw.Cell;
+import ingsw.Color;
+import ingsw.Coordinate;
+import ingsw.Die;
 
-public class WP3 extends WindowPattern {
+public class WP4 extends WindowPattern {
 
-    private String title = "Fractal Drops";
+    private String title = "Ripples of Light";
 
     private int difficulty;
 
@@ -12,15 +15,16 @@ public class WP3 extends WindowPattern {
 
     private boolean wpEmpty;
 
-    public WP3(){
+
+    public WP4(){
 
         cellMatrix = new Cell[][]{
-                {new Cell(0, null, new Coordinate(0,0)), new Cell(4, null, new Coordinate(0,1)), new Cell(0, null, new Coordinate(0,2)), new Cell(0, Color.YELLOW, new Coordinate(0,3)), new Cell(6, null, new Coordinate(0,4))},
-                {new Cell(0, Color.RED, new Coordinate(1,0)), new Cell(0, null, new Coordinate(1,1)), new Cell(2, null, new Coordinate(1,2)), new Cell(0, null, new Coordinate(1,3)), new Cell(0, null, new Coordinate(1,4))},
-                {new Cell(0, null, new Coordinate(2,0)), new Cell(0, null, new Coordinate(2,1)), new Cell(0, Color.RED, new Coordinate(2,2)), new Cell(0, Color.VIOLET, new Coordinate(2,3)), new Cell(1, null, new Coordinate(2,4))},
-                {new Cell(0, Color.BLUE, new Coordinate(3,0)), new Cell(0, Color.YELLOW, new Coordinate(3,1)), new Cell(0, null, new Coordinate(3,2)), new Cell(0, null, new Coordinate(3,3)), new Cell(0, null, new Coordinate(3,4))}
+                {new Cell(0, null, new Coordinate(0,0)), new Cell(0, null, new Coordinate(0,1)), new Cell(0, null, new Coordinate(0,2)), new Cell(0, Color.RED, new Coordinate(0,3)), new Cell(5, null, new Coordinate(0,4))},
+                {new Cell(0, null, new Coordinate(1,0)), new Cell(0, null, new Coordinate(1,1)), new Cell(0, Color.VIOLET, new Coordinate(1,2)), new Cell(4, null, new Coordinate(1,3)), new Cell(0, Color.BLUE, new Coordinate(1,4))},
+                {new Cell(0, null, new Coordinate(2,0)), new Cell(0, Color.BLUE, new Coordinate(2,1)), new Cell(3, null, new Coordinate(2,2)), new Cell(0, Color.YELLOW, new Coordinate(2,3)), new Cell(6, null, new Coordinate(2,4))},
+                {new Cell(0, Color.YELLOW, new Coordinate(3,0)), new Cell(2, null, new Coordinate(3,1)), new Cell(0, Color.GREEN, new Coordinate(3,2)), new Cell(1, null, new Coordinate(3,3)), new Cell(0, Color.RED, new Coordinate(3,4))}
         };
-        this.difficulty=3;
+        this.difficulty=5;
         this.wpEmpty=true;
     }
 

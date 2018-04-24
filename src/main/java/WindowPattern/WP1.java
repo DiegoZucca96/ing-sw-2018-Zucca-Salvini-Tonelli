@@ -66,20 +66,28 @@ public class WP1 extends WindowPattern{
     }
 
 
-    public boolean verifyCellConstraint(Coordinate destination, Die die){
-        return super.verifyCellConstraint(destination, die, cellMatrix);
+    public boolean verifyCellColorConstraint(Coordinate destination, Die die){
+        return super.verifyCellColorConstraint(destination, die, cellMatrix);
+    }
+
+    public boolean verifyCellNumberConstraint(Coordinate destination, Die die){
+        return super.verifyCellNumberConstraint(destination, die, cellMatrix);
     }
 
 
-    public boolean verifyDieConstraint(Coordinate destination, Die die){
-        return super.verifyDieConstraint( destination, die, cellMatrix);
+    public boolean verifyDieColorConstraint(Coordinate destination, Die die){
+        return super.verifyDieColorConstraint( destination, die, cellMatrix);
     }
 
 
+    public boolean verifyDieNumberConstraint(Coordinate destination, Die die){
+        return super.verifyDieColorConstraint( destination, die, cellMatrix);
+    }
 
     public boolean verifyPosition(Coordinate destination){
         return super.verifyPosition(destination, cellMatrix);
     }
 
+    public boolean verifyOnBoard(Coordinate destination) { return super.verifyOnBoard(destination); }
 
 }

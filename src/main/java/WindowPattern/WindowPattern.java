@@ -9,7 +9,6 @@ public abstract class WindowPattern {
 
     public abstract String getTitle();
 
-
     public abstract int getDifficulty();
 
     public abstract boolean isWpEmpty();
@@ -30,10 +29,11 @@ public abstract class WindowPattern {
 
 
     public boolean addDie(Coordinate destination, Die die, boolean wpEmpty, Cell[][] cellMatrix) {
+
         if(wpEmpty){
-            if(destination.getX()==0 || destination.getX()==3 || destination.getY()==0 || destination.getY()==4){
+            if(verifyOnBoard(destination)){
                 if (cellMatrix[destination.getX()][destination.getY()].isEmpty()){
-                    if(verifyCellConstraint(destination, die, cellMatrix) && verifyDieConstraint(destination, die, cellMatrix)){
+                    if(verifyCellColorConstraint(destination, die, cellMatrix) && verifyCellNumberConstraint(destination, die, cellMatrix) &&verifyDieColorConstraint(destination, die, cellMatrix) && verifyDieNumberConstraint(destination, die, cellMatrix)){
                         cellMatrix[destination.getX()][destination.getY()].setEmpty(false);
                         cellMatrix[destination.getX()][destination.getY()].insertDie(die);
                         wpEmpty=false;
@@ -54,7 +54,7 @@ public abstract class WindowPattern {
 
         }else if (cellMatrix[destination.getX()][destination.getY()].isEmpty()){
             if(verifyPosition(destination, cellMatrix)) {
-                if(verifyCellConstraint(destination, die, cellMatrix) && verifyDieConstraint(destination, die, cellMatrix)){
+                if(verifyCellColorConstraint(destination, die, cellMatrix) && verifyCellNumberConstraint(destination, die, cellMatrix) &&verifyDieColorConstraint(destination, die, cellMatrix) && verifyDieNumberConstraint(destination, die, cellMatrix)){
                     cellMatrix[destination.getX()][destination.getY()].setEmpty(false);
                     cellMatrix[destination.getX()][destination.getY()].insertDie(die);
                     return true;
@@ -91,30 +91,56 @@ public abstract class WindowPattern {
     }
 
 
-    //VERIFICA CHE LA CELLA DI DESTINAZIONE ABBIA COLORE O NUMERO UGUALE AL DADO
-    public boolean verifyCellConstraint(Coordinate destination, Die die, Cell[][] cellMatrix){
+    //VERIFICA CHE LA CELLA DI DESTINAZIONE ABBIA COLORE UGUALE AL DADO
+    public boolean verifyCellColorConstraint(Coordinate destination, Die die, Cell[][] cellMatrix){
         int x =destination.getX();
         int y =destination.getY();
-        if(cellMatrix[x][y].getColor()==null &&cellMatrix[x][y].getNumber()==0)
+        if(cellMatrix[x][y].getColor()==null)
             return true;
-        else if (cellMatrix[x][y].getColor()== die.getColor() && cellMatrix[x][y].getNumber()== 0) {
+        else if (cellMatrix[x][y].getColor()== die.getColor()) {
             return true;
-        } else if (cellMatrix[x][y].getColor()== null && cellMatrix[x][y].getNumber()== die.getNumber())
+        } else if (cellMatrix[x][y].getColor()== null )
             return true;
         else
             return false;
     }
 
-    //VERIFICA CHE LE CELLE ORTOGONALMENTE ADIACENTI AL DADO CHE SI VUOLE POSIZIONARE NON ABBIANO DADI CON LO STESSO COLORE O CON LO STESSO NUMERO
-    public boolean verifyDieConstraint(Coordinate destination, Die die, Cell[][] cellMatrix){
+    //VERIFICA CHE LA CELLA DI DESTINAZIONE ABBIA NUMERO UGUALE AL DADO
+    public boolean verifyCellNumberConstraint(Coordinate destination, Die die, Cell[][] cellMatrix){
+        int x =destination.getX();
+        int y =destination.getY();
+        if(cellMatrix[x][y].getNumber()==0)
+            return true;
+        else if (cellMatrix[x][y].getNumber()== 0) {
+            return true;
+        } else if (cellMatrix[x][y].getNumber()== die.getNumber())
+            return true;
+        else
+            return false;
+    }
+
+
+
+
+
+    //VERIFICA CHE LE CELLE ORTOGONALMENTE ADIACENTI AL DADO CHE SI VUOLE POSIZIONARE NON ABBIANO DADI CON LO STESSO COLORE
+    public boolean verifyDieColorConstraint(Coordinate destination, Die die, Cell[][] cellMatrix){
         int x =destination.getX();
         int y =destination.getY();
         if((x+1<4 && cellMatrix[x+1][y].getDie()!=null && cellMatrix[x+1][y].getDie().getColor()==die.getColor()) || (y+1<4 && cellMatrix[x][y+1].getDie()!=null && cellMatrix[x][y+1].getDie().getColor()==die.getColor()) || (x-1>0 && cellMatrix[x-1][y].getDie()!=null && cellMatrix[x-1][y].getDie().getColor()==die.getColor())|| (y-1>0 && cellMatrix[x][y-1].getDie()!=null && cellMatrix[x][y-1].getDie().getColor()==die.getColor()))
             return false;
-        else if((x+1<4 && cellMatrix[x+1][y].getDie()!=null && cellMatrix[x+1][y].getDie().getNumber()==die.getNumber()) || (y+1<4 && cellMatrix[x][y+1].getDie()!=null && cellMatrix[x][y+1].getDie().getNumber()==die.getNumber()) || (x-1>0 && cellMatrix[x-1][y].getDie()!=null && cellMatrix[x-1][y].getDie().getNumber()==die.getNumber())|| (y-1>0 && cellMatrix[x][y-1].getDie()!=null && cellMatrix[x][y-1].getDie().getNumber()==die.getNumber()))
-            return false;
         else
             return true;
+    }
+
+
+    //VERIFICA CHE LE CELLE ORTOGONALMENTE ADIACENTI AL DADO CHE SI VUOLE POSIZIONARE NON ABBIANO DADI CON LO STESSO NUMERO
+    public boolean verifyDieNumberConstraint(Coordinate destination, Die die, Cell[][] cellMatrix){
+        int x =destination.getX();
+        int y =destination.getY();
+        if((x+1<4 && cellMatrix[x+1][y].getDie()!=null && cellMatrix[x+1][y].getDie().getNumber()==die.getNumber()) || (y+1<4 && cellMatrix[x][y+1].getDie()!=null && cellMatrix[x][y+1].getDie().getNumber()==die.getNumber()) || (x-1>0 && cellMatrix[x-1][y].getDie()!=null && cellMatrix[x-1][y].getDie().getNumber()==die.getNumber())|| (y-1>0 && cellMatrix[x][y-1].getDie()!=null && cellMatrix[x][y-1].getDie().getNumber()==die.getNumber()))
+            return false;
+        else return true;
     }
 
 
@@ -134,5 +160,12 @@ public abstract class WindowPattern {
             return true;
         else
             return false;
+    }
+
+
+
+    public boolean verifyOnBoard(Coordinate destination) {
+        if(destination.getX()==0 || destination.getX()==3 || destination.getY()==0 || destination.getY()==4) return true;
+        else return false;
     }
 }
