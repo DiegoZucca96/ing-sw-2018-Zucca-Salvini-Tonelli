@@ -1,6 +1,7 @@
 package ingsw;
 
 import PublicCard.*;
+import WindowPattern.WP1;
 
 public class PBObjectiveCard {
     private PBStrategy pbStrategy;
@@ -44,8 +45,8 @@ public class PBObjectiveCard {
         }
     }
 
-    public void doPBStrategy(){
-        pbStrategy.doOp(Player p,WP1 window);
+    public void doPBStrategy(Player p, WP1 window){
+        pbStrategy.doOp( p , window);
     }
 
 }
