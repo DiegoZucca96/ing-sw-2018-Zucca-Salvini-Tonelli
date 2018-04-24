@@ -3,7 +3,6 @@ package ingsw;
 public class Die {
 
     private final Color color;
-    private Cell cell;
     private int number;
 
     public Die(int number, Color color){
@@ -13,14 +12,6 @@ public class Die {
 
     public Color getColor() {
         return color;
-    }
-
-    public Cell getCell() {
-        return cell;
-    }
-
-    public void setCell(Cell cell) {
-        this.cell = cell;
     }
 
     public int getNumber(){
