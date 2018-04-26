@@ -1,14 +1,17 @@
 package ingsw.model.toolcard;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import ingsw.model.Die;
 
 public class Tool1 implements ToolStrategy {
     private String title;
     private String comment;
+    private boolean alreadyUsed;
 
     public Tool1(){
         this.title ="Pinza Sgrossatrice";
         this.comment = "Dopo aver scelto un dado,\n" + "aumenta o dominuisci il valore\n" + "del dado scelto di 1\n" + "Non puoi cambiare\n" + "un 6 in 1 o un 1 in 6";
+        this.alreadyUsed=false;
     }
 
      //Il metodo useToolCard avrà come parametro la Tool e il Die selezionato, poi chiamerà doOp(Die)
@@ -25,10 +28,16 @@ public class Tool1 implements ToolStrategy {
     }
 
     private boolean downDie() {  //Giusto per far compilare il progetto
+        // TODO
         return true;
     }
 
     private boolean upDie() {
+        // TODO
         return true;
+    }
+
+    public boolean isAlreadyUsed(){
+        return alreadyUsed;
     }
 }

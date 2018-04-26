@@ -53,6 +53,13 @@ public class ToolCard {
         }
     }
 
+    public void setAlreadyUsed(boolean alreadyUsed) {
+        this.alreadyUsed = alreadyUsed;
+    }
+
+    public boolean isAlreadyUsed(){
+        return alreadyUsed;}
+
     public void doToolStrategy(Die die){
         toolStrategy.doOp(die);
     }

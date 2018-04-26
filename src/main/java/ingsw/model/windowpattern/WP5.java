@@ -48,13 +48,16 @@ public class WP5 extends WindowPattern {
         return this.cellMatrix;
     }
 
+    @Override
+    public void setWpEmpty (boolean wpEmpty) { this.wpEmpty = wpEmpty;}
+
     public int countEmptyCells(){
         return super.countEmptyCells(getCellMatrix());
     }
 
 
     public boolean addDie (Coordinate destination, Die die){
-        return super.addDie(destination, die, isWpEmpty(), getCellMatrix());
+        return super.addDie(destination, die, getCellMatrix());
     }
 
     public boolean removeDie(Coordinate destination) {

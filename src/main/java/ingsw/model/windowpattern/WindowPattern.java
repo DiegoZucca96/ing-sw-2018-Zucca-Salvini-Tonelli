@@ -1,6 +1,7 @@
 package ingsw.model.windowpattern;
 
 import ingsw.model.Cell;
+import ingsw.model.Color;
 import ingsw.model.Coordinate;
 import ingsw.model.Die;
 
@@ -12,6 +13,8 @@ public abstract class WindowPattern {
     public abstract int getDifficulty();
 
     public abstract boolean isWpEmpty();
+
+    public abstract void setWpEmpty(boolean wpEmpty);
 
     public abstract Cell[][] getCellMatrix();
 
@@ -27,16 +30,27 @@ public abstract class WindowPattern {
         return count;
     }
 
+    public int countDie(Color color, Cell[][] cellMatrix){ // Si potrebbe fare un unico metodo per entrambi? E' ripetitivo
+        int count =0;
+        for(int i=0; i<5; i++){
+            for(int j=0; j<4; j++){
+                if(cellMatrix[j][i].getColor() == color) count++;
+            }
+        }
+        return count;
 
-    public boolean addDie(Coordinate destination, Die die, boolean wpEmpty, Cell[][] cellMatrix) {
+    }
 
-        if(wpEmpty){
+
+    public boolean addDie(Coordinate destination, Die die, Cell[][] cellMatrix) {
+
+        if(isWpEmpty()){
             if(verifyOnBoard(destination)){
                 if (cellMatrix[destination.getX()][destination.getY()].isEmpty()){
                     if(verifyCellColorConstraint(destination, die, cellMatrix) && verifyCellNumberConstraint(destination, die, cellMatrix) &&verifyDieColorConstraint(destination, die, cellMatrix) && verifyDieNumberConstraint(destination, die, cellMatrix)){
                         cellMatrix[destination.getX()][destination.getY()].setEmpty(false);
                         cellMatrix[destination.getX()][destination.getY()].insertDie(die);
-                        wpEmpty=false;
+                        setWpEmpty(false);
                         return true;
                     }
                     else{
@@ -99,8 +113,7 @@ public abstract class WindowPattern {
             return true;
         else if (cellMatrix[x][y].getColor()== die.getColor()) {
             return true;
-        } else if (cellMatrix[x][y].getColor()== null )
-            return true;
+        }
         else
             return false;
     }
@@ -111,9 +124,7 @@ public abstract class WindowPattern {
         int y =destination.getY();
         if(cellMatrix[x][y].getNumber()==0)
             return true;
-        else if (cellMatrix[x][y].getNumber()== 0) {
-            return true;
-        } else if (cellMatrix[x][y].getNumber()== die.getNumber())
+        else if (cellMatrix[x][y].getNumber()== die.getNumber())
             return true;
         else
             return false;

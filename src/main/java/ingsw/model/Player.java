@@ -2,6 +2,7 @@ package ingsw.model;
 
 import ingsw.model.windowpattern.WindowPattern;
 
+
 public class Player {       //Classe che rappresenta un giocatore della partita
 
     private String name;
@@ -46,19 +47,22 @@ public class Player {       //Classe che rappresenta un giocatore della partita
 
     //consuma un certo numero di favorite tokens in base alla tool card utilizzata
     public void useToken(ToolCard tool){
-        if(tool.alreadyUsed()) nFavoriteTokens -= 2;
-        else nFavoriteTokens--;
+        if(tool.isAlreadyUsed()) nFavoriteTokens -= 2;
+        else{
+            nFavoriteTokens--;
+            tool.setAlreadyUsed(true);
+        }
     }
 
     //posiziona un dado sulla window pattern del giocatore
     public boolean positionDie(Die die, Coordinate coordinates){
-        return windowPattern.addDie(coordinates, die);
+        return windowPattern.addDie(coordinates, die, windowPattern.getCellMatrix());
     }
 
     //attribuisce al giocatore il suo punteggio indipendente dalle public objective card in tavola
     public void pvScore(){
         addScore(nFavoriteTokens);
-        addScore(windowPattern.countDie(pvObjectiveCard.getColor()));
-        subScore(windowPattern.countEmptyCells());
+        addScore(windowPattern.countDie(pvObjectiveCard.getColor(), windowPattern.getCellMatrix()));
+        subScore(windowPattern.countEmptyCells(windowPattern.getCellMatrix()));
     }
 }
