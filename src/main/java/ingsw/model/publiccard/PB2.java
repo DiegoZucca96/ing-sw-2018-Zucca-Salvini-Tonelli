@@ -4,6 +4,8 @@ import ingsw.model.Cell;
 import ingsw.model.Color;
 import ingsw.model.Player;
 import ingsw.model.windowpattern.WP1;
+import ingsw.model.windowpattern.WindowPattern;
+
 import java.util.ArrayList;
 
 public class PB2 implements PBStrategy {
@@ -17,8 +19,8 @@ public class PB2 implements PBStrategy {
         this.points = 5;
     }
 
-    @Override
-    public void doOp(Player p, WP1 window) {
+
+    public void doOp(Player p, WindowPattern window) {
         Cell [][] cellMatrix = window.getCellMatrix();
         for(int i=0;i<5;i++){
             int j;

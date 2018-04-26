@@ -2,6 +2,7 @@ package ingsw.model;
 
 import ingsw.model.publiccard.*;
 import ingsw.model.windowpattern.WP1;
+import ingsw.model.windowpattern.WindowPattern;
 
 public class PBObjectiveCard {
     private PBStrategy pbStrategy;
@@ -45,7 +46,7 @@ public class PBObjectiveCard {
         }
     }
 
-    public void doPBStrategy(Player p, WP1 window){
+    public void doPBStrategy(Player p, WindowPattern window){
         pbStrategy.doOp( p , window);
     }
 

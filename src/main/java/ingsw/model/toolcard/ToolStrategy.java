@@ -1,8 +1,11 @@
 package ingsw.model.toolcard;
 
-import ingsw.model.Die;
+
+import ingsw.model.ObjectiveTool;
 
 public interface ToolStrategy {
-    void doOp(Die die);
+    void doOp(ObjectiveTool object);
     boolean isAlreadyUsed();
+    int getIdCard();
+    void setAlreadyUsed(boolean alreadyUsed);
 }

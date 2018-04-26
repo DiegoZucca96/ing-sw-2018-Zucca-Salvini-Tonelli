@@ -3,6 +3,8 @@ package ingsw.model.publiccard;
 import ingsw.model.Cell;
 import ingsw.model.Player;
 import ingsw.model.windowpattern.WP1;
+import ingsw.model.windowpattern.WindowPattern;
+
 import java.util.ArrayList;
 
 public class PB3 implements PBStrategy {
@@ -16,8 +18,7 @@ public class PB3 implements PBStrategy {
         this.points = 5;
     }
 
-    @Override
-    public void doOp(Player p, WP1 window) {
+    public void doOp(Player p, WindowPattern window) {
         Cell [][] cellMatrix = window.getCellMatrix();
         for(int i=0;i<4;i++){
             int j;
