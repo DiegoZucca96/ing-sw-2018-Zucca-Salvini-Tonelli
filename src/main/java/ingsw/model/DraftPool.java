@@ -36,4 +36,12 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
         diceList.remove(index);
         return result;
     }
+
+    public void insertDie(Die die){
+        diceList.add(die);
+    }
+
+    public ArrayList<Die> getDiceList() {
+        return diceList;
+    }
 }

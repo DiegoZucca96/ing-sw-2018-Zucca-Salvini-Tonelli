@@ -1,9 +1,12 @@
 package ingsw.model;
+
+import ingsw.model.windowpattern.WindowPattern;
+
 // Oggetto da passare al metodo delle ToolCard, varia in base alla ToolCard usata
 public class ObjectiveTool {
     private Die die1;
     private Die die2;
-    private Cell[][] cellMatrix;
+    private WindowPattern window;
     private int up;             //Per la ToolCard 1, serve a dire se si vuole alzare (1) o abbassare (-1) il valore (default 0)
     private Coordinate c1;
     private Coordinate c2;
@@ -14,10 +17,10 @@ public class ObjectiveTool {
     private int turnDie;        // Se 1 bisogna ruotare, altrimenti è zero di base
     private DiceBag diceBag;
 
-    public ObjectiveTool(Die die1, Die die2, Cell[][] cellMatrix, int up, Coordinate c1, Coordinate c2, Coordinate destination1, Coordinate destination2, RoundTrack rt, DraftPool dp, int turnDie, DiceBag diceBag) {
+    public ObjectiveTool(Die die1, Die die2, WindowPattern window, int up, Coordinate c1, Coordinate c2, Coordinate destination1, Coordinate destination2, RoundTrack rt, DraftPool dp, int turnDie, DiceBag diceBag) {
         this.die1 = die1;
         this.die2 = die2;
-        this.cellMatrix = cellMatrix;
+        this.window = window;
         this.up = up;
         this.c1 = c1;
         this.c2 = c2;
@@ -45,12 +48,12 @@ public class ObjectiveTool {
         this.die2 = die2;
     }
 
-    public Cell[][] getCellMatrix() {
-        return cellMatrix;
+    public WindowPattern getWindow() {
+        return window;
     }
 
-    public void setCellMatrix(Cell[][] cellMatrix) {
-        this.cellMatrix = cellMatrix;
+    public void setWindow(WindowPattern window) {
+        this.window = window;
     }
 
     public int getUp() {

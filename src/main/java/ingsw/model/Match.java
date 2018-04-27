@@ -67,21 +67,29 @@ public class Match {
         draftPool.throwsDice(nPlayers*2+1);
     }
 
-    //termina il round
+    //termina il round e setta a tutti i giocatori il loro primo turno
     public void endRound(){
         roundTrack.nextRound();
         clockwiseRound = true;
+        for(Player p:players)
+            p.setMyRound(1);
     }
 
-    //NB nextTurn va chiamata 7 volte con 4 giocatori, al termine si chiama endRound
+    //NB nextTurn va chiamata 7 volte con 4 giocatori, al termine si chiama endRound (tengo conto se è il primo o secondo turno)
     public void nextTurn(){                         //il turno va al prossimo giocatore
         if(currentPlayer == players.get(players.size()) && clockwiseRound){
+            currentPlayer.setMyRound(2);
             clockwiseRound = false;
-        } else{
+        }else {
             try{
-                if(clockwiseRound) currentPlayer = players.get(players.indexOf(currentPlayer)+1);
-                else currentPlayer = players.get(players.indexOf(currentPlayer)-1);
-            }catch(IndexOutOfBoundsException e){
+                if (clockwiseRound){
+                    currentPlayer.setMyRound(2);
+                    currentPlayer = players.get(players.indexOf(currentPlayer) + 1);
+                }else{
+                    currentPlayer.setMyRound(2);
+                    currentPlayer = players.get(players.indexOf(currentPlayer) - 1);
+                }
+            } catch (IndexOutOfBoundsException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -94,7 +102,6 @@ public class Match {
 
     //usa la ingsw.model.toolcard passata come parametro
     public void playerUseTool(ToolCard tool){
-        currentPlayer.useToken(tool);
         currentPlayer.useToolCard(tool);
     }
 

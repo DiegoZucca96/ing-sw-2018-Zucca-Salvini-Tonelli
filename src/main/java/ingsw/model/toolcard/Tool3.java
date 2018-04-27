@@ -5,8 +5,7 @@ import ingsw.model.Die;
 import ingsw.model.ObjectiveTool;
 import ingsw.model.windowpattern.WindowPattern;
 
-//In UML
-public class Tool2 implements ToolStrategy {
+public class Tool3 implements ToolStrategy {
     private Die possibledie;
     private Die die;
     private Cell destinationCell;
@@ -17,14 +16,13 @@ public class Tool2 implements ToolStrategy {
     private boolean alreadyUsed;
     private int idCard;
 
-    public Tool2(int idCard){
-        this.title ="Pennello per Eglomise";
-        this.comment = "Muovi un qualsiasi dado nella tua\n" + "vetrata ignorando le restrizioni\n" + "di colore\n" + "Devi rispettare tutte le altre\n" + "restrizioni di piazzamento";
+    public Tool3(int idCard) {
+        this.title ="Alesatore per lamina di rame";
+        this.comment = "Muovi un qualsiasi dado nella tua\n" + "vetrata ignorando le restrizioni\n" + "di valore\n" + "Devi rispettare tutte le altre\n" + "restrizioni di piazzamento";
         this.alreadyUsed=false;
         this.idCard=idCard;
     }
-
-    //Prima di estrarre davvero il dado, ne prendo il riferimento, verifico che posso metterlo in destination1 e poi lo inserisco rimuovendolo
+    //Stessa identica cosa per la Tool2 solo che qua passo oltre la restrizione del numero e non del colore
     public void doOp(ObjectiveTool object){
         window = object.getWindow();
         cellMatrix = window.getCellMatrix();
