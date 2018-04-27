@@ -94,6 +94,7 @@ public class Match {
 
     //usa la ingsw.model.toolcard passata come parametro
     public void playerUseTool(ToolCard tool){
+        currentPlayer.useToken(tool);
         currentPlayer.useToolCard(tool);
     }
 
