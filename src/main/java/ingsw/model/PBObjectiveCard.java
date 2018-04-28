@@ -46,6 +46,7 @@ public class PBObjectiveCard {
         }
     }
 
+    //puoi ottenere windowPattern tramite getWindowPattern di player
     public void doPBStrategy(Player p, WindowPattern window){
         pbStrategy.doOp( p , window);
     }

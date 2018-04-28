@@ -35,6 +35,10 @@ public class Player {       //Classe che rappresenta un giocatore della partita
         return nFavoriteTokens;
     }
 
+    public WindowPattern getWindowPattern() {
+        return windowPattern;
+    }
+
     public void setScore(int newScore){
         score = newScore;
     }
