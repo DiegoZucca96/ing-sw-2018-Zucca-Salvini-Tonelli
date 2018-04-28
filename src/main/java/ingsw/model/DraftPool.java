@@ -40,9 +40,9 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
     }
 
     //NB -----> questo metodo espone il rep della classe, non possiamo tenerlo, è un errore grave
-    public ArrayList<Die> getDiceList() {
+    /*public ArrayList<Die> getDiceList() {
         return diceList;
-    }
+    }*/
 
     //mette i dadi che non sono stati usati nella round track
     public void cleanDraftPool(){

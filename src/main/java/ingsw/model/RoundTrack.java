@@ -17,32 +17,42 @@ public class RoundTrack {
         extraDice = new ArrayList<ArrayList<Die>>();
     }
 
-    public int getRound() {                             //restituisce il round corrente
+    //restituisce il round corrente
+    public int getRound() {
         return currentRound;
     }
 
-    public void setRound(int currentRound) {            //imposta il round corrente (non impedisce di impostare valori <0 o >10)
-        this.currentRound = currentRound;
+    //imposta il round corrente
+    public void setRound(int currentRound) {
+        if(currentRound >= 1 && currentRound <=10) this.currentRound = currentRound;
     }
 
-    public void nextRound(){                            //incrementa il round corrente di uno, fino a raggiungere il valore massimo, 10
+    //incrementa il round corrente di uno, fino a raggiungere il valore massimo, 10
+    public void nextRound(){
         if(currentRound <10) currentRound++;
     }
 
-    public void addDie(Die die, int round){             //inserisce il dado nella lista all'indice round.
-        for(int i=extraDice.size(); i<round; i++){
-            extraDice.add(new ArrayList<Die>());
+    //inserisce il dado nella lista all'indice round.
+    public void addDie(Die die, int round){
+        if(round>=1 && round<=10){
+            for(int i=extraDice.size(); i<round; i++){
+                extraDice.add(new ArrayList<Die>());
+            }
+            extraDice.get(round-1).add(die);
         }
-        extraDice.get(round).add(die);
     }
 
-    public Die getDie(int round, int index){            //restituisce il riferimento al dado nella posizione index della lista nella
-        return extraDice.get(round).get(index);         //poszione round
+    //restituisce il riferimento al dado nella posizione index della lista nella poszione round
+    public Die getDie(int round, int index){
+        if(round<1 || round>10) return null;
+        return extraDice.get(round-1).get(index);
     }
 
-    public Die takeDie(int round, int index){           //esegue getDie e rimuove il riferiemento al dado dalla lista.
+    //esegue getDie e rimuove il riferiemento al dado dalla lista.
+    public Die takeDie(int round, int index){
         Die result = getDie(round, index);
-        extraDice.get(round).remove(index);
+        if(result == null) return null;
+        extraDice.get(round-1).remove(index);
         return result;
     }
 
