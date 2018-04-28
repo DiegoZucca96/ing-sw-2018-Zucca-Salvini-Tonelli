@@ -15,33 +15,41 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
         this.roundTrack = roundTrack;
     }
 
-    public void throwsDice(int nDice){      //mette i dadi in avanzo relativi al turno precedente nella round track,
-        if(!diceList.isEmpty()){            //lancia nDice nuovi dadi.
-            for(int i=0; i<diceList.size(); i++){
-                roundTrack.addDie(diceList.get(i), roundTrack.getRound()-1);    //quando viene chiamata il currentRound è già stato aggiornato
-            }
-        }
-
+    //mette i dadi in avanzo relativi al turno precedente nella round track, lancia nDice nuovi dadi.
+    public void throwsDice(int nDice){
         for(int i=0; i<nDice; i++){
             diceList.add(diceBag.randomDice());
         }
     }
 
-    public Die getDie(int index){       //restituisce il riferimento al dado in posizione index
+    //restituisce il riferimento al dado in posizione index
+    public Die getDie(int index){
         return diceList.get(index);
     }
 
-    public Die takeDie(int index){      //fa get(index) e rimuove il dado dalla lista
+    //fa get(index) e rimuove il dado dalla draft pool
+    public Die takeDie(int index){
         Die result = diceList.get(index);
         diceList.remove(index);
         return result;
     }
 
-    public void insertDie(Die die){
+    //aggiunge un dado nella draft pool
+    public void addDie(Die die){
         diceList.add(die);
     }
 
+    //NB -----> questo metodo espone il rep della classe, non possiamo tenerlo, è un errore grave
     public ArrayList<Die> getDiceList() {
         return diceList;
+    }
+
+    //mette i dadi che non sono stati usati nella round track
+    public void cleanDraftPool(){
+        if(!diceList.isEmpty()){
+            for(int i=0; i<diceList.size(); i++){
+                roundTrack.addDie(diceList.get(i), roundTrack.getRound());
+            }
+        }
     }
 }

@@ -69,6 +69,7 @@ public class Match {
 
     //termina il round e setta a tutti i giocatori il loro primo turno
     public void endRound(){
+        draftPool.cleanDraftPool();
         roundTrack.nextRound();
         clockwiseRound = true;
         for(Player p:players)
