@@ -43,12 +43,14 @@ public class WP1Test extends TestCase {
 
     @Test
     public void testVerifyCellConstraint(){
-        assertTrue(window.verifyCellConstraint(dieCoordinate3,die2));
+        assertTrue(window.verifyCellNumberConstraint(dieCoordinate3,die2));
+        assertTrue(window.verifyCellColorConstraint(dieCoordinate3,die2));
     }
 
     @Test
     public void testVerifyDieConstraint(){
         cellMatrix[0][2].insertDie(die);
-        assertFalse(window.verifyDieConstraint(dieCoordinate2,die));
+        assertFalse(window.verifyDieColorConstraint(dieCoordinate2,die));
+        assertFalse(window.verifyDieNumberConstraint(dieCoordinate2,die));
     }
 }
