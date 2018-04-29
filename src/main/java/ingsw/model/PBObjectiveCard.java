@@ -1,8 +1,7 @@
 package ingsw.model;
 
 import ingsw.model.publiccard.*;
-import ingsw.model.windowpattern.WP1;
-import ingsw.model.windowpattern.WindowPattern;
+import ingsw.model.publiccard.PB9;
 
 public class PBObjectiveCard {
     private PBStrategy pbStrategy;
@@ -46,9 +45,8 @@ public class PBObjectiveCard {
         }
     }
 
-    //puoi ottenere windowPattern tramite getWindowPattern di player
-    public void doPBStrategy(Player p, WindowPattern window){
-        pbStrategy.doOp( p , window);
+    public void doPBStrategy(Player p){
+        pbStrategy.doOp(p);
     }
 
 }

@@ -1,10 +1,7 @@
 package ingsw.model.publiccard;
 
-import ingsw.model.windowpattern.WP1;
 import ingsw.model.Cell;
 import ingsw.model.Player;
-import ingsw.model.windowpattern.WindowPattern;
-
 
 public class PB8 implements PBStrategy {
     private String title;
@@ -17,8 +14,8 @@ public class PB8 implements PBStrategy {
         this.points = 5;
     }
 
-    public void doOp(Player p, WindowPattern window) {
-        Cell[][] cellMatrix = window.getCellMatrix();
+    public void doOp(Player p) {
+        Cell [][] cellMatrix = p.getWindowPattern().getCellMatrix();
         int values[] = new int[]{0,0,0,0,0,0};
         for(int i=0;i<4;i++){
             for(int j=0;j<5;j++){
