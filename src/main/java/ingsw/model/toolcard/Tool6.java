@@ -25,7 +25,7 @@ public class Tool6 implements ToolStrategy {
         die.setNumber(r.nextInt(6));
         if(!isInsertable(object.getWindow(),die)){  //Metodo che controlla se ci sono possibili inserimenti
             dp = object.getDp();
-            dp.insertDie(die);
+            dp.addDie(die);
         }
     }
 
