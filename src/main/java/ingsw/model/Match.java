@@ -105,7 +105,7 @@ public class Match {
 
     //raccoglie i dati necessari per l'utilizzo di una tool card in un oggetto di tipo ObjectiveTool
     //se non è possibile utilizzare la carta indicata in pTParameter restituisce null
-    public ObjectiveTool createToolParameter(PlayerToolParameter pTParameter){
+    private ObjectiveTool createToolParameter(PlayerToolParameter pTParameter){
         int idCard = pTParameter.getIdCard();
         ObjectiveTool toolParameter;
         boolean allow = true;  //Serve a dare il consenso all'uso della ToolCard o meno
@@ -175,9 +175,13 @@ public class Match {
 
 
 
-    //usa la ingsw.model.toolcard passata come parametro
-    public void playerUseTool(ToolCard tool){
-        currentPlayer.useToolCard(tool);
+    //usa la ingsw.model.toolcard passata come parametro, restituisce false se non può essere usata
+    public boolean playerUseTool(ToolCard tool, PlayerToolParameter pTParameter){
+        ObjectiveTool toolParameter = createToolParameter(pTParameter);
+        if(toolParameter == null) return false;
+        currentPlayer.useToken(tool);
+        tool.doToolStrategy(toolParameter);
+        return true;
     }
 
     //calcola e setta il punteggio a tutti i giocatori
