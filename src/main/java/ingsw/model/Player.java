@@ -76,53 +76,53 @@ public class Player {       //Classe che rappresenta un giocatore della partita
     }
 
     //A partire dall'ID della carta vado a creare l'object con solo i parametri interessati (Problema di come ottenere dati in input)
-    public void useToolCard(ToolCard toolCard){
+    /*public void useToolCard(ToolCard toolCard){
         int idCard = toolCard.getIdCard();
         ObjectiveTool object;
         boolean allow = true;  //Serve a dare il consenso all'uso della ToolCard o meno
         switch(idCard){
             case 1:{
                 if(upDie()) //upDie funzione che se true porta ad aumentare il valore, se false abbassare
-                    object = new ObjectiveTool(die1,null,null,1,null,null,null,null, null, draftpool,0,null);
+                    object = new ObjectiveTool(die1, 1, draftPool);
                 else
-                    object = new ObjectiveTool(die1,null,null,-1,null,null,null,null, null, draftpool,0,null);
+                    object = new ObjectiveTool(die1, -1, draftpool);
                 break;
             }case 2:{
-                object = new ObjectiveTool(null,null,window,0,coordinateDie,null,destination,null, null, null,0,null);
+                object = new ObjectiveTool(window, coordinateDie, destination);
                 break;
             }case 3:{
-                object = new ObjectiveTool(null,null,window,0,coordinateDie,null,destination,null, null, null,0,null);
+                object = new ObjectiveTool(window, coordinateDie, destination);
                 break;
             }case 4:{
-                object = new ObjectiveTool(null,null,window,0,coordinateDie1,coordinateDie2 ,destination1,destination2, null, null,0,null);
+                object = new ObjectiveTool(window, coordinateDie1, coordinateDie2, destination1, destination2);
                 break;
             }case 5:{
-                object = new ObjectiveTool(die1,die2,null,0,null,null,null,null, roundtrack, draftpool,0,null);
+                object = new ObjectiveTool(die1, die2, roundtrack, draftpool);
                 break;
             }case 6:{
-                object = new ObjectiveTool(die1,null,window,0,null,null,null,null, null, draftpool,0,null);
+                object = new ObjectiveTool(die1, window, draftpool);
                 break;
             }case 7:{
                 if(getMyRound()==2)
-                    object = new ObjectiveTool(null,null,null,0,null,null,null,null, null, draftpool,0,dicebag);
+                    object = new ObjectiveTool(draftpool, dicebag);
                 else
                     allow = false;
                 break;
             }case 8:{
 
-                object = new ObjectiveTool(null,null,window,0,null,null,destination,null, null, draftpool,0,null);
+                object = new ObjectiveTool(window, destination, draftpool);
                 break;
             }case 9:{
-                object = new ObjectiveTool(die1,null,window,0,null,null,destination,null, null, null,0,null);
+                object = new ObjectiveTool(die1, window, destination);
                 break;
             }case 10:{
-                object = new ObjectiveTool(die1,null,null,0,null,null,null,null, null, draftpool,1,null);
+                object = new ObjectiveTool(die1, draftpool, 1);
                 break;
             }case 11:{
-                object = new ObjectiveTool(die1,null,window,0,null,null,null,null, null, null,0,dicebag);
+                object = new ObjectiveTool(die1, window, dicebag);
                 break;
             }case 12:{
-                object = new ObjectiveTool(null,null,window,0,coordinateDie1,coordinateDie2,destination1,destination2, roundtrack, null,0,null);
+                object = new ObjectiveTool(window, coordinateDie1, coordinateDie2, destination1, destination2, roundtrack);
                 break;
             }default: break;
         }
@@ -131,7 +131,7 @@ public class Player {       //Classe che rappresenta un giocatore della partita
             toolCard.doToolStrategy(object);//restituzione dei token al giocatore
         }else
             System.out.print("Non puoi usare questa carta");
-    }
+    }*/
 
     //attribuisce al giocatore il suo punteggio indipendente dalle public objective card in tavola
     public void pvScore(){

@@ -15,6 +15,10 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
         this.roundTrack = roundTrack;
     }
 
+    public DiceBag getDiceBag() {
+        return diceBag;
+    }
+
     //mette i dadi in avanzo relativi al turno precedente nella round track, lancia nDice nuovi dadi.
     public void throwsDice(int nDice){
         for(int i=0; i<nDice; i++){
