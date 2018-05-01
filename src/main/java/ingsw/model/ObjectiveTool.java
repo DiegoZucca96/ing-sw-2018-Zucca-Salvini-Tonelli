@@ -17,20 +17,6 @@ public class ObjectiveTool {
     private int turnDie;        // Se 1 bisogna ruotare, altrimenti è zero di base
     private DiceBag diceBag;
 
-    /*public ObjectiveTool(Die die1, Die die2, WindowPattern window, int up, Coordinate c1, Coordinate c2, Coordinate destination1, Coordinate destination2, RoundTrack rt, DraftPool dp, int turnDie, DiceBag diceBag) {
-        this.die1 = die1;
-        this.die2 = die2;
-        this.window = window;
-        this.up = up;
-        this.c1 = c1;
-        this.c2 = c2;
-        this.destination1 = destination1;
-        this.destination2 = destination2;
-        this.rt = rt;
-        this.dp = dp;
-        this.turnDie = turnDie;
-        this.diceBag = diceBag;
-    }*/
 
     public ObjectiveTool(Die die1, int up, DraftPool dp){
         this.die1 = die1;
@@ -65,9 +51,8 @@ public class ObjectiveTool {
         this.dp = dp;
     }
 
-    public ObjectiveTool(DraftPool dp, DiceBag diceBag){
+    public ObjectiveTool(DraftPool dp){
         this.dp = dp;
-        this.diceBag = diceBag;
     }
 
     public ObjectiveTool(WindowPattern window, Coordinate destination1, DraftPool dp){
@@ -88,10 +73,11 @@ public class ObjectiveTool {
         this.turnDie = turnDie;
     }
 
-    public ObjectiveTool(Die die1, WindowPattern window, DiceBag diceBag){
+    public ObjectiveTool(Die die1, WindowPattern window, DraftPool dp ,DiceBag diceBag){
         this.die1 = die1;
         this.window = window;
         this.diceBag = diceBag;
+        this.dp = dp;
     }
 
     public ObjectiveTool(WindowPattern window, Coordinate c1, Coordinate c2, Coordinate destination1, Coordinate destination2, RoundTrack rt){
@@ -102,6 +88,8 @@ public class ObjectiveTool {
         this.destination2 = destination2;
         this.rt = rt;
     }
+
+
 
     public Die getDie1() {
         return die1;

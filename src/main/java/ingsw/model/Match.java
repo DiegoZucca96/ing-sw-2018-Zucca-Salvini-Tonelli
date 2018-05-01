@@ -122,7 +122,7 @@ public class Match {
                 toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC1(), pTParameter.getD1());
                 break;
             }
-            case 4: {
+            case 4:{
                 toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC1(), pTParameter.getC2(), pTParameter.getD1(), pTParameter.getD2());
                 break;
             }
@@ -136,15 +136,20 @@ public class Match {
             }
             case 7: {
                 if (!clockwiseRound)
-                    toolParameter = new ObjectiveTool(draftPool, draftPool.getDiceBag());
+                    toolParameter = new ObjectiveTool(draftPool);
                 else {
                     allow = false;
                     toolParameter = null;
                 }
                 break;
             }
-            case 8: {
-                toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getD1(), draftPool);
+            case 8: { //Salta il secondo turno, si potrebbe sfruttare il myRound controllando nel cambio turno se il player ha già valore 2
+                if (clockwiseRound){
+                    allow = false;
+                    toolParameter = null;
+                }else
+                    toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(),pTParameter.getD1(), draftPool);
+                //currentPlayer.setMyRound(2);
                 break;
             }
             case 9: {
@@ -156,7 +161,7 @@ public class Match {
                 break;
             }
             case 11: {
-                toolParameter = new ObjectiveTool(pTParameter.getDie1(), currentPlayer.getWindowPattern(), draftPool.getDiceBag());
+                toolParameter = new ObjectiveTool(pTParameter.getDie1(), currentPlayer.getWindowPattern(),draftPool, draftPool.getDiceBag());
                 break;
             }
             case 12: {

@@ -28,7 +28,7 @@ public class Tool5 implements ToolStrategy {
         die2 = object.getDie2();
         rt = object.getRt();
         dp = object.getDp();
-       // rt.addDie(die1,round); //Manca il riferimento al round da dove è stato preso il dado
+       // rt.addDie(die1,indexRound); //Manca il riferimento al round da dove è stato preso il dado (forse aggiungere un attributo indice nel OT?)
        // dp.insertDie(die2);
     }
 

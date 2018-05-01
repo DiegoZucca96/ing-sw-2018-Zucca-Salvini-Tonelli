@@ -1,13 +1,22 @@
 package ingsw.model.toolcard;
 
-import ingsw.model.ObjectiveTool;
+import ingsw.model.*;
+import ingsw.model.windowpattern.WindowPattern;
 
 public class Tool12 implements ToolStrategy {
     private String title;
     private String comment;
     private boolean alreadyUsed;
     private int idCard;
-
+    private WindowPattern window;
+    private Die die1;
+    private Die die2;
+    private Coordinate c1;
+    private Coordinate c2;
+    private Coordinate d1;
+    private Coordinate d2;
+    private DraftPool dp;
+    private Color color;
 
     public Tool12(int idCard) {
         this.title ="Taglierina Manuale";
@@ -17,7 +26,27 @@ public class Tool12 implements ToolStrategy {
     }
 
     public void doOp(ObjectiveTool object){
-
+        //color = object.getSelectedColor();   //Manca questo parametro in ObjectiveTool
+        window = object.getWindow();
+        Cell[][] cellMatrix = window.getCellMatrix();
+        c1 = object.getC1();
+        c2 = object.getC2();
+        if(c1 != null) {
+            if (cellMatrix[c1.getX()][c1.getY()].getDie().getColor() == color) {
+                die1 = cellMatrix[c1.getX()][c1.getY()].takeDie();
+                window.addDie(object.getDestination1(),die1,cellMatrix);
+            }
+            else
+                System.out.print("Il dado selezionato non è dello stesso colore del RoundTrack");
+        }
+        if(c2 != null) {
+            if (cellMatrix[c2.getX()][c2.getY()].getDie().getColor() == color) {
+                die2 = cellMatrix[c2.getX()][c2.getY()].takeDie();
+                window.addDie(object.getDestination2(), die2, cellMatrix);
+            }
+            else
+                System.out.print("Il dado selezionato non è dello stesso colore del RoundTrack");
+        }
     }
 
     public int getIdCard() {

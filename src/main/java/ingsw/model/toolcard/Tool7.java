@@ -14,7 +14,6 @@ public class Tool7 implements ToolStrategy {
     private boolean alreadyUsed;
     private int idCard;
     private DraftPool dp;
-    private DiceBag dicebag;
 
     public Tool7(int idCard) {
         this.title ="Martelletto";
@@ -24,15 +23,19 @@ public class Tool7 implements ToolStrategy {
     }
 //Manca un metodo per modificare la DraftPool senza dover per forza inserire i dadi nella RoundTrack
     public void doOp(ObjectiveTool object){
-       /* dp = object.getDp();
-        dicebag = object.getDiceBag();
-        ArrayList<Die> dicelist = dp.getDiceList();
-        for(Die die: dicelist){
+      /* if(!(object.equals(null))){
+           dp = object.getDp();
+           dp.refreshDice(); //Metodo che ritira i dadi
+       }
+    */
+    }
+
+    /*public void refreshDice(){ //Questo apparterrà alla DraftPool
+        for(Die die: draftPool.dicelist){
             Random r = new Random();
             die.setNumber(r.nextInt(6));
         }
-    */
-    }
+    }*/
 
     public int getIdCard() {
         return idCard;

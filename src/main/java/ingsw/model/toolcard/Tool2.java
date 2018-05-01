@@ -33,6 +33,8 @@ public class Tool2 implements ToolStrategy {
             die = cellMatrix[object.getC1().getX()][object.getC1().getY()].takeDie();
             cellMatrix[object.getDestination1().getX()][object.getDestination1().getY()].insertDie(die);
         }
+        else
+            System.out.println("Posizione di destinazione non corretta");
     }
 
     public int getIdCard() {
