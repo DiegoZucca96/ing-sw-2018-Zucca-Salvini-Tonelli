@@ -10,21 +10,27 @@ public class Player {       //Classe che rappresenta un giocatore della partita
     private String name;
     private int nFavoriteTokens;
     private int score;
+    private int pvScore;
     private WindowPattern windowPattern;
     private PVObjectiveCard pvObjectiveCard;
-    private int myRound;
+    //private int myRound;
 
     public Player(String name, String wpType, Color pvColor){
         this.name = name;
         score = 0;
+        pvScore = 0;
         windowPattern = new WindowPFactory().createWindowPattern(wpType);
         nFavoriteTokens = windowPattern.getDifficulty();
         pvObjectiveCard = new PVObjectiveCard(pvColor);
-        this.myRound = 1;
+        //this.myRound = 1;
     }
 
     public int getScore(){
         return score;
+    }
+
+    public int getPVScore() {
+        return pvScore;
     }
 
     public String getName(){
@@ -43,13 +49,13 @@ public class Player {       //Classe che rappresenta un giocatore della partita
         score = newScore;
     }
 
-    public int getMyRound() {
+    /*public int getMyRound() {
         return myRound;
     }
 
     public void setMyRound(int myRound) {
         this.myRound = myRound;
-    }
+    }*/
 
     //somma additionalScore al punteggio attuale
     public void addScore(int additionalScore){
@@ -134,9 +140,10 @@ public class Player {       //Classe che rappresenta un giocatore della partita
     }*/
 
     //attribuisce al giocatore il suo punteggio indipendente dalle public objective card in tavola
-    public void pvScore(){
+    public void personalScore(){
         addScore(nFavoriteTokens);
-        addScore(windowPattern.countDie(pvObjectiveCard.getColor(), windowPattern.getCellMatrix()));
+        pvScore = windowPattern.countDie(pvObjectiveCard.getColor(), windowPattern.getCellMatrix());
+        addScore(pvScore);
         subScore(windowPattern.countEmptyCells(windowPattern.getCellMatrix()));
     }
 }
