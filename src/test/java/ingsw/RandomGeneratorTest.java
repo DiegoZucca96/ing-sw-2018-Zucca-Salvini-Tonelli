@@ -1,12 +1,13 @@
 package ingsw;
 
 import ingsw.model.RandomGenerator;
-import junit.framework.TestCase;
-import org.junit.jupiter.api.Test;
+import org.junit.*;
 
 import java.util.ArrayList;
 
-public class RandomGeneratorTest extends TestCase {
+import static org.junit.Assert.assertFalse;
+
+public class RandomGeneratorTest{
 
     @Test
     public void testRandomDifferentNumbers(){

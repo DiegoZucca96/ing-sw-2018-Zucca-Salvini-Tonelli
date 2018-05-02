@@ -27,7 +27,7 @@ public class Match {
         //Inizializzazione dei giocatori sulla base dei dati ricevuti dal costruttore
         players = new ArrayList<Player>();
         for (int i = 0; i < playersNames.size(); i++) {
-            players.add(new Player(playersNames.get(i), playersWP.get(i), Color.values()[new RandomGenerator(5).random()]));
+            players.add(new Player(playersNames.get(i), playersWP.get(i), Color.values()[new RandomGenerator(4).random()]));
         }
         nPlayers = players.size();
         clockwiseRound = true;
@@ -62,6 +62,40 @@ public class Match {
         return nPlayers;
     }
 
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    //NB --> metodo ad uso esclusivo dei test
+    public void setDraftPool(DraftPool draftPool) {
+        this.draftPool = draftPool;
+    }
+
+    //NB --> metodo ad uso esclusivo dei test
+    public void setRoundTrack(RoundTrack roundTrack) {
+        this.roundTrack = roundTrack;
+    }
+
+    //NB --> metodo ad uso esclusivo dei test
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
+    }
+
+    //NB --> metodo ad uso esclusivo dei test
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    //NB --> metodo ad uso esclusivo dei test
+    public void setPbCards(ArrayList<PBObjectiveCard> pbCards) {
+        this.pbCards = pbCards;
+    }
+
+    //NB --> metodo ad uso esclusivo dei test
+    public void setTools(ArrayList<ToolCard> tools) {
+        this.tools = tools;
+    }
+
     //inizia il round (lancia i dadi), con turno già sul primo giocatore
     public void startRound() {
         draftPool.throwsDice(nPlayers * 2 + 1);
@@ -80,7 +114,7 @@ public class Match {
 
     //il turno va al prossimo giocatore
     public void nextTurn() {
-        if (currentPlayer == players.get(players.size()) && clockwiseRound) {
+        if (currentPlayer == players.get(players.size()-1) && clockwiseRound) {
             //currentPlayer.setMyRound(2);
             clockwiseRound = false;
         } else {
@@ -239,6 +273,5 @@ public class Match {
         }
         return winner;
     }
-
 
 }

@@ -19,7 +19,7 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
         return diceBag;
     }
 
-    //NM --> metodo ad uso esclusivo dei test
+    //NB --> metodo ad uso esclusivo dei test
     public void setDiceBag(DiceBag diceBag) {
         this.diceBag = diceBag;
     }
