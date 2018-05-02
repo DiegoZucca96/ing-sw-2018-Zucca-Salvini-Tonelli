@@ -1,4 +1,4 @@
-package ingsw;
+package ingsw.UnitTests;
 
 import ingsw.model.*;
 import org.junit.*;
