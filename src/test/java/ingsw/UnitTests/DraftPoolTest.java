@@ -1,29 +1,39 @@
-package ingsw;
+package ingsw.UnitTests;
 
 import ingsw.model.*;
-import junit.framework.TestCase;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.*;
 
-public class DraftPoolTest extends TestCase{
+import static junit.framework.TestCase.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.*;
+
+
+public class DraftPoolTest{
 
     private Die die;
     private DiceBag db;
     private RoundTrack rt;
     private DraftPool dp;
 
-    @BeforeAll
+    public DraftPoolTest(){
+    dp = new DraftPool(rt);
+    db = null;
+    rt = null;
+    die = null;
+    }
+
+    @Before
     public void setUpTests(){
         die = mock(Die.class);
         db = mock(DiceBag.class);
         rt = mock(RoundTrack.class);
         dp = new DraftPool(rt);
-        when(db.randomDice()).thenReturn(die);
+        dp.setDiceBag(db);
+        when(db.randomDice()).thenReturn(mock(Die.class));
         when(die.getNumber()).thenReturn(1);
         when(die.getColor()).thenReturn(Color.BLUE);
+        when(rt.getRound()).thenReturn((2));
+        doNothing().when(rt).addDie(die,2);
     }
 
     @Test
@@ -48,7 +58,8 @@ public class DraftPoolTest extends TestCase{
         assertNull(dp.getDie(2));
     }
 
-    @Test public void testCleanDraftPool(){
+    @Test
+    public void testCleanDraftPool(){
         dp.throwsDice(3);
         //draft pool piena
         assertNotNull(dp.getDie(0));

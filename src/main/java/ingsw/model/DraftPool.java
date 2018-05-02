@@ -19,6 +19,11 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
         return diceBag;
     }
 
+    //NM --> metodo ad uso esclusivo dei test
+    public void setDiceBag(DiceBag diceBag) {
+        this.diceBag = diceBag;
+    }
+
     //mette i dadi in avanzo relativi al turno precedente nella round track, lancia nDice nuovi dadi.
     public void throwsDice(int nDice){
         for(int i=0; i<nDice; i++){
@@ -28,13 +33,21 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
 
     //restituisce il riferimento al dado in posizione index
     public Die getDie(int index){
-        return diceList.get(index);
+        try{
+            return diceList.get(index);
+        }catch (IndexOutOfBoundsException e){
+            return null;
+        }
     }
 
     //fa get(index) e rimuove il dado dalla draft pool
     public Die takeDie(int index){
-        Die result = diceList.get(index);
-        diceList.remove(index);
+        Die result = getDie(index);
+        try{
+            diceList.remove(index);
+        } catch(IndexOutOfBoundsException e){
+            return null;
+        }
         return result;
     }
 
@@ -51,8 +64,9 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
     //mette i dadi che non sono stati usati nella round track
     public void cleanDraftPool(){
         if(!diceList.isEmpty()){
-            for(int i=0; i<diceList.size(); i++){
-                roundTrack.addDie(diceList.get(i), roundTrack.getRound());
+            int size = diceList.size();
+            for(int i=0; i<size; i++){
+                roundTrack.addDie(takeDie(0), roundTrack.getRound());
             }
         }
     }

@@ -45,7 +45,11 @@ public class RoundTrack {
     //restituisce il riferimento al dado nella posizione index della lista nella poszione round
     public Die getDie(int round, int index){
         if(round<1 || round>10) return null;
-        return extraDice.get(round-1).get(index);
+        try{
+            return extraDice.get(round-1).get(index);
+        } catch(IndexOutOfBoundsException e){
+            return null;
+        }
     }
 
     //esegue getDie e rimuove il riferiemento al dado dalla lista.

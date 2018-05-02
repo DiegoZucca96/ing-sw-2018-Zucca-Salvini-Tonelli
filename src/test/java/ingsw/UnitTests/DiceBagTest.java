@@ -1,13 +1,14 @@
-package ingsw;
+package ingsw.UnitTests;
 
 import ingsw.model.DiceBag;
 import ingsw.model.Die;
-import junit.framework.TestCase;
 import org.junit.jupiter.api.*;
 
-class DiceBagTest extends TestCase{
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class DiceBagTest{
     @Test
-   public void testRandomDice() {
+    public void testRandomDice() {
         int b = 0, g = 0, y = 0, r = 0, v = 0;
         DiceBag db = new DiceBag();
         Die die;

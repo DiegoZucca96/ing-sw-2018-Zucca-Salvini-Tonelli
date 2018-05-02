@@ -1,28 +1,31 @@
-package ingsw;
+package ingsw.UnitTests;
 
 import ingsw.model.*;
-import junit.framework.TestCase;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
-public class RoundTrackTest extends TestCase {
+public class RoundTrackTest{
 
-    private RoundTrack rt;
-    private Die die1;
-    private Die die2;
-    private Die die3;
+    private  RoundTrack rt;
+    private  Die die1;
+    private  Die die2;
+    private  Die die3;
 
-    @BeforeAll
+    public RoundTrackTest() {
+        rt = new RoundTrack();
+    }
+
+    @Before
     public void setUpTests(){
         rt = new RoundTrack();
         die1 = mock(Die.class);
         die2 = mock(Die.class);
         die3 = mock(Die.class);
-        rt = mock(RoundTrack.class);
         when(die1.getNumber()).thenReturn(1);
         when(die1.getColor()).thenReturn(Color.BLUE);
         when(die2.getNumber()).thenReturn(2);
@@ -31,10 +34,13 @@ public class RoundTrackTest extends TestCase {
         when(die3.getColor()).thenReturn(Color.BLUE);
     }
 
+
+
     @Test
     public void testCurrentRound() {
         //verifico che il round corrente venga aggiornato correttamente, e non ecceda 10
         for (int i = 1; i <= 20; i++) {
+            System.out.println(rt.getRound());
             if (i < 10) assertEquals(i, rt.getRound());
             else assertEquals(10, rt.getRound());
             rt.nextRound();
