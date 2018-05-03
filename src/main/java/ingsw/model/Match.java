@@ -178,7 +178,7 @@ public class Match {
                 break;
             }
             case 8: { //Salta il secondo turno, si potrebbe sfruttare il myRound controllando nel cambio turno se il player ha già valore 2
-                if (clockwiseRound){
+                if (!clockwiseRound){
                     allow = false;
                     toolParameter = null;
                 }else
@@ -199,7 +199,7 @@ public class Match {
                 break;
             }
             case 12: {
-                toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC1(), pTParameter.getC2(), pTParameter.getD1(), pTParameter.getD2(), roundTrack);
+                toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC1(), pTParameter.getC2(), pTParameter.getD1(), pTParameter.getD2(), roundTrack, pTParameter.getColor());
                 break;
             }
             default:

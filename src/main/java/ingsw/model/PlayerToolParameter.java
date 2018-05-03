@@ -12,6 +12,7 @@ public class PlayerToolParameter {
     private Coordinate d2;
     private int up;
     private int turnDie;
+    private Color color;
 
     public PlayerToolParameter(int idCard, Die die1, int upOrTurnDie){
         this.idCard = idCard;
@@ -31,12 +32,13 @@ public class PlayerToolParameter {
         this.d1 = d1;
     }
 
-    public PlayerToolParameter(int idCard, Coordinate c1, Coordinate c2, Coordinate d1, Coordinate d2){
+    public PlayerToolParameter(int idCard, Coordinate c1, Coordinate c2, Coordinate d1, Coordinate d2, Color color){
         this.idCard = idCard;
         this.c1 = c1;
         this.c2 = c2;
         this.d1 = d1;
         this.d2 = d2;
+        this.color = color;
     }
 
     public PlayerToolParameter(int idCard, Die die1, Die die2){
@@ -91,4 +93,6 @@ public class PlayerToolParameter {
     public int getTurnDie() {
         return turnDie;
     }
+
+    public Color getColor() { return color;}
 }

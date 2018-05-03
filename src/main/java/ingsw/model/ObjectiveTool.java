@@ -16,6 +16,7 @@ public class ObjectiveTool {
     private DraftPool dp;
     private int turnDie;        // Se 1 bisogna ruotare, altrimenti è zero di base
     private DiceBag diceBag;
+    private Color color;
 
 
     public ObjectiveTool(Die die1, int up, DraftPool dp){
@@ -80,13 +81,14 @@ public class ObjectiveTool {
         this.dp = dp;
     }
 
-    public ObjectiveTool(WindowPattern window, Coordinate c1, Coordinate c2, Coordinate destination1, Coordinate destination2, RoundTrack rt){
+    public ObjectiveTool(WindowPattern window, Coordinate c1, Coordinate c2, Coordinate destination1, Coordinate destination2, RoundTrack rt, Color color){
         this.window = window;
         this.c1 = c1;
         this.c2 = c2;
         this.destination1 = destination1;
         this.destination2 = destination2;
         this.rt = rt;
+        this.color = color;
     }
 
 
@@ -186,5 +188,9 @@ public class ObjectiveTool {
     public void setDiceBag(DiceBag diceBag) {
         this.diceBag = diceBag;
     }
+
+    public Color getColor() { return color;}
+
+    public void setColor(Color color) { this.color = color;}
 
 }

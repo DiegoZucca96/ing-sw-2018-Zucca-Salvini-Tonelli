@@ -33,7 +33,7 @@ public class PB10 implements PBStrategy {
             }
         }
         int min = values[0];
-        for(int i=1; i<6; i++){
+        for(int i=1; i<5; i++){
             if (min>values[i])
                 min = values[i];
         }

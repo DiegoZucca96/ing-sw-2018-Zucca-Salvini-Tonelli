@@ -21,15 +21,17 @@ public class Tool5 implements ToolStrategy {
         this.alreadyUsed=false;
         this.idCard=idCard;
     }
-    //Il dado dalla roundtrack è già stato tolto ancora prima di chiamare l'uso della ToolCard, è passato come die2
+
     //Va a scambiare un dado dalla riserva con uno presente nel RoundTrack, indipendentemente dal round
     public void doOp(ObjectiveTool object){
+        int indexRound =0, indexDieRound=0;
         die1 = object.getDie1();
-        die2 = object.getDie2();
+        //die2 = object.getDie2(); //Sono inutili i dadi passati, qua mi servono gli indici passati dalla grafica per selezione
         rt = object.getRt();
         dp = object.getDp();
-       // rt.addDie(die1,indexRound); //Manca il riferimento al round da dove è stato preso il dado (forse aggiungere un attributo indice nel OT?)
-       // dp.insertDie(die2);
+        die2 = rt.takeDie(indexRound,indexDieRound); //Non serve passare il dado perchè comunque devo rimuoverlo dalla RoundTrack
+        dp.addDie(die2);
+        rt.addDie(die1,indexRound);
     }
 
     public int getIdCard() {

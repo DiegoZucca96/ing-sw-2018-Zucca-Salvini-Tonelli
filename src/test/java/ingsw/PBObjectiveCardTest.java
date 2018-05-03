@@ -132,7 +132,6 @@ class PBObjectiveCardTest extends TestCase{
         Coordinate c6 = new Coordinate(0,2);
         Coordinate c7 = new Coordinate(1,2);
         Coordinate c8 = new Coordinate(2,2);
-        Coordinate c9 = new Coordinate(3,2);
         Die die1 = new Die(1,Color.VIOLET);
         Die die2 = new Die (5,Color.GREEN);
         Die die3 = new Die (3,Color.RED);
@@ -152,5 +151,113 @@ class PBObjectiveCardTest extends TestCase{
         PBObjectiveCard pb = new PBObjectiveCard(4);
         pb.doPBStrategy(p);
         assertEquals(4,p.getScore());
+    }
+
+    @Test
+    public void testPB7(){
+        Player p = new Player("io","wp5", Color.GREEN);
+        WindowPattern window = p.getWindowPattern();
+        Coordinate c1 = new Coordinate(0,0);
+        Coordinate c2 = new Coordinate(1,1);
+        Coordinate c3 = new Coordinate(2,2);
+        Coordinate c4 = new Coordinate(3,3);
+        Coordinate c5 = new Coordinate(0,1);
+        Coordinate c6 = new Coordinate(0,2);
+        Coordinate c7 = new Coordinate(0,3);
+        Coordinate c8 = new Coordinate(0,4);
+        Die die1 = new Die(1,Color.VIOLET);
+        Die die2 = new Die (5,Color.GREEN);
+        Die die3 = new Die (4,Color.RED);
+        Die die4 = new Die (5,Color.GREEN);
+        Die die5 = new Die (6,Color.BLUE);
+        Die die6 = new Die (1,Color.YELLOW);
+        Die die7 = new Die (5,Color.VIOLET);
+        Die die8 = new Die (3,Color.RED);
+        window.addDie(c1,die1,window.getCellMatrix());
+        window.addDie(c2,die2,window.getCellMatrix());
+        window.addDie(c3,die3,window.getCellMatrix());
+        window.addDie(c4,die4,window.getCellMatrix());
+        window.addDie(c5,die5,window.getCellMatrix());
+        window.addDie(c6,die6,window.getCellMatrix());
+        window.addDie(c7,die7,window.getCellMatrix());
+        window.addDie(c8,die8,window.getCellMatrix());
+        PBObjectiveCard pb = new PBObjectiveCard(7);
+        pb.doPBStrategy(p);
+        assertEquals(2,p.getScore());
+    }
+
+    @Test
+    public void testPB8(){
+        Player p = new Player("io","wp6", Color.GREEN);
+        WindowPattern window = p.getWindowPattern();
+        Coordinate c1 = new Coordinate(1,0);
+        Coordinate c2 = new Coordinate(0,1);
+        Coordinate c3 = new Coordinate(1,2);
+        Coordinate c4 = new Coordinate(2,3);
+        Coordinate c5 = new Coordinate(1,3);
+        Coordinate c6 = new Coordinate(0,4);
+        Coordinate c7 = new Coordinate(2,2);
+        Coordinate c8 = new Coordinate(3,2);
+        Die die1 = new Die(6,Color.VIOLET);
+        Die die2 = new Die (1,Color.GREEN);
+        Die die3 = new Die (2,Color.RED);
+        Die die4 = new Die (3,Color.YELLOW);
+        Die die5 = new Die (5,Color.GREEN);
+        Die die6 = new Die (4,Color.YELLOW);
+        Die die7 = new Die (5,Color.VIOLET);
+        Die die8 = new Die (1,Color.RED);
+        window.addDie(c1,die1,window.getCellMatrix());
+        window.addDie(c2,die2,window.getCellMatrix());
+        window.addDie(c3,die3,window.getCellMatrix());
+        window.addDie(c4,die4,window.getCellMatrix());
+        window.addDie(c5,die5,window.getCellMatrix());
+        window.addDie(c6,die6,window.getCellMatrix());
+        window.addDie(c7,die7,window.getCellMatrix());
+        window.addDie(c8,die8,window.getCellMatrix());
+        PBObjectiveCard pb = new PBObjectiveCard(8);
+        pb.doPBStrategy(p);
+        assertEquals(5,p.getScore());
+    }
+
+    @Test
+    public void testPB10(){
+        Player p = new Player("io","wp7", Color.GREEN);
+        WindowPattern window = p.getWindowPattern();
+        Coordinate c1 = new Coordinate(0,0);
+        Coordinate c2 = new Coordinate(1,0);
+        Coordinate c3 = new Coordinate(2,0);
+        Coordinate c4 = new Coordinate(3,0);
+        Coordinate c5 = new Coordinate(0,1);
+        Coordinate c6 = new Coordinate(0,2);
+        Coordinate c7 = new Coordinate(0,3);
+        Coordinate c8 = new Coordinate(0,4);
+        Coordinate c9 = new Coordinate(1,4);
+        Coordinate c10 = new Coordinate(2,4);
+        Coordinate c11 = new Coordinate(3,4);
+        Die die1 = new Die(1,Color.VIOLET);
+        Die die2 = new Die (5,Color.GREEN);
+        Die die3 = new Die (6,Color.RED);
+        Die die4 = new Die (2,Color.BLUE);
+        Die die5 = new Die (6,Color.GREEN);
+        Die die6 = new Die (3,Color.YELLOW);
+        Die die7 = new Die (5,Color.BLUE);
+        Die die8 = new Die (3,Color.RED);
+        Die die9 = new Die (1,Color.VIOLET);
+        Die die10 = new Die (4,Color.YELLOW);
+        Die die11 = new Die (1,Color.GREEN);
+        window.addDie(c1,die1,window.getCellMatrix());
+        window.addDie(c2,die2,window.getCellMatrix());
+        window.addDie(c3,die3,window.getCellMatrix());
+        window.addDie(c4,die4,window.getCellMatrix());
+        window.addDie(c5,die5,window.getCellMatrix());
+        window.addDie(c6,die6,window.getCellMatrix());
+        window.addDie(c7,die7,window.getCellMatrix());
+        window.addDie(c8,die8,window.getCellMatrix());
+        window.addDie(c9,die9,window.getCellMatrix());
+        window.addDie(c10,die10,window.getCellMatrix());
+        window.addDie(c11,die11,window.getCellMatrix());
+        PBObjectiveCard pb = new PBObjectiveCard(10);
+        pb.doPBStrategy(p);
+        assertEquals(8,p.getScore());
     }
 }

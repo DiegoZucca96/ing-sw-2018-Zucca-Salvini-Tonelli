@@ -21,21 +21,14 @@ public class Tool7 implements ToolStrategy {
         this.alreadyUsed=false;
         this.idCard=idCard;
     }
-//Manca un metodo per modificare la DraftPool senza dover per forza inserire i dadi nella RoundTrack
-    public void doOp(ObjectiveTool object){
-      /* if(!(object.equals(null))){
-           dp = object.getDp();
-           dp.refreshDice(); //Metodo che ritira i dadi
-       }
-    */
-    }
 
-    /*public void refreshDice(){ //Questo apparterrà alla DraftPool
-        for(Die die: draftPool.dicelist){
-            Random r = new Random();
-            die.setNumber(r.nextInt(6));
-        }
-    }*/
+    //La carta specifica prima di prendere il secondo dado, questo è ancora da gestire in qualche modo
+    public void doOp(ObjectiveTool object){
+       if(!(object.equals(null))){
+           dp = object.getDp();
+           dp.refreshDraftPool(); //Metodo che ritira i dadi
+       }
+    }
 
     public int getIdCard() {
         return idCard;

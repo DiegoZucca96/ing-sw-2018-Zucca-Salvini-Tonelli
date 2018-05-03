@@ -56,10 +56,10 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
         diceList.add(die);
     }
 
-    //NB -----> questo metodo espone il rep della classe, non possiamo tenerlo, è un errore grave
-    /*public ArrayList<Die> getDiceList() {
-        return diceList;
-    }*/
+    //Metodo che serve nella Tool11 per prendere il nuovo dado estratto con throwsDice
+    public int getDiceListSize(){
+        return diceList.size();
+    }
 
     //mette i dadi che non sono stati usati nella round track
     public void cleanDraftPool(){
@@ -70,4 +70,14 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
             }
         }
     }
+
+    //Tiro nuovamente tutti i dadi della riserva (ToolCard 7)
+    public void refreshDraftPool(){
+
+       /* for(Die die: dicelist){
+            Random r = new Random();
+            die.setNumber(r.nextInt(6));
+        }*/
+    }
+
 }

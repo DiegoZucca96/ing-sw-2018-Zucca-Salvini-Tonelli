@@ -8,7 +8,6 @@ import ingsw.model.windowpattern.WindowPattern;
 public class Tool3 implements ToolStrategy {
     private Die possibledie;
     private Die die;
-    private Cell destinationCell;
     private WindowPattern window;
     private Cell[][] cellMatrix;
     private String title;

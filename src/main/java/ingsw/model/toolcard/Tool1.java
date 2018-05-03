@@ -1,6 +1,5 @@
 package ingsw.model.toolcard;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import ingsw.model.Die;
 import ingsw.model.ObjectiveTool;
 

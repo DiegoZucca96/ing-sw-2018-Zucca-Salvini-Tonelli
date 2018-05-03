@@ -20,4 +20,10 @@ public class DiceBag{           //classe che tiene traccia dei dati relativi all
         if(randomNumber>72 && randomNumber<=90) return new Die(new RandomGenerator(6).random(), YELLOW);
         return null;
     }
+
+    //Metodo che sistema la randomicità con cui escono i dadi, reinserisco il dado nella borsa
+    public void insertDie (Die die){
+
+    }
+
 }

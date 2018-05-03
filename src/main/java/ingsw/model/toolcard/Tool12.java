@@ -13,9 +13,6 @@ public class Tool12 implements ToolStrategy {
     private Die die2;
     private Coordinate c1;
     private Coordinate c2;
-    private Coordinate d1;
-    private Coordinate d2;
-    private DraftPool dp;
     private Color color;
 
     public Tool12(int idCard) {
@@ -26,7 +23,7 @@ public class Tool12 implements ToolStrategy {
     }
 
     public void doOp(ObjectiveTool object){
-        //color = object.getSelectedColor();   //Manca questo parametro in ObjectiveTool
+        color = object.getColor();
         window = object.getWindow();
         Cell[][] cellMatrix = window.getCellMatrix();
         c1 = object.getC1();
