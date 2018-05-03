@@ -22,16 +22,18 @@ public class PB3 implements PBStrategy {
             int j;
             ArrayList<Integer> list = new ArrayList<Integer>();
             for(j=0;j<5;j++){
-                Integer num = cellMatrix[i][j].getDie().getNumber();
-                if(list.contains(num) || num==0)
-                    j=8;           //Metto un valore alto in modo da differenziare il caso in cui esco perchè trovata la colonna di colori diversi
-                else
-                    list.add(num);
+                if(cellMatrix[i][j].getDie()==null)
+                    j=5;
+                else {
+                    Integer num = cellMatrix[i][j].getDie().getNumber();
+                    if(num == 0 || list.contains(num))
+                        j=8;           //Metto un valore alto in modo da differenziare il caso in cui esco perchè trovata la colonna di colori diversi
+                    else
+                        list.add(num);
+                }
             }
-            if(j==5){
-                i=4;
+            if(j==5)
                 p.addScore(points);
-            }
         }
     }
 }

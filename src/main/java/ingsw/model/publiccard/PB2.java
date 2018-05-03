@@ -17,24 +17,24 @@ public class PB2 implements PBStrategy {
         this.points = 5;
     }
 
-
     public void doOp(Player p) {
         Cell [][] cellMatrix = p.getWindowPattern().getCellMatrix();
         for(int i=0;i<5;i++){
             int j;
             ArrayList<Color> list = new ArrayList<Color>();
             for(j=0;j<4;j++){
-                Color color = cellMatrix[j][i].getDie().getColor();
-                if(list.contains(color) || color==null)
-                    j=7;           //Metto un valore alto in modo da differenziare il caso in cui esco perchè trovata la colonna di colori diversi
-                else
-                    list.add(color);
+                if(cellMatrix[j][i].getDie()==null)
+                    j=5;
+                else {
+                    Color color = cellMatrix[j][i].getDie().getColor();
+                    if (color==null || list.contains(color))
+                        j=7;           //Metto un valore alto in modo da differenziare il caso in cui esco perchè trovata la colonna di colori diversi
+                    else
+                        list.add(color);
+                }
             }
-            if(j==4){
-                i=5;
+            if(j==4)
                 p.addScore(points);
-            }
         }
-
     }
 }

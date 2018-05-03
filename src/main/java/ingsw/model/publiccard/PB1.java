@@ -22,16 +22,18 @@ public class PB1 implements PBStrategy {
             int j;
             ArrayList<Color> list = new ArrayList<Color>();
             for(j=0;j<5;j++){
-                Color color = cellMatrix[i][j].getDie().getColor();
-                if(list.contains(color) || color==null)
-                    j=8;           //Metto un valore alto in modo da differenziare il caso in cui esco perchè trovata la riga di colori diversi
-                else
-                    list.add(color);
+                if(cellMatrix[i][j].getDie()==null)
+                    j=5;
+                else {
+                    Color color = cellMatrix[i][j].getDie().getColor();
+                    if (color == null || list.contains(color))
+                        j = 8;           //Metto un valore alto in modo da differenziare il caso in cui esco perchè trovata la riga di colori diversi
+                    else
+                        list.add(color);
+                }
             }
-            if(j==5){
-                i=4;
+            if(j==5)
                 p.addScore(points);
-            }
         }
     }
 }
