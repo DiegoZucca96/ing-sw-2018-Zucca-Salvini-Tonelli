@@ -18,14 +18,19 @@ public class Die{
         return number;
     }
 
-    public int setNumber(int number) {
-        return this.number;
-    }
+    public void setNumber(int number) { this.number=number; }
 
     @Override
     public boolean equals(Object die){
-        //... Tony implementa equals, serve per far funzionare le assertEquals nei test
-        return true;
+
+        if (die == this) return true;
+
+        if (!(die instanceof Die)) return false;
+
+        Die myDie = (Die) die;
+
+        return (myDie.getNumber()==this.getNumber() && myDie.getColor()==this.getColor());
+
     }
 
 }
