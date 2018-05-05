@@ -101,6 +101,7 @@ public class Match {
         draftPool.throwsDice(nPlayers * 2 + 1);
     }
 
+    //NB: Manca la rotazione in senso orario del currentPlayer alla fine di ogni Round
     //termina il round e setta a tutti i giocatori il loro primo turno
     public void endRound() {
         draftPool.cleanDraftPool();
@@ -145,7 +146,7 @@ public class Match {
         boolean allow = true;  //Serve a dare il consenso all'uso della ToolCard o meno
         switch (idCard) {
             case 1: {
-                toolParameter = new ObjectiveTool(pTParameter.getDie1(), pTParameter.getUp(), draftPool);
+                toolParameter = new ObjectiveTool(pTParameter.getDie1(), pTParameter.getUp());
                 break;
             }
             case 2: {

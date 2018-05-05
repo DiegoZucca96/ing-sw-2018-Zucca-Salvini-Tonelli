@@ -19,10 +19,9 @@ public class ObjectiveTool {
     private Color color;
 
 
-    public ObjectiveTool(Die die1, int up, DraftPool dp){
+    public ObjectiveTool(Die die1, int up){
         this.die1 = die1;
         this.up = up;
-        this.dp = dp;
     }
 
     public ObjectiveTool(WindowPattern window,Coordinate c1, Coordinate destination1){

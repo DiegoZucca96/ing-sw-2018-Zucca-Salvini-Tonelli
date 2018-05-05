@@ -13,7 +13,7 @@ public class WP1Test extends TestCase {
     private Cell[][] cellMatrix = window.getCellMatrix();
     private Coordinate coordinate = new Coordinate(1,2);
     private Coordinate dieCoordinate1 = new Coordinate(3,0);
-    private Coordinate dieCoordinate2 = new Coordinate(0,3);
+    private Coordinate dieCoordinate2 = new Coordinate(0,4);
     private Coordinate dieCoordinate3 = new Coordinate(2,0);
     private Coordinate dieCoordinate4 = new Coordinate(1,1);
     private Die die= new Die(5, Color.BLUE);
@@ -25,12 +25,10 @@ public class WP1Test extends TestCase {
     @Test
     public void testVerifyPosition() {
         window.addDie(dieCoordinate1,die4);
-        //cellMatrix[3][0].insertDie(die4);
-        //cellMatrix[0][2].setEmpty(false);
-        //window.addDie(dieCoordinate2,die);
         window.addDie(dieCoordinate3,die2);
         window.addDie(dieCoordinate4,die3);
         assertEquals(true, window.verifyPosition(coordinate));
+        assertFalse(window.verifyPosition(dieCoordinate2));
     }
 
     @Test

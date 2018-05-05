@@ -19,10 +19,10 @@ public class WP9 extends WindowPattern {
     public WP9(){
 
         cellMatrix = new Cell[][]{
-                {new Cell(0, null, new Coordinate(0,0)), new Cell(0, Color.BLUE, new Coordinate(0,1)), new Cell(0, null, new Coordinate(0,2)), new Cell(0, null, new Coordinate(0,3)), new Cell(1, null, new Coordinate(0,4))},
-                {new Cell(0, null, new Coordinate(1,0)), new Cell(4, null, new Coordinate(1,1)), new Cell(0, Color.BLUE, new Coordinate(1,2)), new Cell(0, null, new Coordinate(1,3)), new Cell(0, null, new Coordinate(1,4))},
-                {new Cell(0, null, new Coordinate(2,0)), new Cell(0, null, new Coordinate(2,1)), new Cell(2, null, new Coordinate(2,2)), new Cell(0, Color.BLUE, new Coordinate(2,3)), new Cell(0, null, new Coordinate(2,4))},
-                {new Cell(0, Color.GREEN, new Coordinate(3,0)), new Cell(3, null, new Coordinate(3,1)), new Cell(0, Color.YELLOW, new Coordinate(3,2)), new Cell(3, null, new Coordinate(3,3)), new Cell(0, Color.VIOLET, new Coordinate(3,4))}
+                {new Cell(0, null, new Coordinate(0,0)), new Cell(0, Color.BLUE, new Coordinate(0,1)), new Cell(2, null, new Coordinate(0,2)), new Cell(0, null, new Coordinate(0,3)), new Cell(0, Color.YELLOW, new Coordinate(0,4))},
+                {new Cell(0, null, new Coordinate(1,0)), new Cell(4, null, new Coordinate(1,1)), new Cell(0, null, new Coordinate(1,2)), new Cell(0, Color.RED, new Coordinate(1,3)), new Cell(0, null, new Coordinate(1,4))},
+                {new Cell(0, null, new Coordinate(2,0)), new Cell(0, null, new Coordinate(2,1)), new Cell(5, null, new Coordinate(2,2)), new Cell(0, Color.YELLOW, new Coordinate(2,3)), new Cell(0, null, new Coordinate(2,4))},
+                {new Cell(0, Color.GREEN, new Coordinate(3,0)), new Cell(3, null, new Coordinate(3,1)), new Cell(0, null, new Coordinate(3,2)), new Cell(0, null, new Coordinate(3,3)), new Cell(0, Color.VIOLET, new Coordinate(3,4))}
         };
         this.difficulty=3;
         this.wpEmpty=true;

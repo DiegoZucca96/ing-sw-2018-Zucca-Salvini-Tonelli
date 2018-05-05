@@ -21,7 +21,7 @@ public class Tool1 implements ToolStrategy {
         die = object.getDie1();
         if(1 <= die.getNumber() && die.getNumber()<=5 && object.getUp()== 1)
             die.setNumber(die.getNumber() + 1);
-        else if(2 <= die.getNumber() && die.getNumber()<=5 && object.getUp()== -1)
+        else if(2 <= die.getNumber() && die.getNumber()<=6 && object.getUp()== -1)
             die.setNumber(die.getNumber() - 1);
         else
             System.out.println("Non puoi usare questa carta su questo dado");
