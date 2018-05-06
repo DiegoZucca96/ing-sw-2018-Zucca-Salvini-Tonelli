@@ -31,7 +31,10 @@ public class Tool12 implements ToolStrategy {
         if(c1 != null) {
             if (cellMatrix[c1.getX()][c1.getY()].getDie().getColor() == color) {
                 die1 = cellMatrix[c1.getX()][c1.getY()].takeDie();
-                window.addDie(object.getDestination1(),die1,cellMatrix);
+                if(!window.addDie(object.getDestination1(),die1,cellMatrix)){
+                    System.out.print("Hai violato una restrizione di posizione");
+                    window.addDie(c1,die1,cellMatrix);
+                }
             }
             else
                 System.out.print("Il dado selezionato non è dello stesso colore del RoundTrack");
@@ -39,7 +42,10 @@ public class Tool12 implements ToolStrategy {
         if(c2 != null) {
             if (cellMatrix[c2.getX()][c2.getY()].getDie().getColor() == color) {
                 die2 = cellMatrix[c2.getX()][c2.getY()].takeDie();
-                window.addDie(object.getDestination2(), die2, cellMatrix);
+                if(!window.addDie(object.getDestination2(), die2, cellMatrix)){
+                    System.out.print("Hai violato una restrizione di posizione");
+                    window.addDie(c2,die2,cellMatrix);
+                }
             }
             else
                 System.out.print("Il dado selezionato non è dello stesso colore del RoundTrack");

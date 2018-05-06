@@ -67,10 +67,8 @@ public class ObjectiveTool {
         this.destination1 = destination1;
     }
 
-    public ObjectiveTool(Die die1, DraftPool dp, int turnDie){
+    public ObjectiveTool(Die die1){
         this.die1 = die1;
-        this.dp = dp;
-        this.turnDie = turnDie;
     }
 
     public ObjectiveTool(Die die1, WindowPattern window, DraftPool dp ,DiceBag diceBag){
@@ -80,13 +78,12 @@ public class ObjectiveTool {
         this.dp = dp;
     }
 
-    public ObjectiveTool(WindowPattern window, Coordinate c1, Coordinate c2, Coordinate destination1, Coordinate destination2, RoundTrack rt, Color color){
+    public ObjectiveTool(WindowPattern window, Coordinate c1, Coordinate c2, Coordinate destination1, Coordinate destination2, Color color){
         this.window = window;
         this.c1 = c1;
         this.c2 = c2;
         this.destination1 = destination1;
         this.destination2 = destination2;
-        this.rt = rt;
         this.color = color;
     }
 

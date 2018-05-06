@@ -20,37 +20,36 @@ public class Tool10 implements ToolStrategy {
     }
 
     public void doOp(ObjectiveTool object){
-        int turn = object.getTurnDie();
         die = object.getDie1();
-        dp = object.getDp();
-        if (turn == 1){ //In effetti se voglio usare questa carta per forza vale uno, forse si può togliere come parametro
-            switch(die.getNumber()){
-                case 1:{
-                    die.setNumber(6);
-                    break;
-                }
-                case 2:{
-                    die.setNumber(5);
-                    break;
-                }
-                case 3:{
-                    die.setNumber(4);
-                    break;
-                }
-                case 4:{
-                    die.setNumber(3);
-                    break;
-                }
-                case 5:{
-                    die.setNumber(2);
-                    break;
-                }
-                case 6:{
-                    die.setNumber(1);
-                    break;
-                }
+        switch(die.getNumber()){
+            case 1:{
+                die.setNumber(6);
+                break;
             }
-            dp.addDie(die);
+            case 2:{
+                die.setNumber(5);
+                break;
+            }
+            case 3:{
+                die.setNumber(4);
+                break;
+            }
+            case 4:{
+                die.setNumber(3);
+                break;
+            }
+            case 5:{
+                die.setNumber(2);
+                break;
+            }
+            case 6:{
+                die.setNumber(1);
+                break;
+            }
+            default:{
+                System.out.print("Dado non valido");
+                break;
+            }
         }
     }
 

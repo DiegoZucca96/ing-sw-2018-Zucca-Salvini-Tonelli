@@ -27,15 +27,14 @@ public class Tool6 implements ToolStrategy {
             dp = object.getDp();
             dp.addDie(die);
         }
+        //Manca un pezzo in cui si chiede al player dove vuole inserire il dado se può inserirlo
     }
 
     public boolean isInsertable(WindowPattern window, Die die){
         for(int i=0; i<4;i++){
             for(int j=0; j<5; j++){
                 Coordinate coordinate = new Coordinate(i,j);
-                if( window.getCellMatrix()[i][j].isEmpty() && window.verifyDieColorConstraint(coordinate,die,window.getCellMatrix()) && window.verifyDieNumberConstraint(coordinate,die,window.getCellMatrix()) &&window.verifyCellColorConstraint(coordinate,die,window.getCellMatrix()) && window.verifyCellNumberConstraint(coordinate,die,window.getCellMatrix())){
-                    i=4;
-                    j=5;
+                if( window.getCellMatrix()[i][j].isEmpty() && window.verifyDieColorConstraint(coordinate,die,window.getCellMatrix()) && window.verifyDieNumberConstraint(coordinate,die,window.getCellMatrix()) &&window.verifyCellColorConstraint(coordinate,die,window.getCellMatrix()) && window.verifyCellNumberConstraint(coordinate,die,window.getCellMatrix()) && window.verifyPosition(coordinate,window.getCellMatrix())){
                     return true;
                 }
             }

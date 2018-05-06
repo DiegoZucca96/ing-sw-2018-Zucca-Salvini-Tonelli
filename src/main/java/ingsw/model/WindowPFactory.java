@@ -31,7 +31,7 @@ public class WindowPFactory {
             return new WP8();
         else if(WpType.equalsIgnoreCase("wp9"))
             return new WP9();
-        /*else if(WpType.equalsIgnoreCase("wp10"))
+        else if(WpType.equalsIgnoreCase("wp10"))
            return new WP10();
         else if(WpType.equalsIgnoreCase("wp11"))
             return new WP11();
@@ -61,7 +61,6 @@ public class WindowPFactory {
             return new WP23();
         else if(WpType.equalsIgnoreCase("wp24"))
             return new WP24();
-*/
         return null;
     }
 }
