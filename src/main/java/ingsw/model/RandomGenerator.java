@@ -5,6 +5,8 @@ import java.util.Random;
 
 public class RandomGenerator {
 
+    //Classe che genera numeri casuali tra 1 e n senza mai restituire due volte lo stesso numero
+
     private ArrayList<Integer> values;
 
     public RandomGenerator(int n){

@@ -1,6 +1,7 @@
 package ingsw.model;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class DraftPool {        //Classe che rappresenta la draft pool del gioco, tramite diceBag lancia i dadi e mette
                                 //quelli in eccesso nella RoundTrack.
@@ -74,10 +75,10 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
     //Tiro nuovamente tutti i dadi della riserva (ToolCard 7)
     public void refreshDraftPool(){
 
-       /* for(Die die: dicelist){
-            Random r = new Random();
-            die.setNumber(r.nextInt(6));
-        }*/
+       for(Die die: diceList){
+            RandomGenerator rg = new RandomGenerator(6);
+            die.setNumber(rg.random());
+        }
     }
 
 }

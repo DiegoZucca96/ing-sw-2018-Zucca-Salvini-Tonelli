@@ -101,12 +101,16 @@ public class Match {
         draftPool.throwsDice(nPlayers * 2 + 1);
     }
 
-    //NB: Manca la rotazione in senso orario del currentPlayer alla fine di ogni Round
     //termina il round e setta a tutti i giocatori il loro primo turno
     public void endRound() {
+        Player tmp;
         draftPool.cleanDraftPool();
         roundTrack.nextRound();
         clockwiseRound = true;
+        //il primo giocatore viene messo in fondo alla lista in quanto diventa l'ultimo
+        players.remove(currentPlayer);
+        players.add(currentPlayer);
+        currentPlayer = players.get(0);
         /*for (Player p : players)
             p.setMyRound(1);*/
     }

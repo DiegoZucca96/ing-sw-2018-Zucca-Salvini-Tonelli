@@ -49,6 +49,17 @@ public class Player {       //Classe che rappresenta un giocatore della partita
         score = newScore;
     }
 
+    //NB --> metodo ad uso esclusivo dei test
+    public void setWindowPattern(WindowPattern windowPattern) {
+        this.windowPattern = windowPattern;
+    }
+
+    //NB --> metodo ad uso esclusivo dei test
+    public void setPvObjectiveCard(PVObjectiveCard pvObjectiveCard) {
+        this.pvObjectiveCard = pvObjectiveCard;
+    }
+
+
     /*public int getMyRound() {
         return myRound;
     }
