@@ -1,4 +1,4 @@
-package ingsw.gui;
+package ingsw.view;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;

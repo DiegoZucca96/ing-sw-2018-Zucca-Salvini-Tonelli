@@ -1,7 +1,6 @@
-package ingsw.gui;
+package ingsw.view;
 
 import javafx.scene.Scene;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;

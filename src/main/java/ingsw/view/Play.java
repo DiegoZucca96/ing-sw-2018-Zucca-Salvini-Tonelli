@@ -1,4 +1,4 @@
-package ingsw.gui;
+package ingsw.view;
 
 import javafx.application.Platform;
 import javafx.geometry.Insets;
