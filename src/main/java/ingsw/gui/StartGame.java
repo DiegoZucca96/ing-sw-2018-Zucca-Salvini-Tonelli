@@ -15,17 +15,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Shear;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.text.Font;
 import javafx.scene.effect.Reflection;
-import sample.SelectionFile;
 import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 
 public class StartGame extends Application{
@@ -79,30 +74,10 @@ public class StartGame extends Application{
 
 
 
-        //REWIND PARTITE with FILECHOOSER
-        final FileChooser fileChooser = new FileChooser();
-        Button btnRewind = new Button();
-        btnRewind.setText("Rewind Match");
-        btnRewind.setOpacity(0.5);
-        btnRewind.setLayoutX(0);
-        btnRewind.setLayoutY(0);
-        btnRewind.setOnAction(
-                new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(final ActionEvent e) {
-                        File file = fileChooser.showOpenDialog(stage);
-                        if (file != null) {
-                            openFile(file);
-                        }
-                    }
-                });
-        final Tooltip tooltip = new Tooltip("Would you like to see old matches played with your friends?\n"+"Just click me");
-        tooltip.setFont(new Font("Arial", 16));
-        btnRewind.setTooltip(tooltip);
 
         //ATTACH DI TUTTO: Pane e no StackPane
         Pane begin = new Pane();
-        begin.getChildren().addAll(selectedImage, btnPlay, btnRewind);
+        begin.getChildren().addAll(selectedImage, btnPlay);
         root.getChildren().addAll(begin);
 
         //MOSTRA
@@ -113,17 +88,7 @@ public class StartGame extends Application{
     }
 
 
-    //OPEN FILE
-    private static void openFile(File file) {
-        try {
-            desktop.open(file);
-        } catch (IOException ex) {
-            Logger.getLogger(
-                    SelectionFile.class.getName()).log(
-                    Level.SEVERE, null, ex
-            );
-        }
-    }
+
 
     //NUOVO STAGE PER EFFETTUARE IL LOGIN, SE è LA PRIMA VOLTA PUò REGISTRARSI
     private Stage loginStage () {
