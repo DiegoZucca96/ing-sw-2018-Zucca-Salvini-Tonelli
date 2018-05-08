@@ -50,7 +50,7 @@ public class InfoStage {
 
 
         final ImageView logo = new ImageView();
-        String imagePath = "images/logo.png";
+        String imagePath = "/logo.png";
         Image imageLogo = new Image(imagePath, 100, 100, false, false);
         logo.setImage(imageLogo);
         logo.setLayoutX(300);

@@ -21,7 +21,7 @@ public class Private {
         privateObj.setHeight(320);
 
         final ImageView selectedImage = new ImageView();
-        String imagePath = "images/p1.png";
+        String imagePath = "/p1.png";
         Image imagepv = new Image(imagePath, 240, 320, false, false);
         selectedImage.setImage(imagepv);
 

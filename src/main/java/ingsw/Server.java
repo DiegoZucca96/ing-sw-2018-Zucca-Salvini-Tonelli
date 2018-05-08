@@ -14,5 +14,6 @@ public class Server {
         Controller controller = new Controller();
         Registry registry = LocateRegistry.createRegistry(1080);
         registry.rebind("controller", controller);
+        System.out.println("Server ready");
     }
 }

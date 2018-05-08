@@ -62,7 +62,7 @@ public class Play {
 
         //IMMAGINE BACKGROUND
         final ImageView backGround = new ImageView();
-        String imagePath = "images/sagradabackground.png";
+        String imagePath = "/sagradabackground.png";
         Image image1 = new Image(imagePath, 1200, 700, false, false);
         backGround.setImage(image1);
 
@@ -129,7 +129,7 @@ public class Play {
 
         //IMMAGINE ROUNDTRACK COME BACKGROUND DEI BOTTONI PER SELEZIONARE IL TURNO
         final ImageView round = new ImageView();
-        String imagePathR = "images/roundtrack.png";
+        String imagePathR = "/roundtrack.png";
         Image imageR = new Image(imagePathR, 500, 90, false, false);
         round.setImage(imageR);
         round.setLayoutX(350.0);
@@ -219,7 +219,7 @@ public class Play {
         pane.setPrefSize(280, 350);
 
         final ImageView imageDP = new ImageView();
-        String imagePathD = "images/draftpool.png";
+        String imagePathD = "/draftpool.png";
         Image draft = new Image(imagePathD, 280, 350, false, false);
 
 
@@ -284,7 +284,7 @@ public class Play {
                 gridWP.setPrefSize(280, 280);
                 gridWP.setHgap(3);
                 gridWP.setVgap(8);
-                String imagePath = "images/Virtus.png";
+                String imagePath = "/Virtus.png";
                 Image image1 = new Image(imagePath, 280, 280, false, false);
                 BackgroundImage myBI= new BackgroundImage(image1,
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
@@ -302,7 +302,7 @@ public class Play {
                 }
                 paneWP.getChildren().add(gridWP);
                 /*final ImageView wpPlayer = new ImageView();
-                String imagePath = "images/Virtus.png";
+                String imagePath = "/Virtus.png";
                 Image image1 = new Image(imagePath, 280, 280, false, false);
                 wpPlayer.setImage(image1);*/
                 break;
@@ -312,7 +312,7 @@ public class Play {
                 gridWP.setPrefSize(280, 280);
                 gridWP.setHgap(3);
                 gridWP.setVgap(8);
-                String imagePath = "images/SunCatcher.png";
+                String imagePath = "/SunCatcher.png";
                 Image image1 = new Image(imagePath, 280, 280, false, false);
                 BackgroundImage myBI= new BackgroundImage(image1,
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
@@ -333,7 +333,7 @@ public class Play {
                 /*
                 final ImageView wpPlayer = new ImageView();
 
-                String imagePath = "images/SunCatcher.png";
+                String imagePath = "/SunCatcher.png";
                 Image image1 = new Image(imagePath, 280, 280, false, false);
                 wpPlayer.setImage(image1);*/
                 break;
@@ -343,7 +343,7 @@ public class Play {
                 gridWP.setPrefSize(280, 280);
                 gridWP.setHgap(3);
                 gridWP.setVgap(8);
-                String imagePath = "images/KaleidoscopicDream.png";
+                String imagePath = "/KaleidoscopicDream.png";
                 Image image1 = new Image(imagePath, 280, 280, false, false);
                 BackgroundImage myBI= new BackgroundImage(image1,
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
@@ -364,7 +364,7 @@ public class Play {
                 /*
                 final ImageView wpPlayer = new ImageView();
 
-                String imagePath = "images/KaleidoscopicDream.png";
+                String imagePath = "/KaleidoscopicDream.png";
                 Image image1 = new Image(imagePath, 280, 280, false, false);
                 wpPlayer.setImage(image1);*/
                 break;
@@ -402,19 +402,19 @@ public class Play {
         final ImageView pbPlayers = new ImageView();
         switch (pageIndex) {
             case 0: {
-                String imagePath = "images/p2.png";
+                String imagePath = "/p2.png";
                 Image image1 = new Image(imagePath, 200, 280, false, false);
                 pbPlayers.setImage(image1);
                 break;
             }
             case 1: {
-                String imagePath = "images/p3.png";
+                String imagePath = "/p3.png";
                 Image image1 = new Image(imagePath, 200, 280, false, false);
                 pbPlayers.setImage(image1);
                 break;
             }
             case 2: {
-                String imagePath = "images/p4.png";
+                String imagePath = "/p4.png";
                 Image image1 = new Image(imagePath, 200, 280, false, false);
                 pbPlayers.setImage(image1);
                 break;
@@ -452,19 +452,19 @@ public class Play {
         final ImageView tlPlayer = new ImageView();
         switch (pageIndex) {
             case 0: {
-                String imagePath = "images/t1.png";
+                String imagePath = "/t1.png";
                 Image image1 = new Image(imagePath, 200, 280, false, false);
                 tlPlayer.setImage(image1);
                 break;
             }
             case 1: {
-                String imagePath = "images/t2.png";
+                String imagePath = "/t2.png";
                 Image image1 = new Image(imagePath, 200, 280, false, false);
                 tlPlayer.setImage(image1);
                 break;
             }
             case 2: {
-                String imagePath = "images/t3.png";
+                String imagePath = "/t3.png";
                 Image image1 = new Image(imagePath, 200, 280, false, false);
                 tlPlayer.setImage(image1);
                 break;

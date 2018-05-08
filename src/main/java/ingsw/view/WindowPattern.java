@@ -24,25 +24,25 @@ public class WindowPattern {
         windowPattern.setHeight(320);
 
         final ImageView wp1 = new ImageView();
-        String imagePath1 = "images/AuroraeMagnificus.png";
+        String imagePath1 = "/AuroraeMagnificus.png";
         Image image1 = new Image(imagePath1, 300, 300, false, false);
         wp1.setImage(image1);
         gp.add(wp1, 0,0);
 
         final ImageView wp2 = new ImageView();
-        String imagePath2 = "images/SunCatcher.png";
+        String imagePath2 = "/SunCatcher.png";
         Image image2 = new Image(imagePath2, 300, 300, false, false);
         wp2.setImage(image2);
         gp.add(wp2, 1,0);
 
         final ImageView wp3 = new ImageView();
-        String imagePath3 = "images/KaleidoscopicDream.png";
+        String imagePath3 = "/KaleidoscopicDream.png";
         Image image3 = new Image(imagePath3, 300, 300, false, false);
         wp3.setImage(image3);
         gp.add(wp3, 2,0);
 
         final ImageView wp4 = new ImageView();
-        String imagePath4 = "images/Virtus.png";
+        String imagePath4 = "/Virtus.png";
         Image image4 = new Image(imagePath4, 300, 300, false, false);
         wp4.setImage(image4);
         gp.add(wp4, 3,0);

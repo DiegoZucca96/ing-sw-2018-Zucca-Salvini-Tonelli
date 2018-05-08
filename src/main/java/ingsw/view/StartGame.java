@@ -1,5 +1,6 @@
 package ingsw.view;
 
+import ingsw.controller.RMIController;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -19,22 +20,35 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.text.Font;
 import javafx.scene.effect.Reflection;
-import java.awt.Desktop;
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 
 
+public class StartGame  extends Application{
 
-public class StartGame extends Application{
-
-    private static Desktop desktop = Desktop.getDesktop();
     Scene scene;
     Stage window;
+    private RMIController controller;
+    //private GuiCaller guiCaller;
+
+
 
     public static void main(String[] args) {
+
         Application.launch(args);
     }
 
-    @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws Exception{
+
+
+        Registry registry=LocateRegistry.getRegistry("localhost",1080);
+        this.controller=(RMIController) registry.lookup("controller");
+
+
 
         window=stage;
         window.setWidth(1200);
@@ -46,7 +60,7 @@ public class StartGame extends Application{
 
         //CREO IMMAGINE
         final ImageView selectedImage = new ImageView();
-        String imagePath = "images/SagradaMenu.png";
+        String imagePath = "/SagradaMenu.png";
         Image image1 = new Image(imagePath, 1200, 700, false, false);
         selectedImage.setImage(image1);
 
@@ -104,7 +118,7 @@ public class StartGame extends Application{
 
 
         final ImageView imageOk = new ImageView();
-        String imagePath = "images/ok.png";
+        String imagePath = "/ok.png";
         Image image2 = new Image(imagePath, 20, 20, false, false);
         imageOk.setImage(image2);
         Button btnLogin = new Button( "Log in", imageOk);
