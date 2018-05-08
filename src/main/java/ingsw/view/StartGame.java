@@ -33,13 +33,9 @@ public class StartGame  extends Application{
     Scene scene;
     Stage window;
     private RMIController controller;
-    //private GuiCaller guiCaller;
 
-
-
-    public static void main(String[] args) {
-
-        Application.launch(args);
+    public static void main() {
+        Application.launch();
     }
 
     public void start(Stage stage) throws Exception{
@@ -95,7 +91,6 @@ public class StartGame  extends Application{
         root.getChildren().addAll(begin);
 
         //MOSTRA
-        btnPlay.getStylesheets().add("me/controlStyle.css");
         window.setScene(scene);
         window.setTitle("Sagrada");
         window.show();
