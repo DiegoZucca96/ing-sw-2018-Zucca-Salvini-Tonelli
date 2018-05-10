@@ -20,15 +20,12 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.text.Font;
 import javafx.scene.effect.Reflection;
-
-import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 
+//GUI: avvia schermata di gioco con credenziali di accesso
 
-public class StartGame  extends Application{
+public class GUI  extends Application{
 
     Scene scene;
     Stage window;
@@ -111,13 +108,14 @@ public class StartGame  extends Application{
         HBox hbButtons = new HBox();
         hbButtons.setSpacing(10.0);
 
-
+        //IMMAGINE DI OK PER LOG IN
         final ImageView imageOk = new ImageView();
         String imagePath = "/ok.png";
         Image image2 = new Image(imagePath, 20, 20, false, false);
         imageOk.setImage(image2);
         Button btnLogin = new Button( "Log in", imageOk);
         btnLogin.setOnAction(e->{
+            //VA COMPLETATO COL SERVER CHE VERIFICA LE CREDENZIALI
             if(true) {
 
                 stage.close();

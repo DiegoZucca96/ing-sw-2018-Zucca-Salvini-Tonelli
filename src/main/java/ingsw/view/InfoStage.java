@@ -12,6 +12,8 @@ import javafx.scene.transform.Shear;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+//RINGRAZIAMENTI
+
 public class InfoStage {
 
     public static Stage displayAuthor(Stage stage){
