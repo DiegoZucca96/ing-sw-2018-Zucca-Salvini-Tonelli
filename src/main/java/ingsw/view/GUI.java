@@ -29,9 +29,10 @@ import java.rmi.registry.Registry;
 
 public class GUI  extends Application{
 
-    Scene scene;
-    Stage window;
-    String username;
+    private Scene scene;
+    private Stage window;
+    private String username;
+    private String saveUsername;
     private RMIController controller;
 
     public static void main() {
@@ -43,9 +44,6 @@ public class GUI  extends Application{
 
         Registry registry=LocateRegistry.getRegistry("localhost",1080);
         this.controller=(RMIController) registry.lookup("controller");
-
-
-
 
         window=stage;
         window.setWidth(1200);
@@ -125,6 +123,7 @@ public class GUI  extends Application{
             @Override
             public void handle(ActionEvent e) {
                 signUp(stage);
+                stage.close();
             }
         });
 
@@ -138,14 +137,15 @@ public class GUI  extends Application{
         btnLogin.setOnAction(e->{
             //VA COMPLETATO COL SERVER CHE VERIFICA LE CREDENZIALI
                 username = tfName.getText();
+                System.out.println(username);
                 if (!username.isEmpty()) {
                     try {
-                        if(controller.getListOfClient().contains(username)){
+                        if (controller.getListOfClient().contains(username)) {
                             stage.close();
                             window.close();
                             WindowPattern.display();
                             Private.display();
-                        }else{
+                        } else {
                             Label warning = new Label("Register if you want to play");
                             warning.setTextFill(Color.RED);
                             grid.add(warning, 1,4);
@@ -213,16 +213,29 @@ public class GUI  extends Application{
 
         //Verifca che non ci sia nessun altro utente con lo stesso nickname
         btnSubmit.setOnAction(e-> {
-            Boolean answer=confirmHandler(oldStage);
-            if(answer){
-                stage.close();
+            saveUsername = tfName.getText();
+            System.out.println(username);
+            if (!saveUsername.isEmpty()) {
+                try {
+                    if (!controller.getListOfClient().contains(saveUsername)) {
+                        controller.addAccount(saveUsername);
+                        stage.close();
+                        //loginStage();
+                        window.close();
+                        WindowPattern.display();
+                        Private.display();
+
+                    } else {
+                        Label warning = new Label("Nickname already exists");
+                        warning.setTextFill(Color.RED);
+                        grid.add(warning, 1,3, 2, 1);
+                    }
+                } catch (RemoteException e1) {
+                    e1.printStackTrace();
+                }
+
             }
 
-            else {
-                Label warning = new Label("Nickname already exists");
-                warning.setTextFill(Color.RED);
-                grid.add(warning, 1,3, 2, 1);
-            }
         });
         btnExit.setOnAction(e-> stage.close());
 
@@ -251,14 +264,4 @@ public class GUI  extends Application{
         return stage;
     }
 
-    private boolean confirmHandler(Stage stage){
-        //Tutta la parte di ricerca del server di un nickname uguale a quello appena scritto che ritornerà un boolean
-
-        Boolean answer=false;
-
-        if(answer){
-            stage.close();
-        }
-        return answer;
-    }
 }
