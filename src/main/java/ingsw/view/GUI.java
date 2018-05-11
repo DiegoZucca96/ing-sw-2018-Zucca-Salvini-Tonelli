@@ -20,6 +20,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.text.Font;
 import javafx.scene.effect.Reflection;
+
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
@@ -29,6 +31,7 @@ public class GUI  extends Application{
 
     Scene scene;
     Stage window;
+    String username;
     private RMIController controller;
 
     public static void main() {
@@ -40,6 +43,7 @@ public class GUI  extends Application{
 
         Registry registry=LocateRegistry.getRegistry("localhost",1080);
         this.controller=(RMIController) registry.lookup("controller");
+
 
 
 
@@ -65,6 +69,7 @@ public class GUI  extends Application{
         btnPlay.setFont(new Font("Tahoma", 40));
         btnPlay.getTransforms().add(new Shear(-0.50, 0));
         btnPlay.setEffect(new Reflection());
+        btnPlay.setStyle("-fx-border-radius: 15.0; -fx-background-radius: 15.0; -fx-border-color: black");;
         btnPlay.setOnAction(event -> loginStage());
         btnPlay.setLayoutX(900.0);
         btnPlay.setLayoutY(300.0);
@@ -108,27 +113,11 @@ public class GUI  extends Application{
         HBox hbButtons = new HBox();
         hbButtons.setSpacing(10.0);
 
-        //IMMAGINE DI OK PER LOG IN
-        final ImageView imageOk = new ImageView();
-        String imagePath = "/ok.png";
-        Image image2 = new Image(imagePath, 20, 20, false, false);
-        imageOk.setImage(image2);
-        Button btnLogin = new Button( "Log in", imageOk);
-        btnLogin.setOnAction(e->{
-            //VA COMPLETATO COL SERVER CHE VERIFICA LE CREDENZIALI
-            if(true) {
-
-                stage.close();
-                window.close();
-                WindowPattern.display();
-                Private.display();
-            }
-        });
-
+        //USERNAME E PASSWORD
         Label lblName = new Label("Nickname:");
         TextField tfName = new TextField();
-        Label lblPw = new Label("Password: ");
-        PasswordField pfPw = new PasswordField();
+        //Label lblPw = new Label("Password: ");
+        //PasswordField pfPw = new PasswordField();
         Label reg = new Label("Not an account?");
         Hyperlink link = new Hyperlink();
         link.setText("Click to register");
@@ -139,11 +128,43 @@ public class GUI  extends Application{
             }
         });
 
+
+        //IMMAGINE DI OK PER LOG IN
+        final ImageView imageOk = new ImageView();
+        String imagePath = "/ok.png";
+        Image image2 = new Image(imagePath, 20, 20, false, false);
+        imageOk.setImage(image2);
+        Button btnLogin = new Button( "Log in", imageOk);
+        btnLogin.setOnAction(e->{
+            //VA COMPLETATO COL SERVER CHE VERIFICA LE CREDENZIALI
+                username = tfName.getText();
+                if (!username.isEmpty()) {
+                    try {
+                        if(controller.getListOfClient().contains(username)){
+                            stage.close();
+                            window.close();
+                            WindowPattern.display();
+                            Private.display();
+                        }else{
+                            Label warning = new Label("Register if you want to play");
+                            warning.setTextFill(Color.RED);
+                            grid.add(warning, 1,4);
+                        }
+                    } catch (RemoteException e1) {
+                        e1.printStackTrace();
+                    }
+
+                }
+
+        });
+
+
+
         hbButtons.getChildren().add(btnLogin);
         grid.add(lblName, 0, 0);
         grid.add(tfName, 1, 0);
-        grid.add(lblPw, 0, 1);
-        grid.add(pfPw, 1, 1);
+        //grid.add(lblPw, 0, 1);
+        //grid.add(pfPw, 1, 1);
         grid.add(reg, 0, 2);
         grid.add(link, 1, 2);
         grid.add(hbButtons, 0, 3, 2, 3);
@@ -185,8 +206,8 @@ public class GUI  extends Application{
 
         Label lblName = new Label("User name:");
         TextField tfName = new TextField();
-        Label lblPwd = new Label("Password:");
-        PasswordField pfPwd = new PasswordField();
+        //Label lblPwd = new Label("Password:");
+        //PasswordField pfPwd = new PasswordField();
 
 
 
@@ -208,8 +229,8 @@ public class GUI  extends Application{
         hbButtons.getChildren().addAll(btnSubmit, btnExit);
         grid.add(lblName, 0, 0);
         grid.add(tfName, 1, 0);
-        grid.add(lblPwd, 0, 1);
-        grid.add(pfPwd, 1, 1);
+        //grid.add(lblPwd, 0, 1);
+        //grid.add(pfPwd, 1, 1);
         grid.add(hbButtons, 2, 3, 2, 1);
 
 

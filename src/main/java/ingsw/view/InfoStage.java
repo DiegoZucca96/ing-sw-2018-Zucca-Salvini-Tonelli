@@ -27,9 +27,9 @@ public class InfoStage {
         vbox.setLayoutY(20);
 
 
-        final String content = "            Il progetto è stato svolto dai laureandi \n\n"+
-                                "   Diego Zucca\n\n\n"+"                Elio Salvini\n\n\n"+
-                                "                                 Alessio Tonelli\n\n\n\n\n"+"              " +
+        final String content = "            Il progetto è stato svolto dai laureandi \n\n\n"+
+                                "                   Diego Zucca\n\n\n"+"                                Elio Salvini\n\n\n"+
+                                "                                                Alessio Tonelli\n\n\n\n\n"+"              " +
                 "                       Si ringrazia il Politecnico \n" +
                 "                       per l'esperienza acquisita nel creare il gioco" ;
         final Text text = new Text(20, 20, "");
