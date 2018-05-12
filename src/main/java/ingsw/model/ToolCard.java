@@ -68,4 +68,63 @@ public class ToolCard {
         toolStrategy.doOp(objective);
     }
 
+    public static void generateToolCard(InitializerView init) {
+        RandomGenerator rg = new RandomGenerator(10);
+        for(int i=0;i<3;i++){
+            int select = rg.random();
+            switch(select){
+                case 1:{
+                    init.getToolCard().add("/Tool1.png");
+                    break;
+                }
+                case 2:{
+                    init.getToolCard().add("/Tool2.png");
+                    break;
+                }
+                case 3:{
+                    init.getToolCard().add("/Tool3.png");
+                    break;
+                }
+                case 4:{
+                    init.getToolCard().add("/Tool4.png");
+                    break;
+                }
+                case 5:{
+                    init.getToolCard().add("/Tool5.png");
+                    break;
+                }
+                case 6:{
+                    init.getToolCard().add("/Tool6.png");
+                    break;
+                }
+                case 7:{
+                    init.getToolCard().add("/Tool7.png");
+                    break;
+                }
+                case 8:{
+                    init.getToolCard().add("/Tool8.png");
+                    break;
+                }
+                case 9:{
+                    init.getToolCard().add("/Tool9.png");
+                    break;
+                }
+                case 10:{
+                    init.getToolCard().add("/Tool10.png");
+                    break;
+                }
+                case 11:{
+                    init.getToolCard().add("/Tool11.png");
+                    break;
+                }
+                case 12:{
+                    init.getToolCard().add("/Tool12.png");
+                    break;
+                }
+                default:{
+                    break;
+                }
+            }
+        }
+    }
 }

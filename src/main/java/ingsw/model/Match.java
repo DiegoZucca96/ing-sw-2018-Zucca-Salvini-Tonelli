@@ -1,5 +1,7 @@
 package ingsw.model;
 
+import ingsw.model.windowpattern.WindowPattern;
+
 import java.util.ArrayList;
 
 
@@ -52,6 +54,15 @@ public class Match {
         //Inizializzazione di round track e draft pool
         roundTrack = new RoundTrack();
         draftPool = new DraftPool(roundTrack);
+    }
+    //Metodo che inizializza tutto (solo grafica per ora)
+    public static InitializerView initialize(){
+        InitializerView init = new InitializerView();
+        WindowPattern.generateWindowPattern(init);
+        PBObjectiveCard.generatePBCard(init);
+        ToolCard.generateToolCard(init);
+        PVObjectiveCard.generatePVCard(init);
+        return init;
     }
 
     public int getId() {

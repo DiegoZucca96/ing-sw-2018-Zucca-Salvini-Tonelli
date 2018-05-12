@@ -1,6 +1,7 @@
 package ingsw.view;
 
 import ingsw.controller.RMIController;
+import ingsw.model.InitializerView;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -140,11 +141,17 @@ public class GUI  extends Application{
                 System.out.println(username);
                 if (!username.isEmpty()) {
                     try {
-                        if (controller.getListOfClient().contains(username)) {
+                        if (!controller.getListOfClient().contains(username)) {
                             stage.close();
                             window.close();
-                            WindowPattern.display();
-                            Private.display();
+                            InitializerView init = null;
+                            try {
+                                init = controller.initializeView();
+                            } catch (RemoteException e1) {
+                                e1.printStackTrace();
+                            }
+                            WindowPattern.display(init);
+                            Private.display(init);
                         } else {
                             Label warning = new Label("Register if you want to play");
                             warning.setTextFill(Color.RED);
@@ -222,9 +229,14 @@ public class GUI  extends Application{
                         stage.close();
                         //loginStage();
                         window.close();
-                        WindowPattern.display();
-                        Private.display();
-
+                        InitializerView init = null;
+                        try {
+                            init = controller.initializeView();
+                        } catch (RemoteException e1) {
+                            e1.printStackTrace();
+                        }
+                        WindowPattern.display(init);
+                        Private.display(init);
                     } else {
                         Label warning = new Label("Nickname already exists");
                         warning.setTextFill(Color.RED);

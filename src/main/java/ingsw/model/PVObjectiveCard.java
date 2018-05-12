@@ -19,35 +19,6 @@ public class PVObjectiveCard {
         return color;
     }
 
-   /* public PVObjectiveCard createPVCard (int idCard){
-        switch (idCard){
-            case 1:{
-                return new PVObjectiveCard(RED);
-                break;
-            }
-            case 2:{
-                return new PVObjectiveCard(YELLOW);
-                break;
-            }
-            case 3:{
-                return new PVObjectiveCard(GREEN);
-                break;
-            }
-            case 4:{
-                return new PVObjectiveCard(BLUE);
-                break;
-            }
-            case 5:{
-                return new PVObjectiveCard(VIOLET);
-                break;
-            }
-            default:{
-                System.out.print("Invalid numer, launch exception");
-                return null;
-                break;
-            }
-        }
-    }*/
 
     public PVObjectiveCard (Color color){
         switch(color){
@@ -76,5 +47,33 @@ public class PVObjectiveCard {
         this.color = color;
     }
 
-
+    public static void generatePVCard(InitializerView init) {
+        RandomGenerator rg = new RandomGenerator(5);
+        int select = rg.random();
+        switch(select){
+            case 1:{
+                init.getPvCard().add("/Private1.png");
+                break;
+            }
+            case 2:{
+                init.getPvCard().add ("/Private2.png");
+                break;
+            }
+            case 3:{
+                init.getPvCard().add ("/Private3.png");
+                break;
+            }
+            case 4:{
+                init.getPvCard().add ("/Private4.png");
+                break;
+            }
+            case 5:{
+                init.getPvCard().add ("/Private5.png");
+                break;
+            }
+            default:{
+                break;
+            }
+        }
+    }
 }

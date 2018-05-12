@@ -49,4 +49,56 @@ public class PBObjectiveCard {
         pbStrategy.doOp(p);
     }
 
+    public static void generatePBCard(InitializerView init) {
+        RandomGenerator rg = new RandomGenerator(10);
+        for(int i=0;i<3;i++){
+            int select = rg.random();
+            switch(select){
+                case 1:{
+                    init.getPbCard().add("/Public1.png");
+                    break;
+                }
+                case 2:{
+                    init.getPbCard().add("/Public2.png");
+                    break;
+                }
+                case 3:{
+                    init.getPbCard().add("/Public3.png");
+                    break;
+                }
+                case 4:{
+                    init.getPbCard().add("/Public4.png");
+                    break;
+                }
+                case 5:{
+                    init.getPbCard().add("/Public5.png");
+                    break;
+                }
+                case 6:{
+                    init.getPbCard().add("/Public6.png");
+                    break;
+                }
+                case 7:{
+                    init.getPbCard().add("/Public7.png");
+                    break;
+                }
+                case 8:{
+                    init.getPbCard().add("/Public8.png");
+                    break;
+                }
+                case 9:{
+                    init.getPbCard().add("/Public9.png");
+                    break;
+                }
+                case 10:{
+                    init.getPbCard().add("/Public10.png");
+                    break;
+                }
+                default:{
+                    break;
+                }
+            }
+        }
+    }
+
 }

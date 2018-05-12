@@ -1,9 +1,6 @@
 package ingsw.model.windowpattern;
 
-import ingsw.model.Cell;
-import ingsw.model.Color;
-import ingsw.model.Coordinate;
-import ingsw.model.Die;
+import ingsw.model.*;
 
 public abstract class WindowPattern {
 
@@ -192,5 +189,113 @@ public abstract class WindowPattern {
     public boolean verifyOnBoard(Coordinate destination) {
         if(destination.getX()==0 || destination.getX()==3 || destination.getY()==0 || destination.getY()==4) return true;
         else return false;
+    }
+
+    public static void generateWindowPattern(InitializerView init){
+        RandomGenerator rg = new RandomGenerator(24);
+        for(int i=0;i<4;i++){
+            int select = rg.random();
+            switch(select){
+                case 1:{
+                    init.getImages().add("/KaleidoscopicDream.png");
+                    break;
+                }
+                case 2:{
+                    init.getImages().add("/Firmitas.png");
+                    break;
+                }
+                case 3:{
+                    init.getImages().add("/Fractal Drops.png");
+                    break;
+                }
+                case 4:{
+                    init.getImages().add ("/Ripples of Light.png");
+                    break;
+                }
+                case 5:{
+                    init.getImages().add("/Lux Mundi.png");
+                    break;
+                }
+                case 6:{
+                    init.getImages().add ("/Lux Astram.png");
+                    break;
+                }
+                case 7:{
+                    init.getImages().add ("/Gravitas.png");
+                    break;
+                }
+                case 8:{
+                    init.getImages().add ("/Water of Life.png");
+                    break;
+                }
+                case 9:{
+                    init.getImages().add ("/SunCatcher.png");
+                    break;
+                }
+                case 10:{
+                    init.getImages().add ("/Shadow Thief.png");
+                    break;
+                }
+                case 11:{
+                    init.getImages().add ("/AuroraeMagnificus.png");
+                    break;
+                }
+                case 12:{
+                    init.getImages().add ("/Aurora Sagradis.png");
+                    break;
+                }
+                case 13:{
+                    init.getImages().add ("/Symphony of Light.png");
+                    break;
+                }
+                case 14:{
+                    init.getImages().add ("/Virtus.png");
+                    break;
+                }
+                case 15:{
+                    init.getImages().add ("/Firelight.png");
+                    break;
+                }
+                case 16:{
+                    init.getImages().add ("/Sun's Glory.png");
+                    break;
+                }
+                case 17:{
+                    init.getImages().add ("/Battlo.png");
+                    break;
+                }
+                case 18:{
+                    init.getImages().add ("/Bellesguard.png");
+                    break;
+                }
+                case 19:{
+                    init.getImages().add ("/Fulgor del Cielo.png");
+                    break;
+                }
+                case 20:{
+                    init.getImages().add ("/Luz Celestial.png");
+                    break;
+                }
+                case 21:{
+                    init.getImages().add ("/Chromatic Splendor.png");
+                    break;
+                }
+                case 22:{
+                    init.getImages().add ("/Comitas.png");
+                    break;
+                }
+                case 23:{
+                    init.getImages().add ("/Via Lux.png");
+                    break;
+                }
+                case 24:{
+                    init.getImages().add ("/Industria.png");
+                    break;
+                }
+                default:{
+                    break;
+                }
+            }
+        }
     }
 }

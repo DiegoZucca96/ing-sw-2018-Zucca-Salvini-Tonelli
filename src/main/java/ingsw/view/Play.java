@@ -1,5 +1,6 @@
 package ingsw.view;
 
+import ingsw.model.InitializerView;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,11 +21,13 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import java.util.ArrayList;
+
 
 public class Play {
 
 
-    public static void display(String imageString){
+    public static void display(String imageString,InitializerView init){
 
         Stage table = new Stage();
         table.setWidth(1200);
@@ -96,8 +99,8 @@ public class Play {
 
         //PAGINAZIONE DI VARI OGGETTI
         AnchorPane playersWP = paginationPlayers();
-        AnchorPane playersPb = paginationPublic();
-        AnchorPane playersTool = paginationTool();
+        AnchorPane playersPb = paginationPublic(init);
+        AnchorPane playersTool = paginationTool(init);
 
         //GRIGLIA DELLE TRE PAGINAZIONI
         /*GridPane gridPagination2 = new GridPane();
@@ -377,12 +380,12 @@ public class Play {
         return box;
     }
 
-    private static AnchorPane paginationPublic(){
+    private static AnchorPane paginationPublic(InitializerView init){
         Pagination pagination = new Pagination(3, 0);
         pagination.setPageFactory(new Callback<Integer, Node>() {
             @Override
             public Node call(Integer pageIndex) {
-                return createPagePb(pageIndex);
+                return createPagePb(pageIndex,init);
             }
         });
 
@@ -396,25 +399,25 @@ public class Play {
         return anchor;
     }
 
-    private static VBox createPagePb(int pageIndex){
+    private static VBox createPagePb(int pageIndex,InitializerView init){
         VBox box = new VBox(5);
-
+        ArrayList<String> pbCards = init.getPbCard();
         final ImageView pbPlayers = new ImageView();
         switch (pageIndex) {
             case 0: {
-                String imagePath = "/p2.png";
+                String imagePath = pbCards.get(0);
                 Image image1 = new Image(imagePath, 200, 280, false, false);
                 pbPlayers.setImage(image1);
                 break;
             }
             case 1: {
-                String imagePath = "/p3.png";
+                String imagePath = pbCards.get(1);
                 Image image1 = new Image(imagePath, 200, 280, false, false);
                 pbPlayers.setImage(image1);
                 break;
             }
             case 2: {
-                String imagePath = "/p4.png";
+                String imagePath = pbCards.get(2);
                 Image image1 = new Image(imagePath, 200, 280, false, false);
                 pbPlayers.setImage(image1);
                 break;
@@ -427,12 +430,12 @@ public class Play {
         return box;
     }
 
-    private static AnchorPane paginationTool(){
+    private static AnchorPane paginationTool(InitializerView init){
         Pagination pagination = new Pagination(3, 0);
         pagination.setPageFactory(new Callback<Integer, Node>() {
             @Override
             public Node call(Integer pageIndex) {
-                return createPageTool(pageIndex);
+                return createPageTool(pageIndex,init);
             }
         });
 
@@ -446,25 +449,25 @@ public class Play {
         return anchor;
     }
 
-    private static VBox createPageTool(int pageIndex){
+    private static VBox createPageTool(int pageIndex,InitializerView init){
         VBox box = new VBox(5);
-
+        ArrayList<String> toolCards = init.getToolCard();
         final ImageView tlPlayer = new ImageView();
         switch (pageIndex) {
             case 0: {
-                String imagePath = "/t1.png";
+                String imagePath = toolCards.get(0);
                 Image image1 = new Image(imagePath, 200, 280, false, false);
                 tlPlayer.setImage(image1);
                 break;
             }
             case 1: {
-                String imagePath = "/t2.png";
+                String imagePath = toolCards.get(1);
                 Image image1 = new Image(imagePath, 200, 280, false, false);
                 tlPlayer.setImage(image1);
                 break;
             }
             case 2: {
-                String imagePath = "/t3.png";
+                String imagePath = toolCards.get(2);
                 Image image1 = new Image(imagePath, 200, 280, false, false);
                 tlPlayer.setImage(image1);
                 break;

@@ -1,5 +1,6 @@
 package ingsw.view;
 
+import ingsw.model.InitializerView;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -10,7 +11,7 @@ import javafx.stage.Stage;
 
 public class Private {
 
-    public static void display(){
+    public static void display(InitializerView init){
 
 
 
@@ -19,9 +20,9 @@ public class Private {
         Stage privateObj = new Stage();
         privateObj.setWidth(240);
         privateObj.setHeight(320);
-
+        String pvCard = init.getPvCard().get(0);
         final ImageView selectedImage = new ImageView();
-        String imagePath = "/p1.png";
+        String imagePath = pvCard;
         Image imagepv = new Image(imagePath, 240, 320, false, false);
         selectedImage.setImage(imagepv);
 
