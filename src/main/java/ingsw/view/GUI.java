@@ -157,13 +157,13 @@ public class GUI  extends Application{
                                 Private.display(init);
                             } else {
 
-                                Label warning1 = new Label("Register if you want to play");
+                                Label warning1 = new Label("REGISTER NOW");
                                 warning1.setTextFill(Color.RED);
                                 grid.add(warning1, 1,4);
 
                             }
                         }else{
-                            Label warning2 = new Label("Already exists");
+                            Label warning2 = new Label("ALREADY EXISTS");
                             warning2.setTextFill(Color.RED);
                             grid.add(warning2, 1,4);
                         }
@@ -209,8 +209,10 @@ public class GUI  extends Application{
     private Stage signUp (Stage oldStage) {
 
         Stage stage = new Stage();
+        Pane root = new Pane();
         GridPane grid = new GridPane();
-        grid.setAlignment(Pos.CENTER);
+        grid.setLayoutX(50);
+        grid.setLayoutY(50);
         grid.setHgap(10);
         grid.setVgap(12);
 
@@ -230,8 +232,8 @@ public class GUI  extends Application{
 
         //IMMAGINE DI BACKGROUND
         final ImageView backgrundImage = new ImageView();
-        String imagePath = "/t0.png";
-        Image image = new Image(imagePath, 500, 500, false, false);
+        String imagePath = "/Tool0.png";
+        Image image = new Image(imagePath, 450, 600, false, false);
         backgrundImage.setImage(image);
 
 
@@ -253,9 +255,9 @@ public class GUI  extends Application{
                         WindowPattern.display(init);
                         Private.display(init);
                     } else {
-                        Label warning = new Label("Nickname already exists");
+                        Label warning = new Label("NICKNAME ALREADY EXISTS");
                         warning.setTextFill(Color.RED);
-                        grid.add(warning, 1,3, 2, 1);
+                        grid.add(warning, 1,4, 2, 1);
                     }
                 } catch (RemoteException e1) {
                     e1.printStackTrace();
@@ -274,7 +276,6 @@ public class GUI  extends Application{
         grid.add(hbButtons, 2, 3, 2, 1);
 
 
-
         ColumnConstraints column1 = new ColumnConstraints();
         column1.setHalignment(HPos.RIGHT);
         grid.getColumnConstraints().add(column1);
@@ -283,7 +284,8 @@ public class GUI  extends Application{
         column2.setHalignment(HPos.LEFT);
         grid.getColumnConstraints().add(column2);
 
-        Scene scene2 = new Scene(backgrund, 450, 300);
+        root.getChildren().addAll(backgrundImage, grid);
+        Scene scene2 = new Scene(root, 450, 300);
         stage.setScene(scene2);
         stage.setTitle("Nickname");
         stage.show();

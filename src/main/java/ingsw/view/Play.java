@@ -102,16 +102,6 @@ public class Play {
         AnchorPane playersPb = paginationPublic(init);
         AnchorPane playersTool = paginationTool(init);
 
-        //GRIGLIA DELLE TRE PAGINAZIONI
-        /*GridPane gridPagination2 = new GridPane();
-        gridPagination2.setHgap(50);
-        gridPagination2.setPrefSize(850, 350);
-        gridPagination2.setPadding(new Insets(10, 10, 10, 10));
-        gridPagination2.add(playersWP, 0, 0);
-        gridPagination2.add(playersPb, 2, 0);
-        gridPagination2.add(playersTool, 1, 0);
-        gridPagination2.setLayoutX(0.0);
-        gridPagination2.setLayoutY(350.0);*/
 
         Pane panePlayer= new Pane();
         panePlayer.setLayoutX(900);
@@ -140,7 +130,7 @@ public class Play {
 
 
 
-        root.getChildren().addAll( backGround, round, pDraft, paneWP, /*gridPagination2,*/panePlayer, panePublic, paneTool, gridRound, paneMenu);
+        root.getChildren().addAll( backGround, round, pDraft, paneWP, panePlayer, panePublic, paneTool, gridRound, paneMenu);
         table.setScene(scene);
         table.setTitle("Sagrada");
         table.show();
