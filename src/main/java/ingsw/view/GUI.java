@@ -129,6 +129,7 @@ public class GUI  extends Application{
         });
 
 
+
         //IMMAGINE DI OK PER LOG IN
         final ImageView imageOk = new ImageView();
         String imagePath = "/ok.png";
@@ -137,26 +138,36 @@ public class GUI  extends Application{
         Button btnLogin = new Button( "Log in", imageOk);
         btnLogin.setOnAction(e->{
             //VA COMPLETATO COL SERVER CHE VERIFICA LE CREDENZIALI
-                username = tfName.getText();
-                System.out.println(username);
+            username = tfName.getText();
+            boolean second=false;
+            //System.out.println(username);
                 if (!username.isEmpty()) {
                     try {
-                        if (!controller.getListOfClient().contains(username)) {
-                            stage.close();
-                            window.close();
-                            InitializerView init = null;
-                            try {
-                                init = controller.initializeView();
-                            } catch (RemoteException e1) {
-                                e1.printStackTrace();
+                        if(controller.access(username)){
+                            if (controller.getListOfClient().contains(username)) {
+                                stage.close();
+                                window.close();
+                                InitializerView init = null;
+                                try {
+                                    init = controller.initializeView();
+                                } catch (RemoteException e1) {
+                                    e1.printStackTrace();
+                                }
+                                WindowPattern.display(init);
+                                Private.display(init);
+                            } else {
+
+                                Label warning1 = new Label("Register if you want to play");
+                                warning1.setTextFill(Color.RED);
+                                grid.add(warning1, 1,4);
+
                             }
-                            WindowPattern.display(init);
-                            Private.display(init);
-                        } else {
-                            Label warning = new Label("Register if you want to play");
-                            warning.setTextFill(Color.RED);
-                            grid.add(warning, 1,4);
+                        }else{
+                            Label warning2 = new Label("Already exists");
+                            warning2.setTextFill(Color.RED);
+                            grid.add(warning2, 1,4);
                         }
+
                     } catch (RemoteException e1) {
                         e1.printStackTrace();
                     }
@@ -217,17 +228,21 @@ public class GUI  extends Application{
         //PasswordField pfPwd = new PasswordField();
 
 
+        //IMMAGINE DI BACKGROUND
+        final ImageView backgrundImage = new ImageView();
+        String imagePath = "/t0.png";
+        Image image = new Image(imagePath, 500, 500, false, false);
+        backgrundImage.setImage(image);
+
 
         //Verifca che non ci sia nessun altro utente con lo stesso nickname
         btnSubmit.setOnAction(e-> {
             saveUsername = tfName.getText();
-            System.out.println(username);
             if (!saveUsername.isEmpty()) {
                 try {
                     if (!controller.getListOfClient().contains(saveUsername)) {
                         controller.addAccount(saveUsername);
                         stage.close();
-                        //loginStage();
                         window.close();
                         InitializerView init = null;
                         try {
@@ -268,7 +283,7 @@ public class GUI  extends Application{
         column2.setHalignment(HPos.LEFT);
         grid.getColumnConstraints().add(column2);
 
-        Scene scene2 = new Scene(grid, 450, 300);
+        Scene scene2 = new Scene(backgrund, 450, 300);
         stage.setScene(scene2);
         stage.setTitle("Nickname");
         stage.show();

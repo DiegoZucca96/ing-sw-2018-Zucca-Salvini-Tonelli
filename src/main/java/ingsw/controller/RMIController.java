@@ -14,4 +14,6 @@ public interface RMIController extends Remote {
     void addAccount(String saveUsername) throws RemoteException;
 
     InitializerView initializeView() throws RemoteException;
+
+    boolean access(String account) throws RemoteException;
 }
