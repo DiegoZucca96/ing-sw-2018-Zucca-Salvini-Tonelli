@@ -244,7 +244,7 @@ public class GUI  extends Application{
                 try {
                     if(!controller.access(saveUsername)){
                         if(controller.getListOfPlayers().size()<4) {
-                            controller.addClient(username);
+                            controller.addClient(saveUsername);
                             stage.close();
                             window.close();
                             InitializerView init = null;
