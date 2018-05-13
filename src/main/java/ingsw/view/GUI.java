@@ -115,8 +115,6 @@ public class GUI  extends Application{
         //USERNAME E PASSWORD
         Label lblName = new Label("Nickname:");
         TextField tfName = new TextField();
-        //Label lblPw = new Label("Password: ");
-        //PasswordField pfPw = new PasswordField();
         Label reg = new Label("Not an account?");
         Hyperlink link = new Hyperlink();
         link.setText("Click to register");
@@ -139,7 +137,6 @@ public class GUI  extends Application{
         btnLogin.setOnAction(e->{
             //VA COMPLETATO COL SERVER CHE VERIFICA LE CREDENZIALI
             username = tfName.getText();
-            boolean second=false;
             //System.out.println(username);
                 if (!username.isEmpty()) {
                     try {
@@ -181,8 +178,6 @@ public class GUI  extends Application{
         hbButtons.getChildren().add(btnLogin);
         grid.add(lblName, 0, 0);
         grid.add(tfName, 1, 0);
-        //grid.add(lblPw, 0, 1);
-        //grid.add(pfPw, 1, 1);
         grid.add(reg, 0, 2);
         grid.add(link, 1, 2);
         grid.add(hbButtons, 0, 3, 2, 3);
@@ -226,8 +221,7 @@ public class GUI  extends Application{
 
         Label lblName = new Label("User name:");
         TextField tfName = new TextField();
-        //Label lblPwd = new Label("Password:");
-        //PasswordField pfPwd = new PasswordField();
+
 
 
         //IMMAGINE DI BACKGROUND
@@ -252,8 +246,9 @@ public class GUI  extends Application{
                         } catch (RemoteException e1) {
                             e1.printStackTrace();
                         }
-                        WindowPattern.display(init);
-                        Private.display(init);
+                        Loading.display(new Stage(), init);
+                        //WindowPattern.display(init);
+                        //Private.display(init);
                     } else {
                         Label warning = new Label("NICKNAME ALREADY EXISTS");
                         warning.setTextFill(Color.RED);
@@ -271,8 +266,6 @@ public class GUI  extends Application{
         hbButtons.getChildren().addAll(btnSubmit, btnExit);
         grid.add(lblName, 0, 0);
         grid.add(tfName, 1, 0);
-        //grid.add(lblPwd, 0, 1);
-        //grid.add(pfPwd, 1, 1);
         grid.add(hbButtons, 2, 3, 2, 1);
 
 
