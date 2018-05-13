@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Server {
 
     private ArrayList<String> listOfClient;
-
+    private ArrayList<String> listOfPlayers ;
     public static void main(String[] args) throws RemoteException {
         Server server = new Server();
         Controller controller = new Controller(server);
@@ -23,16 +23,24 @@ public class Server {
 
     public Server(){
         listOfClient=new ArrayList<>();
+        listOfPlayers = new ArrayList<>();
     }
 
     public ArrayList<String> getListOfClient() {
         return listOfClient;
     }
 
+    public ArrayList<String> getListOfPlayers() {
+        return listOfPlayers;
+    }
+
     public void addClient(String account){
-        if(!listOfClient.contains(account)){
-            listOfClient.add(account);
-        }
+        listOfClient.add(account);
+        listOfPlayers.add(account);
+    }
+
+    public void addAccount(String account) {
+        listOfClient.add(account);
     }
 
 }

@@ -17,8 +17,6 @@ public class Private {
 
     public static void display(InitializerView init){
 
-
-
         StackPane p = new StackPane();
         Scene s1 = new Scene(p);
         Stage privateObj = new Stage();
@@ -40,6 +38,6 @@ public class Private {
         privateObj.setTitle(" Your Private Card");
         privateObj.setScene(s1);
         privateObj.show();
-
     }
+
 }

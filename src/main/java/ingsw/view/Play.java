@@ -20,14 +20,12 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-
 import java.util.ArrayList;
-
 
 public class Play {
 
 
-    public static void display(String imageString,InitializerView init){
+    public static void display(String imageString, InitializerView init){
 
         Stage table = new Stage();
         table.setWidth(1200);
@@ -136,6 +134,21 @@ public class Play {
         table.resizableProperty().setValue(Boolean.FALSE);
         table.show();
 
+       /* table.setOnCloseRequest(event -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Close Confirmation");
+            alert.setHeaderText("Quit match");
+            alert.setContentText("Are you sure you want to exit?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK){
+                table.close();
+                Private.;
+            }
+            if(result.get()==ButtonType.CANCEL){
+                event.consume();
+                alert.close();
+            }
+        });*/
     }
 
 
@@ -145,7 +158,6 @@ public class Play {
             Boolean answer= ConfirmExit.display("Quit", "Are you sure to exit without saving?");
             if(answer)
                 Platform.exit();
-
         });
 
         return exitMenuItem;
@@ -476,11 +488,8 @@ public class Play {
                 }
         );
 
-
         box.getChildren().add(tlPlayer);
         return box;
     }
-
-
 
 }

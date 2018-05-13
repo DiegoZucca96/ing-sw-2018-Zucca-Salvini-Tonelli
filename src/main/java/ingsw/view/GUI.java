@@ -141,37 +141,39 @@ public class GUI  extends Application{
             //System.out.println(username);
                 if (!username.isEmpty()) {
                     try {
-                        if(controller.access(username)){
-                            if (controller.getListOfClient().contains(username)) {
-                                stage.close();
-                                window.close();
-                                InitializerView init = null;
-                                try {
-                                    init = controller.initializeView();
-                                } catch (RemoteException e1) {
-                                    e1.printStackTrace();
+                        if(!controller.getListOfPlayers().contains(username)){
+                            if (controller.access(username)) {
+                                if(controller.getListOfPlayers().size()<4) {
+                                    controller.addClient(username);
+                                    stage.close();
+                                    window.close();
+                                    InitializerView init = null;
+                                    try {
+                                        init = controller.initializeView();
+                                    } catch (RemoteException e1) {
+                                        e1.printStackTrace();
+                                    }
+                                    WindowPattern.display(init);
+                                    Private.display(init);
+                                } else {
+                                    Label warning1 = new Label("MATCH IS FULL, SORRY");
+                                    warning1.setTextFill(Color.RED);
+                                    grid.add(warning1, 1,4);
                                 }
-                                WindowPattern.display(init);
-                                Private.display(init);
                             } else {
-
-                                Label warning1 = new Label("REGISTER NOW");
-                                warning1.setTextFill(Color.RED);
-                                grid.add(warning1, 1,4);
-
+                                Label warning2 = new Label("REGISTER NOW");
+                                warning2.setTextFill(Color.RED);
+                                grid.add(warning2, 1,4);
                             }
                         }else{
-                            Label warning2 = new Label("ALREADY EXISTS");
-                            warning2.setTextFill(Color.RED);
-                            grid.add(warning2, 1,4);
+                            Label warning3 = new Label("NICKNAME ALREADY TAKEN");
+                            warning3.setTextFill(Color.RED);
+                            grid.add(warning3, 1,4);
                         }
-
                     } catch (RemoteException e1) {
                         e1.printStackTrace();
                     }
-
                 }
-
         });
 
 
@@ -239,19 +241,25 @@ public class GUI  extends Application{
             saveUsername = tfName.getText();
             if (!saveUsername.isEmpty()) {
                 try {
-                    if (!controller.getListOfClient().contains(saveUsername)) {
-                        controller.addAccount(saveUsername);
-                        stage.close();
-                        window.close();
-                        InitializerView init = null;
-                        try {
-                            init = controller.initializeView();
-                        } catch (RemoteException e1) {
-                            e1.printStackTrace();
+                    if(!controller.access(saveUsername)){
+                        if(controller.getListOfPlayers().size()<4) {
+                            controller.addClient(username);
+                            stage.close();
+                            window.close();
+                            InitializerView init = null;
+                            try {
+                                init = controller.initializeView();
+                            } catch (RemoteException e1) {
+                                e1.printStackTrace();
+                            }
+                            WindowPattern.display(init);
+                            Private.display(init);
+                        }else{
+                            controller.addAccount(saveUsername);
+                            Label warning1 = new Label("MATCH IS FULL, SORRY");
+                            warning1.setTextFill(Color.RED);
+                            grid.add(warning1, 1,4);
                         }
-                        Loading.display(new Stage(), init);
-                        //WindowPattern.display(init);
-                        //Private.display(init);
                     } else {
                         Label warning = new Label("NICKNAME ALREADY EXISTS");
                         warning.setTextFill(Color.RED);
@@ -260,9 +268,7 @@ public class GUI  extends Application{
                 } catch (RemoteException e1) {
                     e1.printStackTrace();
                 }
-
             }
-
         });
         btnExit.setOnAction(e-> stage.close());
 

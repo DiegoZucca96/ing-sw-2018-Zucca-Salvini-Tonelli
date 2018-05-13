@@ -9,9 +9,11 @@ import java.util.ArrayList;
 public interface RMIController extends Remote {
     //Qua ci vanno tutti i metodi che il controller implementerà
 
-    ArrayList getListOfClient() throws RemoteException;
+    ArrayList<String> getListOfPlayers() throws RemoteException;
 
-    void addAccount(String saveUsername) throws RemoteException;
+    void addClient(String saveUsername) throws RemoteException;
+
+    void addAccount(String account)throws RemoteException;
 
     InitializerView initializeView() throws RemoteException;
 

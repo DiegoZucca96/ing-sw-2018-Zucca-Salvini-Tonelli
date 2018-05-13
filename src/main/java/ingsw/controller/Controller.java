@@ -10,35 +10,35 @@ import java.util.ArrayList;
 
 public class Controller extends UnicastRemoteObject implements RMIController {
 
-    ArrayList<String> listOfClient ;
     Server server;
 
     public Controller(Server server) throws RemoteException {
         super();
-        listOfClient=new ArrayList<>();
         this.server= server;
     }
 
     //Lista dei vari metodi invocabili da grafica che vanno a interagire con il model
 
     @Override
-    public ArrayList<String> getListOfClient() {
-        return listOfClient;
-    }
+    public ArrayList<String> getListOfPlayers() {
+        return server.getListOfPlayers();    }
 
     @Override
-    public void addAccount(String account){
-        listOfClient.add(account);
+    public void addClient(String account){
         server.addClient(account);
     }
     @Override
+    public void addAccount(String account){
+        server.addAccount(account);
+    }
+
+    @Override
     public boolean access(String account){
-        //System.out.println(account);
         //se esiste già il nome salvato nel server non puoi accedere
         if(server.getListOfClient().contains(account)){
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
 
