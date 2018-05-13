@@ -63,6 +63,7 @@ public class InfoStage {
         ((Group) scene.getRoot()).getChildren().addAll(vbox, logo);
 
         stage.setScene(scene);
+        stage.resizableProperty().setValue(Boolean.FALSE);
         stage.show();
 
         return stage;

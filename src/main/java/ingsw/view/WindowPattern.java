@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -74,6 +75,7 @@ public class WindowPattern {
 
         windowPattern.setTitle("Choose window pattern");
         windowPattern.setScene(s2);
+        windowPattern.resizableProperty().setValue(Boolean.FALSE);
         windowPattern.show();
     }
 

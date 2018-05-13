@@ -133,6 +133,7 @@ public class Play {
         root.getChildren().addAll( backGround, round, pDraft, paneWP, panePlayer, panePublic, paneTool, gridRound, paneMenu);
         table.setScene(scene);
         table.setTitle("Sagrada");
+        table.resizableProperty().setValue(Boolean.FALSE);
         table.show();
 
     }

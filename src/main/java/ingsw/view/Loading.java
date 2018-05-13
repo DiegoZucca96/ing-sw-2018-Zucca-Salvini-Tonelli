@@ -13,6 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -59,6 +61,7 @@ public class Loading {
 
         //MANAGE THE LABEL "LOADING"
         final Label lblProgress = new Label("LOADING MATCH");
+        lblProgress.setFont(Font.font("GB18030 Bitmap", FontWeight.BOLD, 20));
         lblProgress.setTextFill(Color.WHITE);
 
         timeline = new Timeline();
@@ -113,6 +116,7 @@ public class Loading {
         primaryStage.initModality(Modality.WINDOW_MODAL);
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setScene(scene);
+        primaryStage.setOpacity(0.7);
         primaryStage.showAndWait();
     }
 

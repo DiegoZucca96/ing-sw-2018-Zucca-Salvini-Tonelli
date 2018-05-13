@@ -94,6 +94,7 @@ public class GUI  extends Application{
         //MOSTRA
         window.setScene(scene);
         window.setTitle("Sagrada");
+        window.resizableProperty().setValue(Boolean.FALSE);
         window.show();
     }
 
@@ -195,6 +196,8 @@ public class GUI  extends Application{
         Scene scene1 = new Scene(grid, 350, 250);
         stage.setScene(scene1);
         stage.setTitle("Nickname");
+        stage.resizableProperty().setValue(Boolean.FALSE);
+        stage.setOpacity(0.7);
         stage.show();
 
         return stage;
@@ -281,6 +284,7 @@ public class GUI  extends Application{
         Scene scene2 = new Scene(root, 450, 300);
         stage.setScene(scene2);
         stage.setTitle("Nickname");
+        stage.resizableProperty().setValue(Boolean.FALSE);
         stage.show();
 
         return stage;

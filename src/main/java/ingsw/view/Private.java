@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 //ASSEGNAZIONE CARTA PRIVATA
 
@@ -26,6 +27,7 @@ public class Private {
         Image imagepv = new Image(imagePath, 240, 320, false, false);
         selectedImage.setImage(imagepv);
 
+        privateObj.resizableProperty().setValue(Boolean.FALSE);
 
         p.getChildren().add(selectedImage);
         privateObj.setTitle(" Your Private Card");
