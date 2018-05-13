@@ -153,8 +153,9 @@ public class GUI  extends Application{
                                     } catch (RemoteException e1) {
                                         e1.printStackTrace();
                                     }
-                                    WindowPattern.display(init);
-                                    Private.display(init);
+                                    Loading.display(new Stage(), init);
+                                    //WindowPattern.display(init);
+                                    // Private.display(init);
                                 } else {
                                     Label warning1 = new Label("MATCH IS FULL, SORRY");
                                     warning1.setTextFill(Color.RED);
@@ -252,8 +253,9 @@ public class GUI  extends Application{
                             } catch (RemoteException e1) {
                                 e1.printStackTrace();
                             }
-                            WindowPattern.display(init);
-                            Private.display(init);
+                            Loading.display(new Stage(), init);
+                            //WindowPattern.display(init);
+                            //Private.display(init);
                         }else{
                             controller.addAccount(saveUsername);
                             Label warning1 = new Label("MATCH IS FULL, SORRY");
