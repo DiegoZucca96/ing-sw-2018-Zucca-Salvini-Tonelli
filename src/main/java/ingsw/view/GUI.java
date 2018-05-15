@@ -153,7 +153,7 @@ public class GUI  extends Application{
                                     } catch (RemoteException e1) {
                                         e1.printStackTrace();
                                     }
-                                    Loading.display(new Stage(), init);
+                                    Loading.display(new Stage(), init, "LOADING MATCH", 1, null);
                                     //WindowPattern.display(init);
                                     // Private.display(init);
                                 } else {
@@ -253,7 +253,7 @@ public class GUI  extends Application{
                             } catch (RemoteException e1) {
                                 e1.printStackTrace();
                             }
-                            Loading.display(new Stage(), init);
+                            Loading.display(new Stage(), init, "LOADING", 1, null);
                             //WindowPattern.display(init);
                             //Private.display(init);
                         }else{

@@ -23,7 +23,7 @@ import javafx.util.Duration;
 public class Loading {
 
 
-    private static final Integer STARTTIME = 15;
+    private static final Integer STARTTIME = 5;
 
     private static Timeline timeline;
     private static Integer timeSeconds = STARTTIME;
@@ -47,7 +47,7 @@ public class Loading {
     }
 
 
-    public static void display(Stage primaryStage, InitializerView init) {
+    public static void display(Stage primaryStage, InitializerView init, String comment, int i, String wp) {
 
         //MANAGE CYCLE PROGRESS
         final ProgressIndicator progressIndicator = new ProgressIndicator(0);
@@ -60,7 +60,7 @@ public class Loading {
 
 
         //MANAGE THE LABEL "LOADING"
-        final Label lblProgress = new Label("LOADING MATCH");
+        final Label lblProgress = new Label(comment);
         lblProgress.setFont(Font.font("GB18030 Bitmap", FontWeight.BOLD, 20));
         lblProgress.setTextFill(Color.WHITE);
 
@@ -82,11 +82,18 @@ public class Loading {
                                 timeSeconds--;
 
 
-                                if (timeSeconds <= 0) {
+                                if (timeSeconds <= 0 && i==1) {
                                     timeline.stop();
 
                                     WindowPattern.display(init);
                                     Private.display(init);
+                                    primaryStage.close();
+                                }
+
+                                if (timeSeconds <= 0 && i==2) {
+                                    timeline.stop();
+
+                                    Play.display(wp,init);
                                     primaryStage.close();
                                 }
                             }

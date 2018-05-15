@@ -1,6 +1,7 @@
 package ingsw.view;
 
 import ingsw.model.InitializerView;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -52,19 +53,23 @@ public class WindowPattern {
         gp.add(wp4, 3,0);
 
         wp1.setOnMouseClicked(event -> {
-            Play.display(imagePath1,init);
+            //Play.display(imagePath1,init);
+            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, imagePath1);
             windowPattern.close();
         });
         wp2.setOnMouseClicked(event -> {
-            Play.display(imagePath2,init);
+            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, imagePath2);
+            //Play.display(imagePath2,init);
             windowPattern.close();
         });
         wp3.setOnMouseClicked(event -> {
-            Play.display(imagePath3,init);
+            //Play.display(imagePath3,init);
+            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, imagePath3);
             windowPattern.close();
         });
         wp4.setOnMouseClicked(event -> {
-            Play.display(imagePath4,init);
+            //Play.display(imagePath4,init);
+            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, imagePath4);
             windowPattern.close();
         });
 
@@ -72,6 +77,10 @@ public class WindowPattern {
 
         windowPattern.setTitle("Choose window pattern");
         windowPattern.setScene(s2);
+
+        Platform.setImplicitExit(false);
+
+        windowPattern.setOnCloseRequest(event -> event.consume());
         windowPattern.resizableProperty().setValue(Boolean.FALSE);
         windowPattern.show();
     }
