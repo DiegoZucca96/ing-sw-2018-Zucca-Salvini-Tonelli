@@ -34,8 +34,7 @@ public class Server {
         return listOfPlayers;
     }
 
-    public void addClient(String account){
-        listOfClient.add(account);
+    public void addPlayers(String account){
         listOfPlayers.add(account);
     }
 

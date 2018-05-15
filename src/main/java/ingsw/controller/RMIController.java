@@ -11,7 +11,7 @@ public interface RMIController extends Remote {
 
     ArrayList<String> getListOfPlayers() throws RemoteException;
 
-    void addClient(String saveUsername) throws RemoteException;
+    void addPlayers(String saveUsername) throws RemoteException;
 
     void addAccount(String account)throws RemoteException;
 

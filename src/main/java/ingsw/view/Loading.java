@@ -24,11 +24,8 @@ public class Loading {
 
 
     private static final Integer STARTTIME = 5;
-
     private static Timeline timeline;
     private static Integer timeSeconds = STARTTIME;
-
-
     private static Task copyWorker;
     private static int numFiles = 20;
 
@@ -64,6 +61,7 @@ public class Loading {
         lblProgress.setFont(Font.font("GB18030 Bitmap", FontWeight.BOLD, 20));
         lblProgress.setTextFill(Color.WHITE);
 
+        //MANAGE TIME
         timeline = new Timeline();
         timeline.setCycleCount(timeSeconds);
         timeline.setAutoReverse(true);

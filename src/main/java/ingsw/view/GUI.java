@@ -136,15 +136,14 @@ public class GUI  extends Application{
         imageOk.setImage(image2);
         Button btnLogin = new Button( "Log in", imageOk);
         btnLogin.setOnAction(e->{
-            //VA COMPLETATO COL SERVER CHE VERIFICA LE CREDENZIALI
+            // SERVER VERIFICA LE CREDENZIALI
             username = tfName.getText();
-            //System.out.println(username);
                 if (!username.isEmpty()) {
                     try {
                         if(!controller.getListOfPlayers().contains(username)){
                             if (controller.access(username)) {
                                 if(controller.getListOfPlayers().size()<4) {
-                                    controller.addClient(username);
+                                    controller.addPlayers(username);
                                     stage.close();
                                     window.close();
                                     InitializerView init = null;
@@ -154,8 +153,7 @@ public class GUI  extends Application{
                                         e1.printStackTrace();
                                     }
                                     Loading.display(new Stage(), init, "LOADING MATCH", 1, null);
-                                    //WindowPattern.display(init);
-                                    // Private.display(init);
+
                                 } else {
                                     Label warning1 = new Label("MATCH IS FULL, SORRY");
                                     warning1.setTextFill(Color.RED);
@@ -244,24 +242,19 @@ public class GUI  extends Application{
                 try {
                     if(!controller.access(saveUsername)){
                         if(controller.getListOfPlayers().size()<4) {
-                            controller.addClient(saveUsername);
+                            controller.addAccount(saveUsername);
                             stage.close();
-                            window.close();
+                            //window.close();
                             InitializerView init = null;
                             try {
                                 init = controller.initializeView();
                             } catch (RemoteException e1) {
                                 e1.printStackTrace();
                             }
-                            Loading.display(new Stage(), init, "LOADING", 1, null);
-                            //WindowPattern.display(init);
-                            //Private.display(init);
-                        }else{
-                            controller.addAccount(saveUsername);
-                            Label warning1 = new Label("MATCH IS FULL, SORRY");
-                            warning1.setTextFill(Color.RED);
-                            grid.add(warning1, 1,4);
+                            //Loading.display(new Stage(), init, "LOADING", 1, null);
+                            oldStage.show();
                         }
+
                     } else {
                         Label warning = new Label("NICKNAME ALREADY EXISTS");
                         warning.setTextFill(Color.RED);

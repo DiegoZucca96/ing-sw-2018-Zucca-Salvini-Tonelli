@@ -24,8 +24,8 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return server.getListOfPlayers();    }
 
     @Override
-    public void addClient(String account){
-        server.addClient(account);
+    public void addPlayers(String account){
+        server.addPlayers(account);
     }
     @Override
     public void addAccount(String account){
