@@ -17,7 +17,7 @@ public class Match {
     private RoundTrack roundTrack;
     private DraftPool draftPool;
 
-    public Match(int id, ArrayList<String> playersNames, ArrayList<String> playersWP) {    //viene passato l'id dal Server per identificare il match
+    public Match(int id, ArrayList<String> playersNames, ArrayList<Integer> playersWP) {    //viene passato l'id dal Server per identificare il match
         this.id = id;
 
         /*for(int i=0; i < server.listOfClient.size(); i++){

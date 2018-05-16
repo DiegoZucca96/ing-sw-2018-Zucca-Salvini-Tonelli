@@ -243,14 +243,12 @@ public class GUI  extends Application{
                         if(controller.getListOfPlayers().size()<4) {
                             controller.addAccount(saveUsername);
                             stage.close();
-                            //window.close();
                             InitializerView init = null;
                             try {
                                 init = controller.initializeView();
                             } catch (RemoteException e1) {
                                 e1.printStackTrace();
                             }
-                            //Loading.display(new Stage(), init, "LOADING", 1, null);
                             oldStage.show();
                         }
 

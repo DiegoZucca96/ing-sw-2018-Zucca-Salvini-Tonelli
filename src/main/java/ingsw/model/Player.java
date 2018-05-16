@@ -15,7 +15,7 @@ public class Player {       //Classe che rappresenta un giocatore della partita
     private PVObjectiveCard pvObjectiveCard;
     //private int myRound;
 
-    public Player(String name, String wpType, Color pvColor){
+    public Player(String name, int wpType, Color pvColor){
         this.name = name;
         score = 0;
         pvScore = 0;
