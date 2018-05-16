@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 //SCELTA DELLE WINDOW PATTERN
 
-public class WindowPattern {
+public class WPRendering {
 
     public static void display(InitializerView init){
 

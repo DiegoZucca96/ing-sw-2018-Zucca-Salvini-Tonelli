@@ -83,7 +83,7 @@ public class Loading {
                                 if (timeSeconds <= 0 && i==1) {
                                     timeline.stop();
 
-                                    WindowPattern.display(init);
+                                    WPRendering.display(init);
                                     Private.display(init);
                                     primaryStage.close();
                                 }
