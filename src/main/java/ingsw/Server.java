@@ -1,7 +1,6 @@
 package ingsw;
 
 import ingsw.controller.Controller;
-import ingsw.model.Match;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;

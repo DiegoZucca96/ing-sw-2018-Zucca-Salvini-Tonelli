@@ -130,6 +130,8 @@ public class GUI  extends Application{
 
         //IMMAGINE DI OK PER LOG IN
         final ImageView imageOk = new ImageView();
+        Label warning1 = new Label("");
+        grid.add(warning1, 1,4);
         String imagePath = "/ok.png";
         Image image2 = new Image(imagePath, 20, 20, false, false);
         imageOk.setImage(image2);
@@ -154,19 +156,16 @@ public class GUI  extends Application{
                                     Loading.display(new Stage(), init, "LOADING MATCH", 1, null);
 
                                 } else {
-                                    Label warning1 = new Label("MATCH IS FULL, SORRY");
+                                    warning1.setText("MATCH IS FULL, SORRY");
                                     warning1.setTextFill(Color.RED);
-                                    grid.add(warning1, 1,4);
                                 }
                             } else {
-                                Label warning2 = new Label("REGISTER NOW");
-                                warning2.setTextFill(Color.RED);
-                                grid.add(warning2, 1,4);
+                                warning1.setText("REGISTER NOW");
+                                warning1.setTextFill(Color.RED);
                             }
                         }else{
-                            Label warning3 = new Label("NICKNAME ALREADY TAKEN");
-                            warning3.setTextFill(Color.RED);
-                            grid.add(warning3, 1,4);
+                            warning1.setText("NICKNAME ALREADY TAKEN");
+                            warning1.setTextFill(Color.RED);
                         }
                     } catch (RemoteException e1) {
                         e1.printStackTrace();
@@ -229,6 +228,8 @@ public class GUI  extends Application{
 
         //IMMAGINE DI BACKGROUND
         final ImageView backgrundImage = new ImageView();
+        Label warning1 = new Label("");
+        grid.add(warning1, 1,4);
         String imagePath = "/Tool0.png";
         Image image = new Image(imagePath, 450, 600, false, false);
         backgrundImage.setImage(image);
@@ -239,23 +240,19 @@ public class GUI  extends Application{
             saveUsername = tfName.getText();
             if (!saveUsername.isEmpty()) {
                 try {
-                    if(!controller.access(saveUsername)){
-                        if(controller.getListOfPlayers().size()<4) {
-                            controller.addAccount(saveUsername);
-                            stage.close();
-                            InitializerView init = null;
-                            try {
-                                init = controller.initializeView();
-                            } catch (RemoteException e1) {
-                                e1.printStackTrace();
-                            }
-                            oldStage.show();
+                    if (!controller.access(saveUsername)) {
+                        controller.addAccount(saveUsername);
+                        stage.close();
+                        InitializerView init = null;
+                        try {
+                            init = controller.initializeView();
+                        } catch (RemoteException e1) {
+                            e1.printStackTrace();
                         }
-
-                    } else {
-                        Label warning = new Label("NICKNAME ALREADY EXISTS");
-                        warning.setTextFill(Color.RED);
-                        grid.add(warning, 1,4, 2, 1);
+                        oldStage.show();
+                    }else {
+                        warning1.setText("NICKNAME ALREADY EXISTS");
+                        warning1.setTextFill(Color.RED);
                     }
                 } catch (RemoteException e1) {
                     e1.printStackTrace();

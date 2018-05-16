@@ -5,7 +5,7 @@ import ingsw.model.InitializerView;
 import ingsw.model.Match;
 import ingsw.model.RandomGenerator;
 import ingsw.model.WindowPFactory;
-import ingsw.view.WindowPattern;
+import ingsw.model.windowpattern.WindowPattern;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -36,16 +36,19 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         server.addPlayers(account);
     }
 
-    //aggiunge il nuovo account alla lista degli account del server, se l'account è già presente restituisce false
     @Override
+    public void addAccount(String account){
+        server.addAccount(account);
+    }
+    //aggiunge il nuovo account alla lista degli account del server, se l'account è già presente restituisce false
+    /*@Override
     public synchronized boolean addAccount(String account){
         if (access(account)) return false;
         server.addAccount(account);
         return true;
-    }
-
+    }*/
     @Override
-    private boolean access(String account){
+    public boolean access(String account){
         //se esiste già il nome salvato nel server non puoi accedere
         if(server.getListOfClient().contains(account)){
             return true;
