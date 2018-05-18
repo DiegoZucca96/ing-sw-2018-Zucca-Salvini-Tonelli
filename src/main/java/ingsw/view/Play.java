@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class Play {
 
 
-    public static void display(String imageString, InitializerView init){
+    public static void display(GridPane gridMyWindow, InitializerView init){
 
         Stage table = new Stage();
         table.setWidth(1200);
@@ -71,28 +71,7 @@ public class Play {
 
         //LA MIA WINDOW PATTERN
         Pane paneWP = new Pane();
-        paneWP.setLayoutY(380);
-        paneWP.setLayoutX(10);
-        GridPane gridWP = new GridPane();
-        gridWP.setPrefSize(280, 280);
-        gridWP.setHgap(3);
-        gridWP.setVgap(8);
-        Image myImage = new Image(imageString, 280, 280, false, false);
-        BackgroundImage myBI= new BackgroundImage(myImage,
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
-        gridWP.setBackground(new Background(myBI));
-
-        for(int row=0; row<4; row++){
-            for(int col=0; col<5; col++){
-                Button b= new Button();
-                b.setOpacity(0.6);
-                b.setPrefSize(58, 58);
-                gridWP.add(b, col, row);
-
-            }
-        }
-        paneWP.getChildren().add(gridWP);
+        paneWP.getChildren().add(gridMyWindow);
 
 
         //PAGINAZIONE DI VARI OGGETTI

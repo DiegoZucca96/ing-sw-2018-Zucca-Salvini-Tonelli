@@ -42,7 +42,7 @@ class ToolCardTest extends TestCase{
 
     @Test
     public void testTool2(){
-        Player p = new Player("me","wp8",Color.YELLOW);
+        Player p = new Player("me",8,Color.YELLOW);
         WindowPattern window = p.getWindowPattern();
         Coordinate c = new Coordinate(0,2);
         Coordinate d = new Coordinate(2,1);
@@ -81,7 +81,7 @@ class ToolCardTest extends TestCase{
 
     @Test
     public void testTool3(){
-        Player p = new Player("me","wp9",Color.YELLOW);
+        Player p = new Player("me",9,Color.YELLOW);
         WindowPattern window = p.getWindowPattern();
         Coordinate c = new Coordinate(0,2);
         Coordinate d = new Coordinate(2,2);
@@ -120,7 +120,7 @@ class ToolCardTest extends TestCase{
 
     @Test
     public void testTool4(){
-        Player p = new Player("me","wp10",Color.YELLOW);
+        Player p = new Player("me",10,Color.YELLOW);
         WindowPattern window = p.getWindowPattern();
         Coordinate c = new Coordinate(0,2);
         Coordinate da = new Coordinate(2,1);
@@ -169,7 +169,7 @@ class ToolCardTest extends TestCase{
 
     @Test
     public void testTool6(){
-        Player p = new Player("me","wp11",Color.YELLOW);
+        Player p = new Player("me",11,Color.YELLOW);
         WindowPattern window = p.getWindowPattern();
         DraftPool dp = new DraftPool(new RoundTrack());
         Coordinate c1 = new Coordinate(3,1);
@@ -224,7 +224,7 @@ class ToolCardTest extends TestCase{
 
     @Test
     public void testTool9(){
-        Player p = new Player("me","wp12",Color.YELLOW);
+        Player p = new Player("me",12,Color.YELLOW);
         WindowPattern window = p.getWindowPattern();
         Coordinate d = new Coordinate(2,1);
         Coordinate c1 = new Coordinate(3,4);
@@ -278,7 +278,7 @@ class ToolCardTest extends TestCase{
 
     @Test
     public void testTool12(){
-        Player p = new Player("me","wp13",Color.YELLOW);
+        Player p = new Player("me",13,Color.YELLOW);
         WindowPattern window = p.getWindowPattern();
         Coordinate d1 = new Coordinate(2,0);
         Coordinate d2 = new Coordinate(1,2);

@@ -10,7 +10,7 @@ class PBObjectiveCardTest extends TestCase{
 
     @Test
     public void testDoPBStrategy() {
-        Player p = new Player("io","wp1", Color.BLUE);
+        Player p = new Player("io",1, Color.BLUE);
         WindowPattern window = p.getWindowPattern();
         Coordinate c1 = new Coordinate(0,4);
         Coordinate c2 = new Coordinate(1,4);
@@ -59,7 +59,7 @@ class PBObjectiveCardTest extends TestCase{
 
     @Test
     public void testPB2(){
-        Player p = new Player("io","wp2", Color.GREEN);
+        Player p = new Player("io",2, Color.GREEN);
         WindowPattern window = p.getWindowPattern();
         Coordinate c1 = new Coordinate(0,0);
         Coordinate c2 = new Coordinate(1,0);
@@ -95,7 +95,7 @@ class PBObjectiveCardTest extends TestCase{
 
     @Test
     public void testPB3(){
-        Player p = new Player("io","wp3", Color.BLUE);
+        Player p = new Player("io",3, Color.BLUE);
         WindowPattern window = p.getWindowPattern();
         Coordinate c1 = new Coordinate(3,0);
         Coordinate c2 = new Coordinate(3,1);
@@ -122,7 +122,7 @@ class PBObjectiveCardTest extends TestCase{
 
     @Test
     public void testPB4(){
-        Player p = new Player("io","wp4", Color.GREEN);
+        Player p = new Player("io",4, Color.GREEN);
         WindowPattern window = p.getWindowPattern();
         Coordinate c1 = new Coordinate(0,0);
         Coordinate c2 = new Coordinate(1,0);
@@ -155,7 +155,7 @@ class PBObjectiveCardTest extends TestCase{
 
     @Test
     public void testPB7(){
-        Player p = new Player("io","wp5", Color.GREEN);
+        Player p = new Player("io",5, Color.GREEN);
         WindowPattern window = p.getWindowPattern();
         Coordinate c1 = new Coordinate(0,0);
         Coordinate c2 = new Coordinate(1,1);
@@ -188,7 +188,7 @@ class PBObjectiveCardTest extends TestCase{
 
     @Test
     public void testPB8(){
-        Player p = new Player("io","wp6", Color.GREEN);
+        Player p = new Player("io",6, Color.GREEN);
         WindowPattern window = p.getWindowPattern();
         Coordinate c1 = new Coordinate(1,0);
         Coordinate c2 = new Coordinate(0,1);
@@ -221,7 +221,7 @@ class PBObjectiveCardTest extends TestCase{
 
     @Test
     public void testPB10(){
-        Player p = new Player("io","wp7", Color.GREEN);
+        Player p = new Player("io",7, Color.GREEN);
         WindowPattern window = p.getWindowPattern();
         Coordinate c1 = new Coordinate(0,0);
         Coordinate c2 = new Coordinate(1,0);

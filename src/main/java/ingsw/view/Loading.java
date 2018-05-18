@@ -44,7 +44,7 @@ public class Loading {
     }
 
 
-    public static void display(Stage primaryStage, InitializerView init, String comment, int i, String wp) {
+    public static void display(Stage primaryStage, InitializerView init, String comment, int i, GridPane gridWp) {
 
         //MANAGE CYCLE PROGRESS
         final ProgressIndicator progressIndicator = new ProgressIndicator(0);
@@ -91,7 +91,7 @@ public class Loading {
                                 if (timeSeconds <= 0 && i==2) {
                                     timeline.stop();
 
-                                    Play.display(wp,init);
+                                    Play.display(gridWp,init);
                                     primaryStage.close();
                                 }
                             }
