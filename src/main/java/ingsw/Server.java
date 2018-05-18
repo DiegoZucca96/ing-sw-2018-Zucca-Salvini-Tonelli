@@ -2,17 +2,25 @@ package ingsw;
 
 import ingsw.controller.Controller;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Server {
 
     private ArrayList<String> listOfClient;
-    private ArrayList<String> listOfPlayers ;
+    private ArrayList<String> listOfPlayers;
+    private static Server instance;
+    private int port;
+
     public static void main(String[] args) throws RemoteException {
-        Server server = new Server();
+        Server server = Server.instance(1080);
         Controller controller = new Controller(server);
         Registry registry = LocateRegistry.createRegistry(1080);
         registry.rebind("controller", controller);
@@ -20,9 +28,15 @@ public class Server {
     }
 
 
-    public Server(){
-        listOfClient=new ArrayList<>();
+    private Server(int port) {
+        listOfClient = new ArrayList<>();
         listOfPlayers = new ArrayList<>();
+        this.port = port;
+    }
+
+    public static Server instance(int port) {
+        if (instance == null) instance = new Server(port);
+        return instance;
     }
 
     public ArrayList<String> getListOfClient() {
@@ -33,12 +47,44 @@ public class Server {
         return listOfPlayers;
     }
 
-    public void addPlayers(String account){
+    public void addPlayers(String account) {
         listOfPlayers.add(account);
     }
 
     public void addAccount(String account) {
         listOfClient.add(account);
+    }
+
+    public void startServerSocket() {
+        ExecutorService executor = Executors.newCachedThreadPool();
+        ServerSocket serverSocket;
+        try {
+            serverSocket = new ServerSocket(port);
+        } catch (IOException e) {
+            System.err.println(e.getMessage()); // porta non disponibile
+            return;
+        }
+        try {
+            System.out.println("Server ready");
+            while (true) {
+                Boolean endLoop = false;
+                try {
+                    Socket socket = serverSocket.accept();
+                    executor.submit(new ServerHandler(socket));
+                } catch (IOException e) {
+                    endLoop = true;                  //connessione chiusa
+                }
+                if (endLoop) break;
+            }
+            executor.shutdown();
+        } catch(Exception e){}
+        finally {
+            try {
+                serverSocket.close();
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+            }
+        }
     }
 
 }
