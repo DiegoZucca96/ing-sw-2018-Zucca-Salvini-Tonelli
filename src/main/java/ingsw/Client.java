@@ -23,8 +23,6 @@ public class Client {
 
     public static void main(String[] args) throws Exception {
         Client client = new Client("127.0.0.1",1080);
-        //In teoria qua si deve passare al metodo grafico il controller per far eseguire le varie operazioni
-        new GUI().main();
         try{
             client.startClientSocket();
         }catch (IOException e){
@@ -35,6 +33,9 @@ public class Client {
     public void startClientSocket() throws IOException {
         try{
             setup();
+            //...
+            //In teoria qua si deve passare al metodo grafico il controller per far eseguire le varie operazioni
+            new GUI().main();
             //...
         }catch(NoSuchElementException e){
             System.err.println(e.getMessage());
