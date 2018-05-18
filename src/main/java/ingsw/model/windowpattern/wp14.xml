@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
-    <name>Kaleidoscopic Dream</name>
-    <difficulty> 4</difficulty>
+    <name>Virtus</name>
+    <difficulty> 5</difficulty>
     <cell>
         <row>0</row>
         <column>0</column>
-        <num>0</num>
-        <color>YELLOW</color>
+        <num>4</num>
+        <color>WHITE</color>
     </cell>
     <cell>
         <row>0</row>
         <column>1</column>
         <num>0</num>
-        <color>BLUE</color>
+        <color>WHITE</color>
     </cell>
     <cell>
         <row>0</row>
         <column>2</column>
-        <num>0</num>
+        <num>2</num>
         <color>WHITE</color>
     </cell>
     <cell>
         <row>0</row>
         <column>3</column>
-        <num>0</num>
+        <num>5</num>
         <color>WHITE</color>
     </cell>
     <cell>
         <row>0</row>
         <column>4</column>
-        <num>1</num>
-        <color>WHITE</color>
-    </cell>
-    <cell>
-        <row>1</row>
-        <column>0</column>
         <num>0</num>
         <color>GREEN</color>
     </cell>
     <cell>
         <row>1</row>
+        <column>0</column>
+        <num>0</num>
+        <color>WHITE</color>
+    </cell>
+    <cell>
+        <row>1</row>
         <column>1</column>
         <num>0</num>
         <color>WHITE</color>
@@ -47,80 +47,80 @@
     <cell>
         <row>1</row>
         <column>2</column>
-        <num>5</num>
+        <num>6</num>
         <color>WHITE</color>
     </cell>
     <cell>
         <row>1</row>
         <column>3</column>
         <num>0</num>
-        <color>WHITE</color>
+        <color>GREEN</color>
     </cell>
     <cell>
         <row>1</row>
         <column>4</column>
-        <num>4</num>
+        <num>2</num>
         <color>WHITE</color>
     </cell>
     <cell>
         <row>2</row>
         <column>0</column>
+        <num>0</num>
+        <color>WHITE</color>
+    </cell>
+    <cell>
+        <row>2</row>
+        <column>1</column>
         <num>3</num>
         <color>WHITE</color>
     </cell>
     <cell>
         <row>2</row>
-        <column>1</column>
-        <num>0</num>
-        <color>WHITE</color>
-    </cell>
-    <cell>
-        <row>2</row>
         <column>2</column>
         <num>0</num>
-        <color>RED</color>
+        <color>GREEN</color>
     </cell>
     <cell>
         <row>2</row>
         <column>3</column>
-        <num>0</num>
+        <num>4</num>
         <color>WHITE</color>
     </cell>
     <cell>
         <row>2</row>
         <column>4</column>
+        <num>0</num>
+        <color>WHITE</color>
+    </cell>
+    <cell>
+        <row>3</row>
+        <column>0</column>
+        <num>5</num>
+        <color>WHITE</color>
+    </cell>
+    <cell>
+        <row>3</row>
+        <column>1</column>
         <num>0</num>
         <color>GREEN</color>
     </cell>
     <cell>
         <row>3</row>
-        <column>0</column>
-        <num>2</num>
-        <color>WHITE</color>
-    </cell>
-    <cell>
-        <row>3</row>
-        <column>1</column>
-        <num>0</num>
-        <color>WHITE</color>
-    </cell>
-    <cell>
-        <row>3</row>
         <column>2</column>
-        <num>0</num>
+        <num>1</num>
         <color>WHITE</color>
     </cell>
     <cell>
         <row>3</row>
         <column>3</column>
         <num>0</num>
-        <color>BLUE</color>
+        <color>WHITE</color>
     </cell>
     <cell>
         <row>3</row>
         <column>4</column>
         <num>0</num>
-        <color>YELLOW</color>
+        <color>WHITE</color>
     </cell>
 
 </window>
