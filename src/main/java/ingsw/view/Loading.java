@@ -3,6 +3,7 @@ package ingsw.view;
 
 
 import ingsw.model.InitializerView;
+import ingsw.model.windowpattern.CellRender;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -19,6 +20,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+
+import java.util.List;
 
 public class Loading {
 
@@ -44,7 +47,7 @@ public class Loading {
     }
 
 
-    public static void display(Stage primaryStage, InitializerView init, String comment, int i, GridPane gridWp) {
+    public static void display(Stage primaryStage, InitializerView init, String comment, int i, List<CellRender> myWindow) {
 
         //MANAGE CYCLE PROGRESS
         final ProgressIndicator progressIndicator = new ProgressIndicator(0);
@@ -91,7 +94,7 @@ public class Loading {
                                 if (timeSeconds <= 0 && i==2) {
                                     timeline.stop();
 
-                                    Play.display(gridWp,init);
+                                    Play.display(myWindow,init);
                                     primaryStage.close();
                                 }
                             }

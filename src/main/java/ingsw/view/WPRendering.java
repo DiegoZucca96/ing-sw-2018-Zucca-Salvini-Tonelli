@@ -108,6 +108,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.util.ArrayList;
+import java.util.List;
 
 /**CHOOSE WINDOW PATTERN
  *
@@ -120,11 +121,13 @@ public class WPRendering {
     public static void display(InitializerView init){
 
         GridPane root = new GridPane();
-        root.setHgap(20);
+        root.setLayoutX(40);
+        root.setLayoutY(20);
+        root.setHgap(40);
         root.setVgap(20);
         Scene s2= new Scene(root);
         Stage windowPattern = new Stage();
-        windowPattern.setWidth(1060);
+        windowPattern.setWidth(1260);
         windowPattern.setHeight(300);
 
 
@@ -158,11 +161,13 @@ public class WPRendering {
         String diffPath1 = infos.get(0).getDifficulty();
         final Label label1 = new Label();
         label1.setText("               "+namePath1+diffPath1);
-        label1.setTextFill(Color.RED);
+        label1.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"; -fx-padding: 0 0 20 0; -fx-text-alignment: center");
         root.add(label1, 0, 1);
 
         label1.setOnMousePressed(event -> {
-            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, grid1);
+            List<CellRender> myWindow = new ArrayList<>();
+            myWindow = cells.subList(0, 20);
+            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow);
             windowPattern.close();
         });
 
@@ -206,11 +211,13 @@ public class WPRendering {
         String imagePath2 = infos.get(1).getName()+infos.get(1).getDifficulty();
         final Label label2 = new Label();
         label2.setText("               "+imagePath2);
-        label2.setTextFill(Color.RED);
+        label2.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"; -fx-padding: 0 0 20 0; -fx-text-alignment: center");
         root.add(label2, 1, 1);
 
         label2.setOnMousePressed(event -> {
-            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, grid2);
+            List<CellRender> myWindow = new ArrayList<>();
+            myWindow = cells.subList(20, 40);
+            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow);
             windowPattern.close();
         });
 
@@ -253,11 +260,13 @@ public class WPRendering {
         String imagePath3 = infos.get(2).getName()+infos.get(2).getDifficulty();
         final Label label3 = new Label();
         label3.setText("               "+imagePath3);
-        label3.setTextFill(Color.RED);
+        label3.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"; -fx-padding: 0 0 20 0; -fx-text-alignment: center");
         root.add(label3, 2, 1);
 
         label3.setOnMousePressed(event -> {
-            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 3, grid3);
+            List<CellRender> myWindow = new ArrayList<>();
+            myWindow = cells.subList(40, 60);
+            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 3, myWindow);
             windowPattern.close();
         });
 
@@ -301,11 +310,13 @@ public class WPRendering {
         String imagePath4 = infos.get(3).getName()+infos.get(3).getDifficulty();
         final Label label4 = new Label();
         label4.setText("               "+imagePath4);
-        label4.setTextFill(Color.RED);
+        label4.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"; -fx-padding: 0 0 20 0; -fx-text-alignment: center");
         root.add(label4, 3, 1);
 
         label4.setOnMousePressed(event -> {
-            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, grid4);
+            List<CellRender> myWindow = new ArrayList<>();
+            myWindow = cells.subList(60, 80);
+            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow);
             windowPattern.close();
         });
 
@@ -337,7 +348,7 @@ public class WPRendering {
         windowPattern.show();
     }
 
-    private static String pathCell(String number, String color) {
+    public static String pathCell(String number, String color) {
 
         if (number == null || color == null)
             return null;

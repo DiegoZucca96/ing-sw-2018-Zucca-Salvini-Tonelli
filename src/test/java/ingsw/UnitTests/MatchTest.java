@@ -37,11 +37,11 @@ public class MatchTest{
         names.add("Tony");
         names.add("Norma");
 
-        ArrayList<String > wps = new ArrayList<String>();
-        wps.add("wp1");
-        wps.add("wp2");
-        wps.add("wp3");
-        wps.add("wp4");
+        ArrayList<Integer > wps = new ArrayList<Integer>();
+        wps.add(1);
+        wps.add(2);
+        wps.add(3);
+        wps.add(4);
 
         match = new Match(1, names, wps);
 

@@ -20,7 +20,7 @@ public class PlayerTest {
 
     @Before
     public void setUpTests(){
-        p = new Player("Norma", "wp1", Color.BLUE);
+        p = new Player("Norma", 1, Color.BLUE);
         wp = mock(WindowPattern.class);
         pvCard = mock(PVObjectiveCard.class);
         p.setWindowPattern(wp);

@@ -1,6 +1,7 @@
 package ingsw.view;
 
 import ingsw.model.InitializerView;
+import ingsw.model.windowpattern.CellRender;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -21,11 +22,12 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Play {
 
 
-    public static void display(GridPane gridMyWindow, InitializerView init){
+    public static void display(List<CellRender> myWindow, InitializerView init){
 
         Stage table = new Stage();
         table.setWidth(1200);
@@ -63,7 +65,7 @@ public class Play {
 
         //IMMAGINE BACKGROUND
         final ImageView backGround = new ImageView();
-        String imagePath = "/sagradabackground.png";
+        String imagePath = "/backgroundtable.jpg";
         Image image1 = new Image(imagePath, 1200, 700, false, false);
         backGround.setImage(image1);
 
@@ -71,7 +73,28 @@ public class Play {
 
         //LA MIA WINDOW PATTERN
         Pane paneWP = new Pane();
-        paneWP.getChildren().add(gridMyWindow);
+        paneWP.setLayoutY(420);
+        paneWP.setLayoutX(10);
+        GridPane myGrid = new GridPane();
+        int k=0;
+        for(int i=0; i<4; i++){
+            for( int j=0; j<5; j++){
+                Button btnCell = new Button();
+                btnCell.setPrefSize(55, 55);
+                String numCell = myWindow.get(k).getNumber();
+                String colorCell = myWindow.get(k).getColor();
+                String pathCell = WPRendering.pathCell(numCell, colorCell);
+                Image myImage = new Image(pathCell, 55, 55, false, false);
+                BackgroundImage myBI= new BackgroundImage(myImage,
+                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                        BackgroundSize.DEFAULT);
+                btnCell.setBackground(new Background(myBI));
+                myGrid.add(btnCell, j, i);
+                k++;
+            }
+        }
+
+        paneWP.getChildren().add(myGrid);
 
 
         //PAGINAZIONE DI VARI OGGETTI
