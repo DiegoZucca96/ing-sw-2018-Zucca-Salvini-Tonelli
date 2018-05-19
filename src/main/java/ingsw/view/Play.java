@@ -24,6 +24,12 @@ import javafx.util.Callback;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**author : Alessio Tonelli
+ *
+ * THIS CLASS REPRESENTS THE TABLE ON WHICH MATCH TAKES PLACE
+ *
+ * */
 public class Play {
 
 

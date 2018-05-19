@@ -1,5 +1,10 @@
 package ingsw.model;
 
+/**Author : Alessio Tonelli
+ *
+ *
+ * */
+
 
 public class Cell {
     private Color color;              //colore della cella, per ora commentato perchè implementata da Diego la Enum

@@ -1,5 +1,10 @@
 package ingsw.model;
 
+/**Author : Alessio Tonelli
+ *
+ *
+ * */
+
 public class Die{
 
     private final Color color;

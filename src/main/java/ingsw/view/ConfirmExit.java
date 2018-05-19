@@ -8,6 +8,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
+/**Author : Alessio Tonelli
+ *
+ * This allows user to quit or make safe choice
+ * */
+
 public class ConfirmExit {
 
     static boolean answer;

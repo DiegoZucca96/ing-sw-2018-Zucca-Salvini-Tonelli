@@ -1,7 +1,11 @@
 package ingsw.model.windowpattern;
 
 
-/**TAKE CELL FROM XML FILE AND SEND IT TO THE GUI AND MODEL*/
+/**Author : Alessio Tonelli
+ *
+ *
+ * TAKE CELL FROM XML FILE AND SEND IT TO THE GUI AND MODEL
+ * */
 public class CellRender implements java.io.Serializable {
 
     private String row;

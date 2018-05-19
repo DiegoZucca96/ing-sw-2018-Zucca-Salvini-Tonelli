@@ -25,7 +25,11 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-//GUI: avvia schermata di gioco con credenziali di accesso
+/**Author : Alessio Tonelli _ Diego Zucca _ Elio Salvini
+ *
+ * GUI: start first Scene
+ *
+ * */
 
 public class GUI  extends Application{
 

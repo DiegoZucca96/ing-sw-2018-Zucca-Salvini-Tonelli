@@ -12,17 +12,27 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-/**CLASS WHICH PARSES XML FILE*/
+/**Author : Alessio Tonelli
+ *
+ * CLASS PARSES XML FILE
+ *
+ * there are two methods
+ *
+ * readConfig  parses all the cells belonging to the window pattern
+ *
+ * readInfo  parses name and difficulty belonging to the window pattern
+ *
+ * */
 
 public class SAXParser {
 
-    static final String NAME ="name";
-    static final String DIFF = "difficulty";
-    static final String COLUMN = "column";
-    static final String CELL = "cell";
-    static final String COLOR = "color";
-    static final String ROW = "row";
-    static final String NUMBER = "num";
+    private static final String NAME ="name";
+    private static final String DIFF = "difficulty";
+    private static final String COLUMN = "column";
+    private static final String CELL = "cell";
+    private static final String COLOR = "color";
+    private static final String ROW = "row";
+    private static final String NUMBER = "num";
 
 
     /**THIS METHOD EXTRACTS ELEMENT FROM EACH CELL OF THE WINDOW*/

@@ -1,8 +1,12 @@
 package ingsw.model;
 
 
-//FACTORY CLASS
-//COSTRUISCE LE WINDOW PATTERN IN BASE AL PARAMETRO CHE RICEVE IN INGRESSO
+/**Author : Alessio Tonelli
+ *
+ *
+ * FACTORY CLASS
+ *
+ * built wp depending by incoming parameter*/
 
 
 import ingsw.model.windowpattern.*;

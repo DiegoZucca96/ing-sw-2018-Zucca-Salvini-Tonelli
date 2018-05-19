@@ -12,7 +12,10 @@ import javafx.scene.transform.Shear;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-//RINGRAZIAMENTI
+/**Author : Alessio Tonelli
+ *
+ * Greetings
+ * */
 
 public class InfoStage {
 

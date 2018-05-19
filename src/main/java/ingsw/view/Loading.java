@@ -23,6 +23,16 @@ import javafx.util.Duration;
 
 import java.util.List;
 
+
+/**Author : Alessio Tonelli
+ *
+ * this class is used two times :
+ *
+ * first: case parameter i = 1 ___ client must wait other clients enter the game
+ *
+ * second: case parameter i = 2 ___ after choosing window pattern wait for other players' choice
+ * */
+
 public class Loading {
 
 

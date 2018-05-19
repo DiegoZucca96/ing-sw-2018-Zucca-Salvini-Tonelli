@@ -11,7 +11,10 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
-//ASSEGNAZIONE CARTA PRIVATA
+/**Author : Alessio Tonelli
+ *
+ *
+ * Private Card*/
 
 public class Private {
 
