@@ -90,28 +90,24 @@ public class Loading {
         //
         timeline.getKeyFrames().add(
                 new KeyFrame(Duration.seconds(1),
-                        new EventHandler() {
-                            @Override
-                            public void handle(Event event) {
-                                timeSeconds--;
-                                timeSeconds--;
+                        event -> {
+                            timeSeconds--;
+                            timeSeconds--;
 
-                                if (timeSeconds <= 0 && i==1) {
-                                    timeline.stop();
+                            if (timeSeconds <= 0 && i==1) {
+                                timeline.stop();
 
-                                    WPRendering.display(init);
-                                    Private.display(init);
-                                    primaryStage.close();
-                                }
-
-                                if (timeSeconds <= 0 && i==2) {
-                                    timeline.stop();
-
-                                    Play.display(myWindow,init);
-                                    primaryStage.close();
-                                }
+                                WPRendering.display(init);
+                                Private.display(init);
+                                primaryStage.close();
                             }
 
+                            if (timeSeconds <= 0 && i==2) {
+                                timeline.stop();
+
+                                Play.display(myWindow,init);
+                                primaryStage.close();
+                            }
                         }));
         timeline.playFromStart();
 
