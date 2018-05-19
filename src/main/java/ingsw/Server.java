@@ -15,10 +15,13 @@ import java.util.concurrent.Executors;
 
 public class Server {
 
-    private ArrayList<String> listOfClient;
+    private ArrayList<ClientData> listOfClients; //associa ad ogni nme di un client il relativo stato
     private ArrayList<String> listOfPlayers;
     private static Server instance;
     private int port;
+    private boolean socketConnection;
+    private ClientState enableClient;
+    private ClientState disableClient;
     private final int timeSearch;
     private final int playerTimeMove;
 
@@ -32,10 +35,13 @@ public class Server {
 
 
     private Server(int port) {
-        listOfClient = new ArrayList<>();
+        listOfClients = new ArrayList<>();
         listOfPlayers = new ArrayList<>();
         this.port = port;
+        socketConnection = false;
         Scanner in = new Scanner(System.in);
+        enableClient = new EnableClient();
+        disableClient = new DisableClient();
         System.out.print("Inserisci tempo di ricerca massimo: ");
         timeSearch = in.nextInt();
         System.out.print("Inserisci tempo massimo per fare una mossa: ");
@@ -47,12 +53,20 @@ public class Server {
         return instance;
     }
 
-    public ArrayList<String> getListOfClient() {
-        return listOfClient;
+    public ArrayList<ClientData> getListOfClient() {
+        return listOfClients;
     }
 
     public ArrayList<String> getListOfPlayers() {
         return listOfPlayers;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
     }
 
     public int getTimeSearch() {
@@ -68,7 +82,19 @@ public class Server {
     }
 
     public void addAccount(String account) {
-        listOfClient.add(account);
+        listOfClients.add(new ClientData(account, disableClient.setState(account)));
+    }
+
+    public void addAccount(String account, ServerHandler handler) {
+        listOfClients.add(new ClientData(account, disableClient.setState(account), handler));
+    }
+
+    public void setClientState(String clientName, ClientState state){
+        for(ClientData client: listOfClients ){
+            if(client.getName().equals(clientName)){
+                client.setState(state);
+            }
+        }
     }
 
     public void startServerSocket() {

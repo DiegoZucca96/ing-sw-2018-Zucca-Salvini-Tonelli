@@ -7,12 +7,14 @@ import java.util.Scanner;
 
 public class ServerHandler implements Runnable {
 
+    private Server server;
     private Socket socket;
     private Scanner in;
     private PrintWriter out;
 
     public ServerHandler(Socket socket){
         this.socket=socket;
+        server = Server.instance(1080);
     }
 
     public void run(){
@@ -28,6 +30,12 @@ public class ServerHandler implements Runnable {
     private void setup() throws IOException {
         in = new Scanner(socket.getInputStream());
         out = new PrintWriter(socket.getOutputStream(), true);
+        out.print("Get name");
+        server.addAccount(in.nextLine(), this);
+    }
+
+    public void setClientState(ClientState state){
+        out.print("Set state:" + state.toString());
     }
 
 }
