@@ -40,6 +40,17 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     public void addAccount(String account){
         server.addAccount(account);
     }
+
+    @Override
+    public int getTimeSearch() throws RemoteException {
+        return server.getTimeSearch();
+    }
+
+    @Override
+    public int getPlayerTimeMove() throws RemoteException {
+        return server.getPlayerTimeMove();
+    }
+
     //aggiunge il nuovo account alla lista degli account del server, se l'account è già presente restituisce false
     /*@Override
     public synchronized boolean addAccount(String account){

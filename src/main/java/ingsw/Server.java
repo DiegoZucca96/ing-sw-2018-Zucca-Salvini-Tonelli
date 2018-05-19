@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -18,6 +19,8 @@ public class Server {
     private ArrayList<String> listOfPlayers;
     private static Server instance;
     private int port;
+    private final int timeSearch;
+    private final int playerTimeMove;
 
     public static void main(String[] args) throws RemoteException {
         Server server = Server.instance(1080);
@@ -32,6 +35,11 @@ public class Server {
         listOfClient = new ArrayList<>();
         listOfPlayers = new ArrayList<>();
         this.port = port;
+        Scanner in = new Scanner(System.in);
+        System.out.print("Inserisci tempo di ricerca massimo: ");
+        timeSearch = in.nextInt();
+        System.out.print("Inserisci tempo massimo per fare una mossa: ");
+        playerTimeMove = in.nextInt();
     }
 
     public static Server instance(int port) {
@@ -45,6 +53,14 @@ public class Server {
 
     public ArrayList<String> getListOfPlayers() {
         return listOfPlayers;
+    }
+
+    public int getTimeSearch() {
+        return timeSearch;
+    }
+
+    public int getPlayerTimeMove() {
+        return playerTimeMove;
     }
 
     public void addPlayers(String account) {

@@ -157,6 +157,7 @@ public class GUI  extends Application{
                                     } catch (RemoteException e1) {
                                         e1.printStackTrace();
                                     }
+                                    Loading.setTimeStart(controller.getTimeSearch());
                                     Loading.display(new Stage(), init, "LOADING MATCH", 1, null);
 
                                 } else {

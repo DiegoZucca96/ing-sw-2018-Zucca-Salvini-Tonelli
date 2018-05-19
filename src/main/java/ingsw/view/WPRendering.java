@@ -177,7 +177,7 @@ public class WPRendering {
         label3.setOnMousePressed(event -> {
             List<CellRender> myWindow = new ArrayList<>();
             myWindow = cells.subList(40, 60);
-            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 3, myWindow);
+            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow);
             windowPattern.close();
         });
 

@@ -2,6 +2,7 @@ package ingsw.view;
 
 
 
+import ingsw.controller.RMIController;
 import ingsw.model.InitializerView;
 import ingsw.model.windowpattern.CellRender;
 import javafx.animation.KeyFrame;
@@ -21,6 +22,10 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.List;
 
 
@@ -35,10 +40,8 @@ import java.util.List;
 
 public class Loading {
 
-
-    private static final Integer STARTTIME = 5;
     private static Timeline timeline;
-    private static Integer timeSeconds = STARTTIME;
+    private static Integer timeSeconds;
     private static Task copyWorker;
     private static int numFiles = 20;
 
@@ -48,7 +51,7 @@ public class Loading {
             protected Object call() throws Exception {
                 for (int i = 0; i < numFiles; i++) {
 
-                    Thread.sleep(1 * 250);
+                    Thread.sleep(1000);
 
                 }
                 return true;
@@ -84,14 +87,14 @@ public class Loading {
         timeline.play();
 
 
-
+        //
         timeline.getKeyFrames().add(
                 new KeyFrame(Duration.seconds(1),
                         new EventHandler() {
                             @Override
                             public void handle(Event event) {
                                 timeSeconds--;
-
+                                timeSeconds--;
 
                                 if (timeSeconds <= 0 && i==1) {
                                     timeline.stop();
@@ -138,4 +141,7 @@ public class Loading {
         primaryStage.showAndWait();
     }
 
+    public static void setTimeStart(int timer) {
+        timeSeconds = timer;
+    }
 }

@@ -1,5 +1,6 @@
 package ingsw.controller;
 
+import com.sun.org.apache.regexp.internal.RE;
 import ingsw.model.InitializerView;
 
 import java.rmi.Remote;
@@ -14,6 +15,10 @@ public interface RMIController extends Remote {
     void addPlayers(String saveUsername) throws RemoteException;
 
     void addAccount(String account)throws RemoteException;
+
+    int getTimeSearch() throws RemoteException;
+
+    int getPlayerTimeMove() throws RemoteException;
 
     InitializerView initializeView() throws RemoteException;
 
