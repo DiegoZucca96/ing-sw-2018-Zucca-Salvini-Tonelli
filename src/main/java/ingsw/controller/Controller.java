@@ -1,5 +1,8 @@
 package ingsw.controller;
 
+import ingsw.ClientState;
+import ingsw.DisableClient;
+import ingsw.EnableClient;
 import ingsw.Server;
 import ingsw.model.InitializerView;
 import ingsw.model.Match;
@@ -74,6 +77,16 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         wps.add(wpFactory.createWindowPattern(rg.random()));
         wps.add(wpFactory.createWindowPattern(rg.random()));
         return wps;
+    }
+
+    //disabilita il client (il server ignora le sue richieste)
+    public ClientState enableClient(String clientName){
+        return new EnableClient().setState(clientName);
+    }
+
+    //attiva il client (il server ascolta le sue richieste
+    public ClientState disableClient(String clientName){
+        return new DisableClient().setState(clientName);
     }
 
     //Chiama il metodo inizializzatore del Match

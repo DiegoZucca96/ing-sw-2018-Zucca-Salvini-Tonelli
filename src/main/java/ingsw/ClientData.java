@@ -4,18 +4,21 @@ public class ClientData {
 
     private String name;            //nome dell'account
     private ClientState state;      //stato del client
-    private ServerHandler handler;  //thread che comunica con il client
+    private ServerHandler handler;  //thread che comunica con il client (solo pe socket)
+    private String connection;      //tipo di connessione
 
-    public ClientData(String name, ClientState state){
+    public ClientData(String name){
         this.name = name;
-        this.state = state;
+        this.state = null;
         handler = null;
+        connection = "RMI";
     }
 
-    public ClientData(String name, ClientState state, ServerHandler handler){
+    public ClientData(String name, ServerHandler handler){
         this.name = name;
-        this.state = state;
+        this.state = null;
         this.handler = handler;
+        connection = "socket";
     }
 
     public ClientState getState() {
@@ -28,6 +31,10 @@ public class ClientData {
 
     public ServerHandler getHandler() {
         return handler;
+    }
+
+    public String getConnection() {
+        return connection;
     }
 
     public void setHandler(ServerHandler handler) {

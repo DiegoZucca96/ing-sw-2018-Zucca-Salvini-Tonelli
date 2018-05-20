@@ -17,9 +17,9 @@ public class Server {
 
     private ArrayList<ClientData> listOfClients; //associa ad ogni nme di un client il relativo stato
     private ArrayList<String> listOfPlayers;
-    private static Server instance;
+    private static Server instance = null;
+    private Controller controller;
     private int port;
-    private boolean socketConnection;
     private ClientState enableClient;
     private ClientState disableClient;
     private final int timeSearch;
@@ -27,9 +27,8 @@ public class Server {
 
     public static void main(String[] args) throws RemoteException {
         Server server = Server.instance(1080);
-        Controller controller = new Controller(server);
         Registry registry = LocateRegistry.createRegistry(1080);
-        registry.rebind("controller", controller);
+        registry.rebind("controller", server.getController());
         System.out.println("Server ready");
     }
 
@@ -37,11 +36,13 @@ public class Server {
     private Server(int port) {
         listOfClients = new ArrayList<>();
         listOfPlayers = new ArrayList<>();
+        try {
+            controller = new Controller(this);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         this.port = port;
-        socketConnection = false;
         Scanner in = new Scanner(System.in);
-        enableClient = new EnableClient();
-        disableClient = new DisableClient();
         System.out.print("Inserisci tempo di ricerca massimo: ");
         timeSearch = in.nextInt();
         System.out.print("Inserisci tempo massimo per fare una mossa: ");
@@ -51,6 +52,10 @@ public class Server {
     public static Server instance(int port) {
         if (instance == null) instance = new Server(port);
         return instance;
+    }
+
+    public Controller getController() {
+        return controller;
     }
 
     public ArrayList<ClientData> getListOfClient() {
@@ -82,20 +87,27 @@ public class Server {
     }
 
     public void addAccount(String account) {
-        listOfClients.add(new ClientData(account, disableClient.setState(account)));
+        listOfClients.add(new ClientData(account));
+        controller.disableClient(account);
     }
 
     public void addAccount(String account, ServerHandler handler) {
-        listOfClients.add(new ClientData(account, disableClient.setState(account), handler));
+        listOfClients.add(new ClientData(account, handler));
+        controller.disableClient(account);
     }
 
     public void setClientState(String clientName, ClientState state){
         for(ClientData client: listOfClients ){
-            if(client.getName().equals(clientName)){
-                client.setState(state);
+            if(client.getName().equals(clientName) && client.getConnection().equals("socket")){
+                client.getHandler().setClientState(state);
             }
-        }
+            else if (client.getName().equals(clientName) && client.getConnection().equals("RMI")){
+                    //...
+                }
+            }
     }
+
+
 
     public void startServerSocket() {
         ExecutorService executor = Executors.newCachedThreadPool();
