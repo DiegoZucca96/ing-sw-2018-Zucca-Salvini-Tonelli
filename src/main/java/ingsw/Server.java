@@ -27,8 +27,9 @@ public class Server {
 
     public static void main(String[] args) throws RemoteException {
         Server server = Server.instance(1080);
-        Registry registry = LocateRegistry.createRegistry(1080);
+        Registry registry = LocateRegistry.createRegistry(1081);
         registry.rebind("controller", server.getController());
+        server.startServerSocket();
         System.out.println("Server ready");
     }
 

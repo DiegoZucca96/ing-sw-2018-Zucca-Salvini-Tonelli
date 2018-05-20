@@ -1,5 +1,8 @@
 package ingsw.view;
 
+import ingsw.Client;
+import ingsw.ClientRMI;
+import ingsw.ClientSocket;
 import ingsw.controller.RMIController;
 import ingsw.model.InitializerView;
 import javafx.animation.KeyFrame;
@@ -21,6 +24,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.text.Font;
 import javafx.scene.effect.Reflection;
+
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -38,9 +43,24 @@ public class GUI  extends Application{
     private String username;
     private String saveUsername;
     private RMIController controller;
+    private Client client;              //usa client per contattare il controller
 
     public static void main() {
         Application.launch();
+    }
+
+    //Avvia la connessione RMI se connectionType = "RMI", avvia la connessione scket se connectionType = "socket"
+    public void setupConnection(String connectionType){
+        if(connectionType.equals("socket")){
+            client = new ClientSocket("127.0.0.1",1080);
+            try{
+                client.startClient();
+            }catch (IOException e){
+                System.err.println(e.getMessage());
+            }
+        } else if(connectionType.equals("RMI")){
+            client = new ClientRMI();
+        }
     }
 
     public void start(Stage stage) throws Exception{
