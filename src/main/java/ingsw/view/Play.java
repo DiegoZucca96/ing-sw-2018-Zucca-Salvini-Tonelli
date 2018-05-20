@@ -33,7 +33,7 @@ import java.util.List;
 public class Play {
 
 
-    public static void display(List<Cell> myWindow, InitializerView init){
+    public static void display(List<Cell> myWindow, InitializerView init, String myTitle, String myDiff){
 
         Stage table = new Stage();
         table.setWidth(1200);
@@ -82,6 +82,8 @@ public class Play {
         paneWP.setLayoutY(420);
         paneWP.setLayoutX(10);
         GridPane myGrid = new GridPane();
+        myGrid.setLayoutX(0);
+        myGrid.setLayoutY(0);
         int k=0;
         for(int i=0; i<4; i++){
             for( int j=0; j<5; j++){
@@ -100,7 +102,11 @@ public class Play {
             }
         }
 
-        paneWP.getChildren().add(myGrid);
+        Label info = new Label(myTitle+myDiff);
+        info.setLayoutY(230);
+        info.setLayoutX(10);
+        info.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"; -fx-padding: 0 0 20 0; -fx-text-alignment: center");
+        paneWP.getChildren().addAll(myGrid, info);
 
 
         //PAGINAZIONE DI VARI OGGETTI

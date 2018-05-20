@@ -158,7 +158,7 @@ public class GUI  extends Application{
                                         e1.printStackTrace();
                                     }
                                     Loading.setTimeStart(controller.getTimeSearch());
-                                    Loading.display(new Stage(), init, "LOADING MATCH", 1, null);
+                                    Loading.display(new Stage(), init, "LOADING MATCH", 1, null, null, null);
 
                                 } else {
                                     warning1.setText("MATCH IS FULL, SORRY");

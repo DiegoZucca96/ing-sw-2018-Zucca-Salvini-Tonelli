@@ -1,16 +1,12 @@
 package ingsw.view;
 
 
-
-import ingsw.controller.RMIController;
 import ingsw.model.Cell;
 import ingsw.model.InitializerView;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.concurrent.Task;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -21,11 +17,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.List;
 
 
@@ -60,7 +51,7 @@ public class Loading {
     }
 
 
-    public static void display(Stage primaryStage, InitializerView init, String comment, int i, List<Cell> myWindow) {
+    public static void display(Stage primaryStage, InitializerView init, String comment, int i, List<Cell> myWindow, String titleWp, String diffWp) {
 
         //MANAGE CYCLE PROGRESS
         final ProgressIndicator progressIndicator = new ProgressIndicator(0);
@@ -105,7 +96,7 @@ public class Loading {
                             if (timeSeconds <= 0 && i==2) {
                                 timeline.stop();
 
-                                Play.display(myWindow,init);
+                                Play.display(myWindow,init, titleWp, diffWp);
                                 primaryStage.close();
                             }
                         }));
