@@ -64,4 +64,17 @@ public class ClientSocket implements Client{
         System.out.println("Client ready");
     }
 
+    @Override
+    public boolean login(String nickname) {
+        out.print("login:" + nickname);
+        if(in.nextLine().equals("ok")) return true;
+        else return  false;
+    }
+
+    @Override
+    public boolean register(String nickname) {
+        out.print("register:" + nickname);
+        if(in.nextLine().equals("ok")) return true;
+        else return  false;
+    }
 }
