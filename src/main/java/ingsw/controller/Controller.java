@@ -4,15 +4,13 @@ import ingsw.ClientState;
 import ingsw.DisableClient;
 import ingsw.EnableClient;
 import ingsw.Server;
-import ingsw.model.InitializerView;
-import ingsw.model.Match;
-import ingsw.model.RandomGenerator;
-import ingsw.model.WindowPFactory;
+import ingsw.model.*;
 import ingsw.model.windowpattern.WindowPattern;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Controller extends UnicastRemoteObject implements RMIController {
 
@@ -52,6 +50,21 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     @Override
     public int getPlayerTimeMove() throws RemoteException {
         return server.getPlayerTimeMove();
+    }
+
+    @Override
+    public void search() throws RemoteException{
+        server.search();
+    }
+
+    @Override
+    public ArrayList<WindowPattern> getWindowChosen() throws RemoteException {
+        return server.getWindowChosen();
+    }
+
+    @Override
+    public void addWindow(List<Cell> myWindow) throws RemoteException {
+        server.addWindow(myWindow);
     }
 
     //aggiunge il nuovo account alla lista degli account del server, se l'account è già presente restituisce false

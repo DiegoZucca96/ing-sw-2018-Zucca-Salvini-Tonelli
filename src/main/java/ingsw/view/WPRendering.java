@@ -1,6 +1,7 @@
 package ingsw.view;
 
 
+import ingsw.controller.RMIController;
 import ingsw.model.Cell;
 import ingsw.model.InitializerView;
 import ingsw.model.windowpattern.InfoWindow;
@@ -13,6 +14,10 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +35,10 @@ public class WPRendering {
 
     private static final String styleSheet = "-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"; -fx-padding: 0 0 20 0; -fx-text-alignment: center";
 
-    public static void display(InitializerView init){
+    public static void display(InitializerView init) throws Exception{
+
+        Registry registry= LocateRegistry.getRegistry("localhost",1080);
+        RMIController controller=(RMIController) registry.lookup("controller");
 
         GridPane root = new GridPane();
         root.setLayoutX(40);
@@ -79,7 +87,11 @@ public class WPRendering {
         label1.setOnMousePressed(event -> {
             List<Cell> myWindow = new ArrayList<>();
             myWindow = cells.subList(0, 20);
-            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow, namePath1, diffPath1);
+            try {
+                Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow, namePath1, diffPath1, controller);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
             windowPattern.close();
         });
 
@@ -130,7 +142,11 @@ public class WPRendering {
         label2.setOnMousePressed(event -> {
             List<Cell> myWindow = new ArrayList<>();
             myWindow = cells.subList(20, 40);
-            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow, namePath2, diffPath2);
+            try {
+                Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow, namePath1, diffPath1, controller);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
             windowPattern.close();
         });
 
@@ -180,7 +196,11 @@ public class WPRendering {
         label3.setOnMousePressed(event -> {
             List<Cell> myWindow = new ArrayList<>();
             myWindow = cells.subList(40, 60);
-            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow, namePath3, diffPath3);
+            try {
+                Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow, namePath1, diffPath1, controller);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
             windowPattern.close();
         });
 
@@ -231,7 +251,11 @@ public class WPRendering {
         label4.setOnMousePressed(event -> {
             List<Cell> myWindow = new ArrayList<>();
             myWindow = cells.subList(60, 80);
-            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow, namePath4, diffPath4);
+            try {
+                Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow, namePath1, diffPath1, controller);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
             windowPattern.close();
         });
 

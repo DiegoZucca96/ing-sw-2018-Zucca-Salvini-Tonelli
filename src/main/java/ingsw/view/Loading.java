@@ -1,6 +1,7 @@
 package ingsw.view;
 
 
+import ingsw.controller.RMIController;
 import ingsw.model.Cell;
 import ingsw.model.InitializerView;
 import javafx.animation.KeyFrame;
@@ -17,6 +18,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+
+import java.rmi.RemoteException;
 import java.util.List;
 
 
@@ -32,9 +35,10 @@ import java.util.List;
 public class Loading {
 
     private static Timeline timeline;
-    private static Integer timeSeconds;
     private static Task copyWorker;
     private static int numFiles = 20;
+    private static int access=0;
+    private static int single = 0;
 
     private static Task createWorker(final int numFiles) {
         return new Task() {
@@ -51,7 +55,7 @@ public class Loading {
     }
 
 
-    public static void display(Stage primaryStage, InitializerView init, String comment, int i, List<Cell> myWindow, String titleWp, String diffWp) {
+    public static void display(Stage primaryStage, InitializerView init, String comment, int i, List<Cell> myWindow, String titleWp, String diffWp, RMIController controller) throws RemoteException {
 
         //MANAGE CYCLE PROGRESS
         final ProgressIndicator progressIndicator = new ProgressIndicator(0);
@@ -70,33 +74,54 @@ public class Loading {
 
         //MANAGE TIME
         timeline = new Timeline();
-        timeline.setCycleCount(timeSeconds);
+        timeline.setCycleCount(10000000);
         timeline.setAutoReverse(true);
         final KeyValue kv = new KeyValue(lblProgress.opacityProperty(), 0);
-        final KeyFrame kf = new KeyFrame(Duration.millis(2000), kv);
+        final KeyFrame kf = new KeyFrame(Duration.millis(1000), kv);
         timeline.getKeyFrames().add(kf);
         timeline.play();
 
 
-        //
         timeline.getKeyFrames().add(
-                new KeyFrame(Duration.seconds(1),
+                new KeyFrame(Duration.millis(500),
                         event -> {
-                            timeSeconds--;
-                            timeSeconds--;
-
-                            if (timeSeconds <= 0 && i==1) {
-                                timeline.stop();
-
-                                WPRendering.display(init);
-                                Private.display(init);
-                                primaryStage.close();
+                            final Label lbl1 = new Label(comment);
+                            lblProgress.setFont(Font.font("GB18030 Bitmap", FontWeight.BOLD, 20));
+                            lblProgress.setTextFill(Color.WHITE);
+                            if(i==1){
+                                try {
+                                    if(controller.getListOfPlayers().size()==1){ //Fa qualcosa mentre aspetta
+                                        //System.out.println(controller.getTimeSearch());
+                                        single++;
+                                    }
+                                    if(controller.getListOfPlayers().size()==2 && access == 0 && single == 0){
+                                        controller.search();
+                                        access++;
+                                    }
+                                    //System.out.println("Timer pari a:"+controller.getTimeSearch());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                try{
+                                    if(controller.getTimeSearch()==0) {
+                                        timeline.stop();
+                                        WPRendering.display(init);
+                                        Private.display(init);
+                                        primaryStage.close();
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
-
-                            if (timeSeconds <= 0 && i==2) {
+                            if (i==2) {
+                                try {
+                                    while(controller.getWindowChosen().size()< controller.getListOfPlayers().size())
+                                        lbl1.setText("Players are choosing, wait");
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                                 timeline.stop();
-
-                                Play.display(myWindow,init, titleWp, diffWp);
+                                Play.display(myWindow,init,titleWp,diffWp);
                                 primaryStage.close();
                             }
                         }));
@@ -117,8 +142,27 @@ public class Loading {
         rightPane.setLayoutY(100);
         rightPane.getChildren().addAll(lblProgress);
 
+        final Label lbl2 = new Label("");
+        lbl2.setFont(Font.font("GB18030 Bitmap", FontWeight.BOLD, 10));
+        lbl2.setTextFill(Color.WHITE);
 
-        root.getChildren().addAll(leftPane, rightPane);
+        try {
+            if(controller.getListOfPlayers().size()==2){
+                lbl2.setText("Found one!");
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        try {
+            if(controller.getListOfPlayers().size()==3){
+                lbl2.setText("Found two! Only one remaining...");
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+
+        root.getChildren().addAll(leftPane, rightPane,lbl2);
         root.setStyle("-fx-background-color:black;");
 
         primaryStage.initModality(Modality.WINDOW_MODAL);
@@ -128,7 +172,4 @@ public class Loading {
         primaryStage.showAndWait();
     }
 
-    public static void setTimeStart(int timer) {
-        timeSeconds = timer;
-    }
 }

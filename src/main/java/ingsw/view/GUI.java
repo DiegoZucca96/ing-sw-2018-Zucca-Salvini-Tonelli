@@ -177,8 +177,7 @@ public class GUI  extends Application{
                                     } catch (RemoteException e1) {
                                         e1.printStackTrace();
                                     }
-                                    Loading.setTimeStart(controller.getTimeSearch());
-                                    Loading.display(new Stage(), init, "LOADING MATCH", 1, null, null, null);
+                                    Loading.display(new Stage(), init, "LOADING MATCH", 1, null, null, null, controller);
 
                                 } else {
                                     warning1.setText("MATCH IS FULL, SORRY");
@@ -268,12 +267,6 @@ public class GUI  extends Application{
                     if (!controller.access(saveUsername)) {
                         controller.addAccount(saveUsername);
                         stage.close();
-                        InitializerView init = null;
-                        try {
-                            init = controller.initializeView();
-                        } catch (RemoteException e1) {
-                            e1.printStackTrace();
-                        }
                         oldStage.show();
                     }else {
                         warning1.setText("NICKNAME ALREADY EXISTS");
