@@ -1,7 +1,7 @@
 package ingsw.view;
 
+import ingsw.model.Cell;
 import ingsw.model.InitializerView;
-import ingsw.model.windowpattern.CellRender;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -33,7 +33,7 @@ import java.util.List;
 public class Play {
 
 
-    public static void display(List<CellRender> myWindow, InitializerView init){
+    public static void display(List<Cell> myWindow, InitializerView init){
 
         Stage table = new Stage();
         table.setWidth(1200);
@@ -87,8 +87,8 @@ public class Play {
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(55, 55);
-                String numCell = myWindow.get(k).getNumber();
-                String colorCell = myWindow.get(k).getColor();
+                String numCell = Integer.toString(myWindow.get(k).getNumber());
+                String colorCell = String.valueOf(myWindow.get(k).getColor());
                 String pathCell = WPRendering.pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 55, 55, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,

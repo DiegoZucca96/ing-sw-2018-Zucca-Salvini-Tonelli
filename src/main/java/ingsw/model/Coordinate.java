@@ -1,11 +1,13 @@
 package ingsw.model;
 
+import java.io.Serializable;
+
 /**Author : Alessio Tonelli
  *
  *
  * */
 
-public class Coordinate {
+public class Coordinate implements Serializable {
 
     private final int x;
     private final int y;

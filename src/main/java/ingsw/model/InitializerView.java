@@ -1,6 +1,5 @@
 package ingsw.model;
 
-import ingsw.model.windowpattern.CellRender;
 import ingsw.model.windowpattern.InfoWindow;
 
 import java.io.Serializable;
@@ -9,7 +8,7 @@ import java.util.ArrayList;
 //Oggetto che porta le informazioni grafiche da model a view
 public class InitializerView implements Serializable {
     private ArrayList<InfoWindow> info;
-    private ArrayList<CellRender> images;
+    private ArrayList<Cell> images;
     private ArrayList<String> pbCard;
     private ArrayList<String> toolCard;
     private ArrayList<String> pvCard;
@@ -27,7 +26,7 @@ public class InitializerView implements Serializable {
         return info;
     }
 
-    public ArrayList<CellRender> getImages() {
+    public ArrayList<Cell> getImages() {
         return images;
     }
 

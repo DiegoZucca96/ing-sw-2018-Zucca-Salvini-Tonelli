@@ -1,12 +1,14 @@
 package ingsw.model;
 
+import java.io.Serializable;
+
 /**Author : Alessio Tonelli
  *
  *
  * */
 
 
-public class Cell {
+public class Cell implements Serializable {
     private Color color;              //colore della cella, per ora commentato perchè implementata da Diego la Enum
     private int number;                 //numero scritto sulla cella come vincolo
     private boolean empty;              //presenza o meno del dado

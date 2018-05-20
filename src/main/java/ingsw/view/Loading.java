@@ -3,8 +3,8 @@ package ingsw.view;
 
 
 import ingsw.controller.RMIController;
+import ingsw.model.Cell;
 import ingsw.model.InitializerView;
-import ingsw.model.windowpattern.CellRender;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -60,7 +60,7 @@ public class Loading {
     }
 
 
-    public static void display(Stage primaryStage, InitializerView init, String comment, int i, List<CellRender> myWindow) {
+    public static void display(Stage primaryStage, InitializerView init, String comment, int i, List<Cell> myWindow) {
 
         //MANAGE CYCLE PROGRESS
         final ProgressIndicator progressIndicator = new ProgressIndicator(0);
