@@ -1,7 +1,7 @@
 package ingsw.view;
 
+import ingsw.model.Cell;
 import ingsw.model.InitializerView;
-import ingsw.model.windowpattern.CellRender;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -33,7 +33,7 @@ import java.util.List;
 public class Play {
 
 
-    public static void display(List<CellRender> myWindow, InitializerView init){
+    public static void display(List<Cell> myWindow, InitializerView init, String myTitle, String myDiff){
 
         Stage table = new Stage();
         table.setWidth(1200);
@@ -82,13 +82,15 @@ public class Play {
         paneWP.setLayoutY(420);
         paneWP.setLayoutX(10);
         GridPane myGrid = new GridPane();
+        myGrid.setLayoutX(0);
+        myGrid.setLayoutY(0);
         int k=0;
         for(int i=0; i<4; i++){
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(55, 55);
-                String numCell = myWindow.get(k).getNumber();
-                String colorCell = myWindow.get(k).getColor();
+                String numCell = Integer.toString(myWindow.get(k).getNumber());
+                String colorCell = String.valueOf(myWindow.get(k).getColor());
                 String pathCell = WPRendering.pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 55, 55, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
@@ -100,7 +102,11 @@ public class Play {
             }
         }
 
-        paneWP.getChildren().add(myGrid);
+        Label info = new Label(myTitle+myDiff);
+        info.setLayoutY(230);
+        info.setLayoutX(10);
+        info.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"; -fx-padding: 0 0 20 0; -fx-text-alignment: center");
+        paneWP.getChildren().addAll(myGrid, info);
 
 
         //PAGINAZIONE DI VARI OGGETTI

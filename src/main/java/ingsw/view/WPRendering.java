@@ -1,8 +1,8 @@
 package ingsw.view;
 
 
+import ingsw.model.Cell;
 import ingsw.model.InitializerView;
-import ingsw.model.windowpattern.CellRender;
 import ingsw.model.windowpattern.InfoWindow;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -28,6 +28,7 @@ import java.util.List;
 
 public class WPRendering {
 
+    private static final String styleSheet = "-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"; -fx-padding: 0 0 20 0; -fx-text-alignment: center";
 
     public static void display(InitializerView init){
 
@@ -44,7 +45,7 @@ public class WPRendering {
 
         //Con queste due operazioni ottengo tutti i parametri che sono stati generati dal model (Problema di sincronizzarli con quelli salvati nel model)
         ArrayList<InfoWindow> infos = init.getInfo();
-        ArrayList<CellRender> cells = init.getImages();
+        ArrayList<Cell> cells = init.getImages();
 
         //WP 1
         GridPane grid1 = new GridPane();
@@ -53,8 +54,8 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String numCell = cells.get(k).getNumber();
-                String colorCell = cells.get(k).getColor();
+                String numCell = Integer.toString(cells.get(k).getNumber());
+                String colorCell = String.valueOf(cells.get(k).getColor());
                 String pathCell = pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 50, 50, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
@@ -72,13 +73,13 @@ public class WPRendering {
         String diffPath1 = infos.get(0).getDifficulty();
         final Label label1 = new Label();
         label1.setText("               "+namePath1+diffPath1);
-        label1.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"; -fx-padding: 0 0 20 0; -fx-text-alignment: center");
+        label1.setStyle(styleSheet);
         root.add(label1, 0, 1);
 
         label1.setOnMousePressed(event -> {
-            List<CellRender> myWindow = new ArrayList<>();
+            List<Cell> myWindow = new ArrayList<>();
             myWindow = cells.subList(0, 20);
-            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow);
+            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow, namePath1, diffPath1);
             windowPattern.close();
         });
 
@@ -104,8 +105,8 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String numCell = cells.get(k).getNumber();
-                String colorCell = cells.get(k).getColor();
+                String numCell = String.valueOf(cells.get(k).getNumber());
+                String colorCell = String.valueOf(cells.get(k).getColor());
                 String pathCell = pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 50, 50, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
@@ -119,16 +120,17 @@ public class WPRendering {
 
         root.add(grid2, 1, 0);
 
-        String imagePath2 = infos.get(1).getName()+infos.get(1).getDifficulty();
+        String namePath2 = infos.get(1).getName();
+        String diffPath2 = infos.get(1).getDifficulty();
         final Label label2 = new Label();
-        label2.setText("               "+imagePath2);
-        label2.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"; -fx-padding: 0 0 20 0; -fx-text-alignment: center");
+        label2.setText("               "+namePath2+diffPath2);
+        label2.setStyle(styleSheet);
         root.add(label2, 1, 1);
 
         label2.setOnMousePressed(event -> {
-            List<CellRender> myWindow = new ArrayList<>();
+            List<Cell> myWindow = new ArrayList<>();
             myWindow = cells.subList(20, 40);
-            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow);
+            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow, namePath2, diffPath2);
             windowPattern.close();
         });
 
@@ -154,8 +156,8 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String numCell = cells.get(k).getNumber();
-                String colorCell = cells.get(k).getColor();
+                String numCell = String.valueOf(cells.get(k).getNumber());
+                String colorCell = String.valueOf(cells.get(k).getColor());
                 String pathCell = pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 50, 50, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
@@ -168,16 +170,17 @@ public class WPRendering {
         }
         root.add(grid3, 2, 0);
 
-        String imagePath3 = infos.get(2).getName()+infos.get(2).getDifficulty();
+        String namePath3 = infos.get(2).getName();
+        String diffPath3 = infos.get(2).getDifficulty();
         final Label label3 = new Label();
-        label3.setText("               "+imagePath3);
-        label3.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"; -fx-padding: 0 0 20 0; -fx-text-alignment: center");
+        label3.setText("               "+namePath3+diffPath3);
+        label3.setStyle(styleSheet);
         root.add(label3, 2, 1);
 
         label3.setOnMousePressed(event -> {
-            List<CellRender> myWindow = new ArrayList<>();
+            List<Cell> myWindow = new ArrayList<>();
             myWindow = cells.subList(40, 60);
-            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow);
+            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow, namePath3, diffPath3);
             windowPattern.close();
         });
 
@@ -203,8 +206,8 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String numCell = cells.get(k).getNumber();
-                String colorCell = cells.get(k).getColor();
+                String numCell = String.valueOf(cells.get(k).getNumber());
+                String colorCell = String.valueOf(cells.get(k).getColor());
                 String pathCell = pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 50, 50, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
@@ -218,16 +221,17 @@ public class WPRendering {
 
         root.add(grid4, 3, 0);
 
-        String imagePath4 = infos.get(3).getName()+infos.get(3).getDifficulty();
+        String namePath4 = infos.get(3).getName();
+        String diffPath4 = infos.get(3).getDifficulty();
         final Label label4 = new Label();
-        label4.setText("               "+imagePath4);
-        label4.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"; -fx-padding: 0 0 20 0; -fx-text-alignment: center");
+        label4.setText("               "+namePath4+diffPath4);
+        label4.setStyle(styleSheet);
         root.add(label4, 3, 1);
 
         label4.setOnMousePressed(event -> {
-            List<CellRender> myWindow = new ArrayList<>();
+            List<Cell> myWindow = new ArrayList<>();
             myWindow = cells.subList(60, 80);
-            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow);
+            Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow, namePath4, diffPath4);
             windowPattern.close();
         });
 

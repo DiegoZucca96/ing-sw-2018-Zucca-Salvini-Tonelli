@@ -4,6 +4,7 @@ package ingsw.model.windowpattern;
 
 import ingsw.model.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -13,7 +14,7 @@ import java.util.List;
  *
  * */
 
-public class WindowPattern {
+public class WindowPattern implements Serializable {
 
 
     private String title ;
@@ -24,8 +25,28 @@ public class WindowPattern {
 
     private boolean wpEmpty;
 
-    public WindowPattern(){
-        cellMatrix= new Cell[5][4];
+    public WindowPattern(SAXParser parser, int select ){
+
+        List<Cell> readConfig = parser.readConfig("src/main/java/ingsw/model/windowpattern/wp"+select+".xml");
+
+        List<InfoWindow> readInfo = parser.readInfo("src/main/java/ingsw/model/windowpattern/wp"+select+".xml");
+
+        cellMatrix= new Cell[4][5];
+
+        int count=0;
+        for(int row = 0; row < 4; row++){
+            for ( int column = 0; column < 5; column ++ ){
+
+                cellMatrix[row][column]= readConfig.get(count);
+                count++;
+            }
+        }
+
+
+
+        this.title=readInfo.get(0).getName();
+        this.difficulty=Integer.parseInt(readInfo.get(0).getDifficulty());
+
     }
 
     public String getTitle() {
@@ -237,17 +258,14 @@ public class WindowPattern {
             int select = rg.random();
 
             //READ FROM FILE
-            List<CellRender> readConfig = read.readConfig("src/main/java/ingsw/model/windowpattern/wp"+select+".xml");
+            List<Cell> readConfig = read.readConfig("src/main/java/ingsw/model/windowpattern/wp"+select+".xml");
 
             List<InfoWindow> readInfo = read.readInfo("src/main/java/ingsw/model/windowpattern/wp"+select+".xml");
 
-            for (CellRender cell : readConfig) {
+            for (Cell cell : readConfig) {
 
                 //CREAT CELL IN THE VIEW
                 init.getImages().add(cell);
-
-                //CREAT CELL IN THE MODEL
-                Cell cellWp = new Cell(Integer.parseInt(cell.getNumber()), Color.valueOf(cell.getColor()), new Coordinate(Integer.parseInt(cell.getRow()), Integer.parseInt(cell.getColumn())));
 
             }
             //SEND INFO (NAME AND DIFFICULTY) TO VIEW

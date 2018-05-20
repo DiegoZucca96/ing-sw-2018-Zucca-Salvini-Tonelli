@@ -1,5 +1,9 @@
 package ingsw.model.windowpattern;
 
+import ingsw.model.Cell;
+import ingsw.model.Color;
+import ingsw.model.Coordinate;
+
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -37,8 +41,9 @@ public class SAXParser {
 
     /**THIS METHOD EXTRACTS ELEMENT FROM EACH CELL OF THE WINDOW*/
     @SuppressWarnings({ "unchecked", "null" })
-    public List<CellRender> readConfig(String configFile){
-        List<CellRender> cells = new ArrayList<CellRender>();
+    public List<Cell> readConfig(String configFile){
+        List<Cell> cells = new ArrayList<Cell>();
+
         try {
             // First, create a new XMLInputFactory
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
@@ -46,7 +51,11 @@ public class SAXParser {
             InputStream in = new FileInputStream(configFile);
             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
             // read the XML document
-            CellRender cellRender = null;
+            Cell cell = null;
+            int column=0;
+            int row=0;
+            int number=0;
+            Color color =null;
 
             while (eventReader.hasNext()) {
                 XMLEvent event = eventReader.nextEvent();
@@ -55,7 +64,7 @@ public class SAXParser {
                 if (event.isStartElement()) {
                     StartElement startElement = event.asStartElement();
                     if (startElement.getName().getLocalPart().equals(CELL)) {
-                        cellRender = new CellRender();
+
                     }
 
 
@@ -63,28 +72,28 @@ public class SAXParser {
                     if (event.isStartElement()) {
                         if (event.asStartElement().getName().getLocalPart().equals(ROW)) {
                             event = eventReader.nextEvent();
-                            cellRender.setRow(event.asCharacters().getData());
+                            row = Integer.parseInt(event.asCharacters().getData());
                             continue;
                         }
                     }
 
                     if (event.asStartElement().getName().getLocalPart().equals(COLUMN)) {
                         event = eventReader.nextEvent();
-                        cellRender.setColumn(event.asCharacters().getData());
+                        column = Integer.parseInt(event.asCharacters().getData());
                         continue;
                     }
 
                     if (event.asStartElement().getName().getLocalPart()
                             .equals(NUMBER)) {
                         event = eventReader.nextEvent();
-                        cellRender.setNumber(event.asCharacters().getData());
+                        number=Integer.parseInt(event.asCharacters().getData());
                         continue;
                     }
 
                     if (event.asStartElement().getName().getLocalPart()
                             .equals(COLOR)) {
                         event = eventReader.nextEvent();
-                        cellRender.setColor(event.asCharacters().getData());
+                        color=Color.valueOf(event.asCharacters().getData());
                         continue;
                     }
                 }
@@ -92,7 +101,8 @@ public class SAXParser {
                 if (event.isEndElement()) {
                     EndElement endElement = event.asEndElement();
                     if (endElement.getName().getLocalPart().equals(CELL)) {
-                        cells.add(cellRender);
+                        cell = new Cell(number, color, new Coordinate(row, column));
+                        cells.add(cell);
                     }
                 }
 
