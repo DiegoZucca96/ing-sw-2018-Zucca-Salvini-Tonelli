@@ -49,7 +49,7 @@ public class GUI  extends Application{
         Application.launch();
     }
 
-    //Avvia la connessione RMI se connectionType = "RMI", avvia la connessione scket se connectionType = "socket"
+    //Avvia la connessione RMI se connectionType = "RMI", avvia la connessione socket se connectionType = "socket"
     public void setupConnection(String connectionType){
         if(connectionType.equals("socket")){
             client = new ClientSocket("127.0.0.1",1080);

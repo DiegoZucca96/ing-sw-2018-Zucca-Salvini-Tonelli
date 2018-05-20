@@ -18,6 +18,8 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     private WindowPFactory wpFactory;
     private RandomGenerator rg;
 
+    //NB -->    tutti i metodi del controller devono essere boolean, per un motivo o per l'altro
+    //          non sempre possono fare l'azione richiesta, in quel caso restituiscono false
 
     public Controller(Server server) throws RemoteException {
         super();

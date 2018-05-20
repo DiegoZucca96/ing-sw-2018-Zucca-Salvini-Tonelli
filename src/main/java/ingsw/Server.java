@@ -131,15 +131,10 @@ public class Server {
             getWindowChosen().add((WindowPattern) myWindow);
     }
 
-    public void setClientState(String clientName, ClientState state){
-        for(ClientData client: listOfClients ){
-            if(client.getName().equals(clientName) && client.getConnection().equals("socket")){
-                client.getHandler().setClientState(state);
-            }
-            else if (client.getName().equals(clientName) && client.getConnection().equals("RMI")){
-                    //...
-                }
-            }
+    public void setClientState(String clientName, ClientState state) {
+        for (ClientData client : listOfClients) {
+            if (client.getName().equals(clientName)) client.setState(state);
+        }
     }
 
 

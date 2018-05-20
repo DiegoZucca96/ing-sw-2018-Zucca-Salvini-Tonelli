@@ -1,5 +1,7 @@
 package ingsw;
 
+import ingsw.controller.Controller;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -10,6 +12,7 @@ import java.util.Scanner;
 public class ServerHandler implements Runnable {
 
     private Server server;
+    private Controller controller;
     private Socket socket;
     private Scanner in;
     private PrintWriter out;
@@ -19,6 +22,7 @@ public class ServerHandler implements Runnable {
     public ServerHandler(Socket socket){
         this.socket=socket;
         server = Server.instance(1080);
+        controller = server.getController();
         try {
             in = new Scanner(socket.getInputStream());
             out = new PrintWriter(socket.getOutputStream(), true);
@@ -30,22 +34,42 @@ public class ServerHandler implements Runnable {
     }
 
     public void run(){
+        String request;
+        String command;
+        String parameter;
         try {
             setup();
-            //...
+            while(true){
+                request = in.nextLine();
+                command = request.substring(0,request.indexOf(':'));
+                parameter = request.substring(request.indexOf(':')+1, request.length()-1);
+                if(command.equals("close")) break;
+                else if (command.equals("login")) login(parameter);
+                else if (command.equals("register")) register(parameter);
+                }
             socket.close();
-        } catch (IOException e) {
+        }
+         catch (IOException e) {
             System.err.println(e.getMessage());
         }
     }
 
     private void setup() throws IOException {
-        out.print("Get name");
-        server.addAccount(in.nextLine(), this);
+        //...
     }
 
     public void setClientState(ClientState state){
         out.print("Set state:" + state.toString());
+    }
+
+    public void login(String parameter){
+        //if(controller.addPlayers(parameter)) out.print("ok");
+        //else out.print("ko");
+    }
+
+    public void register(String parameter){
+        //if(controller.addAccount(parameter)) out.print("ok");
+        //else out.print("ko");
     }
 
 }
