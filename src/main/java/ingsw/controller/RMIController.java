@@ -27,9 +27,11 @@ public interface RMIController extends Remote {
 
     void addWindow(List<Cell> myWindow) throws RemoteException;
 
-    String getCurrentPlayerName();
+    String getCurrentPlayerName() throws RemoteException;
 
     void skip(String clientName) throws RemoteException;
+
+    boolean useToolCard(String parameter) throws RemoteException;
 
     InitializerView initializeView() throws RemoteException;
 
@@ -43,9 +45,7 @@ public interface RMIController extends Remote {
 
     boolean register(String account, ServerHandler serverHandler) throws RemoteException;
 
-    boolean access(String account) throws RemoteException;
-
     //restituisce lo stato del client che lo richiede (usa toString dello oggetto di tipo ClientState)
-    String getPlayerState(String clientName);
+    String getPlayerState(String clientName) throws RemoteException;
 
 }

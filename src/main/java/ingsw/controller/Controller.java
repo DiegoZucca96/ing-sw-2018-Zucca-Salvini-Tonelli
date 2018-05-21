@@ -102,6 +102,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         }
     }
 
+    //Inserisce l'account tra i giocatori disabilitandolo, verrà attivato solo il primo entrato
     @Override
     public synchronized boolean login(String account) throws RemoteException {
         if(access(account)){
@@ -135,10 +136,10 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return match.getCurrentPlayer().getName();
     }
 
+    //Salta volontariamente il turno oppure forzatamente dalla fine del timer de giocatore
     @Override
     public void skip(String clientName){
         if(getPlayerState(clientName).equals("enabled")){
-
             disableClient(getCurrentPlayerName());
             match.nextTurn();
             enableClient(getCurrentPlayerName());
@@ -159,6 +160,12 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     //attiva il client (il server ascolta le sue richieste
     public ClientState disableClient(String clientName){
         return new DisableClient().setState(clientName);
+    }
+
+    //Utilizza la ToolCard, ancora da implementare (forse serve anche quale tool è stata scelta come parametro)
+    @Override
+    public boolean useToolCard(String parameter){
+        return false;
     }
 
     //Chiama il metodo inizializzatore del Match

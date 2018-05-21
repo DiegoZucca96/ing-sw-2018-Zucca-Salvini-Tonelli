@@ -126,7 +126,7 @@ public class Server {
                     timeMoveRemaining--;
                     controller.skip(controller.getCurrentPlayerName());
                 }
-                if(timeMoveRemaining>0))
+                if(timeMoveRemaining>0)
                     timeMoveRemaining--;
             }
         }, delay, period);
