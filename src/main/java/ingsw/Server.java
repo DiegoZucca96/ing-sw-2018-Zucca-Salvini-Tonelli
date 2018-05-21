@@ -138,7 +138,6 @@ public class Server {
 
     public void addAccount(String account) {
         listOfClients.add(new ClientData(account));
-        controller.disableClient(account);
     }
 
     public void addAccount(String account, ServerHandler handler) {
@@ -157,7 +156,12 @@ public class Server {
         }
     }
 
-
+    public ClientState getClientState(String clientName){
+        for (ClientData client : listOfClients) {
+            if (client.getName().equals(clientName)) return  client.getState();
+        }
+    }
+    
 
     public void startServerSocket() {
         ExecutorService executor = Executors.newCachedThreadPool();
