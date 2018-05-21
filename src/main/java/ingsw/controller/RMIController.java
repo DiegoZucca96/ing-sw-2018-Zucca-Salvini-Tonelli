@@ -32,4 +32,7 @@ public interface RMIController extends Remote {
     InitializerView initializeView() throws RemoteException;
 
     boolean access(String account) throws RemoteException;
+
+    //restituisce lo stato del client che lo richiede (usa toString dello oggetto di tipo ClientState)
+    String getPlayerState(String clientName);
 }

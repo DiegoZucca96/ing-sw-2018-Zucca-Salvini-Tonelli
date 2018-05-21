@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 public class ClientSocket implements Client{
 
+    private String name;
     private String ip;
     private int port;
     private Scanner in;
@@ -46,8 +47,7 @@ public class ClientSocket implements Client{
         try{
             setup();
             //...
-            //In teoria qua si deve passare al metodo grafico il controller per far eseguire le varie operazioni
-            //new GUI().main();
+            new GUI().display(this);
             //...
         }catch(NoSuchElementException e){
             System.err.println(e.getMessage());
@@ -73,8 +73,20 @@ public class ClientSocket implements Client{
 
     @Override
     public boolean register(String nickname) {
+        name = nickname;
         out.print("register:" + nickname);
         if(in.nextLine().equals("ok")) return true;
         else return  false;
+    }
+
+    @Override
+    public String getPlayerState() {
+        out.print("state:" + name);
+        return in.nextLine();
+    }
+
+    @Override
+    public void skip() {
+        out.print("skip:" + name);
     }
 }
