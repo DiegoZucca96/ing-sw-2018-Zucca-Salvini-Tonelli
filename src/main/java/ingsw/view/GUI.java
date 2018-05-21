@@ -36,40 +36,18 @@ import java.rmi.registry.Registry;
  *
  * */
 
-public class GUI  extends Application{
+public class GUI  {
 
     private Scene scene;
-    private Stage window;
     private String username;
     private String saveUsername;
-    private RMIController controller;
-    private Client client;              //usa client per contattare il controller
-
-    public static void main() {
-        Application.launch();
-    }
-
-    //Avvia la connessione RMI se connectionType = "RMI", avvia la connessione socket se connectionType = "socket"
-    public void setupConnection(String connectionType){
-        if(connectionType.equals("socket")){
-            client = new ClientSocket("127.0.0.1",1080);
-            try{
-                client.startClient();
-            }catch (IOException e){
-                System.err.println(e.getMessage());
-            }
-        } else if(connectionType.equals("RMI")){
-            client = new ClientRMI();
-        }
-    }
-
-    public void start(Stage stage) throws Exception{
 
 
-        Registry registry=LocateRegistry.getRegistry("localhost",1080);
-        this.controller=(RMIController) registry.lookup("controller");
 
-        window=stage;
+    public void display() {
+
+
+        Stage window = new Stage();
         window.setWidth(1200);
         window.setHeight(700);
         VBox root = new VBox();

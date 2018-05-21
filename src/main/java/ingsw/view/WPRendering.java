@@ -7,6 +7,7 @@ import ingsw.model.InitializerView;
 import ingsw.model.windowpattern.InfoWindow;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -41,8 +42,7 @@ public class WPRendering {
         RMIController controller=(RMIController) registry.lookup("controller");
 
         GridPane root = new GridPane();
-        root.setLayoutX(40);
-        root.setLayoutY(20);
+        root.setPadding(new Insets(20, 0, 0, 40));
         root.setHgap(40);
         root.setVgap(20);
         Scene s2= new Scene(root);
