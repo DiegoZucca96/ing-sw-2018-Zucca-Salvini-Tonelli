@@ -36,10 +36,7 @@ public class WPRendering {
 
     private static final String styleSheet = "-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"; -fx-padding: 0 0 20 0; -fx-text-alignment: center";
 
-    public static void display(InitializerView init) throws Exception{
-
-        Registry registry= LocateRegistry.getRegistry("localhost",1080);
-        RMIController controller=(RMIController) registry.lookup("controller");
+    public static void display(ArrayList<ArrayList<String>> init) {
 
         GridPane root = new GridPane();
         root.setPadding(new Insets(20, 0, 0, 40));
@@ -52,18 +49,20 @@ public class WPRendering {
 
 
         //Con queste due operazioni ottengo tutti i parametri che sono stati generati dal model (Problema di sincronizzarli con quelli salvati nel model)
-        ArrayList<InfoWindow> infos = init.getInfo();
-        ArrayList<Cell> cells = init.getImages();
+        //ArrayList<InfoWindow> infos = init.getInfo();
+       //ArrayList<Cell> cells = init.getImages();
+
 
         //WP 1
         GridPane grid1 = new GridPane();
-        int k=0;
+        int k=2;
         for(int i=0; i<4; i++){
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String numCell = Integer.toString(cells.get(k).getNumber());
-                String colorCell = String.valueOf(cells.get(k).getColor());
+                String cell = init.get(0).get(k);
+                String numCell = cell.substring(cell.indexOf(':')+1,cell.indexOf(',')-1);
+                String colorCell = cell.substring(cell.indexOf(",")+1);
                 String pathCell = pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 50, 50, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
@@ -77,21 +76,16 @@ public class WPRendering {
 
         root.add(grid1, 0, 0);
 
-        String namePath1 = infos.get(0).getName();
-        String diffPath1 = infos.get(0).getDifficulty();
+        String namePath1 = init.get(0).get(0);
+        String diffPath1 = init.get(0).get(1);
         final Label label1 = new Label();
         label1.setText("               "+namePath1+diffPath1);
         label1.setStyle(styleSheet);
         root.add(label1, 0, 1);
 
         label1.setOnMousePressed(event -> {
-            List<Cell> myWindow = new ArrayList<>();
-            myWindow = cells.subList(0, 20);
-            try {
-                Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow, namePath1, diffPath1, controller);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
+            ArrayList<String> myWindow= init.get(0);
+            Loading.display(new Stage(), "WAITING FOR PLAYERS", 2, myWindow);
             windowPattern.close();
         });
 
@@ -112,13 +106,14 @@ public class WPRendering {
 
         //WP 2
         GridPane grid2 = new GridPane();
-
+        k=2;
         for(int i=0; i<4; i++){
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String numCell = String.valueOf(cells.get(k).getNumber());
-                String colorCell = String.valueOf(cells.get(k).getColor());
+                String cell = init.get(1).get(k);
+                String numCell = cell.substring(cell.indexOf(':')+1,cell.indexOf(',')-1);
+                String colorCell = cell.substring(cell.indexOf(",")+1);
                 String pathCell = pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 50, 50, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
@@ -132,21 +127,16 @@ public class WPRendering {
 
         root.add(grid2, 1, 0);
 
-        String namePath2 = infos.get(1).getName();
-        String diffPath2 = infos.get(1).getDifficulty();
+        String namePath2 = init.get(1).get(0);
+        String diffPath2 = init.get(1).get(1);
         final Label label2 = new Label();
         label2.setText("               "+namePath2+diffPath2);
         label2.setStyle(styleSheet);
         root.add(label2, 1, 1);
 
         label2.setOnMousePressed(event -> {
-            List<Cell> myWindow = new ArrayList<>();
-            myWindow = cells.subList(20, 40);
-            try {
-                Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow, namePath1, diffPath1, controller);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
+            ArrayList<String> myWindow= init.get(1);
+            Loading.display(new Stage(), "WAITING FOR PLAYERS", 2, myWindow);
             windowPattern.close();
         });
 
@@ -167,13 +157,14 @@ public class WPRendering {
 
         //WP 3
         GridPane grid3 = new GridPane();
-
+        k=2;
         for(int i=0; i<4; i++){
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String numCell = String.valueOf(cells.get(k).getNumber());
-                String colorCell = String.valueOf(cells.get(k).getColor());
+                String cell = init.get(2).get(k);
+                String numCell = cell.substring(cell.indexOf(':')+1,cell.indexOf(',')-1);
+                String colorCell = cell.substring(cell.indexOf(",")+1);
                 String pathCell = pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 50, 50, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
@@ -186,21 +177,16 @@ public class WPRendering {
         }
         root.add(grid3, 2, 0);
 
-        String namePath3 = infos.get(2).getName();
-        String diffPath3 = infos.get(2).getDifficulty();
+        String namePath3 = init.get(2).get(0);
+        String diffPath3 = init.get(2).get(1);
         final Label label3 = new Label();
         label3.setText("               "+namePath3+diffPath3);
         label3.setStyle(styleSheet);
         root.add(label3, 2, 1);
 
         label3.setOnMousePressed(event -> {
-            List<Cell> myWindow = new ArrayList<>();
-            myWindow = cells.subList(40, 60);
-            try {
-                Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow, namePath1, diffPath1, controller);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
+            ArrayList<String> myWindow= init.get(2);
+            Loading.display(new Stage(), "WAITING FOR PLAYERS", 2, myWindow);
             windowPattern.close();
         });
 
@@ -221,13 +207,14 @@ public class WPRendering {
 
         //WP 4
         GridPane grid4 = new GridPane();
-
+        k=2;
         for(int i=0; i<4; i++){
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String numCell = String.valueOf(cells.get(k).getNumber());
-                String colorCell = String.valueOf(cells.get(k).getColor());
+                String cell = init.get(3).get(k);
+                String numCell = cell.substring(cell.indexOf(':')+1,cell.indexOf(',')-1);
+                String colorCell = cell.substring(cell.indexOf(",")+1);
                 String pathCell = pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 50, 50, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
@@ -241,21 +228,16 @@ public class WPRendering {
 
         root.add(grid4, 3, 0);
 
-        String namePath4 = infos.get(3).getName();
-        String diffPath4 = infos.get(3).getDifficulty();
+        String namePath4 = init.get(3).get(0);
+        String diffPath4 = init.get(3).get(0);
         final Label label4 = new Label();
         label4.setText("               "+namePath4+diffPath4);
         label4.setStyle(styleSheet);
         root.add(label4, 3, 1);
 
         label4.setOnMousePressed(event -> {
-            List<Cell> myWindow = new ArrayList<>();
-            myWindow = cells.subList(60, 80);
-            try {
-                Loading.display(new Stage(), init, "WAITING FOR PLAYERS", 2, myWindow, namePath1, diffPath1, controller);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
+            ArrayList<String> myWindow= init.get(3);
+            Loading.display(new Stage(), "WAITING FOR PLAYERS", 2, myWindow);
             windowPattern.close();
         });
 

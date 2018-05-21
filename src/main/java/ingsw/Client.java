@@ -15,7 +15,7 @@ public interface Client {
     boolean register(String nickname);
 
     //restituisce un array contenente i dati per renderizzare le 4 wp
-    ArrayList<ArrayList<Integer>[][]> getRandomWps();
+    ArrayList<ArrayList<String>> getRandomWps();
 
     //prende dalla draftpool il dado in posizione index, e lo mette nella wp in posizione (row, column)
     //restitusce false se si violano le restrizioni
@@ -31,4 +31,6 @@ public interface Client {
     //restituisce lo stato del giocatore, "enabled" -> attivo. "disabled" -> disattivo (non è il suo turno)
     String getPlayerState();
 
+    //restituisce i secondi mancanti all'inizio della partita
+    int getCountdown();
 }
