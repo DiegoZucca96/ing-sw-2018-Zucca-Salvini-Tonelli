@@ -20,6 +20,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -55,7 +56,7 @@ public class Loading {
     }
 
 
-    public static void display(Stage primaryStage, InitializerView init, String comment, int i, List<Cell> myWindow, String titleWp, String diffWp, RMIController controller) throws RemoteException {
+    public static void display(Stage primaryStage, ArrayList<ArrayList<Integer>[][]> randomWps, String comment, int i, List<Cell> myWindow, String titleWp, String diffWp) throws RemoteException {
 
         //MANAGE CYCLE PROGRESS
         final ProgressIndicator progressIndicator = new ProgressIndicator(0);

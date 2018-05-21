@@ -16,7 +16,6 @@ public class StartView extends Application {
 
 
     private Client client;
-    private GUI gui = new GUI();
 
 
     public static void main() {
@@ -52,12 +51,10 @@ public class StartView extends Application {
 
         rmiBtn.setOnAction(e->{
             setupConnection("RMI");
-            gui.display();
             primaryStage.close();
         });
         socketBtn.setOnAction(e->{
             setupConnection("socket");
-            gui.display();
             primaryStage.close();
         });
 

@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 
 /**Author : Alessio Tonelli _ Diego Zucca _ Elio Salvini
  *
@@ -41,13 +42,14 @@ public class GUI  {
     private Scene scene;
     private String username;
     private String saveUsername;
+    private Stage window;
+    private Client client;
+
+    public void display(Client c) {
 
 
-
-    public void display() {
-
-
-        Stage window = new Stage();
+        this.client=c;
+        window = new Stage();
         window.setWidth(1200);
         window.setHeight(700);
         VBox root = new VBox();
@@ -70,7 +72,7 @@ public class GUI  {
         btnPlay.getTransforms().add(new Shear(-0.50, 0));
         btnPlay.setEffect(new Reflection());
         btnPlay.setStyle("-fx-border-radius: 15.0; -fx-background-radius: 15.0; -fx-border-color: black");;
-        btnPlay.setOnAction(event -> loginStage());
+        btnPlay.setOnAction(event -> loginStage(client));
         btnPlay.setLayoutX(900.0);
         btnPlay.setLayoutY(300.0);
 
@@ -103,7 +105,7 @@ public class GUI  {
 
 
     //NUOVO STAGE PER EFFETTUARE IL LOGIN, SE è LA PRIMA VOLTA PUò REGISTRARSI
-    private Stage loginStage () {
+    private Stage loginStage (Client client) {
 
         Stage stage = new Stage();
         GridPane grid = new GridPane();
@@ -123,7 +125,7 @@ public class GUI  {
         link.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                signUp(stage);
+                signUp(stage, client);
                 stage.close();
             }
         });
@@ -141,7 +143,7 @@ public class GUI  {
         btnLogin.setOnAction(e->{
             // SERVER VERIFICA LE CREDENZIALI
             username = tfName.getText();
-                if (!username.isEmpty()) {
+                /*if (!username.isEmpty()) {
                     try {
                         if(!controller.getListOfPlayers().contains(username)){
                             if (controller.access(username)) {
@@ -172,6 +174,28 @@ public class GUI  {
                     } catch (RemoteException e1) {
                         e1.printStackTrace();
                     }
+                }*/
+                if (!username.isEmpty()) {
+                    if(client.login(username)){
+
+                        stage.close();
+                        window.close();
+                        ArrayList<ArrayList<Integer>[][]> randomWps;
+                        randomWps= client.getRandomWps();
+
+                        try {
+                            Loading.display(new Stage(), randomWps, "LOADING MATCH", 1, null, null, null);
+                        } catch (RemoteException e1) {
+                            e1.printStackTrace();
+                        }
+
+                    }else{
+                        warning1.setText("LOGIN IS NOT AVAILABLE");
+                        warning1.setTextFill(Color.RED);
+                    }
+                }else{
+                    warning1.setText("Insert at least one letter");
+                    warning1.setTextFill(Color.RED);
                 }
         });
 
@@ -205,7 +229,7 @@ public class GUI  {
     }
 
     //REGISTRAZIONE AL SERVER
-    private Stage signUp (Stage oldStage) {
+    private Stage signUp (Stage oldStage, Client client) {
 
         Stage stage = new Stage();
         Pane root = new Pane();
@@ -241,17 +265,12 @@ public class GUI  {
         btnSubmit.setOnAction(e-> {
             saveUsername = tfName.getText();
             if (!saveUsername.isEmpty()) {
-                try {
-                    if (!controller.access(saveUsername)) {
-                        controller.addAccount(saveUsername);
-                        stage.close();
-                        oldStage.show();
-                    }else {
-                        warning1.setText("NICKNAME ALREADY EXISTS");
-                        warning1.setTextFill(Color.RED);
-                    }
-                } catch (RemoteException e1) {
-                    e1.printStackTrace();
+                if(client.register(saveUsername)){
+                    stage.close();
+                    oldStage.show();
+                }else {
+                    warning1.setText("NICKNAME ALREADY EXISTS");
+                    warning1.setTextFill(Color.RED);
                 }
             }
         });

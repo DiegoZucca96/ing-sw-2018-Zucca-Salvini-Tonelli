@@ -201,7 +201,7 @@ public class Play {
         Menu toolMenu = new Menu("Tools");
 
         MenuItem  menuSkip = new MenuItem("Skip>>");
-        //menuSkip.setOnAction(e-> );
+        menuSkip.setOnAction(e-> );
         toolMenu.getItems().add(menuSkip);
         return toolMenu;
     }

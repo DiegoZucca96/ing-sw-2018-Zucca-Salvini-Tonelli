@@ -15,7 +15,7 @@ public interface Client {
     boolean register(String nickname);
 
     //restituisce un array contenente i dati per renderizzare le 4 wp
-   // ArrayList<ArrayList<Integer>[][]> getRandomWps();
+    ArrayList<ArrayList<Integer>[][]> getRandomWps();
 
     //prende dalla draftpool il dado in posizione index, e lo mette nella wp in posizione (row, column)
     //restitusce false se si violano le restrizioni
