@@ -180,14 +180,15 @@ public class GUI  {
 
                         stage.close();
                         window.close();
-                        ArrayList<ArrayList<Integer>[][]> randomWps;
-                        randomWps= client.getRandomWps();
 
+/*
                         try {
-                            Loading.display(new Stage(), randomWps, "LOADING MATCH", 1, null, null, null);
+                            Loading().display(new Stage(), randomWps, "LOADING MATCH", 1, null, null, null);
                         } catch (RemoteException e1) {
                             e1.printStackTrace();
-                        }
+                        }*/
+
+                        new Loading(client).display(new Stage(), "LOADING MATCH", 1, null, null, null);
 
                     }else{
                         warning1.setText("LOGIN IS NOT AVAILABLE");

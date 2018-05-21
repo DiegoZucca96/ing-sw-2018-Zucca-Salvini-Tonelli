@@ -63,6 +63,10 @@ public class Cell implements Serializable {
         return coordinate;
     }
 
+    @Override
+    public String toString() {
+        return "cell:" + number + "," + color;
+    }
 
     /*
     public Coordinate getInputCoordinate(){

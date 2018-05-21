@@ -29,7 +29,7 @@ public class WindowPattern implements Serializable {
 
         List<Cell> readConfig = parser.readConfig("src/main/java/ingsw/model/windowpattern/wp"+select+".xml");
 
-        List<InfoWindow> readInfo = parser.readInfo("src/main/java/ingsw/model/windowpattern/wp"+select+".xml");
+        InfoWindow readInfo = parser.readInfo("src/main/java/ingsw/model/windowpattern/wp"+select+".xml");
 
         cellMatrix= new Cell[4][5];
 
@@ -44,8 +44,8 @@ public class WindowPattern implements Serializable {
 
 
 
-        this.title=readInfo.get(0).getName();
-        this.difficulty=Integer.parseInt(readInfo.get(0).getDifficulty());
+        this.title=readInfo.getName();
+        this.difficulty=Integer.parseInt(readInfo.getDifficulty());
 
     }
 

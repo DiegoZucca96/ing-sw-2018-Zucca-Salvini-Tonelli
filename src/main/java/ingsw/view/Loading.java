@@ -1,6 +1,7 @@
 package ingsw.view;
 
 
+import ingsw.Client;
 import ingsw.controller.RMIController;
 import ingsw.model.Cell;
 import ingsw.model.InitializerView;
@@ -38,8 +39,14 @@ public class Loading {
     private static Timeline timeline;
     private static Task copyWorker;
     private static int numFiles = 20;
-    private static int access=0;
-    private static int single = 0;
+    //private static int access=0;
+    //private static int single = 0;
+    private Client client;
+
+
+    public Loading(Client c){
+        this.client=c;
+    }
 
     private static Task createWorker(final int numFiles) {
         return new Task() {
@@ -56,7 +63,7 @@ public class Loading {
     }
 
 
-    public static void display(Stage primaryStage, ArrayList<ArrayList<Integer>[][]> randomWps, String comment, int i, List<Cell> myWindow, String titleWp, String diffWp) throws RemoteException {
+    public static void display(Stage primaryStage, String comment, int i, ArrayList<String> myWindow) {
 
         //MANAGE CYCLE PROGRESS
         final ProgressIndicator progressIndicator = new ProgressIndicator(0);
@@ -90,7 +97,7 @@ public class Loading {
                             lblProgress.setFont(Font.font("GB18030 Bitmap", FontWeight.BOLD, 20));
                             lblProgress.setTextFill(Color.WHITE);
                             if(i==1){
-                                try {
+                               /* try {
                                     if(controller.getListOfPlayers().size()==1){ //Fa qualcosa mentre aspetta
                                         //System.out.println(controller.getTimeSearch());
                                         single++;
@@ -102,17 +109,24 @@ public class Loading {
                                     //System.out.println("Timer pari a:"+controller.getTimeSearch());
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                }
-                                try{
-                                    if(controller.getTimeSearch()==0) {
-                                        timeline.stop();
-                                        WPRendering.display(init);
-                                        Private.display(init);
-                                        primaryStage.close();
+                                }*/
+                                if(client.waitForPlayers()){
+                                    try{
+                                        if(client.getCountdown()==0) {
+                                            timeline.stop();
+                                            ArrayList<ArrayList<String>> randomWps;
+                                            randomWps= client.getRandomWps();
+                                            WPRendering.display(randomWps);
+                                            primaryStage.close();
+                                        }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
                                     }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
                                 }
+
+
+
+
                             }
                             if (i==2) {
                                 try {
@@ -122,7 +136,7 @@ public class Loading {
                                     e.printStackTrace();
                                 }
                                 timeline.stop();
-                                Play.display(myWindow,init,titleWp,diffWp);
+                                Play.display(myWindow);
                                 primaryStage.close();
                             }
                         }));
@@ -143,7 +157,7 @@ public class Loading {
         rightPane.setLayoutY(100);
         rightPane.getChildren().addAll(lblProgress);
 
-        final Label lbl2 = new Label("");
+ /*       final Label lbl2 = new Label("");
         lbl2.setFont(Font.font("GB18030 Bitmap", FontWeight.BOLD, 10));
         lbl2.setTextFill(Color.WHITE);
 
@@ -161,9 +175,9 @@ public class Loading {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+*/
 
-
-        root.getChildren().addAll(leftPane, rightPane,lbl2);
+        root.getChildren().addAll(leftPane, rightPane);
         root.setStyle("-fx-background-color:black;");
 
         primaryStage.initModality(Modality.WINDOW_MODAL);

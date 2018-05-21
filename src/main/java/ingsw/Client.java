@@ -34,6 +34,8 @@ public interface Client {
     //restituisce lo stato del giocatore, "enabled" -> attivo. "disabled" -> disattivo (non è il suo turno)
     String getPlayerState();
 
+    //restituisce i secondi mancanti all'inizio della partita
+    int getCountdown();
     //mette il giocatore in attesa di nuovi giocatori
     boolean waitForPlayers();
 
