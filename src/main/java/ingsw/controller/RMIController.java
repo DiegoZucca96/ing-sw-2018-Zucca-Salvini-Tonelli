@@ -1,6 +1,7 @@
 package ingsw.controller;
 
 import com.sun.org.apache.regexp.internal.RE;
+import ingsw.ServerHandler;
 import ingsw.model.Cell;
 import ingsw.model.InitializerView;
 import ingsw.model.windowpattern.WindowPattern;
@@ -15,9 +16,7 @@ public interface RMIController extends Remote {
 
     ArrayList<String> getListOfPlayers() throws RemoteException;
 
-    void addPlayers(String saveUsername) throws RemoteException;
-
-    void addAccount(String account)throws RemoteException;
+    int getSizeOfPlayers() throws RemoteException;
 
     int getTimeSearch() throws RemoteException;
 
@@ -29,7 +28,20 @@ public interface RMIController extends Remote {
 
     void addWindow(List<Cell> myWindow) throws RemoteException;
 
+    String getCurrentPlayerName();
+
+    void skip(String clientName) throws RemoteException;
+
     InitializerView initializeView() throws RemoteException;
 
-    boolean access(String account) throws RemoteException;
+    boolean login(String account) throws RemoteException;
+
+    String takeDie(int index) throws RemoteException;
+
+    boolean positionDie(int row, int column) throws RemoteException;
+
+    boolean register(String account) throws RemoteException;
+
+    boolean register(String account, ServerHandler serverHandler) throws RemoteException;
+
 }

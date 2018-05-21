@@ -1,9 +1,6 @@
 package ingsw.controller;
 
-import ingsw.ClientState;
-import ingsw.DisableClient;
-import ingsw.EnableClient;
-import ingsw.Server;
+import ingsw.*;
 import ingsw.model.*;
 import ingsw.model.windowpattern.WindowPattern;
 
@@ -17,6 +14,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     private Server server;
     private WindowPFactory wpFactory;
     private RandomGenerator rg;
+    private Match match;
 
     //NB -->    tutti i metodi del controller devono essere boolean, per un motivo o per l'altro
     //          non sempre possono fare l'azione richiesta, in quel caso restituiscono false
@@ -35,13 +33,8 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return server.getListOfPlayers();    }
 
     @Override
-    public void addPlayers(String account){
-        server.addPlayers(account);
-    }
-
-    @Override
-    public void addAccount(String account){
-        server.addAccount(account);
+    public int getSizeOfPlayers(){
+        return getListOfPlayers().size();
     }
 
     @Override
@@ -69,6 +62,18 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         server.addWindow(myWindow);
     }
 
+    @Override
+    public String takeDie(int index) throws RemoteException{
+        return match.playerTakeDie(index).toString();
+    }
+
+    @Override
+    public boolean positionDie(int row, int column) throws RemoteException{
+        Coordinate coordinate = new Coordinate(row,column);
+        boolean result = match.positionDie(match.getCurrentPlayer().getDieSelected(),coordinate);
+        skip(getCurrentPlayerName());
+        return result;
+    }
     //aggiunge il nuovo account alla lista degli account del server, se l'account è già presente restituisce false
     /*@Override
     public synchronized boolean addAccount(String account){
@@ -76,10 +81,41 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         server.addAccount(account);
         return true;
     }*/
+
     @Override
-    public boolean access(String account){
+    public synchronized boolean register(String account) throws RemoteException{
+        if (server.getListOfClient().contains(account))
+            return false;
+        else{
+            server.addAccount(account);
+            return true;
+        }
+    }
+
+    @Override
+    public synchronized boolean register(String account, ServerHandler serverHandler) throws RemoteException{
+        if (server.getListOfClient().contains(account))
+            return false;
+        else{
+            server.addAccount(account,serverHandler);
+            return true;
+        }
+    }
+
+    @Override
+    public synchronized boolean login(String account) throws RemoteException {
+        if(access(account)){
+            disableClient(account);
+            return true;
+        }
+        else
+            return false;
+    }
+
+    private boolean access(String account){
         //se esiste già il nome salvato nel server non puoi accedere
-        if(server.getListOfClient().contains(account)){
+        if(server.getListOfClient().contains(account) && !server.getListOfPlayers().contains(account)){
+            server.addPlayers(account);
             return true;
         }
         return false;
@@ -92,6 +128,27 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         wps.add(wpFactory.createWindowPattern(rg.random()));
         wps.add(wpFactory.createWindowPattern(rg.random()));
         return wps;
+    }
+
+    @Override
+    public String getCurrentPlayerName(){
+        return match.getCurrentPlayer().getName();
+    }
+
+    @Override
+    public void skip(String clientName){
+        if(getPlayerState(clientName).equals("enabled")){
+
+            disableClient(getCurrentPlayerName());
+            match.nextTurn();
+            enableClient(getCurrentPlayerName());
+            server.startPlayerTimer();
+        }
+    }
+
+    @Override
+    public String getPlayerState(String clientName){
+        return server.getClientState(clientName).toString();
     }
 
     //disabilita il client (il server ignora le sue richieste)
@@ -109,4 +166,5 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     public InitializerView initializeView() throws RemoteException {
         return Match.initialize();
     }
+
 }

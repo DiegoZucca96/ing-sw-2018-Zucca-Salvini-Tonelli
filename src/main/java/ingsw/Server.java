@@ -26,6 +26,7 @@ public class Server {
     private final int timeSearch;
     private int timeRemaining;
     private final int playerTimeMove;
+    private int timeMoveRemaining;
     private ArrayList<WindowPattern> windowChosen;
 
     public static void main(String[] args) throws RemoteException {
@@ -52,6 +53,7 @@ public class Server {
         timeRemaining=timeSearch;
         System.out.print("Inserisci tempo massimo per fare una mossa: ");
         playerTimeMove = in.nextInt();
+        timeMoveRemaining=playerTimeMove;
         windowChosen = new ArrayList<>();
     }
 
@@ -108,6 +110,24 @@ public class Server {
                         else
                             timeRemaining = timeSearch;
                     }
+            }
+        }, delay, period);
+    }
+
+    public void startPlayerTimer(){
+        timeMoveRemaining = playerTimeMove;
+        Timer timer = new Timer();
+        final int delay = 1000;
+        final int period = 1000;
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if(timeMoveRemaining==1){
+                    timeMoveRemaining--;
+                    controller.skip(controller.getCurrentPlayerName());
+                }
+                if(timeMoveRemaining>0))
+                    timeMoveRemaining--;
             }
         }, delay, period);
     }

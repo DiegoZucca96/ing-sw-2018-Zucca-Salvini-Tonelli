@@ -1,6 +1,5 @@
 package ingsw.view;
 
-import ingsw.model.Cell;
 import ingsw.model.InitializerView;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -9,10 +8,6 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -21,8 +16,8 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**author : Alessio Tonelli
@@ -33,7 +28,7 @@ import java.util.List;
 public class Play {
 
 
-    public static void display(List<Cell> myWindow, InitializerView init, String myTitle, String myDiff){
+    public static void display(ArrayList<String> myWindow){
 
         Stage table = new Stage();
         table.setWidth(1200);
@@ -84,13 +79,14 @@ public class Play {
         GridPane myGrid = new GridPane();
         myGrid.setLayoutX(0);
         myGrid.setLayoutY(0);
-        int k=0;
+        int k=2;
         for(int i=0; i<4; i++){
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(55, 55);
-                String numCell = Integer.toString(myWindow.get(k).getNumber());
-                String colorCell = String.valueOf(myWindow.get(k).getColor());
+                String cell = myWindow.get(k);
+                String numCell = cell.substring(cell.indexOf(':')+1,cell.indexOf(',')-1);
+                String colorCell = cell.substring(cell.indexOf(",")+1);
                 String pathCell = WPRendering.pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 55, 55, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
@@ -102,7 +98,7 @@ public class Play {
             }
         }
 
-        Label info = new Label(myTitle+myDiff);
+        Label info = new Label(myWindow.get(0)+myWindow.get(1));
         info.setLayoutY(230);
         info.setLayoutX(10);
         info.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"; -fx-padding: 0 0 20 0; -fx-text-alignment: center");

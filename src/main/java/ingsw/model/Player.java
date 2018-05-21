@@ -13,6 +13,7 @@ public class Player {       //Classe che rappresenta un giocatore della partita
     private int pvScore;
     private WindowPattern windowPattern;
     private PVObjectiveCard pvObjectiveCard;
+    private Die dieSelected;
     //private int myRound;
 
     public Player(String name, int wpType, Color pvColor){
@@ -23,6 +24,13 @@ public class Player {       //Classe che rappresenta un giocatore della partita
         nFavoriteTokens = windowPattern.getDifficulty();
         pvObjectiveCard = new PVObjectiveCard(pvColor);
         //this.myRound = 1;
+    }
+    public Die getDieSelected() {
+        return dieSelected;
+    }
+
+    public void setDieSelected(Die dieSelected) {
+        this.dieSelected = dieSelected;
     }
 
     public int getScore(){

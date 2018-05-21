@@ -1,35 +1,27 @@
 package ingsw.view;
 
 import ingsw.Client;
-import ingsw.ClientRMI;
-import ingsw.ClientSocket;
-import ingsw.controller.RMIController;
-import ingsw.model.InitializerView;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.effect.Reflection;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.transform.Shear;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.scene.text.Font;
-import javafx.scene.effect.Reflection;
-
-import java.io.IOException;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.util.ArrayList;
 
 /**Author : Alessio Tonelli _ Diego Zucca _ Elio Salvini
  *
@@ -180,14 +172,15 @@ public class GUI  {
 
                         stage.close();
                         window.close();
-                        ArrayList<ArrayList<Integer>[][]> randomWps;
-                        randomWps= client.getRandomWps();
 
+/*
                         try {
-                            Loading.display(new Stage(), randomWps, "LOADING MATCH", 1, null, null, null);
+                            Loading().display(new Stage(), randomWps, "LOADING MATCH", 1, null, null, null);
                         } catch (RemoteException e1) {
                             e1.printStackTrace();
-                        }
+                        }*/
+
+                        new Loading(client).display(new Stage(), "LOADING MATCH", 1, null, null, null);
 
                     }else{
                         warning1.setText("LOGIN IS NOT AVAILABLE");

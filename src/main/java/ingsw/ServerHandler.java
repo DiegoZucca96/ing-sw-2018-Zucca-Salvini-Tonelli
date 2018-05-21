@@ -46,6 +46,8 @@ public class ServerHandler implements Runnable {
                 if(command.equals("close")) break;
                 else if (command.equals("login")) login(parameter);
                 else if (command.equals("register")) register(parameter);
+                else if (command.equals("state")) getPlayerState(parameter);
+                else if (command.equals("skip")) controller.skip(parameter);
                 }
             socket.close();
         }
@@ -58,18 +60,22 @@ public class ServerHandler implements Runnable {
         //...
     }
 
-    public void setClientState(ClientState state){
+    /*public void setClientState(ClientState state){
         out.print("Set state:" + state.toString());
-    }
+    }*/
 
     public void login(String parameter){
-        //if(controller.addPlayers(parameter)) out.print("ok");
-        //else out.print("ko");
+        if(controller.login(parameter)) out.print("ok");
+        else out.print("ko");
     }
 
     public void register(String parameter){
-        //if(controller.addAccount(parameter)) out.print("ok");
-        //else out.print("ko");
+        if(controller.register(parameter, this)) out.print("ok");
+        else out.print("ko");
+    }
+
+    public String getPlayerState(String clientName){
+        return controller.getPlayerState(clientName);
     }
 
 }

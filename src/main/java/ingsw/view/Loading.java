@@ -91,12 +91,12 @@ public class Loading {
                             lblProgress.setTextFill(Color.WHITE);
                             if(i==1){
                                 try {
-                                    if(controller.getListOfPlayers().size()==1){ //Fa qualcosa mentre aspetta
+                                    if(client.getSizeOfPlayers()==1){ //Fa qualcosa mentre aspetta
                                         //System.out.println(controller.getTimeSearch());
                                         single++;
                                     }
-                                    if(controller.getListOfPlayers().size()==2 && access == 0 && single == 0){
-                                        controller.search();
+                                    if(client.getSizeOfPlayers()==2 && access == 0 && single == 0){
+                                        client.search();
                                         access++;
                                     }
                                     //System.out.println("Timer pari a:"+controller.getTimeSearch());
@@ -104,7 +104,7 @@ public class Loading {
                                     e.printStackTrace();
                                 }
                                 try{
-                                    if(controller.getTimeSearch()==0) {
+                                    if(client.getTimeSearch()==0) {
                                         timeline.stop();
                                         WPRendering.display(init);
                                         Private.display(init);

@@ -5,7 +5,6 @@ import ingsw.model.windowpattern.WindowPattern;
 import java.util.ArrayList;
 
 
-
 public class Match {
     private int id;
     private int nPlayers;
@@ -149,8 +148,12 @@ public class Match {
     }
 
     //riceve indice del dado nella draft pool che si vuole posizionare e destinazione sulla WP del currentPlayer
-    public void playerMoveDie(int dieIndex, Coordinate destination) {
-        currentPlayer.positionDie(draftPool.takeDie(dieIndex), destination);
+    public Die playerTakeDie(int dieIndex) {
+        return draftPool.takeDie(dieIndex);
+    }
+
+    public boolean positionDie(Die die, Coordinate destination){
+        return currentPlayer.positionDie(die, destination);
     }
 
     //raccoglie i dati necessari per l'utilizzo di una tool card in un oggetto di tipo ObjectiveTool

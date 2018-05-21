@@ -93,7 +93,7 @@ public class SAXParser {
                     if (event.asStartElement().getName().getLocalPart()
                             .equals(COLOR)) {
                         event = eventReader.nextEvent();
-                        color=Color.valueOf(event.asCharacters().getData());
+                        color= Color.valueOf(event.asCharacters().getData());
                         continue;
                     }
                 }
@@ -116,8 +116,8 @@ public class SAXParser {
     }
 
     /** THIS METHOD EXTTRACTS INFORMATION SUCH AS NAME AND DIFFICULTY*/
-    public List<InfoWindow> readInfo(String configFile) {
-        List<InfoWindow> info = new ArrayList<>();
+    public InfoWindow readInfo(String configFile) {
+        InfoWindow info = new InfoWindow();
         try {
             // First, create a new XMLInputFactory
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
@@ -151,7 +151,7 @@ public class SAXParser {
                 if (event.isEndElement()) {
                     EndElement endElement = event.asEndElement();
                     if (endElement.getName().getLocalPart().equals(DIFF)) {
-                        info.add(infoWindow);
+                        //nothing
                     }
                 }
 

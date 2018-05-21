@@ -31,4 +31,12 @@ public interface Client {
     //restituisce lo stato del giocatore, "enabled" -> attivo. "disabled" -> disattivo (non è il suo turno)
     String getPlayerState();
 
+    //Restituisce il numero dei giocatori della partita
+    int getSizeOfPlayers();
+
+    //Restituisce il timer rimanente del server durante la ricerca
+    int getTimeSearch();
+
+    //Chiama il metodo search del controller che avvierà il timer del server
+    void search();
 }
