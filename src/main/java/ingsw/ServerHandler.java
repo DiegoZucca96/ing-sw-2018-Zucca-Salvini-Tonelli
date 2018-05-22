@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.rmi.RemoteException;
 import java.util.Scanner;
 
 public class ServerHandler implements Runnable {
@@ -46,9 +47,11 @@ public class ServerHandler implements Runnable {
                 if(command.equals("close")) break;
                 else if (command.equals("login")) login(parameter);
                 else if (command.equals("register")) register(parameter);
-                else if (command.equals("state")) getPlayerState(parameter);
+                else if (command.equals("getPlayerState")) getPlayerState(parameter);
                 else if (command.equals("skip")) controller.skip(parameter);
-                }
+                else if (command.equals("takeDie")) takeDie(parameter);
+                else if (command.equals("positionDie")) positionDie(parameter);
+            }
             socket.close();
         }
          catch (IOException e) {
@@ -64,18 +67,27 @@ public class ServerHandler implements Runnable {
         out.print("Set state:" + state.toString());
     }*/
 
-    public void login(String parameter){
+    private void login(String parameter) throws RemoteException {
         if(controller.login(parameter)) out.print("ok");
         else out.print("ko");
     }
 
-    public void register(String parameter){
+    private void register(String parameter) throws RemoteException {
         if(controller.register(parameter, this)) out.print("ok");
         else out.print("ko");
     }
 
-    public String getPlayerState(String clientName){
-        return controller.getPlayerState(clientName);
+    private void getPlayerState(String clientName){
+         out.print(controller.getPlayerState(clientName));
+    }
+
+    private void takeDie(String parameter) throws RemoteException {
+        if(controller.takeDie(Integer.parseInt(parameter)))out.print("ok");
+        else out.print("ko");
+    }
+
+    private void positionDie(String parameter){
+
     }
 
 }

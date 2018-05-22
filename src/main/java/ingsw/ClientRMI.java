@@ -39,17 +39,43 @@ public class ClientRMI implements Client {
         try {
             return controller.register(nickname);
         } catch (RemoteException e) {
-            e.printStackTrace();
+            return false;
         }
     }
 
     @Override
     public String getPlayerState() {
-        return controller.getPlayerState(name);
+        try {
+            return controller.getPlayerState(name);
+        } catch (RemoteException e) {
+            return null;
+        }
     }
 
     @Override
     public void skip() {
-        controller.skip(name);
+        try {
+            controller.skip(name);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean takeDie(int index) {
+        try {
+            return controller.takeDie(index);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean positionDie(int row, int column) {
+        try {
+            return controller.positionDie(row,column);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }

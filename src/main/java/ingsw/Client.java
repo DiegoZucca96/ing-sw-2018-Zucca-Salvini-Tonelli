@@ -21,7 +21,7 @@ public interface Client {
     boolean takeDie(int index);
 
     //posiziona il dado nelle coordinate row, column della wp del giocatore
-    ////restitusce false se si violano le restrizioni
+    //restitusce false se si violano le restrizioni
     boolean positionDie(int row, int column);
 
     //passa il turno
@@ -39,9 +39,6 @@ public interface Client {
 
     //Restituisce il timer rimanente del server durante la ricerca
     int getTimeSearch();
-
-    //Chiama il metodo search del controller che avvierà il timer del server
-    void search();
 
     //restituisce i secondi mancanti all'inizio della partita
     int getCountdown();

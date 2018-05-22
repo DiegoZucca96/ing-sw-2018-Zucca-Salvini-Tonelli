@@ -81,12 +81,26 @@ public class ClientSocket implements Client {
 
     @Override
     public String getPlayerState() {
-        out.print("state:" + name);
+        out.print("getPlayerState:" + name);
         return in.nextLine();
     }
 
     @Override
     public void skip() {
         out.print("skip:" + name);
+    }
+
+    @Override
+    public boolean takeDie(int index) {
+        out.print("takeDie:" + index);
+        if(in.nextLine().equals("ok")) return true;
+        else return false;
+    }
+
+    @Override
+    public boolean positionDie(int row, int column) {
+        out.print("positionDie:" + row + "," + column);
+        if(in.nextLine().equals("ok")) return true;
+        else return false;
     }
 }
