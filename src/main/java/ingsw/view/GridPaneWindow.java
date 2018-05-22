@@ -1,6 +1,5 @@
 package ingsw.view;
 
-
 import ingsw.Client;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -9,13 +8,15 @@ import javafx.scene.layout.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class GridPaneTrackingController extends GridPane {
+public class GridPaneWindow extends GridPane {
 
-
+    private ArrayList<DieInfo> dieInfos = new ArrayList<>();
+    private ArrayList<CellInfo> cellInfos= new ArrayList<>();
     private Client client;
-    private GridPane grid ;
+    private GridPane grid;
+    private GridPaneDraftPool draftPool;
 
-    public GridPaneTrackingController(int indexString, ArrayList<String> myWindow, Client client) {
+    public GridPaneWindow(int indexString, ArrayList<String> myWindow, Client client) {
 
         this.client=client;
         int numCols = 5 ;
@@ -57,7 +58,9 @@ public class GridPaneTrackingController extends GridPane {
         button.setOnMouseEntered(e -> {
 
             if(client.positionDie(i, j)){
-
+                addCellInfo(button.getBackground(), i, j);      //salvo il backgruond della cella
+                button.setBackground(draftPool.getDieInfo().getBackground());       //setto il nuovo background col dado
+                draftPool.getButton(i, j).setTextFill(javafx.scene.paint.Color.TRANSPARENT);;
             }else
                 Toolkit.getDefaultToolkit().beep();
             //System.out.printf("Mouse enetered cell [%d, %d]%n", colIndex, rowIndex);
@@ -66,57 +69,21 @@ public class GridPaneTrackingController extends GridPane {
         return button;
     }
 
-    public GridPaneTrackingController( Client client) {
-        this.client = client;
-        int numCols = 5;
-        int numRows = 4;
-
-        for (int i = 0; i < numCols; i++) {
-            ColumnConstraints colConstraints = new ColumnConstraints();
-            colConstraints.setHgrow(Priority.SOMETIMES);
-            grid.getColumnConstraints().add(colConstraints);
-        }
-
-        for (int i = 0; i < numRows; i++) {
-            RowConstraints rowConstraints = new RowConstraints();
-            rowConstraints.setVgrow(Priority.SOMETIMES);
-            grid.getRowConstraints().add(rowConstraints);
-        }
-
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
-                Button b = addButtonDP(row, col);
-                b.setOpacity(0.6);
-                b.setPrefSize(58, 58);
-                if (client.getPlayerState().equalsIgnoreCase("disabled")) {
-                    b.setDisable(true);
-                } else b.setDisable(false);
-
-                //b.setBackground(new BackgroundImage());
-
-            }
-
-        }
+    public ArrayList<DieInfo> getDieInfo(){
+        return dieInfos;
     }
 
-
-
-    private Button addButtonDP(int row, int col) {
-        Button button = new Button();
-
-            button.setOnMouseEntered(e -> {
-//saveInfo();
-                if(client.takeDie(row,col)){
-
-                }else
-                    Toolkit.getDefaultToolkit().beep();
-                button.setTextFill(javafx.scene.paint.Color.TRANSPARENT);
-            });
-
-        grid.add(button, row, col);
-        return button;
-
+    public void addDieInfo(Background image, int i, int j) {
+        DieInfo dieInfo = new DieInfo(image, i, j);
+        dieInfos.add(dieInfo);
     }
 
+    public ArrayList<CellInfo> getCellInfo(){
+        return cellInfos;
+    }
 
+    public void addCellInfo(Background image, int i, int j) {
+        CellInfo cellInfo= new CellInfo(image, i, j);
+        cellInfos.add(cellInfo);
+    }
 }

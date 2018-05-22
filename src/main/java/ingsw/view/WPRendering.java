@@ -90,6 +90,7 @@ public class WPRendering {
         label1.setOnMousePressed(event -> {
             ArrayList<String> myWindow= init.get(0);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
+            new Private().display();
             windowPattern.close();
         });
 
@@ -141,6 +142,7 @@ public class WPRendering {
         label2.setOnMousePressed(event -> {
             ArrayList<String> myWindow= init.get(1);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
+            new Private().display();
             windowPattern.close();
         });
 
@@ -191,6 +193,7 @@ public class WPRendering {
         label3.setOnMousePressed(event -> {
             ArrayList<String> myWindow= init.get(2);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
+            new Private().display();
             windowPattern.close();
         });
 
@@ -242,6 +245,7 @@ public class WPRendering {
         label4.setOnMousePressed(event -> {
             ArrayList<String> myWindow= init.get(3);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
+            new Private().display();
             windowPattern.close();
         });
 

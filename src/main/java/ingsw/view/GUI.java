@@ -63,7 +63,7 @@ public class GUI  {
         btnPlay.setFont(new Font("Tahoma", 40));
         btnPlay.getTransforms().add(new Shear(-0.50, 0));
         btnPlay.setEffect(new Reflection());
-        btnPlay.setStyle("-fx-border-radius: 15.0; -fx-background-radius: 15.0; -fx-border-color: black");;
+        btnPlay.setStyle("-fx-border-radius: 15.0; -fx-background-radius: 15.0; -fx-border-color: black");
         btnPlay.setOnAction(event -> loginStage(client));
         btnPlay.setLayoutX(900.0);
         btnPlay.setLayoutY(300.0);

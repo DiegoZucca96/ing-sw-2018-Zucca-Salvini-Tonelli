@@ -18,7 +18,11 @@ import javafx.stage.WindowEvent;
 
 public class Private {
 
-    public static void display(InitializerView init){
+    private InitializerView init ;
+
+
+
+    public void display(){
 
         StackPane p = new StackPane();
         Scene s1 = new Scene(p);

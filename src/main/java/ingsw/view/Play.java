@@ -1,8 +1,6 @@
 package ingsw.view;
 
 import ingsw.Client;
-import ingsw.model.Cell;
-import ingsw.model.Color;
 import ingsw.model.InitializerView;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -21,14 +19,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**author : Alessio Tonelli
@@ -125,7 +120,7 @@ public class Play {
             }
         }*/
 
-        GridPane myGrid = new GridPaneTrackingController(2, myWindow, client);
+        GridPane myGrid = new GridPaneWindow(2, myWindow, client);
         myGrid.setLayoutX(0);
         myGrid.setLayoutY(0);
 
@@ -274,7 +269,7 @@ public class Play {
 
 
 
-        GridPane gridDP = new GridPaneTrackingController(client);
+        GridPane gridDP = new GridPaneDraftPool(client);
         gridDP.setPrefSize(280, 350);
         gridDP.setHgap(3);
         gridDP.setVgap(8);
@@ -460,6 +455,7 @@ public class Play {
 
     private VBox createPagePb(int pageIndex,InitializerView init){
         VBox box = new VBox(5);
+        String name=null;
         ArrayList<String> pbCards = init.getPbCard();
         final ImageView pbPlayers = new ImageView();
         switch (pageIndex) {
@@ -467,24 +463,40 @@ public class Play {
                 String imagePath = pbCards.get(0);
                 Image image1 = new Image(imagePath, 200, 280, false, false);
                 pbPlayers.setImage(image1);
+                name = pbPlayers.getImage().impl_getUrl();
                 break;
             }
             case 1: {
                 String imagePath = pbCards.get(1);
                 Image image1 = new Image(imagePath, 200, 280, false, false);
                 pbPlayers.setImage(image1);
+                name = pbPlayers.getImage().impl_getUrl();
                 break;
             }
             case 2: {
                 String imagePath = pbCards.get(2);
                 Image image1 = new Image(imagePath, 200, 280, false, false);
                 pbPlayers.setImage(image1);
+                name = pbPlayers.getImage().impl_getUrl();
                 break;
             }
 
 
         }
 
+        final String finalName;
+
+        if(name==null){
+            finalName=null;
+        }else
+            finalName = name.substring(name.lastIndexOf("/"));
+
+        pbPlayers.setOnMouseClicked(e-> {
+            if(ConfirmExit.display("Public "+finalName.substring(1, finalName.indexOf(".")), "Sure to use this card?")){
+                //client.useToolCard();  quale parametro?
+
+            }
+        });
         box.getChildren().add(pbPlayers);
         return box;
     }
@@ -510,75 +522,54 @@ public class Play {
 
     private VBox createPageTool(int pageIndex,InitializerView init){
         VBox box = new VBox(5);
+        String name=null;
         ArrayList<String> toolCards = init.getToolCard();
-        final ImageView tlPlayer;
+        final ImageView tlPlayer= new ImageView();
         switch (pageIndex) {
             case 0: {
-                tlPlayer = new ImageView();
+
                 String imagePath = toolCards.get(0);
                 Image image1 = new Image(imagePath, 200, 280, false, false);
                 tlPlayer.setImage(image1);
-                tlPlayer.setOnMouseClicked(e-> {
-                    Stage stage  = new Stage();
+                name = tlPlayer.getImage().impl_getUrl();
 
-
-                    Label label = new Label();
-                    label.setText("Want to use this card?");
-                    Button yesBtn = new Button("Yes");
-                    Button noBtn = new Button("No");
-                    yesBtn.setOnAction(event1 -> {
-                        stage.close();
-                        client.useToolCard(client.getName());
-                    });
-                    noBtn.setOnAction(event2-> {
-                        stage.close();
-                    });
-
-
-                    HBox layout = new HBox(40);
-                    layout.getChildren().addAll(label, yesBtn, noBtn);
-                    layout.setAlignment(Pos.CENTER);
-
-                    Scene scene = new Scene(layout);
-                    stage.setScene(scene);
-                    stage.show();
-                });
                 break;
             }
             case 1: {
-                tlPlayer = new ImageView();
+
                 String imagePath = toolCards.get(1);
                 Image image1 = new Image(imagePath, 200, 280, false, false);
                 tlPlayer.setImage(image1);
-                tlPlayer.setOnMouseClicked(e-> {
-                    Stage stage  = new Stage();
-                    Scene sce= new Scene(new Group());
-
-                    stage.setScene(sce);
-                    stage.show();
-                });
+                name = tlPlayer.getImage().impl_getUrl();
                 break;
             }
             case 2: {
-                tlPlayer = new ImageView();
+
                 String imagePath = toolCards.get(2);
                 Image image1 = new Image(imagePath, 200, 280, false, false);
                 tlPlayer.setImage(image1);
-                tlPlayer.setOnMouseClicked(e-> {
-                    Stage stage  = new Stage();
-                    Scene sce= new Scene(new Group());
-
-                    stage.setScene(sce);
-                    stage.show();
-                });
+                name = tlPlayer.getImage().impl_getUrl();
                 break;
             }
 
 
         }
 
+        final String finalName;
 
-        );
+        if(name==null){
+            finalName=null;
+        }else
+            finalName = name.substring(name.lastIndexOf("/"));
+
+
+        tlPlayer.setOnMouseClicked(e-> {
+            if(ConfirmExit.display("Tool "+finalName.substring(1, finalName.indexOf(".")), "Sure to use this card?")){
+                //client.useToolCard();  quale parametro?
+
+            }
+        });
+
 
         box.getChildren().add(tlPlayer);
         return box;

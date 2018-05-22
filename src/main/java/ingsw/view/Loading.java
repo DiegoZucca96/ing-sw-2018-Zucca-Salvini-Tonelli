@@ -116,7 +116,7 @@ public class Loading {
                                 }*/
                                 if (client.getOthersChoice()){
                                     timeline.stop();
-                                    new Play(client);
+                                    new Play(client).display(myWindow);
                                     primaryStage.close();
                                 }
                             }
