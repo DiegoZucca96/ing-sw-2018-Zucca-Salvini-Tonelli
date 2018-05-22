@@ -1,5 +1,8 @@
 package ingsw.view;
 
+import ingsw.Client;
+import ingsw.model.Cell;
+import ingsw.model.Color;
 import ingsw.model.InitializerView;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -8,16 +11,21 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**author : Alessio Tonelli
@@ -28,7 +36,16 @@ import java.util.ArrayList;
 public class Play {
 
 
-    public static void display(ArrayList<String> myWindow){
+    private Client client;
+    private InitializerView init = new InitializerView();
+
+
+    public Play(Client client){
+        this.client=client;
+
+    }
+
+    public void display(ArrayList<String> myWindow){
 
         Stage table = new Stage();
         table.setWidth(1200);
@@ -94,6 +111,12 @@ public class Play {
                         BackgroundSize.DEFAULT);
                 btnCell.setBackground(new Background(myBI));
                 myGrid.add(btnCell, j, i);
+                btnCell.setOnAction(e->{
+                    getInfo();
+                    client.moveDie(index, i, j);
+                });
+
+
                 k++;
             }
         }
@@ -106,7 +129,7 @@ public class Play {
 
 
         //PAGINAZIONE DI VARI OGGETTI
-        AnchorPane playersWP = paginationPlayers();
+        AnchorPane playersWP = paginationPlayers(init);
         AnchorPane playersPb = paginationPublic(init);
         AnchorPane playersTool = paginationTool(init);
 
@@ -162,7 +185,7 @@ public class Play {
     }
 
 
-    private static MenuItem exitMenuItem() {
+    private MenuItem exitMenuItem() {
         MenuItem exitMenuItem = new MenuItem("Exit");
         exitMenuItem.setOnAction(actionEvent -> {
             Boolean answer= ConfirmExit.display("Quit", "Are you sure to exit without saving?");
@@ -172,17 +195,17 @@ public class Play {
 
         return exitMenuItem;
     }
-    private static Menu fileMenu() {
+    private Menu fileMenu() {
         Menu fileMenu = new Menu("File");
-        MenuItem saveMenuItem = new MenuItem("Save Match");
-        fileMenu.getItems().addAll( saveMenuItem,
+        MenuItem seeMenuItem = new MenuItem("See Rules");
+        fileMenu.getItems().addAll( seeMenuItem,
                 new SeparatorMenuItem(), exitMenuItem());
         //saveMenuItem.setOnAction(e->);
 
         return fileMenu;
     }
 
-    private static Menu infoMenu() {
+    private Menu infoMenu() {
         Menu infoMenu = new Menu("Info");
 
         MenuItem authorMenuItem = new MenuItem("Authors of the Game");
@@ -193,18 +216,18 @@ public class Play {
         return infoMenu;
     }
 
-    private static Menu toolMenu(){
+    private Menu toolMenu(){
         Menu toolMenu = new Menu("Tools");
 
         MenuItem  menuSkip = new MenuItem("Skip>>");
-        menuSkip.setOnAction(e-> );
+        menuSkip.setOnAction(e-> client.skip());
         toolMenu.getItems().add(menuSkip);
         return toolMenu;
     }
 
 
 
-    private static GridPane addGridRound(){
+    private GridPane addGridRound(){
         GridPane grid = new GridPane();
         grid.setHgap(15);
         grid.setVgap(0);
@@ -228,7 +251,7 @@ public class Play {
     }
 
 
-    private static Pane addPaneDraft(){
+    private Pane addPaneDraft(){
 
 
         Pane pane = new Pane();
@@ -254,7 +277,15 @@ public class Play {
                 Button b= new Button();
                 b.setOpacity(0.6);
                 b.setPrefSize(58, 58);
+                if(client.getPlayerState().equalsIgnoreCase("disabled")){
+                    b.setDisable(true);
+                }else b.setDisable(false);
+
                 //b.setBackground(new BackgroundImage());
+                b.setOnAction(e-> {
+                    saveInfo();
+                    b.setTextFill(javafx.scene.paint.Color.TRANSPARENT);
+                });
                 gridDP.add(b, col, row);
 
             }
@@ -270,7 +301,7 @@ public class Play {
     }
 
 
-    private static AnchorPane paginationPlayers(){
+    private AnchorPane paginationPlayers(InitializerView init){
         Pagination pagination = new Pagination(3, 0);
         pagination.setPageFactory(new Callback<Integer, Node>() {
             @Override
@@ -289,7 +320,7 @@ public class Play {
         return anchor;
     }
 
-    private static VBox createPageWp(int pageIndex){
+    private VBox createPageWp(int pageIndex){
         VBox box = new VBox(5);
 
         Pane paneWP = new Pane();
@@ -393,7 +424,7 @@ public class Play {
         return box;
     }
 
-    private static AnchorPane paginationPublic(InitializerView init){
+    private AnchorPane paginationPublic(InitializerView init){
         Pagination pagination = new Pagination(3, 0);
         pagination.setPageFactory(new Callback<Integer, Node>() {
             @Override
@@ -412,7 +443,7 @@ public class Play {
         return anchor;
     }
 
-    private static VBox createPagePb(int pageIndex,InitializerView init){
+    private VBox createPagePb(int pageIndex,InitializerView init){
         VBox box = new VBox(5);
         ArrayList<String> pbCards = init.getPbCard();
         final ImageView pbPlayers = new ImageView();
@@ -443,7 +474,7 @@ public class Play {
         return box;
     }
 
-    private static AnchorPane paginationTool(InitializerView init){
+    private AnchorPane paginationTool(InitializerView init){
         Pagination pagination = new Pagination(3, 0);
         pagination.setPageFactory(new Callback<Integer, Node>() {
             @Override
@@ -462,40 +493,76 @@ public class Play {
         return anchor;
     }
 
-    private static VBox createPageTool(int pageIndex,InitializerView init){
+    private VBox createPageTool(int pageIndex,InitializerView init){
         VBox box = new VBox(5);
         ArrayList<String> toolCards = init.getToolCard();
-        final ImageView tlPlayer = new ImageView();
+        final ImageView tlPlayer;
         switch (pageIndex) {
             case 0: {
+                tlPlayer = new ImageView();
                 String imagePath = toolCards.get(0);
                 Image image1 = new Image(imagePath, 200, 280, false, false);
                 tlPlayer.setImage(image1);
+                tlPlayer.setOnMouseClicked(e-> {
+                    Stage stage  = new Stage();
+
+
+                    Label label = new Label();
+                    label.setText("Want to use this card?");
+                    Button yesBtn = new Button("Yes");
+                    Button noBtn = new Button("No");
+                    yesBtn.setOnAction(event1 -> {
+                        stage.close();
+                        client.useToolCard(client.getName());
+                    });
+                    noBtn.setOnAction(event2-> {
+                        stage.close();
+                    });
+
+
+                    HBox layout = new HBox(40);
+                    layout.getChildren().addAll(label, yesBtn, noBtn);
+                    layout.setAlignment(Pos.CENTER);
+
+                    Scene scene = new Scene(layout);
+                    stage.setScene(scene);
+                    stage.show();
+                });
                 break;
             }
             case 1: {
+                tlPlayer = new ImageView();
                 String imagePath = toolCards.get(1);
                 Image image1 = new Image(imagePath, 200, 280, false, false);
                 tlPlayer.setImage(image1);
+                tlPlayer.setOnMouseClicked(e-> {
+                    Stage stage  = new Stage();
+                    Scene sce= new Scene(new Group());
+
+                    stage.setScene(sce);
+                    stage.show();
+                });
                 break;
             }
             case 2: {
+                tlPlayer = new ImageView();
                 String imagePath = toolCards.get(2);
                 Image image1 = new Image(imagePath, 200, 280, false, false);
                 tlPlayer.setImage(image1);
+                tlPlayer.setOnMouseClicked(e-> {
+                    Stage stage  = new Stage();
+                    Scene sce= new Scene(new Group());
+
+                    stage.setScene(sce);
+                    stage.show();
+                });
                 break;
             }
 
 
         }
 
-        tlPlayer.setOnMouseClicked(e-> {
-                    Stage stage  = new Stage();
-                    Scene sce= new Scene(new Group());
 
-                    stage.setScene(sce);
-                    stage.show();
-                }
         );
 
         box.getChildren().add(tlPlayer);

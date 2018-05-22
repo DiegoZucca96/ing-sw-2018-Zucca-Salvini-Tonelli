@@ -21,7 +21,7 @@ public interface Client {
     boolean takeDie(int index);
 
     //posiziona il dado nelle coordinate row, column della wp del giocatore
-    //restitusce false se si violano le restrizioni
+    ////restitusce false se si violano le restrizioni
     boolean positionDie(int row, int column);
 
     //passa il turno
@@ -42,6 +42,10 @@ public interface Client {
 
     //restituisce i secondi mancanti all'inizio della partita
     int getCountdown();
+
+    //restituisce false se hanno scelto tutti la wp e si avvia la partita
+    boolean getOthersChoice();
+
     //mette il giocatore in attesa di nuovi giocatori
     boolean waitForPlayers();
 

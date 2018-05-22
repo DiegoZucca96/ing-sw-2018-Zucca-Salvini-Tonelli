@@ -2,9 +2,6 @@ package ingsw.view;
 
 
 import ingsw.Client;
-import ingsw.controller.RMIController;
-import ingsw.model.Cell;
-import ingsw.model.InitializerView;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -19,10 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-
-import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**Author : Alessio Tonelli
@@ -63,7 +57,7 @@ public class Loading {
     }
 
 
-    public static void display(Stage primaryStage, String comment, int i, ArrayList<String> myWindow) {
+    public void display(Stage primaryStage, String comment, ArrayList<String> myWindow) {
 
         //MANAGE CYCLE PROGRESS
         final ProgressIndicator progressIndicator = new ProgressIndicator(0);
@@ -93,10 +87,8 @@ public class Loading {
         timeline.getKeyFrames().add(
                 new KeyFrame(Duration.millis(500),
                         event -> {
-                            final Label lbl1 = new Label(comment);
-                            lblProgress.setFont(Font.font("GB18030 Bitmap", FontWeight.BOLD, 20));
-                            lblProgress.setTextFill(Color.WHITE);
-                            if(i==1){
+
+                            if(myWindow==null){
                                /* try {
                                     if(controller.getListOfPlayers().size()==1){ //Fa qualcosa mentre aspetta
                                         //System.out.println(controller.getTimeSearch());
@@ -116,7 +108,7 @@ public class Loading {
                                             timeline.stop();
                                             ArrayList<ArrayList<String>> randomWps;
                                             randomWps= client.getRandomWps();
-                                            WPRendering.display(randomWps);
+                                            new WPRendering().display(randomWps, client);
                                             primaryStage.close();
                                         }
                                     } catch (Exception e) {
@@ -128,15 +120,18 @@ public class Loading {
 
 
                             }
-                            if (i==2) {
-                                try {
+                            if (myWindow!=null) {
+                                /*try {
                                     while(controller.getWindowChosen().size()< controller.getListOfPlayers().size())
                                         lbl1.setText("Players are choosing, wait");
                                 } catch (Exception e) {
                                     e.printStackTrace();
+                                }*/
+                                while (client.getOthersChoice()){
+                                    //nothing
                                 }
                                 timeline.stop();
-                                Play.display(myWindow);
+                                new Play(client);
                                 primaryStage.close();
                             }
                         }));
