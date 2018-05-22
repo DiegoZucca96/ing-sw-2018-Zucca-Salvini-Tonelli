@@ -40,10 +40,7 @@ public interface Client {
     //Restituisce il timer rimanente del server durante la ricerca
     int getTimeSearch();
 
-    //restituisce i secondi mancanti all'inizio della partita
-    int getCountdown();
-
-    //restituisce false se hanno scelto tutti la wp e si avvia la partita
+    //restituisce true se hanno scelto tutti la wp e si avvia la partita
     boolean getOthersChoice();
 
     //mette il giocatore in attesa di nuovi giocatori

@@ -33,8 +33,6 @@ public class Loading {
     private static Timeline timeline;
     private static Task copyWorker;
     private static int numFiles = 20;
-    //private static int access=0;
-    //private static int single = 0;
     private Client client;
 
 
@@ -87,7 +85,6 @@ public class Loading {
         timeline.getKeyFrames().add(
                 new KeyFrame(Duration.millis(500),
                         event -> {
-
                             if(myWindow==null){
                                /* try {
                                     if(controller.getListOfPlayers().size()==1){ //Fa qualcosa mentre aspetta
@@ -103,22 +100,12 @@ public class Loading {
                                     e.printStackTrace();
                                 }*/
                                 if(client.waitForPlayers()){
-                                    try{
-                                        if(client.getCountdown()==0) {
-                                            timeline.stop();
-                                            ArrayList<ArrayList<String>> randomWps;
-                                            randomWps= client.getRandomWps();
-                                            new WPRendering().display(randomWps, client);
-                                            primaryStage.close();
-                                        }
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
+                                    timeline.stop();
+                                    ArrayList<ArrayList<String>> randomWps;
+                                    randomWps= client.getRandomWps();
+                                    new WPRendering().display(randomWps, client);
+                                    primaryStage.close();
                                 }
-
-
-
-
                             }
                             if (myWindow!=null) {
                                 /*try {
@@ -127,12 +114,11 @@ public class Loading {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }*/
-                                while (client.getOthersChoice()){
-                                    //nothing
+                                if (client.getOthersChoice()){
+                                    timeline.stop();
+                                    new Play(client);
+                                    primaryStage.close();
                                 }
-                                timeline.stop();
-                                new Play(client);
-                                primaryStage.close();
                             }
                         }));
         timeline.playFromStart();

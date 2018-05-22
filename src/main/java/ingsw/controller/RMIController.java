@@ -21,8 +21,6 @@ public interface RMIController extends Remote {
 
     int getPlayerTimeMove() throws RemoteException;
 
-    void search() throws RemoteException;
-
     ArrayList<WindowPattern> getWindowChosen() throws RemoteException;
 
     void addWindow(List<Cell> myWindow) throws RemoteException;
@@ -33,11 +31,15 @@ public interface RMIController extends Remote {
 
     boolean useToolCard(String parameter) throws RemoteException;
 
+    boolean waitForPlayers() throws RemoteException;
+
+    boolean getOthersChoice() throws RemoteException;
+
     InitializerView initializeView() throws RemoteException;
 
     boolean login(String account) throws RemoteException;
 
-    String takeDie(int index) throws RemoteException;
+    boolean takeDie(int index) throws RemoteException;
 
     boolean positionDie(int row, int column) throws RemoteException;
 

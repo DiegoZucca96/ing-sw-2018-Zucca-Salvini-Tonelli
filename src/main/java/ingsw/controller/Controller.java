@@ -15,6 +15,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     private WindowPFactory wpFactory;
     private RandomGenerator rg;
     private Match match;
+    private static int access=0;
 
     //NB -->    tutti i metodi del controller devono essere boolean, per un motivo o per l'altro
     //          non sempre possono fare l'azione richiesta, in quel caso restituiscono false
@@ -29,11 +30,11 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     //Lista dei vari metodi invocabili da grafica che vanno a interagire con il model
 
     @Override
-    public ArrayList<String> getListOfPlayers() {
+    public ArrayList<String> getListOfPlayers() throws RemoteException{
         return server.getListOfPlayers();    }
 
     @Override
-    public int getSizeOfPlayers(){
+    public int getSizeOfPlayers() throws RemoteException {
         return getListOfPlayers().size();
     }
 
@@ -48,11 +49,6 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
 
     @Override
-    public void search() throws RemoteException{
-        server.search();
-    }
-
-    @Override
     public ArrayList<WindowPattern> getWindowChosen() throws RemoteException {
         return server.getWindowChosen();
     }
@@ -63,8 +59,13 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
 
     @Override
-    public String takeDie(int index) throws RemoteException{
-        return match.playerTakeDie(index).toString();
+    public boolean takeDie(int index) throws RemoteException{
+        if(match.getCurrentPlayer().getDieSelected()==null){
+            match.playerTakeDie(index);
+            return true;
+        }
+        else
+            return false;
     }
 
     @Override
@@ -138,7 +139,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
 
     //Salta volontariamente il turno oppure forzatamente dalla fine del timer de giocatore
     @Override
-    public void skip(String clientName){
+    public void skip(String clientName) throws RemoteException{
         if(getPlayerState(clientName).equals("enabled")){
             disableClient(getCurrentPlayerName());
             match.nextTurn();
@@ -148,7 +149,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
 
     @Override
-    public String getPlayerState(String clientName){
+    public String getPlayerState(String clientName) throws RemoteException{
         return server.getClientState(clientName).toString();
     }
 
@@ -168,6 +169,28 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return false;
     }
 
+    @Override
+    public boolean waitForPlayers() throws RemoteException{
+        if(getSizeOfPlayers()==1 && access == 0){ //Fa qualcosa mentre aspetta
+            access++;
+        }
+        if(getSizeOfPlayers()==2 && access == 1){
+            server.search();
+            access++;
+        }
+        if(getTimeSearch()==0)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public boolean getOthersChoice() throws RemoteException{
+        if(server.getWindowChosen().size()< getSizeOfPlayers())
+            return false;
+        else
+            return true;
+    }
     //Chiama il metodo inizializzatore del Match
     @Override
     public InitializerView initializeView() throws RemoteException {

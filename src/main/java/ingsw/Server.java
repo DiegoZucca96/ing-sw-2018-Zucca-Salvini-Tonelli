@@ -83,11 +83,11 @@ public class Server {
     }
 
     public int getTimeSearch() {
-        return timeSearch;
+        return timeRemaining;
     }
 
     public int getPlayerTimeMove() {
-        return playerTimeMove;
+        return timeMoveRemaining;
     }
 
     public ArrayList<WindowPattern> getWindowChosen() {
@@ -124,7 +124,11 @@ public class Server {
             public void run() {
                 if(timeMoveRemaining==1){
                     timeMoveRemaining--;
-                    controller.skip(controller.getCurrentPlayerName());
+                    try {
+                        controller.skip(controller.getCurrentPlayerName());
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
                 }
                 if(timeMoveRemaining>0)
                     timeMoveRemaining--;
