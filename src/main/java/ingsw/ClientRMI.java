@@ -66,7 +66,7 @@ public class ClientRMI implements Client {
         try {
             return controller.takeDie(index);
         } catch (RemoteException e) {
-            e.printStackTrace();
+            return false;
         }
     }
 
@@ -75,7 +75,43 @@ public class ClientRMI implements Client {
         try {
             return controller.positionDie(row,column);
         } catch (RemoteException e) {
-            e.printStackTrace();
+            return  false;
+        }
+    }
+
+    @Override
+    public boolean waitForPlayers() {
+        try {
+            return controller.waitForPlayers();
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean getOthersChoice() {
+        try {
+            return controller.getOthersChoice();
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public int getSizeOfPlayers() {
+        try {
+            return controller.getSizeOfPlayers();
+        } catch (RemoteException e) {
+            return -1;
+        }
+    }
+
+    @Override
+    public int getTimeSearch() {
+        try {
+            return controller.getTimeSearch();
+        } catch (RemoteException e) {
+            return -1;
         }
     }
 }

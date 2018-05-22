@@ -51,6 +51,9 @@ public class ServerHandler implements Runnable {
                 else if (command.equals("skip")) controller.skip(parameter);
                 else if (command.equals("takeDie")) takeDie(parameter);
                 else if (command.equals("positionDie")) positionDie(parameter);
+                else if (command.equals("getSizeOfPlayers")) getSizeOfPlayers();
+                else if (command.equals("getTimeSearch")) getTimeSearch();
+
             }
             socket.close();
         }
@@ -77,7 +80,7 @@ public class ServerHandler implements Runnable {
         else out.print("ko");
     }
 
-    private void getPlayerState(String clientName){
+    private void getPlayerState(String clientName) throws RemoteException {
          out.print(controller.getPlayerState(clientName));
     }
 
@@ -86,8 +89,25 @@ public class ServerHandler implements Runnable {
         else out.print("ko");
     }
 
-    private void positionDie(String parameter){
+    private void positionDie(String parameter) throws RemoteException {
+        if(controller.positionDie(Integer.parseInt(firstParameter(parameter)),Integer.parseInt(secondParameter(parameter)))) out.print("ok");
+        else out.print("ko");
+    }
 
+    private String firstParameter(String parameter){
+        return parameter.substring(0,parameter.indexOf(',')-1);
+    }
+
+    private String secondParameter(String parameter){
+        return parameter.substring(parameter.indexOf(',')+1,parameter.length()-1);
+    }
+
+    private void getSizeOfPlayers() throws RemoteException {
+        out.print(controller.getSizeOfPlayers());
+    }
+
+    private void getTimeSearch() throws RemoteException {
+        out.print(controller.getTimeSearch());
     }
 
 }

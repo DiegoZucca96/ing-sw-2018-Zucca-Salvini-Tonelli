@@ -103,4 +103,30 @@ public class ClientSocket implements Client {
         if(in.nextLine().equals("ok")) return true;
         else return false;
     }
+
+    @Override
+    public boolean waitForPlayers() {
+        out.print("waitForPlayers:");
+        if(in.nextLine().equals("ok")) return  true;
+        else return false;
+    }
+
+    @Override
+    public boolean getOthersChoice() {
+        out.print("getOthersChoice:");
+        if(in.nextLine().equals("ok")) return  true;
+        else return false;
+    }
+
+    @Override
+    public int getSizeOfPlayers() {
+        out.print("getSizeOfPlayers:");
+        return Integer.parseInt(in.nextLine());
+    }
+
+    @Override
+    public int getTimeSearch() {
+        out.print("getTimeSearch:");
+        return Integer.parseInt(in.nextLine());
+    }
 }
