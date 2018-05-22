@@ -180,7 +180,7 @@ public class GUI  {
                             e1.printStackTrace();
                         }*/
 
-                        new Loading(client).display(new Stage(), "LOADING MATCH", 1, null, null, null);
+                        new Loading(client).display(new Stage(), "LOADING MATCH", null);
 
                     }else{
                         warning1.setText("LOGIN IS NOT AVAILABLE");

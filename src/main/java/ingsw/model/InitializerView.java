@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 //Oggetto che porta le informazioni grafiche da model a view
 public class InitializerView implements Serializable {
-    private ArrayList<InfoWindow> info;
+    private InfoWindow info;
     private ArrayList<Cell> images;
     private ArrayList<String> pbCard;
     private ArrayList<String> toolCard;
@@ -15,14 +15,14 @@ public class InitializerView implements Serializable {
 
 
     public InitializerView() {
-        this.info= new ArrayList<>();
+        this.info= new InfoWindow();
         this.images = new ArrayList<>();
         this.pbCard = new ArrayList<>();
         this.toolCard = new ArrayList<>();
         this.pvCard = new ArrayList<>();
     }
 
-    public ArrayList<InfoWindow> getInfo() {
+    public InfoWindow getInfo() {
         return info;
     }
 

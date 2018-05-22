@@ -37,14 +37,15 @@ public interface Client {
     //Restituisce il numero dei giocatori della partita
     int getSizeOfPlayers();
 
-    //Restituisce il timer rimanente del server durante la ricerca
-    int getTimeSearch();
-
     //Chiama il metodo search del controller che avvierà il timer del server
     void search();
 
-    //restituisce i secondi mancanti all'inizio della partita
+    //Restituisce i secondi mancanti all'inizio della partita
     int getCountdown();
+
+    //restituisce false se hanno scelto tutti la wp e si avvia la partita
+    boolean getOthersChoice();
+
     //mette il giocatore in attesa di nuovi giocatori
     boolean waitForPlayers();
 

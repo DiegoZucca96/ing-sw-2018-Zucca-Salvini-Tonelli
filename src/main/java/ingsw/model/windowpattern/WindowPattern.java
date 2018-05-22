@@ -260,7 +260,7 @@ public class WindowPattern implements Serializable {
             //READ FROM FILE
             List<Cell> readConfig = read.readConfig("src/main/java/ingsw/model/windowpattern/wp"+select+".xml");
 
-            List<InfoWindow> readInfo = read.readInfo("src/main/java/ingsw/model/windowpattern/wp"+select+".xml");
+            InfoWindow readInfo = read.readInfo("src/main/java/ingsw/model/windowpattern/wp"+select+".xml");
 
             for (Cell cell : readConfig) {
 
@@ -269,9 +269,9 @@ public class WindowPattern implements Serializable {
 
             }
             //SEND INFO (NAME AND DIFFICULTY) TO VIEW
-            for(InfoWindow info : readInfo){
-                init.getInfo().add(info);
-            }
+            init.getInfo().setName(readInfo.getName());
+            init.getInfo().setDifficulty(readInfo.getDifficulty());
+
         }
     }
 }

@@ -1,6 +1,11 @@
 package ingsw.view;
 
 
+import ingsw.Client;
+import ingsw.controller.RMIController;
+import ingsw.model.Cell;
+import ingsw.model.InitializerView;
+import ingsw.model.windowpattern.InfoWindow;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -12,7 +17,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.List;
 
 /**Author : Alessio Tonelli
  *
@@ -26,10 +35,13 @@ import java.util.ArrayList;
 
 public class WPRendering {
 
+    private Client client;
     private static final String styleSheet = "-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"; -fx-padding: 0 0 20 0; -fx-text-alignment: center";
 
-    public static void display(ArrayList<ArrayList<String>> init) {
+    public void display(ArrayList<ArrayList<String>> init, Client c) {
 
+
+        this.client=c;
         GridPane root = new GridPane();
         root.setPadding(new Insets(20, 0, 0, 40));
         root.setHgap(40);
@@ -77,7 +89,7 @@ public class WPRendering {
 
         label1.setOnMousePressed(event -> {
             ArrayList<String> myWindow= init.get(0);
-            Loading.display(new Stage(), "WAITING FOR PLAYERS", 2, myWindow);
+            new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             windowPattern.close();
         });
 
@@ -128,7 +140,7 @@ public class WPRendering {
 
         label2.setOnMousePressed(event -> {
             ArrayList<String> myWindow= init.get(1);
-            Loading.display(new Stage(), "WAITING FOR PLAYERS", 2, myWindow);
+            new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             windowPattern.close();
         });
 
@@ -178,7 +190,7 @@ public class WPRendering {
 
         label3.setOnMousePressed(event -> {
             ArrayList<String> myWindow= init.get(2);
-            Loading.display(new Stage(), "WAITING FOR PLAYERS", 2, myWindow);
+            new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             windowPattern.close();
         });
 
@@ -229,7 +241,7 @@ public class WPRendering {
 
         label4.setOnMousePressed(event -> {
             ArrayList<String> myWindow= init.get(3);
-            Loading.display(new Stage(), "WAITING FOR PLAYERS", 2, myWindow);
+            new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             windowPattern.close();
         });
 
