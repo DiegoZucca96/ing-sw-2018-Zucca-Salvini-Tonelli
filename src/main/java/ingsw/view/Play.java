@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -24,6 +25,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,7 +96,7 @@ public class Play {
         Pane paneWP = new Pane();
         paneWP.setLayoutY(420);
         paneWP.setLayoutX(10);
-        GridPane myGrid = new GridPane();
+        /*GridPane myGrid = new GridPane();
         myGrid.setLayoutX(0);
         myGrid.setLayoutY(0);
         int k=2;
@@ -113,13 +116,19 @@ public class Play {
                 myGrid.add(btnCell, j, i);
                 btnCell.setOnAction(e->{
                     getInfo();
+                    Integer colIndex = myGrid.get
                     client.moveDie(index, i, j);
                 });
 
 
                 k++;
             }
-        }
+        }*/
+
+        GridPane myGrid = new GridPaneTrackingController(2, myWindow, client);
+        myGrid.setLayoutX(0);
+        myGrid.setLayoutY(0);
+
 
         Label info = new Label(myWindow.get(0)+myWindow.get(1));
         info.setLayoutY(230);
@@ -183,6 +192,8 @@ public class Play {
             }
         });*/
     }
+
+
 
 
     private MenuItem exitMenuItem() {
@@ -263,7 +274,7 @@ public class Play {
 
 
 
-        GridPane gridDP = new GridPane();
+        GridPane gridDP = new GridPaneTrackingController(client);
         gridDP.setPrefSize(280, 350);
         gridDP.setHgap(3);
         gridDP.setVgap(8);
@@ -271,7 +282,7 @@ public class Play {
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         gridDP.setBackground(new Background(myBI));
-
+/*
         for(int row=0; row<3; row++){
             for(int col=0; col<3; col++){
                 Button b= new Button();
@@ -283,13 +294,17 @@ public class Play {
 
                 //b.setBackground(new BackgroundImage());
                 b.setOnAction(e-> {
-                    saveInfo();
+                    //saveInfo();
+                    if(client.takeDie()){
+
+                    }else
+                        Toolkit.getDefaultToolkit().beep();
                     b.setTextFill(javafx.scene.paint.Color.TRANSPARENT);
                 });
                 gridDP.add(b, col, row);
 
             }
-        }
+        }*/
         gridDP.setAlignment(Pos.CENTER);
         pane.getChildren().add(gridDP);
 
