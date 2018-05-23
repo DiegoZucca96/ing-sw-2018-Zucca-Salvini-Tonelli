@@ -60,7 +60,7 @@ public class GridPaneWindow extends GridPane {
             if(client.positionDie(i, j)){
                 addCellInfo(button.getBackground(), i, j);      //salvo il backgruond della cella
                 button.setBackground(draftPool.getDieInfo().getBackground());       //setto il nuovo background col dado
-                draftPool.getButton(i, j).setTextFill(javafx.scene.paint.Color.TRANSPARENT);;
+                draftPool.getButton(draftPool.getDieInfo().getRow(), draftPool.getDieInfo().getColumn()).setTextFill(javafx.scene.paint.Color.TRANSPARENT);
             }else
                 Toolkit.getDefaultToolkit().beep();
             //System.out.printf("Mouse enetered cell [%d, %d]%n", colIndex, rowIndex);

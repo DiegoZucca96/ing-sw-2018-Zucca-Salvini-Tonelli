@@ -2,6 +2,7 @@ package ingsw.view;
 
 import ingsw.Client;
 import ingsw.model.InitializerView;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -22,6 +23,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 
@@ -54,7 +56,7 @@ public class Play {
         //MENU FILE - INFO - SKIP
         Pane paneMenu = new Pane();
         MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(fileMenu(), infoMenu(), toolMenu());
+        menuBar.getMenus().addAll(fileMenu(), toolMenu());
         ContextMenu contextFileMenu = new ContextMenu(exitMenuItem());
         table.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent me) -> {
             if (me.getButton() == MouseButton.SECONDARY || me.isControlDown()) {
@@ -197,40 +199,45 @@ public class Play {
             Boolean answer= ConfirmExit.display("Quit", "Are you sure to exit without saving?");
             if(answer)
                 Platform.exit();
+
         });
 
         return exitMenuItem;
     }
     private Menu fileMenu() {
         Menu fileMenu = new Menu("File");
-        MenuItem seeMenuItem = new MenuItem("See Rules");
-        fileMenu.getItems().addAll( seeMenuItem,
+        MenuItem authorMenuItem = new MenuItem("Authors of the Game");
+        fileMenu.getItems().addAll( authorMenuItem,
                 new SeparatorMenuItem(), exitMenuItem());
-        //saveMenuItem.setOnAction(e->);
+        authorMenuItem.setOnAction(e-> InfoStage.displayAuthor(new Stage()));
 
         return fileMenu;
     }
 
-    private Menu infoMenu() {
-        Menu infoMenu = new Menu("Info");
+    private MenuItem endTurn() {
+        MenuItem endTurnItem = new MenuItem("End Turn");
+        endTurnItem.setOnAction(actionEvent -> {
+            //verify execute 2 moves , end turn directly
+            client.skip();
 
-        MenuItem authorMenuItem = new MenuItem("Authors of the Game");
-        authorMenuItem.setOnAction(e-> InfoStage.displayAuthor(new Stage()));
+        });
 
-        infoMenu.getItems().addAll(authorMenuItem);
-
-        return infoMenu;
+        return endTurnItem;
     }
+
+
 
     private Menu toolMenu(){
         Menu toolMenu = new Menu("Tools");
 
         MenuItem  menuSkip = new MenuItem("Skip>>");
-        menuSkip.setOnAction(e-> client.skip());
-        toolMenu.getItems().add(menuSkip);
+        toolMenu.getItems().addAll( menuSkip,
+                new SeparatorMenuItem(), endTurn());
+
+        //menuSkip.setOnAction(e-> //skip directly);
+
         return toolMenu;
     }
-
 
 
     private GridPane addGridRound(){

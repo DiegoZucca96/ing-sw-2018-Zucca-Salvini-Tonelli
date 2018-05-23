@@ -38,7 +38,7 @@ public class WPRendering {
     private Client client;
     private static final String styleSheet = "-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"; -fx-padding: 0 0 20 0; -fx-text-alignment: center";
 
-    public void display(ArrayList<ArrayList<String>> init, Client c) {
+    public void display(ArrayList<ArrayList<String>> displayWindow, Client c) {
 
 
         this.client=c;
@@ -64,7 +64,7 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String cell = init.get(0).get(k);
+                String cell = displayWindow.get(0).get(k);
                 String numCell = cell.substring(cell.indexOf(':')+1,cell.indexOf(',')-1);
                 String colorCell = cell.substring(cell.indexOf(",")+1);
                 String pathCell = pathCell(numCell, colorCell);
@@ -80,15 +80,15 @@ public class WPRendering {
 
         root.add(grid1, 0, 0);
 
-        String namePath1 = init.get(0).get(0);
-        String diffPath1 = init.get(0).get(1);
+        String namePath1 = displayWindow.get(0).get(0);
+        String diffPath1 = displayWindow.get(0).get(1);
         final Label label1 = new Label();
         label1.setText("               "+namePath1+diffPath1);
         label1.setStyle(styleSheet);
         root.add(label1, 0, 1);
 
         label1.setOnMousePressed(event -> {
-            ArrayList<String> myWindow= init.get(0);
+            ArrayList<String> myWindow= displayWindow.get(0);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             new Private().display();
             windowPattern.close();
@@ -116,7 +116,7 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String cell = init.get(1).get(k);
+                String cell = displayWindow.get(1).get(k);
                 String numCell = cell.substring(cell.indexOf(':')+1,cell.indexOf(',')-1);
                 String colorCell = cell.substring(cell.indexOf(",")+1);
                 String pathCell = pathCell(numCell, colorCell);
@@ -132,15 +132,15 @@ public class WPRendering {
 
         root.add(grid2, 1, 0);
 
-        String namePath2 = init.get(1).get(0);
-        String diffPath2 = init.get(1).get(1);
+        String namePath2 = displayWindow.get(1).get(0);
+        String diffPath2 = displayWindow.get(1).get(1);
         final Label label2 = new Label();
         label2.setText("               "+namePath2+diffPath2);
         label2.setStyle(styleSheet);
         root.add(label2, 1, 1);
 
         label2.setOnMousePressed(event -> {
-            ArrayList<String> myWindow= init.get(1);
+            ArrayList<String> myWindow= displayWindow.get(1);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             new Private().display();
             windowPattern.close();
@@ -168,7 +168,7 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String cell = init.get(2).get(k);
+                String cell = displayWindow.get(2).get(k);
                 String numCell = cell.substring(cell.indexOf(':')+1,cell.indexOf(',')-1);
                 String colorCell = cell.substring(cell.indexOf(",")+1);
                 String pathCell = pathCell(numCell, colorCell);
@@ -183,15 +183,15 @@ public class WPRendering {
         }
         root.add(grid3, 2, 0);
 
-        String namePath3 = init.get(2).get(0);
-        String diffPath3 = init.get(2).get(1);
+        String namePath3 = displayWindow.get(2).get(0);
+        String diffPath3 = displayWindow.get(2).get(1);
         final Label label3 = new Label();
         label3.setText("               "+namePath3+diffPath3);
         label3.setStyle(styleSheet);
         root.add(label3, 2, 1);
 
         label3.setOnMousePressed(event -> {
-            ArrayList<String> myWindow= init.get(2);
+            ArrayList<String> myWindow= displayWindow.get(2);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             new Private().display();
             windowPattern.close();
@@ -219,7 +219,7 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String cell = init.get(3).get(k);
+                String cell = displayWindow.get(3).get(k);
                 String numCell = cell.substring(cell.indexOf(':')+1,cell.indexOf(',')-1);
                 String colorCell = cell.substring(cell.indexOf(",")+1);
                 String pathCell = pathCell(numCell, colorCell);
@@ -235,15 +235,15 @@ public class WPRendering {
 
         root.add(grid4, 3, 0);
 
-        String namePath4 = init.get(3).get(0);
-        String diffPath4 = init.get(3).get(0);
+        String namePath4 = displayWindow.get(3).get(0);
+        String diffPath4 = displayWindow.get(3).get(0);
         final Label label4 = new Label();
         label4.setText("               "+namePath4+diffPath4);
         label4.setStyle(styleSheet);
         root.add(label4, 3, 1);
 
         label4.setOnMousePressed(event -> {
-            ArrayList<String> myWindow= init.get(3);
+            ArrayList<String> myWindow= displayWindow.get(3);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             new Private().display();
             windowPattern.close();

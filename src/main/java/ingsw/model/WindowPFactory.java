@@ -24,7 +24,7 @@ public class WindowPFactory {
     }
 
     public WindowPFactory(){
-        this.numOfWPs=24;
+        this.numOfWPs=wpList.size();
         wpList= new ArrayList<>();
         for(int i=0;i<=numOfWPs; i++){
             String index=Integer.toString(i+1);

@@ -40,6 +40,6 @@ public class Die{
 
     @Override
     public String toString() {
-        return "die:"+number+","+color;
+        return "die("+number+","+color + ")";
     }
 }

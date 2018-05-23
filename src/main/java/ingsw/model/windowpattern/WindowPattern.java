@@ -281,4 +281,18 @@ public class WindowPattern implements Serializable {
 
         }
     }
+
+
+    @Override
+    public String toString() {
+        String result="windowpattern:";
+        result.concat("name:"+getTitle()+",");
+        result.concat("diff:"+getDifficulty());
+        for(int row=0; row < 4; row ++){
+            for(int col=0; col<5; col++){
+                result.concat(",cell:row"+row+",column:"+col+",number:"+getCell(new Coordinate(row, col), getCellMatrix()).getNumber()+",color"+getCell(new Coordinate(row, col), getCellMatrix()).getColor());
+            }
+        }
+        return result;
+    }
 }
