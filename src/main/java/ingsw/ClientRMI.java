@@ -1,6 +1,7 @@
 package ingsw;
 
 import ingsw.controller.RMIController;
+import ingsw.controller.WPViewChoise;
 import ingsw.view.GUI;
 
 import java.io.IOException;
@@ -126,7 +127,7 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public ArrayList<String> getRandomWps() {
+    public ArrayList<WPViewChoise> getRandomWps() {
         try {
             return controller.getRandomWPs();
         } catch (RemoteException e) {

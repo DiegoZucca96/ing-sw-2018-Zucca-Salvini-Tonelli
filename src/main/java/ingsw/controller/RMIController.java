@@ -56,8 +56,7 @@ public interface RMIController extends Remote {
     //restituisce false se il dado non può essere preso (usa playerTakeWPDie in Match)
     boolean takeWPDie(int row, int column) throws RemoteException;
 
-    //restituisce un array contenente stringh rappresentanti le 4 wps tra cui il giocatore deve scegliere
-    //(usa toString di WindowPattern)
-    ArrayList<String> getRandomWPs() throws RemoteException;
+    //restituisce una matrice contenente stringhe rappresentanti le 4 wps tra cui il giocatore deve scegliere
+    ArrayList<WPViewChoise> getRandomWPs() throws RemoteException;
 
 }

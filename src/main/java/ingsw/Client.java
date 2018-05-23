@@ -1,5 +1,7 @@
 package ingsw;
 
+import ingsw.controller.WPViewChoise;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -17,8 +19,11 @@ public interface Client {
     //permette al giocatore di registrarsi, restituisce false se il nickname è già usato
     boolean register(String nickname);
 
-    //restituisce un array contenente stringh rappresentanti le 4 wps tra cui il giocatore deve scegliere
-    ArrayList<String> getRandomWps() throws IOException;
+    //NB: -> Metodo che crea le 4 WP da scegliere ritornando le informazioni per creare il background dei bottoni
+    ArrayList<WPViewChoise> getRandomWps() throws IOException;
+
+    //Restituisce la lista dei nomi dei giocatori
+    ArrayList<String> getListOfPlayers();
 
     //prende dalla draftpool il dado in posizione index
     boolean takeDie(int index);

@@ -2,6 +2,7 @@ package ingsw.view;
 
 
 import ingsw.Client;
+import ingsw.controller.WPViewChoise;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -103,7 +104,7 @@ public class Loading {
                                 }*/
                                 if(client.waitForPlayers()){
                                     timeline.stop();
-                                    ArrayList<String> randomWps = null;
+                                    ArrayList<WPViewChoise> randomWps = null;
                                     try {
                                         randomWps= client.getRandomWps();
                                     } catch (IOException e) {

@@ -30,8 +30,8 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         this.server= server;
         this.timeSearch = server.getTimeSearch();
         this.playerMoveTime = server.getPlayerTimeMove();
-        wpFactory = new WindowPFactory();
-        rg = new RandomGenerator(wpFactory.getNumOfWPs());
+        this.wpFactory = new WindowPFactory();
+        this.rg = new RandomGenerator(wpFactory.getNumOfWPs());
         this.timer = new Timer();
         this.controllerTimer = new ControllerTimer(timeSearch,playerMoveTime);
     }
@@ -149,12 +149,35 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return false;
     }
 
-    public synchronized ArrayList<String> getRandomWPs(){
-        ArrayList<String> wps = new ArrayList<>();
-        wps.add(wpFactory.createWindowPattern(rg.random()).toString());
-        wps.add(wpFactory.createWindowPattern(rg.random()).toString());
-        wps.add(wpFactory.createWindowPattern(rg.random()).toString());
-        wps.add(wpFactory.createWindowPattern(rg.random()).toString());
+    public synchronized ArrayList<WPViewChoise> getRandomWPs(){
+        ArrayList<WPViewChoise> wps = new ArrayList<>();
+        WPViewChoise wpobject = new WPViewChoise();
+        WindowPattern wp1 = wpFactory.createWindowPattern(rg.random());
+        wpobject.setName(wp1.getTitle());
+        wpobject.setDifficulty(Integer.toString(wp1.getDifficulty()));
+        wpobject.setWps(wp1.toMatrix());
+        wps.add(wpobject);
+
+        WPViewChoise wpobject2 = new WPViewChoise();
+        WindowPattern wp2 = wpFactory.createWindowPattern(rg.random());
+        wpobject2.setName(wp2.getTitle());
+        wpobject2.setDifficulty(Integer.toString(wp2.getDifficulty()));
+        wpobject2.setWps(wp2.toMatrix());
+        wps.add(wpobject2);
+
+        WPViewChoise wpobject3 = new WPViewChoise();
+        WindowPattern wp3 = wpFactory.createWindowPattern(rg.random());
+        wpobject3.setName(wp3.getTitle());
+        wpobject3.setDifficulty(Integer.toString(wp3.getDifficulty()));
+        wpobject3.setWps(wp3.toMatrix());
+        wps.add(wpobject3);
+
+        WPViewChoise wpobject4 = new WPViewChoise();
+        WindowPattern wp4 = wpFactory.createWindowPattern(rg.random());
+        wpobject4.setName(wp4.getTitle());
+        wpobject4.setDifficulty(Integer.toString(wp4.getDifficulty()));
+        wpobject4.setWps(wp4.toMatrix());
+        wps.add(wpobject4);
         return wps;
     }
 

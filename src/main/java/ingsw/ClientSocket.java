@@ -1,5 +1,6 @@
 package ingsw;
 
+import ingsw.controller.WPViewChoise;
 import ingsw.view.GUI;
 
 import java.io.IOException;
@@ -139,7 +140,7 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public ArrayList<String> getRandomWps() throws IOException {
+    public ArrayList<WPViewChoise> getRandomWps() throws IOException {
         out.print("getRandomWPs:");
         try {
             return (ArrayList<String>) is.readObject();
