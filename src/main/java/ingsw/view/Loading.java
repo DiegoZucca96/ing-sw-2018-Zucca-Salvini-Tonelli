@@ -58,7 +58,7 @@ public class Loading {
     }
 
 
-    public void display(Stage primaryStage, String comment, ArrayList<String> myWindow) {
+    public void display(Stage primaryStage, String comment, WPViewChoise myWindow) {
 
         //MANAGE CYCLE PROGRESS
         final ProgressIndicator progressIndicator = new ProgressIndicator(0);

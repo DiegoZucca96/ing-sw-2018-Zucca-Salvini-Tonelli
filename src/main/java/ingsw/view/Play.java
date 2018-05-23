@@ -1,12 +1,11 @@
 package ingsw.view;
 
 import ingsw.Client;
+import ingsw.controller.WPViewChoise;
 import ingsw.model.InitializerView;
-import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -23,7 +22,6 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.util.Duration;
 
 import java.util.ArrayList;
 
@@ -45,7 +43,7 @@ public class Play {
 
     }
 
-    public void display(ArrayList<String> myWindow){
+    public void display(WPViewChoise myWindow){
 
         Stage table = new Stage();
         table.setWidth(1200);
@@ -127,7 +125,7 @@ public class Play {
         myGrid.setLayoutY(0);
 
 
-        Label info = new Label(myWindow.get(0)+myWindow.get(1));
+        Label info = new Label(myWindow.getName()+myWindow.getDifficulty());
         info.setLayoutY(230);
         info.setLayoutX(10);
         info.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"; -fx-padding: 0 0 20 0; -fx-text-alignment: center");
@@ -214,27 +212,16 @@ public class Play {
         return fileMenu;
     }
 
-    private MenuItem endTurn() {
-        MenuItem endTurnItem = new MenuItem("End Turn");
-        endTurnItem.setOnAction(actionEvent -> {
-            //verify execute 2 moves , end turn directly
-            client.skip();
-
-        });
-
-        return endTurnItem;
-    }
-
 
 
     private Menu toolMenu(){
         Menu toolMenu = new Menu("Tools");
 
-        MenuItem  menuSkip = new MenuItem("Skip>>");
-        toolMenu.getItems().addAll( menuSkip,
-                new SeparatorMenuItem(), endTurn());
+        MenuItem  endTurnItem = new MenuItem("End Turn");
+        endTurnItem.setOnAction(actionEvent -> {
+            client.skip();
+        });
 
-        //menuSkip.setOnAction(e-> //skip directly);
 
         return toolMenu;
     }

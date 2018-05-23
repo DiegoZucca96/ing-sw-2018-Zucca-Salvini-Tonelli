@@ -15,7 +15,6 @@ public class GridPaneDraftPool extends GridPane {
 
     private DieInfo dieInfo;
     private Client client;
-    private GridPane grid ;
     private GridPaneWindow windowPattern;
     private Button b;
 
@@ -28,13 +27,13 @@ public class GridPaneDraftPool extends GridPane {
         for (int i = 0; i < numCols; i++) {
             ColumnConstraints colConstraints = new ColumnConstraints();
             colConstraints.setHgrow(Priority.SOMETIMES);
-            grid.getColumnConstraints().add(colConstraints);
+            this.getColumnConstraints().add(colConstraints);
         }
 
         for (int i = 0; i < numRows; i++) {
             RowConstraints rowConstraints = new RowConstraints();
             rowConstraints.setVgrow(Priority.SOMETIMES);
-            grid.getRowConstraints().add(rowConstraints);
+            this.getRowConstraints().add(rowConstraints);
         }
 
         for (int row = 0; row < 3; row++) {
@@ -55,14 +54,19 @@ public class GridPaneDraftPool extends GridPane {
 
             button.setOnMouseEntered(e -> {
                 dieInfo = new DieInfo(button.getBackground(), row, col);
-                setDieInfo(dieInfo);
+
                 if(!dieInfo.getBackground().equals(Color.TRANSPARENT)){
                     button.setStyle("-fx-border-color: yellow");
-                }else
+                    setDieInfo(dieInfo);
+                    client.takeDie( row, col);
+                }else{
                     Toolkit.getDefaultToolkit().beep();
+                    dieInfo=null;
+                }
+
             });
 
-        grid.add(button, row, col);
+        this.add(button, row, col);
         return button;
 
     }

@@ -26,7 +26,7 @@ public interface Client {
     ArrayList<String> getListOfPlayers();
 
     //prende dalla draftpool il dado in posizione index
-    boolean takeDie(int index);
+    boolean takeDie(int row, int col);
 
     //prende un dado in posizione (row, column) dalla wp del giocatore corrente,
     //restituisce false se il dado non può essere preso
