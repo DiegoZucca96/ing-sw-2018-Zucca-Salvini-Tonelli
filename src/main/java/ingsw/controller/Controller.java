@@ -123,12 +123,12 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return false;
     }
 
-    public synchronized ArrayList<WindowPattern> getRandomWPs(){
-        ArrayList<WindowPattern> wps = new ArrayList<>();
-        wps.add(wpFactory.createWindowPattern(rg.random()));
-        wps.add(wpFactory.createWindowPattern(rg.random()));
-        wps.add(wpFactory.createWindowPattern(rg.random()));
-        wps.add(wpFactory.createWindowPattern(rg.random()));
+    public synchronized ArrayList<String> getRandomWPs(){
+        ArrayList<String> wps = new ArrayList<>();
+        wps.add(wpFactory.createWindowPattern(rg.random()).toString());
+        wps.add(wpFactory.createWindowPattern(rg.random()).toString());
+        wps.add(wpFactory.createWindowPattern(rg.random()).toString());
+        wps.add(wpFactory.createWindowPattern(rg.random()).toString());
         return wps;
     }
 

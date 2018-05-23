@@ -53,4 +53,16 @@ public interface Client {
     //mette il giocatore in attesa di nuovi giocatori
     boolean waitForPlayers();
 
+    //restituisce una lista di stringhe rappresentanti gli oggetti da inizializzare nella view
+    ArrayList<String> initializeView();
+
+    //restituisce una lista di stringhe rappresentanti gli oggetti da aggiornare nella view
+    ArrayList<String> updateView();
+
+    /*
+    "windowpattern(name(ciao),difficulty(4),cell(row(0),column(0),number(0),color(RED),Die(number(5),color(RED)),cell(..."
+
+    vecchio modo --> "oggetto:attributo,attributo,..."
+    nuovo modo --> "oggetto(attributo,attributo,...)"
+    */
 }
