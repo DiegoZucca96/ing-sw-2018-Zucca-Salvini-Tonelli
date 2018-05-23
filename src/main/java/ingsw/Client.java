@@ -3,6 +3,9 @@ package ingsw;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Author: Elio Salvini*/
+
 public interface Client {
 
     //avvia il client,fa setup della connessione
@@ -14,14 +17,18 @@ public interface Client {
     //permette al giocatore di registrarsi, restituisce false se il nickname è già usato
     boolean register(String nickname);
 
-    //restituisce un array contenente i dati per renderizzare le 4 wp
-    ArrayList<ArrayList<String>> getRandomWps();
+    //restituisce un array contenente stringh rappresentanti le 4 wps tra cui il giocatore deve scegliere
+    ArrayList<String> getRandomWps() throws IOException;
 
     //prende dalla draftpool il dado in posizione index
     boolean takeDie(int index);
 
+    //prende un dado in posizione (row, column) dalla wp del giocatore corrente,
+    //restituisce false se il dado non può essere preso
+    boolean takeWPDie(int row, int column);
+
     //posiziona il dado nelle coordinate row, column della wp del giocatore
-    ////restitusce false se si violano le restrizioni
+    //restitusce false se si violano le restrizioni
     boolean positionDie(int row, int column);
 
     //passa il turno

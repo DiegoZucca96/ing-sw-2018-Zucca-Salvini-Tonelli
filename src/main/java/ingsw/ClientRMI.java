@@ -8,6 +8,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 
 public class ClientRMI implements Client {
 
@@ -112,6 +113,24 @@ public class ClientRMI implements Client {
             return controller.getTimeSearch();
         } catch (RemoteException e) {
             return -1;
+        }
+    }
+
+    @Override
+    public boolean takeWPDie(int row, int column) {
+        try {
+            return controller.takeWPDie(row,column);
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public ArrayList<String> getRandomWps() {
+        try {
+            return controller.getRandomWPs();
+        } catch (RemoteException e) {
+            return null;
         }
     }
 }

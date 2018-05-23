@@ -47,7 +47,15 @@ public interface RMIController extends Remote {
 
     boolean register(String account, ServerHandler serverHandler) throws RemoteException;
 
-    //restituisce lo stato del client che lo richiede (usa toString dello oggetto di tipo ClientState)
+    //restituisce lo stato del client che lo richiede (usa toString dell'oggetto di tipo ClientState)
     String getPlayerState(String clientName) throws RemoteException;
+
+    //prende un dado in posizione (row, column) dalla wp del giocatore corrente,
+    //restituisce false se il dado non può essere preso (usa playerTakeWPDie in Match)
+    boolean takeWPDie(int row, int column) throws RemoteException;
+
+    //restituisce un array contenente stringh rappresentanti le 4 wps tra cui il giocatore deve scegliere
+    //(usa toString di WindowPattern)
+    ArrayList<String> getRandomWPs() throws RemoteException;
 
 }

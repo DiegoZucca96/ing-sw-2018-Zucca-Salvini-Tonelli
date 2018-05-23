@@ -151,6 +151,13 @@ public class WindowPattern implements Serializable {
         }
     }
 
+    public Die takeDie(Coordinate diePosition){
+        if(getCell(diePosition, cellMatrix).isEmpty()) return null;
+        Die die = getCell(diePosition, cellMatrix).getDie();
+        removeDie(diePosition,cellMatrix);
+        return  die;
+    }
+
 
 
     public Cell getCell(Coordinate coordinate, Cell[][] cellMatrix) {

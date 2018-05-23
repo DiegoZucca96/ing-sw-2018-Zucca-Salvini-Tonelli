@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -128,5 +129,22 @@ public class ClientSocket implements Client {
     public int getTimeSearch() {
         out.print("getTimeSearch:");
         return Integer.parseInt(in.nextLine());
+    }
+
+    @Override
+    public boolean takeWPDie(int row, int column) {
+        out.print("takeWPDie:" + row + "," + column);
+        if(in.nextLine().equals(("ok"))) return  true;
+        else return false;
+    }
+
+    @Override
+    public ArrayList<String> getRandomWps() throws IOException {
+        out.print("getRandomWPs:");
+        try {
+            return (ArrayList<String>) is.readObject();
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
     }
 }

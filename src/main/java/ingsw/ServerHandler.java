@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ServerHandler implements Runnable {
@@ -53,7 +54,8 @@ public class ServerHandler implements Runnable {
                 else if (command.equals("positionDie")) positionDie(parameter);
                 else if (command.equals("getSizeOfPlayers")) getSizeOfPlayers();
                 else if (command.equals("getTimeSearch")) getTimeSearch();
-
+                else if (command.equals("takeWPDie")) takeWPDie(parameter);
+                else if (command.equals("getRandomWPs")) getRandomWPs();
             }
             socket.close();
         }
@@ -108,6 +110,15 @@ public class ServerHandler implements Runnable {
 
     private void getTimeSearch() throws RemoteException {
         out.print(controller.getTimeSearch());
+    }
+
+    private void takeWPDie(String parameter) throws RemoteException {
+        if(controller.takeWPDie(Integer.parseInt(firstParameter(parameter)), Integer.parseInt(secondParameter(parameter)))) out.print("ok");
+        else out.print("ko");
+    }
+
+    private void getRandomWPs() throws RemoteException{
+        os.writeObject( (ArrayList<String>) controller.getRandomWPs());
     }
 
 }

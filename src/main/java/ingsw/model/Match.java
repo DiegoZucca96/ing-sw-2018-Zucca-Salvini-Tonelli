@@ -152,6 +152,11 @@ public class Match {
         return draftPool.takeDie(dieIndex);
     }
 
+    //prende e restituisce un dado dalla windowPattern del current player
+    public Die playerTakeWPDie(Coordinate diePosition){
+        return currentPlayer.getWindowPattern().takeDie(diePosition);
+    }
+
     public boolean positionDie(Die die, Coordinate destination){
         return currentPlayer.positionDie(die, destination);
     }
