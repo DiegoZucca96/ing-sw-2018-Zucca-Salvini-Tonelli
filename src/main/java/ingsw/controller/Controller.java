@@ -8,13 +8,18 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 public class Controller extends UnicastRemoteObject implements RMIController {
 
+    private Timer timer;
+    private ControllerTimer controllerTimer;
     private Server server;
     private WindowPFactory wpFactory;
     private RandomGenerator rg;
     private Match match;
+    private int timeSearch;
+    private int playerMoveTime;
     private static int access=0;
 
     //NB -->    tutti i metodi del controller devono essere boolean, per un motivo o per l'altro
@@ -23,8 +28,12 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     public Controller(Server server) throws RemoteException {
         super();
         this.server= server;
+        this.timeSearch = server.getTimeSearch();
+        this.playerMoveTime = server.getPlayerTimeMove();
         wpFactory = new WindowPFactory();
         rg = new RandomGenerator(wpFactory.getNumOfWPs());
+        this.timer = new Timer();
+        this.controllerTimer = new ControllerTimer(timeSearch,playerMoveTime);
     }
 
     //Lista dei vari metodi invocabili da grafica che vanno a interagire con il model
@@ -59,22 +68,39 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
 
     @Override
-    public boolean takeDie(int index) throws RemoteException{
+    public String takeDie(int row, int column) throws RemoteException{
         if(match.getCurrentPlayer().getDieSelected()==null){
-            match.playerTakeDie(index);
-            return true;
+            int index = 3*row + column;
+            return match.playerTakeDie(index);
         }
-        else
-            return false;
+        return null;
+    }
+
+    @Override
+    public boolean takeWPDie(int row, int column) throws RemoteException {
+        if(match.getCurrentPlayer().getCoordinateDieSelected()==null){
+            Coordinate c = new Coordinate(row,column);
+            Cell [][] matrix = match.getCurrentPlayer().getWindowPattern().getCellMatrix();
+            match.getCurrentPlayer().setCoordinateDieSelected(c);
+            match.getCurrentPlayer().setDieSelected(match.getCurrentPlayer().getWindowPattern().getCell(c,matrix).getDie());
+            return match.getCurrentPlayer().getWindowPattern().removeDie(c,matrix);
+        }
+        return false;
     }
 
     @Override
     public boolean positionDie(int row, int column) throws RemoteException{
-        Coordinate coordinate = new Coordinate(row,column);
-        boolean result = match.positionDie(match.getCurrentPlayer().getDieSelected(),coordinate);
-        skip(getCurrentPlayerName());
-        return result;
+        if(match.getCurrentPlayer().getDieSelected()!=null){
+            Coordinate coordinate = new Coordinate(row,column);
+            if(match.positionDie(match.getCurrentPlayer().getDieSelected(),coordinate)){
+                match.getCurrentPlayer().setCoordinateDieSelected(null);
+                match.getCurrentPlayer().setDieSelected(null);
+                return true;
+            }
+        }
+        return false;
     }
+
     //aggiunge il nuovo account alla lista degli account del server, se l'account è già presente restituisce false
     /*@Override
     public synchronized boolean addAccount(String account){
@@ -141,10 +167,13 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     @Override
     public void skip(String clientName) throws RemoteException{
         if(getPlayerState(clientName).equals("enabled")){
+            timer.cancel();
             disableClient(getCurrentPlayerName());
             match.nextTurn();
+            controllerTimer.setTimeMoveRemaining(playerMoveTime);
             enableClient(getCurrentPlayerName());
-            server.startPlayerTimer();
+            timer = new Timer();
+            controllerTimer.startPlayerTimer(this,timer);
         }
     }
 
@@ -175,13 +204,20 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             access++;
         }
         if(getSizeOfPlayers()==2 && access == 1){
-            server.search();
+            controllerTimer.search(this,timer);
             access++;
         }
-        if(getTimeSearch()==0)
+        if(getTimeSearch()<=0){
+            timer.cancel();
             return true;
+        }
         else
             return false;
+    }
+
+    @Override
+    public int getTimeRemaining() {
+        return controllerTimer.getTimeRemaining();
     }
 
     @Override

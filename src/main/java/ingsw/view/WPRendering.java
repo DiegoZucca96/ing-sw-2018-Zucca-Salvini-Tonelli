@@ -38,7 +38,7 @@ public class WPRendering {
     private Client client;
     private static final String styleSheet = "-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"; -fx-padding: 0 0 20 0; -fx-text-alignment: center";
 
-    public void display(ArrayList<ArrayList<String>> displayWindow, Client c) {
+    public void display(ArrayList<String> displayWindow, Client c) {
 
 
         this.client=c;

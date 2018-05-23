@@ -14,6 +14,7 @@ public class Player {       //Classe che rappresenta un giocatore della partita
     private WindowPattern windowPattern;
     private PVObjectiveCard pvObjectiveCard;
     private Die dieSelected;
+    private Coordinate coordinateDieSelected;
     //private int myRound;
 
     public Player(String name, int wpType, Color pvColor){
@@ -31,6 +32,14 @@ public class Player {       //Classe che rappresenta un giocatore della partita
 
     public void setDieSelected(Die dieSelected) {
         this.dieSelected = dieSelected;
+    }
+
+    public Coordinate getCoordinateDieSelected() {
+        return coordinateDieSelected;
+    }
+
+    public void setCoordinateDieSelected(Coordinate coordinateDieSelected) {
+        this.coordinateDieSelected = coordinateDieSelected;
     }
 
     public int getScore(){

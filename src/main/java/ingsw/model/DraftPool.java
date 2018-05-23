@@ -41,14 +41,15 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
         }
     }
 
-    //fa get(index) e rimuove il dado dalla draft pool
+    //fa get(index), aggiunge un dado finto per riempire la griglia
     public Die takeDie(int index){
         Die result = getDie(index);
         try{
-            diceList.remove(index);
+            diceList.set(index,new Die(0,Color.WHITE));
         } catch(IndexOutOfBoundsException e){
             return null;
         }
+        
         return result;
     }
 

@@ -16,6 +16,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -95,14 +97,18 @@ public class Loading {
                                         controller.search();
                                         access++;
                                     }
-                                    //System.out.println("Timer pari a:"+controller.getTimeSearch());
+                                    //System.out.println("ControllerTimer pari a:"+controller.getTimeSearch());
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }*/
                                 if(client.waitForPlayers()){
                                     timeline.stop();
-                                    ArrayList<ArrayList<String>> randomWps;
-                                    randomWps= client.getRandomWps();
+                                    ArrayList<String> randomWps = null;
+                                    try {
+                                        randomWps= client.getRandomWps();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
                                     new WPRendering().display(randomWps, client);
                                     primaryStage.close();
                                 }

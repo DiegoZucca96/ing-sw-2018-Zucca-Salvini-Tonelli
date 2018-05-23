@@ -24,9 +24,7 @@ public class Server {
     private ClientState enableClient;
     private ClientState disableClient;
     private final int timeSearch;
-    private int timeRemaining;
     private final int playerTimeMove;
-    private int timeMoveRemaining;
     private ArrayList<WindowPattern> windowChosen;
 
     public static void main(String[] args) throws RemoteException {
@@ -41,20 +39,18 @@ public class Server {
     private Server(int port) {
         listOfClients = new ArrayList<>();
         listOfPlayers = new ArrayList<>();
+        this.port = port;
+        Scanner in = new Scanner(System.in);
+        System.out.print("Inserisci tempo di ricerca massimo: ");
+        timeSearch = in.nextInt();
+        System.out.print("Inserisci tempo massimo per fare una mossa: ");
+        playerTimeMove = in.nextInt();
+        windowChosen = new ArrayList<>();
         try {
             controller = new Controller(this);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        this.port = port;
-        Scanner in = new Scanner(System.in);
-        System.out.print("Inserisci tempo di ricerca massimo: ");
-        timeSearch = in.nextInt();
-        timeRemaining=timeSearch;
-        System.out.print("Inserisci tempo massimo per fare una mossa: ");
-        playerTimeMove = in.nextInt();
-        timeMoveRemaining=playerTimeMove;
-        windowChosen = new ArrayList<>();
     }
 
     public static Server instance(int port) {
@@ -83,57 +79,15 @@ public class Server {
     }
 
     public int getTimeSearch() {
-        return timeRemaining;
+        return timeSearch;
     }
 
     public int getPlayerTimeMove() {
-        return timeMoveRemaining;
+        return playerTimeMove;
     }
 
     public ArrayList<WindowPattern> getWindowChosen() {
         return windowChosen;
-    }
-
-    public void search(){
-        Timer timer = new Timer();
-        final int delay = 1000;
-        final int period = 1000;
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if(timeRemaining>0)
-                    if(listOfPlayers.size()>=2 && listOfPlayers.size()<4)
-                        timeRemaining--;
-                    else{
-                        if(listOfPlayers.size()==4)
-                            timeRemaining=0;
-                        else
-                            timeRemaining = timeSearch;
-                    }
-            }
-        }, delay, period);
-    }
-
-    public void startPlayerTimer(){
-        timeMoveRemaining = playerTimeMove;
-        Timer timer = new Timer();
-        final int delay = 1000;
-        final int period = 1000;
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if(timeMoveRemaining==1){
-                    timeMoveRemaining--;
-                    try {
-                        controller.skip(controller.getCurrentPlayerName());
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if(timeMoveRemaining>0)
-                    timeMoveRemaining--;
-            }
-        }, delay, period);
     }
 
     public void addPlayers(String account) {

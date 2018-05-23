@@ -33,13 +33,15 @@ public interface RMIController extends Remote {
 
     boolean waitForPlayers() throws RemoteException;
 
+    int getTimeRemaining() throws RemoteException;
+
     boolean getOthersChoice() throws RemoteException;
 
     InitializerView initializeView() throws RemoteException;
 
     boolean login(String account) throws RemoteException;
 
-    boolean takeDie(int index) throws RemoteException;
+    String takeDie(int row, int column) throws RemoteException;
 
     boolean positionDie(int row, int column) throws RemoteException;
 
