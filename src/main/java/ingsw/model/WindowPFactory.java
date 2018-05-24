@@ -11,8 +11,13 @@ package ingsw.model;
 
 import ingsw.model.windowpattern.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class WindowPFactory {
 
@@ -23,10 +28,12 @@ public class WindowPFactory {
         return numOfWPs;
     }
 
-    public WindowPFactory(){
-        this.numOfWPs=wpList.size();
+    public WindowPFactory() throws IOException {
+        try (Stream<Path> files = Files.list(Paths.get("src/main/java/ingsw/model/windowpattern/wpxml"))) {
+            this.numOfWPs = (int) files.count();
+        }
         wpList= new ArrayList<>();
-        for(int i=0;i<=numOfWPs; i++){
+        for(int i=0;i<numOfWPs; i++){
             String index=Integer.toString(i+1);
             wpList.add(i, "wp"+index+".xml" );
         }

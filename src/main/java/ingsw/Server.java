@@ -62,8 +62,11 @@ public class Server {
         return controller;
     }
 
-    public ArrayList<ClientData> getListOfClient() {
-        return listOfClients;
+    public ArrayList<String> getListOfClient() {
+        ArrayList<String> nameClient = new ArrayList<>();
+        for(ClientData client : listOfClients)
+            nameClient.add(client.getName());
+        return nameClient;
     }
 
     public ArrayList<String> getListOfPlayers() {
@@ -118,6 +121,7 @@ public class Server {
         for (ClientData client : listOfClients) {
             if (client.getName().equals(clientName)) return  client.getState();
         }
+        return null;
     }
     
 

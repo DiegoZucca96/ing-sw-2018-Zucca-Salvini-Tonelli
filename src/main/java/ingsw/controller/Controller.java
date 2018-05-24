@@ -4,6 +4,7 @@ import ingsw.*;
 import ingsw.model.*;
 import ingsw.model.windowpattern.WindowPattern;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -28,10 +29,14 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     public Controller(Server server) throws RemoteException {
         super();
         this.server= server;
+        try {
+            this.wpFactory = new WindowPFactory();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.rg = new RandomGenerator(wpFactory.getNumOfWPs());
         this.timeSearch = server.getTimeSearch();
         this.playerMoveTime = server.getPlayerTimeMove();
-        this.wpFactory = new WindowPFactory();
-        this.rg = new RandomGenerator(wpFactory.getNumOfWPs());
         this.timer = new Timer();
         this.controllerTimer = new ControllerTimer(timeSearch,playerMoveTime);
     }
@@ -68,12 +73,13 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
 
     @Override
-    public String takeDie(int row, int column) throws RemoteException{
+    public boolean takeDie(int row, int column) throws RemoteException{
         if(match.getCurrentPlayer().getDieSelected()==null){
             int index = 3*row + column;
-            return match.playerTakeDie(index);
+            match.getCurrentPlayer().setDieSelected(match.playerTakeDie(index));
+            return true;
         }
-        return null;
+        return false;
     }
 
     @Override
@@ -222,7 +228,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
 
     @Override
-    public boolean waitForPlayers() throws RemoteException{
+    public synchronized boolean waitForPlayers() throws RemoteException{
         if(getSizeOfPlayers()==1 && access == 0){ //Fa qualcosa mentre aspetta
             access++;
         }
@@ -230,7 +236,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             controllerTimer.search(this,timer);
             access++;
         }
-        if(getTimeSearch()<=0){
+        if(getTimeRemaining()<=0){
             timer.cancel();
             return true;
         }

@@ -117,15 +117,13 @@ public class SAXParser {
 
     /** THIS METHOD EXTTRACTS INFORMATION SUCH AS NAME AND DIFFICULTY*/
     public InfoWindow readInfo(String configFile) {
-        InfoWindow info = new InfoWindow();
+        InfoWindow infoWindow = new InfoWindow();
         try {
             // First, create a new XMLInputFactory
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
             // Setup a new eventReader
             InputStream in = new FileInputStream(configFile);
             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
-            // read the XML document
-            InfoWindow infoWindow = new InfoWindow();
 
             while (eventReader.hasNext()) {
                 XMLEvent event = eventReader.nextEvent();
@@ -161,7 +159,7 @@ public class SAXParser {
         } catch (XMLStreamException e) {
             e.printStackTrace();
         }
-        return info;
+        return infoWindow;
 
     }
 }

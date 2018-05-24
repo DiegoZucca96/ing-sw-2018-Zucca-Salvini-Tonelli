@@ -93,11 +93,16 @@ public class ClientSocket implements Client {
     }
 
     @Override
+    public boolean useToolCard(String parameter) {
+        return false;
+    }
+
+   /* @Override
     public boolean takeDie(int index) {
         out.print("takeDie:" + index);
         if(in.nextLine().equals("ok")) return true;
         else return false;
-    }
+    }*/
 
     @Override
     public boolean positionDie(int row, int column) {
@@ -111,6 +116,16 @@ public class ClientSocket implements Client {
         out.print("waitForPlayers:");
         if(in.nextLine().equals("ok")) return  true;
         else return false;
+    }
+
+    @Override
+    public ArrayList<String> initializeView() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<String> updateView() {
+        return null;
     }
 
     @Override
@@ -143,9 +158,19 @@ public class ClientSocket implements Client {
     public ArrayList<WPViewChoise> getRandomWps() throws IOException {
         out.print("getRandomWPs:");
         try {
-            return (ArrayList<String>) is.readObject();
+            return (ArrayList<WPViewChoise>) is.readObject();
         } catch (ClassNotFoundException e) {
             return null;
         }
+    }
+
+    @Override
+    public ArrayList<String> getListOfPlayers() {
+        return null;
+    }
+
+    @Override
+    public boolean takeDie(int row, int col) {
+        return false;
     }
 }

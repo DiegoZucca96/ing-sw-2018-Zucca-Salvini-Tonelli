@@ -20,7 +20,7 @@ public class WindowPattern implements Serializable {
 
     private String title ;
 
-    private int difficulty;
+    private Integer difficulty;
 
     private final Cell[][] cellMatrix;
 
@@ -28,9 +28,9 @@ public class WindowPattern implements Serializable {
 
     public WindowPattern(SAXParser parser, int select ){
 
-        List<Cell> readConfig = parser.readConfig("src/main/java/ingsw/model/windowpattern/wp"+select+".xml");
+        List<Cell> readConfig = parser.readConfig("src/main/java/ingsw/model/windowpattern/wpxml/wp"+select+".xml");
 
-        InfoWindow readInfo = parser.readInfo("src/main/java/ingsw/model/windowpattern/wp"+select+".xml");
+        InfoWindow readInfo = parser.readInfo("src/main/java/ingsw/model/windowpattern/wpxml/wp"+select+".xml");
 
         cellMatrix= new Cell[4][5];
 
@@ -47,7 +47,6 @@ public class WindowPattern implements Serializable {
 
         this.title=readInfo.getName();
         this.difficulty=Integer.parseInt(readInfo.getDifficulty());
-
     }
 
     public String getTitle() {
@@ -266,9 +265,9 @@ public class WindowPattern implements Serializable {
             int select = rg.random();
 
             //READ FROM FILE
-            List<Cell> readConfig = read.readConfig("src/main/java/ingsw/model/windowpattern/wp"+select+".xml");
+            List<Cell> readConfig = read.readConfig("src/main/java/ingsw/model/windowpattern/wpxml/wp"+select+".xml");
 
-            InfoWindow readInfo = read.readInfo("src/main/java/ingsw/model/windowpattern/wp"+select+".xml");
+            InfoWindow readInfo = read.readInfo("src/main/java/ingsw/model/windowpattern/wpxml/wp"+select+".xml");
 
             for (Cell cell : readConfig) {
 

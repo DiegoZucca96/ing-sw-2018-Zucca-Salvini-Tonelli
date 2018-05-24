@@ -41,7 +41,7 @@ public interface RMIController extends Remote {
 
     boolean login(String account) throws RemoteException;
 
-    String takeDie(int row, int column) throws RemoteException;
+    boolean takeDie(int row, int column) throws RemoteException;
 
     boolean positionDie(int row, int column) throws RemoteException;
 

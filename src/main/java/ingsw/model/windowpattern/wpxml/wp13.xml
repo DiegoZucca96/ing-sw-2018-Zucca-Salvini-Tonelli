@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
-    <name>Comitas</name>
-    <difficulty> 5</difficulty>
+    <name>Symphony of Light</name>
+    <difficulty>6</difficulty>
     <cell>
         <row>0</row>
         <column>0</column>
-        <num>0</num>
-        <color>YELLOW</color>
+        <num>2</num>
+        <color>WHITE</color>
     </cell>
     <cell>
         <row>0</row>
@@ -17,7 +17,7 @@
     <cell>
         <row>0</row>
         <column>2</column>
-        <num>2</num>
+        <num>5</num>
         <color>WHITE</color>
     </cell>
     <cell>
@@ -29,91 +29,91 @@
     <cell>
         <row>0</row>
         <column>4</column>
+        <num>1</num>
+        <color>WHITE</color>
+    </cell>
+    <cell>
+        <row>1</row>
+        <column>0</column>
+        <num>0</num>
+        <color>YELLOW</color>
+    </cell>
+    <cell>
+        <row>1</row>
+        <column>1</column>
         <num>6</num>
         <color>WHITE</color>
     </cell>
     <cell>
         <row>1</row>
-        <column>0</column>
-        <num>0</num>
-        <color>WHITE</color>
-    </cell>
-    <cell>
-        <row>1</row>
-        <column>1</column>
-        <num>4</num>
-        <color>WHITE</color>
-    </cell>
-    <cell>
-        <row>1</row>
         <column>2</column>
         <num>0</num>
-        <color>WHITE</color>
+        <color>VIOLET</color>
     </cell>
     <cell>
         <row>1</row>
         <column>3</column>
-        <num>5</num>
-        <color>WHITE</color>
-    </cell>
-    <cell>
-        <row>1</row>
-        <column>4</column>
-        <num>0</num>
-        <color>YELLOW</color>
-    </cell>
-    <cell>
-        <row>2</row>
-        <column>0</column>
-        <num>0</num>
-        <color>WHITE</color>
-    </cell>
-    <cell>
-        <row>2</row>
-        <column>1</column>
-        <num>0</num>
-        <color>WHITE</color>
-    </cell>
-    <cell>
-        <row>2</row>
-        <column>2</column>
-        <num>0</num>
-        <color>WHITE</color>
-    </cell>
-    <cell>
-        <row>2</row>
-        <column>3</column>
-        <num>0</num>
-        <color>YELLOW</color>
-    </cell>
-    <cell>
-        <row>2</row>
-        <column>4</column>
-        <num>5</num>
-        <color>WHITE</color>
-    </cell>
-    <cell>
-        <row>3</row>
-        <column>0</column>
-        <num>1</num>
-        <color>WHITE</color>
-    </cell>
-    <cell>
-        <row>3</row>
-        <column>1</column>
         <num>2</num>
         <color>WHITE</color>
     </cell>
     <cell>
+        <row>1</row>
+        <column>4</column>
+        <num>0</num>
+        <color>RED</color>
+    </cell>
+    <cell>
+        <row>2</row>
+        <column>0</column>
+        <num>0</num>
+        <color>WHITE</color>
+    </cell>
+    <cell>
+        <row>2</row>
+        <column>1</column>
+        <num>0</num>
+        <color>BLUE</color>
+    </cell>
+    <cell>
+        <row>2</row>
+        <column>2</column>
+        <num>4</num>
+        <color>WHITE</color>
+    </cell>
+    <cell>
+        <row>2</row>
+        <column>3</column>
+        <num>0</num>
+        <color>GREEN</color>
+    </cell>
+    <cell>
+        <row>2</row>
+        <column>4</column>
+        <num>0</num>
+        <color>WHITE</color>
+    </cell>
+    <cell>
+        <row>3</row>
+        <column>0</column>
+        <num>0</num>
+        <color>WHITE</color>
+    </cell>
+    <cell>
+        <row>3</row>
+        <column>1</column>
+        <num>3</num>
+        <color>WHITE</color>
+    </cell>
+    <cell>
         <row>3</row>
         <column>2</column>
         <num>0</num>
-        <color>YELLOW</color>
+        <color>WHITE</color>
     </cell>
     <cell>
         <row>3</row>
         <column>3</column>
-        <num>3</num>
+        <num>5</num>
         <color>WHITE</color>
     </cell>
     <cell>

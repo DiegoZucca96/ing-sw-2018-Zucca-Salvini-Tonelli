@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
     <name>Lux Mundi</name>
-    <difficulty> 6</difficulty>
+    <difficulty>6</difficulty>
     <cell>
         <row>0</row>
         <column>0</column>

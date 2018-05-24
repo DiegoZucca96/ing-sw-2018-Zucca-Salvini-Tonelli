@@ -1,6 +1,7 @@
 package ingsw;
 
 import ingsw.controller.Controller;
+import ingsw.controller.WPViewChoise;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -87,7 +88,7 @@ public class ServerHandler implements Runnable {
     }
 
     private void takeDie(String parameter) throws RemoteException {
-        if(controller.takeDie(Integer.parseInt(parameter)))out.print("ok");
+        if(controller.takeDie(Integer.parseInt(parameter),0))out.print("ok");
         else out.print("ko");
     }
 
@@ -118,7 +119,11 @@ public class ServerHandler implements Runnable {
     }
 
     private void getRandomWPs() throws RemoteException{
-        os.writeObject( (ArrayList<String>) controller.getRandomWPs());
+        try {
+            os.writeObject( (ArrayList<WPViewChoise>) controller.getRandomWPs());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

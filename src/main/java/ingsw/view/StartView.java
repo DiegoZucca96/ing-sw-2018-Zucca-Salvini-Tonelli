@@ -33,6 +33,11 @@ public class StartView extends Application {
             }
         } else if(connectionType.equals("RMI")){
             client = new ClientRMI();
+            try {
+                client.startClient();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

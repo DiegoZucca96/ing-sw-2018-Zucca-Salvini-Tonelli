@@ -4,6 +4,8 @@ import ingsw.model.windowpattern.WindowPattern;
 import ingsw.model.toolcard.*;
 import ingsw.model.ToolCard;
 
+import java.io.IOException;
+
 
 public class Player {       //Classe che rappresenta un giocatore della partita
 
@@ -21,7 +23,11 @@ public class Player {       //Classe che rappresenta un giocatore della partita
         this.name = name;
         score = 0;
         pvScore = 0;
-        windowPattern = new WindowPFactory().createWindowPattern(wpType);
+        try {
+            windowPattern = new WindowPFactory().createWindowPattern(wpType);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         nFavoriteTokens = windowPattern.getDifficulty();
         pvObjectiveCard = new PVObjectiveCard(pvColor);
         //this.myRound = 1;

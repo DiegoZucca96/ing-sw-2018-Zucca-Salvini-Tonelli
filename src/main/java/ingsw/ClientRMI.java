@@ -17,7 +17,7 @@ public class ClientRMI implements Client {
     private RMIController controller;
 
     public void startClient() throws IOException{
-        Registry registry = LocateRegistry.getRegistry();
+        Registry registry = LocateRegistry.getRegistry("localhost",1081);
         try {
             controller = (RMIController) registry.lookup("controller");
         } catch (NotBoundException e) {
@@ -33,6 +33,7 @@ public class ClientRMI implements Client {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     @Override
@@ -64,9 +65,14 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public boolean takeDie(int index) {
+    public boolean useToolCard(String parameter) {
+        return false;
+    }
+
+    @Override
+    public boolean takeDie(int index, int index2) {
         try {
-            return controller.takeDie(index);
+            return controller.takeDie(index, index2);
         } catch (RemoteException e) {
             return false;
         }
@@ -88,6 +94,16 @@ public class ClientRMI implements Client {
         } catch (RemoteException e) {
             return false;
         }
+    }
+
+    @Override
+    public ArrayList<String> initializeView() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<String> updateView() {
+        return null;
     }
 
     @Override
@@ -133,5 +149,15 @@ public class ClientRMI implements Client {
         } catch (RemoteException e) {
             return null;
         }
+    }
+
+    @Override
+    public ArrayList<String> getListOfPlayers() {
+        try {
+            return controller.getListOfPlayers();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

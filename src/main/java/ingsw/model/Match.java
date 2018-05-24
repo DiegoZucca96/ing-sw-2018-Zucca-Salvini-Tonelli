@@ -148,8 +148,8 @@ public class Match {
     }
 
     //riceve indice del dado nella draft pool che si vuole posizionare e destinazione sulla WP del currentPlayer
-    public String playerTakeDie(int dieIndex) {
-        return draftPool.takeDie(dieIndex).toString();
+    public Die playerTakeDie(int dieIndex) {
+        return draftPool.takeDie(dieIndex);
     }
 
     //prende e restituisce un dado dalla windowPattern del current player
