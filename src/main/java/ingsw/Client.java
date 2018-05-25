@@ -1,6 +1,7 @@
 package ingsw;
 
-import ingsw.controller.WPViewChoise;
+import ingsw.controller.ViewWP;
+import ingsw.model.ViewData;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public interface Client {
     boolean register(String nickname);
 
     //NB: -> Metodo che crea le 4 WP da scegliere ritornando le informazioni per creare il background dei bottoni
-    ArrayList<WPViewChoise> getRandomWps() throws IOException;
+    ArrayList<ViewWP> getRandomWps() throws IOException;
 
     //Restituisce la lista dei nomi dei giocatori
     ArrayList<String> getListOfPlayers();
@@ -46,6 +47,10 @@ public interface Client {
     //restituisce lo stato del giocatore, "enabled" -> attivo. "disabled" -> disattivo (non è il suo turno)
     String getPlayerState();
 
+    void addWindow(int wpId);
+
+    ArrayList<ViewWP> getPlayersWPs();
+
     //Restituisce il numero dei giocatori della partita
     int getSizeOfPlayers();
 
@@ -53,24 +58,25 @@ public interface Client {
     int getTimeSearch();
 
     //restituisce arraylist della scelta di tutti i giocatori
-    ArrayList<WPViewChoise> getOthersChoice();
+    ArrayList<ViewWP> getPlayerWPs();
 
     //mette il giocatore in attesa di nuovi giocatori
     boolean waitForPlayers();
 
-    //restituisce una lista di stringhe rappresentanti gli oggetti da inizializzare nella view
-    ArrayList<String> initializeView();
+    //restituisce un oggetto contenente tutti i dati necessari a inizializzare la view
+    ViewData initializeView();
 
     //restituisce una lista di stringhe rappresentanti gli oggetti da aggiornare nella view
-    ArrayList<String> updateView();
+    ViewData updateView();
 
     //restituisce true se tutti hanno scelto la propria wp e si avvia la partita
-    boolean getOthersWP();
+    boolean readyToPlay();
 
+    //restituisce il nome del client che viene chiamato
     String getName();
 
-    //aggiunge la finestra scelta dal giocatore nel server
-    void addWindow(String nameWPChosen, String nameClient);
+    //memorizza la window pattern scelta dal giocatore nel controller
+    void addWP(String nameWPChosen);
     /*
     "windowpattern(name(ciao),difficulty(4),cell(row(0),column(0),number(0),color(RED),Die(number(5),color(RED)),cell(..."
 

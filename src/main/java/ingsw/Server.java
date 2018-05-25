@@ -25,7 +25,6 @@ public class Server {
     private ClientState disableClient;
     private final int timeSearch;
     private final int playerTimeMove;
-    private ArrayList<WindowPattern> windowChosen;
 
     public static void main(String[] args) throws RemoteException {
         Server server = Server.instance(1080);
@@ -45,7 +44,6 @@ public class Server {
         timeSearch = in.nextInt();
         System.out.print("Inserisci tempo massimo per fare una mossa: ");
         playerTimeMove = in.nextInt();
-        windowChosen = new ArrayList<>();
         try {
             controller = new Controller(this);
         } catch (RemoteException e) {
@@ -87,10 +85,6 @@ public class Server {
 
     public int getPlayerTimeMove() {
         return playerTimeMove;
-    }
-
-    public ArrayList<WindowPattern> getWindowChosen() {
-        return windowChosen;
     }
 
     public void addPlayers(String account) {

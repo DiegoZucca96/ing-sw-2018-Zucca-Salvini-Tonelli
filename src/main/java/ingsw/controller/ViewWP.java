@@ -3,7 +3,7 @@ package ingsw.controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class WPViewChoise implements Serializable {
+public class ViewWP implements Serializable {
 
     private String name;
     private String difficulty;

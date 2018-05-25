@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 
 public class Controller extends UnicastRemoteObject implements RMIController {
@@ -22,12 +21,17 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     private int timeSearch;
     private int playerMoveTime;
     private static int access=0;
+    private ArrayList<Integer> wpsChosen;   //Serve l'id delle wp per costruire match..
+                                            //NB --> serve assicurarsi che l'ordine degli id delle wp scelte coincida con l'ordine dei giocatori.
+
+
 
     //NB -->    tutti i metodi del controller devono essere boolean, per un motivo o per l'altro
     //          non sempre possono fare l'azione richiesta, in quel caso restituiscono false
 
     public Controller(Server server) throws RemoteException {
         super();
+        wpsChosen = new ArrayList<>();
         this.server= server;
         try {
             this.wpFactory = new WindowPFactory();
@@ -63,13 +67,17 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
 
     @Override
-    public ArrayList<WindowPattern> getWindowChosen() throws RemoteException {
-        return server.getWindowChosen();
+    public ArrayList<Integer> getWpsChosen() {
+        return wpsChosen;
     }
 
+
     @Override
-    public void addWindow(List<Cell> myWindow) throws RemoteException {
-        server.addWindow(myWindow);
+    public void addWindow(int wpId, String clientName) throws RemoteException {
+        //...
+        //assicurarsi che la lista dei giocatori e quella delle wpsChsen siano allineate
+        //io userei un array e poi lo convertirei in un arraylist..
+        wpsChosen.add(wpId);
     }
 
     @Override
@@ -155,42 +163,45 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return false;
     }
 
-    public synchronized ArrayList<WPViewChoise> getRandomWPs(){
-        ArrayList<WPViewChoise> wps = new ArrayList<>();
-        WPViewChoise wpobject = new WPViewChoise();
-        WindowPattern wp1 = wpFactory.createWindowPattern(rg.random());
-        wpobject.setName(wp1.getTitle());
-        wpobject.setDifficulty(Integer.toString(wp1.getDifficulty()));
-        wpobject.setWps(wp1.toMatrix());
-        wps.add(wpobject);
+    public synchronized ArrayList<ViewWP> getRandomWPs(){
+        ArrayList<ViewWP> wps = new ArrayList<>();
+        for(int i=0; i<4; i++){
+            ViewWP wpobject = new ViewWP();
+            WindowPattern wp = wpFactory.createWindowPattern(rg.random());
+            wpobject.setName(wp.getTitle());
+            wpobject.setDifficulty(Integer.toString(wp.getDifficulty()));
+            wpobject.setWps(wp.toMatrix());
+            wps.add(wpobject);
+        }
+        return wps;
 
-        WPViewChoise wpobject2 = new WPViewChoise();
+        /*ViewWP wpobject2 = new ViewWP();
         WindowPattern wp2 = wpFactory.createWindowPattern(rg.random());
         wpobject2.setName(wp2.getTitle());
         wpobject2.setDifficulty(Integer.toString(wp2.getDifficulty()));
         wpobject2.setWps(wp2.toMatrix());
         wps.add(wpobject2);
 
-        WPViewChoise wpobject3 = new WPViewChoise();
+        ViewWP wpobject3 = new ViewWP();
         WindowPattern wp3 = wpFactory.createWindowPattern(rg.random());
         wpobject3.setName(wp3.getTitle());
         wpobject3.setDifficulty(Integer.toString(wp3.getDifficulty()));
         wpobject3.setWps(wp3.toMatrix());
         wps.add(wpobject3);
 
-        WPViewChoise wpobject4 = new WPViewChoise();
+        ViewWP wpobject4 = new ViewWP();
         WindowPattern wp4 = wpFactory.createWindowPattern(rg.random());
         wpobject4.setName(wp4.getTitle());
         wpobject4.setDifficulty(Integer.toString(wp4.getDifficulty()));
         wpobject4.setWps(wp4.toMatrix());
         wps.add(wpobject4);
         return wps;
+        */
     }
 
     @Override
-    public boolean getOthersWP() throws RemoteException {
-        if(server.getWindowChosen().size()<getSizeOfPlayers())
-            return false;
+    public boolean readyToPlay() throws RemoteException {
+        if(wpsChosen.size()<getSizeOfPlayers()) return false; //temo che questa verifica non sia sufficiente..
         else return true;
     }
 
@@ -257,16 +268,14 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
 
     @Override
-    public ArrayList<WPViewChoise> getOthersChoice() throws RemoteException{
-        ArrayList<WPViewChoise> enemyWPs = new ArrayList<>();
-        for(WindowPattern windowPattern: server.getWindowChosen()){
-            WPViewChoise enemyWp = new WPViewChoise();
-            InfoCell [][] infoCell = windowPattern.toMatrix();
-            enemyWp.setWps(infoCell);
-            String name = windowPattern.getTitle();
-            enemyWp.setName(name);
-            String difficulty = Integer.toString(windowPattern.getDifficulty());
-            enemyWp.setDifficulty(difficulty);
+    public ArrayList<ViewWP> getPlayersWPs() throws IOException {
+        ArrayList<ViewWP> enemyWPs = new ArrayList<>();
+        for(int wpId: wpsChosen){
+            ViewWP enemyWp = new ViewWP();
+            WindowPattern wp = new WindowPFactory().createWindowPattern(wpId);
+            enemyWp.setWps(wp.toMatrix());
+            enemyWp.setName(wp.getTitle());
+            enemyWp.setDifficulty(Integer.toString(wp.getDifficulty()));
             enemyWPs.add(enemyWp);
         }
         return enemyWPs;
@@ -274,8 +283,9 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
     //Chiama il metodo inizializzatore del Match
     @Override
-    public InitializerView initializeView() throws RemoteException {
-        return Match.initialize();
+    public ViewData initializeView() throws RemoteException {
+        //...
+        return null;
     }
 
 }

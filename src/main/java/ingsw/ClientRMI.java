@@ -1,7 +1,9 @@
 package ingsw;
 
 import ingsw.controller.RMIController;
-import ingsw.controller.WPViewChoise;
+import ingsw.controller.ViewWP;
+import ingsw.controller.WPView;
+import ingsw.model.ViewData;
 import ingsw.view.GUI;
 
 import java.io.IOException;
@@ -98,19 +100,19 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public ArrayList<String> initializeView() {
+    public ViewData initializeView() {
         return null;
     }
 
     @Override
-    public ArrayList<String> updateView() {
+    public ViewData updateView() {
         return null;
     }
 
     @Override
-    public boolean getOthersWP() {
+    public boolean readyToPlay() {
         try {
-            return controller.getOthersWP();
+            return controller.readyToPlay();
         }catch (RemoteException e){
             return false;
         }
@@ -122,18 +124,15 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public void addWindow(String nameWPChosen, String name) {
-        //da fare
-
-
-
+    public void addWindow(int wpId) {
+        controller.addWindow(wpId, name);
     }
 
     @Override
-    public ArrayList<WPViewChoise> getOthersChoice() {
+    public ArrayList<ViewWP> getPlayersWPs() {
         try {
-            return controller.getOthersChoice();
-        } catch (RemoteException e) {
+            return controller.getPlayersWPs();
+        } catch (IOException e) {
             return null;
         }
     }
@@ -166,7 +165,7 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public ArrayList<WPViewChoise> getRandomWps() {
+    public ArrayList<ViewWP> getRandomWps() {
         try {
             return controller.getRandomWPs();
         } catch (RemoteException e) {
