@@ -142,6 +142,13 @@ public class ClientSocket implements Client {
     }
 
     @Override
+    public void addWindow(String nameWPChosen, String name) {
+        //da fare
+
+
+    }
+
+    @Override
     public ArrayList<WPViewChoise> getOthersChoice(){
         out.print("getOthersChoice:");
         try {

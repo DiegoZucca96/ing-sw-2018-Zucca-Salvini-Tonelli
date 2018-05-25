@@ -69,6 +69,8 @@ public interface Client {
 
     String getName();
 
+    //aggiunge la finestra scelta dal giocatore nel server
+    void addWindow(String nameWPChosen, String nameClient);
     /*
     "windowpattern(name(ciao),difficulty(4),cell(row(0),column(0),number(0),color(RED),Die(number(5),color(RED)),cell(..."
 
