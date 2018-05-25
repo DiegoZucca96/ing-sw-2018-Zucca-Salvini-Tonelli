@@ -129,10 +129,30 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public boolean getOthersChoice() {
-        out.print("getOthersChoice:");
+    public boolean getOthersWP() {
+        out.print("getOthersWP:");
         if(in.nextLine().equals("ok")) return  true;
         else return false;
+    }
+
+    @Override
+    public String getName() {
+        out.print("getName:");
+        return name;
+    }
+
+    @Override
+    public ArrayList<WPViewChoise> getOthersChoice(){
+        out.print("getOthersChoice:");
+        try {
+            return (ArrayList<WPViewChoise>) is.readObject();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     @Override

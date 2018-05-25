@@ -51,13 +51,14 @@ public class WindowPFactory {
         }
     }
 
-
-    public void addNewWP(String pathname){
+        //inutile poichè i file vengono aggiunti manualmente nella cartella e non dal programma
+    //file vengono solo acceduti
+    /*public void addNewWP(String pathname){
 
         int firstFreeIndex = this.getNumOfWPs();
 
         wpList.add(firstFreeIndex, pathname);
 
         this.numOfWPs = wpList.size();
-    }
+    }*/
 }

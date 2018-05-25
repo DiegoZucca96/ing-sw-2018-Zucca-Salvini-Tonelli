@@ -52,8 +52,8 @@ public interface Client {
     //Restituisce il timer rimanente del server durante la ricerca
     int getTimeSearch();
 
-    //restituisce true se hanno scelto tutti la wp e si avvia la partita
-    boolean getOthersChoice();
+    //restituisce arraylist della scelta di tutti i giocatori
+    ArrayList<WPViewChoise> getOthersChoice();
 
     //mette il giocatore in attesa di nuovi giocatori
     boolean waitForPlayers();
@@ -63,6 +63,11 @@ public interface Client {
 
     //restituisce una lista di stringhe rappresentanti gli oggetti da aggiornare nella view
     ArrayList<String> updateView();
+
+    //restituisce true se tutti hanno scelto la propria wp e si avvia la partita
+    boolean getOthersWP();
+
+    String getName();
 
     /*
     "windowpattern(name(ciao),difficulty(4),cell(row(0),column(0),number(0),color(RED),Die(number(5),color(RED)),cell(..."

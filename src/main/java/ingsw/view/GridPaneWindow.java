@@ -38,8 +38,8 @@ public class GridPaneWindow extends GridPane {
             for (int j = 0; j < numCols; j++) {
                 Button btnCell = addButtonWp(i, j);
                 btnCell.setPrefSize(55, 55);
-                String numCell = myWindow.getWps()[i][j].get(0);
-                String colorCell = myWindow.getWps()[i][j].get(1);
+                String numCell = myWindow.getWps()[i][j].getNumCol().get(0);
+                String colorCell = myWindow.getWps()[i][j].getNumCol().get(1);
                 String pathCell = WPRendering.pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 55, 55, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,

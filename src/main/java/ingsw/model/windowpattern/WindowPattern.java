@@ -2,6 +2,7 @@ package ingsw.model.windowpattern;
 
 
 
+import ingsw.controller.InfoCell;
 import ingsw.model.*;
 
 import java.io.Serializable;
@@ -296,13 +297,16 @@ public class WindowPattern implements Serializable {
         return result;
     }
 
-    public ArrayList<String>[][] toMatrix(){
-        ArrayList<String>[][] matrix = new ArrayList[4][5];
+    public InfoCell [][] toMatrix(){
+        InfoCell[][] matrix = new InfoCell[4][5];
         for(int row = 0; row < 4; row++) {
             for (int column = 0; column < 5; column++) {
-                matrix[row][column].add(0, Integer.toString(cellMatrix[row][column].getNumber()));
-                matrix[row][column].add(1, String.valueOf(cellMatrix[row][column].getColor()));
-
+                InfoCell x = new InfoCell();
+                ArrayList<String> numCol = new ArrayList<>();
+                numCol.add(Integer.toString(cellMatrix[row][column].getNumber()));
+                numCol.add(String.valueOf(cellMatrix[row][column].getColor()));
+                x.setNumCol(numCol);
+                matrix[row][column] = x;
             }
         }
         return matrix;

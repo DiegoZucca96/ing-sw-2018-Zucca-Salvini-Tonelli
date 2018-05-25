@@ -54,15 +54,15 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String numCell = displayWindow.get(0).getWps()[i][j].get(0);
-                String colorCell = displayWindow.get(0).getWps()[i][j].get(1);
+                String numCell = displayWindow.get(0).getWps()[i][j].getNumCol().get(0);
+                String colorCell = displayWindow.get(0).getWps()[i][j].getNumCol().get(1);
                 String pathCell = pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 50, 50, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                         BackgroundSize.DEFAULT);
                 btnCell.setBackground(new Background(myBI));
-                grid1.add(btnCell, j, i);
+                grid1.add(btnCell, i, j);
 
             }
         }
@@ -78,6 +78,7 @@ public class WPRendering {
 
         label1.setOnMousePressed(event -> {
             WPViewChoise myWindow= displayWindow.get(0);
+
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             new Private().display();
             windowPattern.close();
@@ -105,15 +106,15 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String numCell = displayWindow.get(1).getWps()[i][j].get(0);
-                String colorCell = displayWindow.get(1).getWps()[i][j].get(1);
+                String numCell = displayWindow.get(1).getWps()[i][j].getNumCol().get(0);
+                String colorCell = displayWindow.get(1).getWps()[i][j].getNumCol().get(1);
                 String pathCell = pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 50, 50, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                         BackgroundSize.DEFAULT);
                 btnCell.setBackground(new Background(myBI));
-                grid2.add(btnCell, j, i);
+                grid2.add(btnCell, i, j);
 
             }
         }
@@ -156,15 +157,15 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String numCell = displayWindow.get(2).getWps()[i][j].get(0);
-                String colorCell = displayWindow.get(2).getWps()[i][j].get(1);
+                String numCell = displayWindow.get(2).getWps()[i][j].getNumCol().get(0);
+                String colorCell = displayWindow.get(2).getWps()[i][j].getNumCol().get(1);
                 String pathCell = pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 50, 50, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                         BackgroundSize.DEFAULT);
                 btnCell.setBackground(new Background(myBI));
-                grid3.add(btnCell, j, i);
+                grid3.add(btnCell, i, j);
 
             }
         }
@@ -206,15 +207,15 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String numCell = displayWindow.get(3).getWps()[i][j].get(0);
-                String colorCell = displayWindow.get(3).getWps()[i][j].get(1);
+                String numCell = displayWindow.get(3).getWps()[i][j].getNumCol().get(0);
+                String colorCell = displayWindow.get(3).getWps()[i][j].getNumCol().get(1);
                 String pathCell = pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 50, 50, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                         BackgroundSize.DEFAULT);
                 btnCell.setBackground(new Background(myBI));
-                grid4.add(btnCell, j, i);
+                grid4.add(btnCell, i, j);
 
             }
         }

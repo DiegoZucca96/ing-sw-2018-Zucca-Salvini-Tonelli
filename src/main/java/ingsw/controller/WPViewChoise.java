@@ -1,12 +1,13 @@
 package ingsw.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class WPViewChoise {
+public class WPViewChoise implements Serializable {
 
     private String name;
     private String difficulty;
-    private ArrayList<String>[][] wps;
+    private InfoCell [][] wps;
 
 
     public String getName() {
@@ -25,11 +26,11 @@ public class WPViewChoise {
         this.difficulty = difficulty;
     }
 
-    public ArrayList<String>[][] getWps() {
+    public InfoCell [][] getWps() {
         return wps;
     }
 
-    public void setWps(ArrayList<String>[][] wps) {
+    public void setWps(InfoCell [][] wps) {
         this.wps = wps;
     }
 }

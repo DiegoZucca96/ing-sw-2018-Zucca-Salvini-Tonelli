@@ -26,6 +26,7 @@ public class ClientRMI implements Client {
         new GUI().display(this);
     }
 
+
     @Override
     public boolean login(String nickname) {
         try {
@@ -107,11 +108,25 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public boolean getOthersChoice() {
+    public boolean getOthersWP() {
+        try {
+            return controller.getOthersWP();
+        }catch (RemoteException e){
+            return false;
+        }
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public ArrayList<WPViewChoise> getOthersChoice() {
         try {
             return controller.getOthersChoice();
         } catch (RemoteException e) {
-            return false;
+            return null;
         }
     }
 

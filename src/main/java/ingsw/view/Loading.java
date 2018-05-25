@@ -104,13 +104,13 @@ public class Loading {
                                 }*/
                                 if(client.waitForPlayers()){
                                     timeline.stop();
-                                    ArrayList<WPViewChoise> randomWps = null;
+
                                     try {
-                                        randomWps= client.getRandomWps();
+                                        new WPRendering().display(client.getRandomWps(), client);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
-                                    new WPRendering().display(randomWps, client);
+
                                     primaryStage.close();
                                 }
                             }
@@ -121,7 +121,7 @@ public class Loading {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }*/
-                                if (client.getOthersChoice()){
+                                if (client.getOthersWP()){
                                     timeline.stop();
                                     new Play(client).display(myWindow);
                                     primaryStage.close();

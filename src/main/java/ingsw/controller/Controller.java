@@ -188,6 +188,13 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
 
     @Override
+    public boolean getOthersWP() throws RemoteException {
+        if(server.getWindowChosen().size()<getSizeOfPlayers())
+            return false;
+        else return true;
+    }
+
+    @Override
     public String getCurrentPlayerName(){
         return match.getCurrentPlayer().getName();
     }
@@ -250,11 +257,20 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
 
     @Override
-    public boolean getOthersChoice() throws RemoteException{
-        if(server.getWindowChosen().size()< getSizeOfPlayers())
-            return false;
-        else
-            return true;
+    public ArrayList<WPViewChoise> getOthersChoice() throws RemoteException{
+        ArrayList<WPViewChoise> enemyWPs = new ArrayList<>();
+        for(WindowPattern windowPattern: server.getWindowChosen()){
+            WPViewChoise enemyWp = new WPViewChoise();
+            InfoCell [][] infoCell = windowPattern.toMatrix();
+            enemyWp.setWps(infoCell);
+            String name = windowPattern.getTitle();
+            enemyWp.setName(name);
+            String difficulty = Integer.toString(windowPattern.getDifficulty());
+            enemyWp.setDifficulty(difficulty);
+            enemyWPs.add(enemyWp);
+        }
+        return enemyWPs;
+
     }
     //Chiama il metodo inizializzatore del Match
     @Override

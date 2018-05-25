@@ -35,7 +35,7 @@ public interface RMIController extends Remote {
 
     int getTimeRemaining() throws RemoteException;
 
-    boolean getOthersChoice() throws RemoteException;
+    ArrayList<WPViewChoise> getOthersChoice() throws RemoteException;
 
     InitializerView initializeView() throws RemoteException;
 
@@ -59,4 +59,6 @@ public interface RMIController extends Remote {
     //restituisce una matrice contenente stringhe rappresentanti le 4 wps tra cui il giocatore deve scegliere
     ArrayList<WPViewChoise> getRandomWPs() throws RemoteException;
 
+    //restituisce true se tutti i giocatori hanno scelto
+    boolean getOthersWP() throws RemoteException;
 }
