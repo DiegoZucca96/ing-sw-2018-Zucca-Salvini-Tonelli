@@ -142,11 +142,10 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public void addWindow(String nameWPChosen, String name) {
-        //da fare
-
+    public void createHash(int nameWindow, String nameClient) {
 
     }
+
 
     @Override
     public ArrayList<WPViewChoise> getOthersChoice(){
@@ -189,6 +188,11 @@ public class ClientSocket implements Client {
         } catch (ClassNotFoundException e) {
             return null;
         }
+    }
+
+    @Override
+    public void addWindow(WPViewChoise wpmodel) {
+
     }
 
     @Override
