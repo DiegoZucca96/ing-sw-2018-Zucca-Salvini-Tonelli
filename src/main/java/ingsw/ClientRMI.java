@@ -2,7 +2,6 @@ package ingsw;
 
 import ingsw.controller.RMIController;
 import ingsw.controller.ViewWP;
-import ingsw.controller.WPView;
 import ingsw.model.ViewData;
 import ingsw.view.GUI;
 
@@ -101,7 +100,11 @@ public class ClientRMI implements Client {
 
     @Override
     public ViewData initializeView() {
-        return null;
+        try {
+            return controller.initializeView();
+        } catch (RemoteException e) {
+            return null;
+        }
     }
 
     @Override
@@ -124,8 +127,12 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public void addWindow(int wpId) {
-        controller.addWindow(wpId, name);
+    public void addWP(int wpId) {
+        try {
+            controller.addWindow(wpId, name);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -181,5 +188,14 @@ public class ClientRMI implements Client {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public ArrayList<ViewWP> getPlayerWPs() {
+        try {
+            return controller.getPlayersWPs();
+        } catch (IOException e) {
+            return null;
+        }
     }
 }

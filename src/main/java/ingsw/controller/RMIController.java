@@ -65,4 +65,7 @@ public interface RMIController extends Remote {
     //restituisce una matrice contenente stringhe rappresentanti le 4 wps tra cui il giocatore deve scegliere
     ArrayList<ViewWP> getRandomWPs() throws RemoteException;
 
+    //con il supporto degli observer mette nell'oggetto che restituisce gli ultimi cambiamenti del model
+    ArrayList<ViewData> updateView();
+
 }

@@ -47,8 +47,6 @@ public interface Client {
     //restituisce lo stato del giocatore, "enabled" -> attivo. "disabled" -> disattivo (non è il suo turno)
     String getPlayerState();
 
-    void addWindow(int wpId);
-
     ArrayList<ViewWP> getPlayersWPs();
 
     //Restituisce il numero dei giocatori della partita
@@ -76,7 +74,9 @@ public interface Client {
     String getName();
 
     //memorizza la window pattern scelta dal giocatore nel controller
-    void addWP(String nameWPChosen);
+    void addWP(int wpId);
+
+
     /*
     "windowpattern(name(ciao),difficulty(4),cell(row(0),column(0),number(0),color(RED),Die(number(5),color(RED)),cell(..."
 
