@@ -76,7 +76,8 @@ public class WPRendering {
 
         label1.setOnMousePressed(event -> {
             WPViewChoise myWindow= displayWindow.get(0);
-            client.addWindow(namePath1, client.getName());
+            client.createHash(myWindow.getNumberWP(), client.getName());
+            client.addWindow(myWindow);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             new Private().display();
             windowPattern.close();
@@ -128,7 +129,8 @@ public class WPRendering {
 
         label2.setOnMousePressed(event -> {
             WPViewChoise myWindow= displayWindow.get(1);
-            client.addWindow(namePath2, client.getName());
+            client.createHash(myWindow.getNumberWP(), client.getName());
+            client.addWindow(myWindow);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             new Private().display();
             windowPattern.close();
@@ -179,7 +181,8 @@ public class WPRendering {
 
         label3.setOnMousePressed(event -> {
             WPViewChoise myWindow= displayWindow.get(2);
-            client.addWindow(namePath3, client.getName());
+            client.createHash(myWindow.getNumberWP(), client.getName());
+            client.addWindow(myWindow);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             new Private().display();
             windowPattern.close();
@@ -231,7 +234,8 @@ public class WPRendering {
 
         label4.setOnMousePressed(event -> {
             WPViewChoise myWindow= displayWindow.get(3);
-            client.addWindow(namePath4, client.getName());
+            client.createHash(myWindow.getNumberWP(), client.getName());
+            client.addWindow(myWindow);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             new Private().display();
             windowPattern.close();

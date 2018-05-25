@@ -1,8 +1,10 @@
 package ingsw;
 
 import ingsw.controller.Controller;
+import ingsw.controller.WPViewChoise;
 import ingsw.model.Cell;
 import ingsw.model.windowpattern.WindowPattern;
+import org.apache.velocity.runtime.parser.node.ASTIntegerRange;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -16,8 +18,9 @@ import java.util.concurrent.Executors;
 
 public class Server {
 
-    private ArrayList<ClientData> listOfClients; //associa ad ogni nme di un client il relativo stato
-    private ArrayList<String> listOfPlayers;
+    private ArrayList<ClientData> listOfClients; //associa ad ogni nome di un client il relativo stato
+    private ArrayList<String> listOfPlayers; //Nomi dei giocatori in partita
+    private HashMap<String,Integer> hashPlayers; //Associa ogni player alla sua WP selezionata (usata nella costruzione di match)
     private static Server instance = null;
     private Controller controller;
     private int port;
@@ -25,7 +28,7 @@ public class Server {
     private ClientState disableClient;
     private final int timeSearch;
     private final int playerTimeMove;
-    private ArrayList<WindowPattern> windowChosen;
+    private ArrayList<WPViewChoise> windowChosen; //Salva associazione WP-Client che ha scelto la WP, massimo size=4
 
     public static void main(String[] args) throws RemoteException {
         Server server = Server.instance(1080);
@@ -39,6 +42,7 @@ public class Server {
     private Server(int port) {
         listOfClients = new ArrayList<>();
         listOfPlayers = new ArrayList<>();
+        hashPlayers = new HashMap<>();
         this.port = port;
         Scanner in = new Scanner(System.in);
         System.out.print("Inserisci tempo di ricerca massimo: ");
@@ -89,7 +93,8 @@ public class Server {
         return playerTimeMove;
     }
 
-    public ArrayList<WindowPattern> getWindowChosen() {
+    //Da modificare per salvare le WP grafiche
+    public ArrayList<WPViewChoise> getWindowChosen() {
         return windowChosen;
     }
 
@@ -106,9 +111,9 @@ public class Server {
         controller.disableClient(account);
     }
     //Metodo da aggiustare, deve aggiungere la vera WP e non una lista di celle
-    public void addWindow(List<Cell> myWindow) {
-        if(myWindow!=null)
-            getWindowChosen().add((WindowPattern) myWindow);
+    public void addWindow(WPViewChoise wpmodel) {
+        if(wpmodel!=null)
+            windowChosen.add(wpmodel);
     }
 
     public void setClientState(String clientName, ClientState state) {
@@ -155,6 +160,10 @@ public class Server {
                 System.err.println(e.getMessage());
             }
         }
+    }
+
+    public void createHash(int numberWP, String nameClient) {
+        hashPlayers.put(nameClient,numberWP);
     }
 
 }

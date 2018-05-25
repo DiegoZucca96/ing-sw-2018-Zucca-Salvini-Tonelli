@@ -1,14 +1,12 @@
 package ingsw.controller;
 
+import com.sun.org.apache.regexp.internal.RE;
 import ingsw.ServerHandler;
-import ingsw.model.Cell;
 import ingsw.model.InitializerView;
-import ingsw.model.windowpattern.WindowPattern;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.List;
 
 public interface RMIController extends Remote {
     //Qua ci vanno tutti i metodi che il controller implementerà
@@ -21,9 +19,9 @@ public interface RMIController extends Remote {
 
     int getPlayerTimeMove() throws RemoteException;
 
-    ArrayList<WindowPattern> getWindowChosen() throws RemoteException;
+    ArrayList<WPViewChoise> getWindowChosen() throws RemoteException;
 
-    void addWindow(List<Cell> myWindow) throws RemoteException;
+    void addWindow(WPViewChoise wpmodel) throws RemoteException;
 
     String getCurrentPlayerName() throws RemoteException;
 
@@ -61,4 +59,6 @@ public interface RMIController extends Remote {
 
     //restituisce true se tutti i giocatori hanno scelto
     boolean getOthersWP() throws RemoteException;
+
+    void createHash(int nameWindow, String nameClient) throws RemoteException;
 }

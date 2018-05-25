@@ -22,6 +22,8 @@ public interface Client {
     //NB: -> Metodo che crea le 4 WP da scegliere ritornando le informazioni per creare il background dei bottoni
     ArrayList<WPViewChoise> getRandomWps() throws IOException;
 
+    void addWindow(WPViewChoise wpmodel);
+
     //Restituisce la lista dei nomi dei giocatori
     ArrayList<String> getListOfPlayers();
 
@@ -69,8 +71,8 @@ public interface Client {
 
     String getName();
 
-    //aggiunge la finestra scelta dal giocatore nel server
-    void addWindow(String nameWPChosen, String nameClient);
+    //crea un hash di valori player-WP scelta
+    void createHash(int nameWindow, String nameClient);
     /*
     "windowpattern(name(ciao),difficulty(4),cell(row(0),column(0),number(0),color(RED),Die(number(5),color(RED)),cell(..."
 

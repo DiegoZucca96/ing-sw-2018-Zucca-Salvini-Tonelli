@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 
 public class Controller extends UnicastRemoteObject implements RMIController {
@@ -63,13 +62,8 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
 
     @Override
-    public ArrayList<WindowPattern> getWindowChosen() throws RemoteException {
+    public ArrayList<WPViewChoise> getWindowChosen() throws RemoteException {
         return server.getWindowChosen();
-    }
-
-    @Override
-    public void addWindow(List<Cell> myWindow) throws RemoteException {
-        server.addWindow(myWindow);
     }
 
     @Override
@@ -158,31 +152,39 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     public synchronized ArrayList<WPViewChoise> getRandomWPs(){
         ArrayList<WPViewChoise> wps = new ArrayList<>();
         WPViewChoise wpobject = new WPViewChoise();
-        WindowPattern wp1 = wpFactory.createWindowPattern(rg.random());
+        int x = rg.random();
+        WindowPattern wp1 = wpFactory.createWindowPattern(x);
         wpobject.setName(wp1.getTitle());
         wpobject.setDifficulty(Integer.toString(wp1.getDifficulty()));
         wpobject.setWps(wp1.toMatrix());
+        wpobject.setNumberWP(x);
         wps.add(wpobject);
 
         WPViewChoise wpobject2 = new WPViewChoise();
-        WindowPattern wp2 = wpFactory.createWindowPattern(rg.random());
+        int y = rg.random();
+        WindowPattern wp2 = wpFactory.createWindowPattern(y);
         wpobject2.setName(wp2.getTitle());
         wpobject2.setDifficulty(Integer.toString(wp2.getDifficulty()));
         wpobject2.setWps(wp2.toMatrix());
+        wpobject2.setNumberWP(y);
         wps.add(wpobject2);
 
         WPViewChoise wpobject3 = new WPViewChoise();
-        WindowPattern wp3 = wpFactory.createWindowPattern(rg.random());
+        int z = rg.random();
+        WindowPattern wp3 = wpFactory.createWindowPattern(z);
         wpobject3.setName(wp3.getTitle());
         wpobject3.setDifficulty(Integer.toString(wp3.getDifficulty()));
         wpobject3.setWps(wp3.toMatrix());
+        wpobject3.setNumberWP(z);
         wps.add(wpobject3);
 
         WPViewChoise wpobject4 = new WPViewChoise();
-        WindowPattern wp4 = wpFactory.createWindowPattern(rg.random());
+        int w = rg.random();
+        WindowPattern wp4 = wpFactory.createWindowPattern(w);
         wpobject4.setName(wp4.getTitle());
         wpobject4.setDifficulty(Integer.toString(wp4.getDifficulty()));
         wpobject4.setWps(wp4.toMatrix());
+        wpobject4.setNumberWP(w);
         wps.add(wpobject4);
         return wps;
     }
@@ -192,6 +194,16 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         if(server.getWindowChosen().size()<getSizeOfPlayers())
             return false;
         else return true;
+    }
+
+    @Override
+    public void createHash(int numberWP, String nameClient) throws RemoteException {
+        server.createHash(numberWP,nameClient);
+    }
+
+    @Override
+    public void addWindow(WPViewChoise wpmodel){
+        server.addWindow(wpmodel);
     }
 
     @Override
@@ -256,16 +268,17 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return controllerTimer.getTimeRemaining();
     }
 
+
     @Override
     public ArrayList<WPViewChoise> getOthersChoice() throws RemoteException{
         ArrayList<WPViewChoise> enemyWPs = new ArrayList<>();
-        for(WindowPattern windowPattern: server.getWindowChosen()){
+        for(WPViewChoise windowPattern: getWindowChosen()){
             WPViewChoise enemyWp = new WPViewChoise();
-            InfoCell [][] infoCell = windowPattern.toMatrix();
+            InfoCell [][] infoCell = windowPattern.getWps();
             enemyWp.setWps(infoCell);
-            String name = windowPattern.getTitle();
+            String name = windowPattern.getName();
             enemyWp.setName(name);
-            String difficulty = Integer.toString(windowPattern.getDifficulty());
+            String difficulty = windowPattern.getDifficulty();
             enemyWp.setDifficulty(difficulty);
             enemyWPs.add(enemyWp);
         }

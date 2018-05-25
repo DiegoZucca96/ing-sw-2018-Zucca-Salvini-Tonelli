@@ -122,11 +122,12 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public void addWindow(String nameWPChosen, String name) {
-        //da fare
-
-
-
+    public void createHash(int numberWP, String nameClient) {
+        try {
+            controller.createHash(numberWP,nameClient);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -171,6 +172,15 @@ public class ClientRMI implements Client {
             return controller.getRandomWPs();
         } catch (RemoteException e) {
             return null;
+        }
+    }
+
+    @Override
+    public void addWindow(WPViewChoise wpmodel){
+        try {
+            controller.addWindow(wpmodel);
+        } catch (RemoteException e) {
+            e.printStackTrace();
         }
     }
 
