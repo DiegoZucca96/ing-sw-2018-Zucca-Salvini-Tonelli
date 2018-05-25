@@ -64,7 +64,7 @@ public class GridPaneWindow extends GridPane {
                 Toolkit.getDefaultToolkit().beep();
             //System.out.printf("Mouse enetered cell [%d, %d]%n", colIndex, rowIndex);
         });
-        this.add(button, i, j);
+        this.add(button, j, i);
         return button;
     }
 
