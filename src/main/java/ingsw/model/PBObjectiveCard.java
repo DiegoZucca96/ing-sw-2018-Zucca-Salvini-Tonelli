@@ -3,6 +3,8 @@ package ingsw.model;
 import ingsw.model.publiccard.*;
 import ingsw.model.publiccard.PB9;
 
+import java.util.ArrayList;
+
 public class PBObjectiveCard {
     private PBStrategy pbStrategy;
     private int points;
@@ -49,49 +51,60 @@ public class PBObjectiveCard {
         pbStrategy.doOp(p);
     }
 
-    public static void generatePBCard(ViewData init) {
+    public static ArrayList<Integer> generatePBCard(ViewData init) {
         RandomGenerator rg = new RandomGenerator(10);
+        ArrayList<Integer> numPBcards = new ArrayList<>();
         for(int i=0;i<3;i++){
             int select = rg.random();
             switch(select){
                 case 1:{
                     init.getPbCard().add("/Public1.png");
+                    numPBcards.add(select);
                     break;
                 }
                 case 2:{
                     init.getPbCard().add("/Public2.png");
+                    numPBcards.add(select);
                     break;
                 }
                 case 3:{
                     init.getPbCard().add("/Public3.png");
+                    numPBcards.add(select);
                     break;
                 }
                 case 4:{
                     init.getPbCard().add("/Public4.png");
+                    numPBcards.add(select);
                     break;
                 }
                 case 5:{
                     init.getPbCard().add("/Public5.png");
+                    numPBcards.add(select);
                     break;
                 }
                 case 6:{
                     init.getPbCard().add("/Public6.png");
+                    numPBcards.add(select);
                     break;
                 }
                 case 7:{
                     init.getPbCard().add("/Public7.png");
+                    numPBcards.add(select);
                     break;
                 }
                 case 8:{
                     init.getPbCard().add("/Public8.png");
+                    numPBcards.add(select);
                     break;
                 }
                 case 9:{
                     init.getPbCard().add("/Public9.png");
+                    numPBcards.add(select);
                     break;
                 }
                 case 10:{
                     init.getPbCard().add("/Public10.png");
+                    numPBcards.add(select);
                     break;
                 }
                 default:{
@@ -99,6 +112,7 @@ public class PBObjectiveCard {
                 }
             }
         }
+        return numPBcards;
     }
 
 }

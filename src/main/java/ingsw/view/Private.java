@@ -18,18 +18,14 @@ import javafx.stage.WindowEvent;
 
 public class Private {
 
-    private ViewData init ;
 
-
-
-    public void display(){
+    public void display(String pvCard){
 
         StackPane p = new StackPane();
         Scene s1 = new Scene(p);
         Stage privateObj = new Stage();
         privateObj.setWidth(240);
         privateObj.setHeight(320);
-        String pvCard = init.getPvCard().get(0);
         final ImageView selectedImage = new ImageView();
         String imagePath = pvCard;
         Image imagepv = new Image(imagePath, 240, 320, false, false);

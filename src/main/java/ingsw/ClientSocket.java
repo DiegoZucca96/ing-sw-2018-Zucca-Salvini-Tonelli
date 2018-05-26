@@ -146,6 +146,11 @@ public class ClientSocket implements Client {
         out.print("createHash:");
     }
 
+    @Override
+    public String getPVCard(String name) {
+        return null;
+    }
+
 
     @Override
     public ArrayList<ViewWP> getPlayerWPs(){

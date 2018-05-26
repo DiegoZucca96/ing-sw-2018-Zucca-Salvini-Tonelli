@@ -18,7 +18,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     private Server server;
     private WindowPFactory wpFactory;
     private RandomGenerator rg;
-    private Match match;
+    private static Match match = null;
     private int timeSearch;
     private int playerMoveTime;
     private static int access=0;
@@ -68,7 +68,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
 
     @Override
     public ArrayList<ViewWP> getWindowChosen() throws RemoteException {
-        return getWindowChosen();
+        return windowChosen;
     }
 
     public void setWindowChosen(ArrayList<ViewWP> windowChosen) {
@@ -314,10 +314,39 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return enemyWPs;
 
     }
-    //Chiama il metodo inizializzatore del Match
+
     @Override
-    public ViewData initializeView() throws RemoteException {
-        //...
-        return null;
+    public String getPVCard(String name) throws RemoteException {
+        String colorPV = null;
+        ArrayList<Player> playersModel = match.getPlayers();
+        for(Player p : playersModel){
+            if(name.equals(p.getName())){
+                colorPV = PVObjectiveCard.getPVCard(p.getPvObjectiveCard().getColor());
+            }
+        }
+        return colorPV;
+    }
+
+    //Chiama il metodo inizializzatore del Match, restituisce le WP grafiche, le PBCard e le ToolCard (PVCard da prendere a parte dopo)
+    @Override
+    public synchronized ViewData initializeView() throws RemoteException {
+        match = istanceMatch();
+        ViewData init = match.initialize();
+        init.setWps(windowChosen);
+        return init;
+    }
+
+    private Match istanceMatch() throws RemoteException {
+        if(match == null)
+            match = new Match(1,getListOfPlayers(),reorderWPandPlayer());
+        return match;
+    }
+
+    private ArrayList<Integer> reorderWPandPlayer() throws RemoteException {
+        ArrayList<Integer> ordinateWPs = new ArrayList<>();
+        for(String player : getListOfPlayers()){
+           ordinateWPs.add(hashPlayers.get(player));
+        }
+        return ordinateWPs;
     }
 }

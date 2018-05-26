@@ -47,32 +47,25 @@ public class PVObjectiveCard {
         this.color = color;
     }
 
-    public static void generatePVCard(ViewData init) {
-        RandomGenerator rg = new RandomGenerator(5);
-        int select = rg.random();
+    public static String getPVCard(Color select) {
         switch(select){
-            case 1:{
-                init.getPvCard().add("/Private1.png");
-                break;
+            case RED:{
+                return "/Private1.png";
             }
-            case 2:{
-                init.getPvCard().add ("/Private2.png");
-                break;
+            case YELLOW:{
+                return "/Private2.png";
             }
-            case 3:{
-                init.getPvCard().add ("/Private3.png");
-                break;
+            case GREEN:{
+                return "/Private3.png";
             }
-            case 4:{
-                init.getPvCard().add ("/Private4.png");
-                break;
+            case BLUE:{
+                return "/Private4.png";
             }
-            case 5:{
-                init.getPvCard().add ("/Private5.png");
-                break;
+            case VIOLET:{
+                return "/Private5.png";
             }
             default:{
-                break;
+                return null;
             }
         }
     }

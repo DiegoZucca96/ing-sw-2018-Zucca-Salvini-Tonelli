@@ -28,39 +28,33 @@ public class Match {
         //Inizializzazione dei giocatori sulla base dei dati ricevuti dal costruttore
         players = new ArrayList<Player>();
         for (int i = 0; i < playersNames.size(); i++) {
-            players.add(new Player(playersNames.get(i), playersWP.get(i), Color.values()[new RandomGenerator(4).random()]));
+            Player player = new Player(playersNames.get(i), playersWP.get(i), Color.values()[new RandomGenerator(4).random()]);
+            players.add(player);
         }
         nPlayers = players.size();
         clockwiseRound = true;
         currentPlayer = players.get(0);
 
-        // Inizializzazione delle tre carte utensili sfruttando tre numeri diversi generati casualmente
+        //Inizializzazione delle componenti del gioco
         tools = new ArrayList<ToolCard>();
-        RandomGenerator rg = new RandomGenerator(12);
-
-        tools.add(new ToolCard(rg.random()));
-        tools.add(new ToolCard(rg.random()));
-        tools.add(new ToolCard(rg.random()));
-
-        //Inizializzazione delle public objective card
         pbCards = new ArrayList<PBObjectiveCard>();
-        rg = new RandomGenerator(10);
-
-        pbCards.add(new PBObjectiveCard(rg.random()));
-        pbCards.add(new PBObjectiveCard(rg.random()));
-        pbCards.add(new PBObjectiveCard(rg.random()));
-
-        //Inizializzazione di round track e draft pool
         roundTrack = new RoundTrack();
         draftPool = new DraftPool(roundTrack);
     }
-    //Metodo che inizializza tutto (solo grafica per ora)
-    public static ViewData initialize(){
+    //Metodo che istanzia il gioco lato model e restituisce a lato view
+    public ViewData initialize(){
         ViewData init = new ViewData();
-        WindowPattern.generateWindowPattern(init);
-        PBObjectiveCard.generatePBCard(init);
-        ToolCard.generateToolCard(init);
-        PVObjectiveCard.generatePVCard(init);
+
+        ArrayList<Integer> numToolCards = ToolCard.generateToolCard(init);
+        tools.add(new ToolCard(numToolCards.get(0)));
+        tools.add(new ToolCard(numToolCards.get(1)));
+        tools.add(new ToolCard(numToolCards.get(2)));
+
+        ArrayList<Integer> numPBCards = PBObjectiveCard.generatePBCard(init);
+        pbCards.add(new PBObjectiveCard(numPBCards.get(0)));
+        pbCards.add(new PBObjectiveCard(numPBCards.get(1)));
+        pbCards.add(new PBObjectiveCard(numPBCards.get(2)));
+
         return init;
     }
 
@@ -74,6 +68,10 @@ public class Match {
 
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 
     //NB --> metodo ad uso esclusivo dei test

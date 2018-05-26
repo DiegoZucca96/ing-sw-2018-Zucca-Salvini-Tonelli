@@ -3,6 +3,8 @@ package ingsw.model;
 
 import ingsw.model.toolcard.*;
 
+import java.util.ArrayList;
+
 public class ToolCard {
 
     private ToolStrategy toolStrategy;
@@ -68,57 +70,70 @@ public class ToolCard {
         toolStrategy.doOp(objective);
     }
 
-    public static void generateToolCard(ViewData init) {
+    public static ArrayList<Integer> generateToolCard(ViewData init) {
         RandomGenerator rg = new RandomGenerator(10);
+        ArrayList<Integer> numToolCards = new ArrayList<>();
         for(int i=0;i<3;i++){
             int select = rg.random();
             switch(select){
                 case 1:{
                     init.getToolCard().add("/Tool1.png");
+                    numToolCards.add(select);
                     break;
                 }
                 case 2:{
                     init.getToolCard().add("/Tool2.png");
+                    numToolCards.add(select);
                     break;
                 }
                 case 3:{
                     init.getToolCard().add("/Tool3.png");
+                    numToolCards.add(select);
                     break;
                 }
                 case 4:{
                     init.getToolCard().add("/Tool4.png");
+                    numToolCards.add(select);
                     break;
                 }
                 case 5:{
                     init.getToolCard().add("/Tool5.png");
+                    numToolCards.add(select);
                     break;
                 }
                 case 6:{
                     init.getToolCard().add("/Tool6.png");
+                    numToolCards.add(select);
                     break;
                 }
                 case 7:{
                     init.getToolCard().add("/Tool7.png");
+                    numToolCards.add(select);
                     break;
                 }
                 case 8:{
                     init.getToolCard().add("/Tool8.png");
+                    numToolCards.add(select);
                     break;
                 }
                 case 9:{
                     init.getToolCard().add("/Tool9.png");
+                    numToolCards.add(select);
                     break;
                 }
                 case 10:{
                     init.getToolCard().add("/Tool10.png");
+                    numToolCards.add(select);
                     break;
                 }
                 case 11:{
                     init.getToolCard().add("/Tool11.png");
+                    numToolCards.add(select);
                     break;
                 }
                 case 12:{
                     init.getToolCard().add("/Tool12.png");
+                    numToolCards.add(select);
                     break;
                 }
                 default:{
@@ -126,5 +141,6 @@ public class ToolCard {
                 }
             }
         }
+        return numToolCards;
     }
 }

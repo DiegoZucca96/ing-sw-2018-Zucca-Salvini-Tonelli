@@ -136,6 +136,16 @@ public class ClientRMI implements Client {
     }
 
     @Override
+    public String getPVCard(String name) {
+        try {
+            return controller.getPVCard(name);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public ArrayList<ViewWP> getPlayerWPs() {
         try {
             return controller.getPlayersWPs();

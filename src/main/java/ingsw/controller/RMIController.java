@@ -66,4 +66,5 @@ public interface RMIController extends Remote {
     //con il supporto degli observer mette nell'oggetto che restituisce gli ultimi cambiamenti del model
     ArrayList<ViewData> updateView() throws RemoteException;
 
+    String getPVCard(String name) throws RemoteException;
 }

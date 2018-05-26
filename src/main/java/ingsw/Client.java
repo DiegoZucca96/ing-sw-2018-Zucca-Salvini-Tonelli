@@ -76,6 +76,8 @@ public interface Client {
     //crea un hash di valori player-WP scelta (credo aggiunga la wp scelta all'hashmap del controller)
     void createHash(int nameWindow, String nameClient);
 
+    String getPVCard(String name);
+
 
     /*
     "windowpattern(name(ciao),difficulty(4),cell(row(0),column(0),number(0),color(RED),Die(number(5),color(RED)),cell(..."

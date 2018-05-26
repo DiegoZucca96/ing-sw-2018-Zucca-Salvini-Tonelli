@@ -38,6 +38,10 @@ public class ViewData implements Serializable {
         return wps;
     }
 
+    public void setWps(ArrayList<ViewWP> wps) {
+        this.wps = wps;
+    }
+
     public ArrayList<String> getPbCard() {
         return pbCards;
     }

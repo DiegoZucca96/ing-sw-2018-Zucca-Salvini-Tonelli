@@ -79,6 +79,7 @@ public class WPRendering {
             client.createHash(myWindow.getNumberWP(), client.getName());
             client.addWindow(myWindow);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
+            new Private().display(client.getPVCard(client.getName()));
             windowPattern.close();
         });
 
@@ -131,6 +132,7 @@ public class WPRendering {
             client.createHash(myWindow.getNumberWP(), client.getName());
             client.addWindow(myWindow);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
+            new Private().display(client.getPVCard(client.getName()));
             windowPattern.close();
         });
 
@@ -182,6 +184,7 @@ public class WPRendering {
             client.createHash(myWindow.getNumberWP(), client.getName());
             client.addWindow(myWindow);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
+            new Private().display(client.getPVCard(client.getName()));
             windowPattern.close();
         });
 
@@ -234,6 +237,7 @@ public class WPRendering {
             client.createHash(myWindow.getNumberWP(), client.getName());
             client.addWindow(myWindow);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
+            new Private().display(client.getPVCard(client.getName()));
             windowPattern.close();
         });
 

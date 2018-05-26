@@ -49,6 +49,10 @@ public class Player {       //Classe che rappresenta un giocatore della partita
         this.coordinateDieSelected = coordinateDieSelected;
     }
 
+    public PVObjectiveCard getPvObjectiveCard() {
+        return pvObjectiveCard;
+    }
+
     public int getScore(){
         return score;
     }

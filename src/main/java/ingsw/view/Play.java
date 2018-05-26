@@ -135,6 +135,7 @@ public class Play {
 
 
         //PAGINAZIONE DI VARI OGGETTI
+        init = client.initializeView();
         AnchorPane playersWP = paginationPlayers(init);
         AnchorPane playersPb = paginationPublic(init);
         AnchorPane playersTool = paginationTool(init);
