@@ -37,12 +37,12 @@ public class Play {
 
 
     private Client client;
-    private ViewData init = new ViewData();
+    private ViewData init ;
 
 
     public Play(Client client){
         this.client=client;
-
+        init= client.initializeView();
     }
 
     public void display(ViewWP myWindow){
@@ -169,7 +169,7 @@ public class Play {
 
         root.getChildren().addAll( backGround, round, pDraft, paneWP, panePlayer, panePublic, paneTool, gridRound, paneMenu);
         table.setScene(scene);
-        table.setTitle("Sagrada");
+        table.setTitle("Sagrada - "+client.getName());
         table.resizableProperty().setValue(Boolean.FALSE);
         table.show();
 
@@ -308,7 +308,7 @@ public class Play {
 
 
     private AnchorPane paginationPlayers(ViewData init){
-        Pagination pagination = new Pagination(3, 0);
+        Pagination pagination = new Pagination(client.getSizeOfPlayers()-1, 0);
         pagination.setPageFactory(new Callback<Integer, Node>() {
             @Override
             public Node call(Integer pageIndex) {
@@ -329,6 +329,8 @@ public class Play {
     private VBox createPageWp(int pageIndex){
         VBox box = new VBox(5);
         final String styleSheet ="-fx-text-fill: blue; -fx-font: italic 15 \"serif\"";
+
+        //mi interessa la lista degli avversari
         ArrayList<String> listOfPllayers = client.getListOfPlayers();
         listOfPllayers.remove(client.getName());
 

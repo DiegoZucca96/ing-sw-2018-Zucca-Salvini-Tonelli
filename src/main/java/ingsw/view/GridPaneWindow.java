@@ -37,11 +37,11 @@ public class GridPaneWindow extends GridPane {
         for (int i = 0 ; i < numRows ; i++) {
             for (int j = 0; j < numCols; j++) {
                 Button btnCell = addButtonWp(i, j);
-                btnCell.setPrefSize(55, 55);
+                btnCell.setPrefSize(50, 50);
                 String numCell = myWindow.getWps()[i][j].getNumCol().get(0);
                 String colorCell = myWindow.getWps()[i][j].getNumCol().get(1);
                 String pathCell = WPRendering.pathCell(numCell, colorCell);
-                Image myImage = new Image(pathCell, 55, 55, false, false);
+                Image myImage = new Image(pathCell, 50, 50, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                         BackgroundSize.DEFAULT);

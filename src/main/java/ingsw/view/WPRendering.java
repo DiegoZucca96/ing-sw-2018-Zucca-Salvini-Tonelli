@@ -79,7 +79,6 @@ public class WPRendering {
             client.createHash(myWindow.getNumberWP(), client.getName());
             client.addWindow(myWindow);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
-            new Private().display();
             windowPattern.close();
         });
 
@@ -132,7 +131,6 @@ public class WPRendering {
             client.createHash(myWindow.getNumberWP(), client.getName());
             client.addWindow(myWindow);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
-            new Private().display();
             windowPattern.close();
         });
 
@@ -184,7 +182,6 @@ public class WPRendering {
             client.createHash(myWindow.getNumberWP(), client.getName());
             client.addWindow(myWindow);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
-            new Private().display();
             windowPattern.close();
         });
 
@@ -237,7 +234,6 @@ public class WPRendering {
             client.createHash(myWindow.getNumberWP(), client.getName());
             client.addWindow(myWindow);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
-            new Private().display();
             windowPattern.close();
         });
 
@@ -259,7 +255,7 @@ public class WPRendering {
 
         windowPattern.setOnCloseRequest(event -> event.consume());
 
-        windowPattern.setTitle("Choose window pattern");
+        windowPattern.setTitle("Choose window pattern - "+client.getName());
         windowPattern.setScene(s2);
 
         Platform.setImplicitExit(false);
