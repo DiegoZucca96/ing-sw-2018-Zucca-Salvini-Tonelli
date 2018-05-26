@@ -309,7 +309,7 @@ public class Play {
 
 
     private AnchorPane paginationPlayers(ViewData init){
-        Pagination pagination = new Pagination(client.getSizeOfPlayers()-1, 0);
+        Pagination pagination = new Pagination(client.getNumberOfPlayers()-1, 0);
         pagination.setPageFactory(new Callback<Integer, Node>() {
             @Override
             public Node call(Integer pageIndex) {

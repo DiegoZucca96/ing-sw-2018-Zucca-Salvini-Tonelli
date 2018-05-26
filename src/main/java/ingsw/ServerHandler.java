@@ -138,7 +138,7 @@ public class ServerHandler implements Runnable {
     }
 
     private void addWP(String parameter){
-        controller.addWindow(parameter);
+        controller.addWindowName(parameter);
     }
 
     private void getListOfPlayers() throws IOException {

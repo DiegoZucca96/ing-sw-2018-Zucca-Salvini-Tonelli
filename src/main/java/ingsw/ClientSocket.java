@@ -196,8 +196,13 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public void addWP(String wp) {
+    public void addWPName(String wp) {
         out.print("addWP:" + wp);
+    }
+
+    @Override
+    public void addWP(ViewWP wp) {
+        //Da implementare se serve
     }
 
     @Override

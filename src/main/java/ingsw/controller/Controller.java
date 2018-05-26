@@ -23,6 +23,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     private int playerMoveTime;
     private static int access=0;
     private ArrayList<ViewWP> windowChosen;
+    private ArrayList<String> nameWPChosen;
     private HashMap<String,Integer> hashPlayers; //Associa ogni player alla sua WP selezionata (usata nella costruzione di match)
 
     //NB -->    tutti i metodi del controller devono essere boolean, per un motivo o per l'altro
@@ -233,6 +234,11 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     @Override
     public void addWindow(ViewWP wpmodel){
         windowChosen.add(wpmodel);
+    }
+    //Aggiunge il nome della finestra scelta
+    @Override
+    public void addWindowName (String wpmodel){
+        nameWPChosen.add(wpmodel);
     }
 
     @Override

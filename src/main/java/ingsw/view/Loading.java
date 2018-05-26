@@ -122,7 +122,8 @@ public class Loading {
                                 }*/
                                 if (client.readyToPlay()){
                                     timeline.stop();
-                                    new PlayGame(client).display(myWindow);
+                                    //new PlayGame(client).display(myWindow);
+                                    new Play(client).display(myWindow);
                                     primaryStage.close();
                                 }
                             }

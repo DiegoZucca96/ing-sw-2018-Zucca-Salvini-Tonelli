@@ -191,9 +191,18 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public void addWP(String wp){
+    public void addWP(ViewWP wp){
         try {
             controller.addWindow(wp);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void addWPName(String wp){
+        try {
+            controller.addWindowName(wp);
         } catch (RemoteException e) {
             e.printStackTrace();
         }

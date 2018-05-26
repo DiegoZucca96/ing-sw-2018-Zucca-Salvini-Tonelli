@@ -22,6 +22,8 @@ public interface RMIController extends Remote {
     //per associare ad un giocatore la sua wp è sufficiente una stringa, o un int
     void addWindow(ViewWP wpmodel) throws RemoteException;
 
+    void addWindowName(String wpmodel) throws RemoteException;
+
     String getCurrentPlayerName() throws RemoteException;
 
     void skip(String clientName) throws RemoteException;

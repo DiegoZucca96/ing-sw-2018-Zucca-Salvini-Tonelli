@@ -77,7 +77,7 @@ public class WPRendering {
         label1.setOnMousePressed(event -> {
             ViewWP myWindow= displayWindow.get(0);
             client.createHash(myWindow.getNumberWP(), client.getName());
-            client.addWindow(myWindow);
+            client.addWP(myWindow);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             new Private().display(client.getPVCard(client.getName()));
             windowPattern.close();
@@ -130,7 +130,7 @@ public class WPRendering {
         label2.setOnMousePressed(event -> {
             ViewWP myWindow= displayWindow.get(1);
             client.createHash(myWindow.getNumberWP(), client.getName());
-            client.addWindow(myWindow);
+            client.addWP(myWindow);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             new Private().display(client.getPVCard(client.getName()));
             windowPattern.close();
@@ -182,7 +182,7 @@ public class WPRendering {
         label3.setOnMousePressed(event -> {
             ViewWP myWindow= displayWindow.get(2);
             client.createHash(myWindow.getNumberWP(), client.getName());
-            client.addWindow(myWindow);
+            client.addWP(myWindow);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             new Private().display(client.getPVCard(client.getName()));
             windowPattern.close();
@@ -235,7 +235,7 @@ public class WPRendering {
         label4.setOnMousePressed(event -> {
             ViewWP myWindow= displayWindow.get(3);
             client.createHash(myWindow.getNumberWP(), client.getName());
-            client.addWindow(myWindow);
+            client.addWP(myWindow);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             new Private().display(client.getPVCard(client.getName()));
             windowPattern.close();
