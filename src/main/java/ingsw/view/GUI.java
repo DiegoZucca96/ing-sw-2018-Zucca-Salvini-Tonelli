@@ -32,10 +32,10 @@ import javafx.util.Duration;
 public class GUI  {
 
     private Scene scene;
-    private String username;
     private String saveUsername;
     private Stage window;
     private Client client;
+    private String userName;
 
     public void display(Client c) {
 
@@ -134,7 +134,7 @@ public class GUI  {
         Button btnLogin = new Button( "Log in", imageOk);
         btnLogin.setOnAction(e->{
             // SERVER VERIFICA LE CREDENZIALI
-            username = tfName.getText();
+            userName = tfName.getText();
                 /*if (!username.isEmpty()) {
                     try {
                         if(!controller.getListOfPlayers().contains(username)){
@@ -167,8 +167,8 @@ public class GUI  {
                         e1.printStackTrace();
                     }
                 }*/
-                if (!username.isEmpty()) {
-                    if(client.login(username)){
+                if (!userName.isEmpty()) {
+                    if(client.login(userName)){
 
                         stage.close();
                         window.close();
@@ -293,4 +293,7 @@ public class GUI  {
         return stage;
     }
 
+    public String getUserName() {
+        return userName;
+    }
 }

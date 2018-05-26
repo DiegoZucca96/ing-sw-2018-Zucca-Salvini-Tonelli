@@ -2,8 +2,7 @@ package ingsw.view;
 
 
 import ingsw.Client;
-import ingsw.controller.RMIController;
-import ingsw.controller.WPViewChoise;
+import ingsw.controller.ViewWP;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -15,7 +14,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import java.util.ArrayList;
-import java.util.List;
 
 /**Author : Alessio Tonelli
  *
@@ -32,7 +30,7 @@ public class WPRendering {
     private Client client;
     private static final String styleSheet = "-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"; -fx-padding: 0 0 20 0; -fx-text-alignment: center";
 
-    public void display(ArrayList<WPViewChoise> displayWindow, Client c) {
+    public void display(ArrayList<ViewWP> displayWindow, Client c) {
 
 
         this.client=c;
@@ -54,15 +52,15 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String numCell = displayWindow.get(0).getWps()[i][j].get(0);
-                String colorCell = displayWindow.get(0).getWps()[i][j].get(1);
+                String numCell = displayWindow.get(0).getWps()[i][j].getNumCol().get(0);
+                String colorCell = displayWindow.get(0).getWps()[i][j].getNumCol().get(1);
                 String pathCell = pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 50, 50, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                         BackgroundSize.DEFAULT);
                 btnCell.setBackground(new Background(myBI));
-                grid1.add(btnCell, j, i);
+                grid1.add(btnCell, j, i);       //ricorda che il primo è colonna, il secondo riga
 
             }
         }
@@ -72,12 +70,14 @@ public class WPRendering {
         String namePath1 = displayWindow.get(0).getName();
         String diffPath1 = displayWindow.get(0).getDifficulty();
         final Label label1 = new Label();
-        label1.setText("               "+namePath1+diffPath1);
+        label1.setText("                "+namePath1+diffPath1);
         label1.setStyle(styleSheet);
         root.add(label1, 0, 1);
 
         label1.setOnMousePressed(event -> {
-            WPViewChoise myWindow= displayWindow.get(0);
+            ViewWP myWindow= displayWindow.get(0);
+            client.createHash(myWindow.getNumberWP(), client.getName());
+            client.addWindow(myWindow);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             new Private().display();
             windowPattern.close();
@@ -105,8 +105,8 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String numCell = displayWindow.get(1).getWps()[i][j].get(0);
-                String colorCell = displayWindow.get(1).getWps()[i][j].get(1);
+                String numCell = displayWindow.get(1).getWps()[i][j].getNumCol().get(0);
+                String colorCell = displayWindow.get(1).getWps()[i][j].getNumCol().get(1);
                 String pathCell = pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 50, 50, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
@@ -123,12 +123,14 @@ public class WPRendering {
         String namePath2 = displayWindow.get(1).getName();
         String diffPath2 = displayWindow.get(1).getDifficulty();
         final Label label2 = new Label();
-        label2.setText("               "+namePath2+diffPath2);
+        label2.setText("                "+namePath2+diffPath2);
         label2.setStyle(styleSheet);
         root.add(label2, 1, 1);
 
         label2.setOnMousePressed(event -> {
-            WPViewChoise myWindow= displayWindow.get(1);
+            ViewWP myWindow= displayWindow.get(1);
+            client.createHash(myWindow.getNumberWP(), client.getName());
+            client.addWindow(myWindow);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             new Private().display();
             windowPattern.close();
@@ -156,8 +158,8 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String numCell = displayWindow.get(2).getWps()[i][j].get(0);
-                String colorCell = displayWindow.get(2).getWps()[i][j].get(1);
+                String numCell = displayWindow.get(2).getWps()[i][j].getNumCol().get(0);
+                String colorCell = displayWindow.get(2).getWps()[i][j].getNumCol().get(1);
                 String pathCell = pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 50, 50, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
@@ -173,12 +175,14 @@ public class WPRendering {
         String namePath3 = displayWindow.get(2).getName();
         String diffPath3 = displayWindow.get(2).getDifficulty();
         final Label label3 = new Label();
-        label3.setText("               "+namePath3+diffPath3);
+        label3.setText("                "+namePath3+diffPath3);
         label3.setStyle(styleSheet);
         root.add(label3, 2, 1);
 
         label3.setOnMousePressed(event -> {
-            WPViewChoise myWindow= displayWindow.get(2);
+            ViewWP myWindow= displayWindow.get(2);
+            client.createHash(myWindow.getNumberWP(), client.getName());
+            client.addWindow(myWindow);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             new Private().display();
             windowPattern.close();
@@ -206,8 +210,8 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String numCell = displayWindow.get(3).getWps()[i][j].get(0);
-                String colorCell = displayWindow.get(3).getWps()[i][j].get(1);
+                String numCell = displayWindow.get(3).getWps()[i][j].getNumCol().get(0);
+                String colorCell = displayWindow.get(3).getWps()[i][j].getNumCol().get(1);
                 String pathCell = pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 50, 50, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
@@ -224,12 +228,14 @@ public class WPRendering {
         String namePath4 = displayWindow.get(3).getName();
         String diffPath4 = displayWindow.get(3).getDifficulty();
         final Label label4 = new Label();
-        label4.setText("               "+namePath4+diffPath4);
+        label4.setText("                "+namePath4+diffPath4);
         label4.setStyle(styleSheet);
         root.add(label4, 3, 1);
 
         label4.setOnMousePressed(event -> {
-            WPViewChoise myWindow= displayWindow.get(3);
+            ViewWP myWindow= displayWindow.get(3);
+            client.createHash(myWindow.getNumberWP(), client.getName());
+            client.addWindow(myWindow);
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             new Private().display();
             windowPattern.close();

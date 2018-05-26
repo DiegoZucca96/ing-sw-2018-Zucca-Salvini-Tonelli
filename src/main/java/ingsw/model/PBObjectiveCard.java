@@ -49,7 +49,7 @@ public class PBObjectiveCard {
         pbStrategy.doOp(p);
     }
 
-    public static void generatePBCard(InitializerView init) {
+    public static void generatePBCard(ViewData init) {
         RandomGenerator rg = new RandomGenerator(10);
         for(int i=0;i<3;i++){
             int select = rg.random();

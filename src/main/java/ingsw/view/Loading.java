@@ -2,7 +2,7 @@ package ingsw.view;
 
 
 import ingsw.Client;
-import ingsw.controller.WPViewChoise;
+import ingsw.controller.ViewWP;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -19,7 +19,6 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 
 /**Author : Alessio Tonelli
@@ -58,7 +57,7 @@ public class Loading {
     }
 
 
-    public void display(Stage primaryStage, String comment, WPViewChoise myWindow) {
+    public void display(Stage primaryStage, String comment, ViewWP myWindow) {
 
         //MANAGE CYCLE PROGRESS
         final ProgressIndicator progressIndicator = new ProgressIndicator(0);
@@ -104,13 +103,13 @@ public class Loading {
                                 }*/
                                 if(client.waitForPlayers()){
                                     timeline.stop();
-                                    ArrayList<WPViewChoise> randomWps = null;
+
                                     try {
-                                        randomWps= client.getRandomWps();
+                                        new WPRendering().display(client.getRandomWps(), client);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
-                                    new WPRendering().display(randomWps, client);
+
                                     primaryStage.close();
                                 }
                             }
@@ -121,7 +120,7 @@ public class Loading {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }*/
-                                if (client.getOthersChoice()){
+                                if (client.readyToPlay()){
                                     timeline.stop();
                                     new Play(client).display(myWindow);
                                     primaryStage.close();

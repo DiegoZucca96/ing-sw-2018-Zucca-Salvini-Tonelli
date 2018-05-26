@@ -1,14 +1,10 @@
 package ingsw.controller;
 
 import ingsw.ServerHandler;
-import ingsw.model.Cell;
-import ingsw.model.InitializerView;
-import ingsw.model.windowpattern.WindowPattern;
-
+import ingsw.model.ViewData;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.List;
 
 public interface RMIController extends Remote {
     //Qua ci vanno tutti i metodi che il controller implementerà
@@ -21,9 +17,9 @@ public interface RMIController extends Remote {
 
     int getPlayerTimeMove() throws RemoteException;
 
-    ArrayList<WindowPattern> getWindowChosen() throws RemoteException;
+    ArrayList<ViewWP> getWindowChosen() throws RemoteException;
 
-    void addWindow(List<Cell> myWindow) throws RemoteException;
+    void addWindow(ViewWP wpmodel) throws RemoteException;
 
     String getCurrentPlayerName() throws RemoteException;
 
@@ -35,9 +31,11 @@ public interface RMIController extends Remote {
 
     int getTimeRemaining() throws RemoteException;
 
-    boolean getOthersChoice() throws RemoteException;
+    //restituisce le wps scelte dai giocatori
+    ArrayList<ViewWP> getPlayersWPs() throws RemoteException;
 
-    InitializerView initializeView() throws RemoteException;
+    //restituisce un oggetto contenete i dati relativi agli oggetti da rappresentare nella view
+    ViewData initializeView() throws RemoteException;
 
     boolean login(String account) throws RemoteException;
 
@@ -57,6 +55,14 @@ public interface RMIController extends Remote {
     boolean takeWPDie(int row, int column) throws RemoteException;
 
     //restituisce una matrice contenente stringhe rappresentanti le 4 wps tra cui il giocatore deve scegliere
-    ArrayList<WPViewChoise> getRandomWPs() throws RemoteException;
+    ArrayList<ViewWP> getRandomWPs() throws RemoteException;
+
+    //restituisce true se tutti i giocatori hanno scelto
+    boolean readyToPlay() throws RemoteException;
+
+    void createHash(int nameWindow, String nameClient) throws RemoteException;
+
+    //con il supporto degli observer mette nell'oggetto che restituisce gli ultimi cambiamenti del model
+    ArrayList<ViewData> updateView() throws RemoteException;
 
 }

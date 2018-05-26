@@ -1,7 +1,7 @@
 package ingsw;
 
 import ingsw.controller.Controller;
-import ingsw.controller.WPViewChoise;
+import ingsw.controller.ViewWP;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -120,7 +120,7 @@ public class ServerHandler implements Runnable {
 
     private void getRandomWPs() throws RemoteException{
         try {
-            os.writeObject( (ArrayList<WPViewChoise>) controller.getRandomWPs());
+            os.writeObject( (ArrayList<ViewWP>) controller.getRandomWPs());
         } catch (IOException e) {
             e.printStackTrace();
         }

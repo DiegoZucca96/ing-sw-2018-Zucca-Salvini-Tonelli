@@ -1,6 +1,6 @@
 package ingsw.view;
 
-import ingsw.model.InitializerView;
+import ingsw.model.ViewData;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -18,7 +18,7 @@ import javafx.stage.WindowEvent;
 
 public class Private {
 
-    private InitializerView init ;
+    private ViewData init ;
 
 
 

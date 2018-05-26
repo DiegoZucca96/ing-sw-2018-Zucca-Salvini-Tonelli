@@ -1,8 +1,7 @@
 package ingsw;
 
 import ingsw.controller.Controller;
-import ingsw.model.Cell;
-import ingsw.model.windowpattern.WindowPattern;
+import ingsw.controller.ViewWP;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -16,8 +15,8 @@ import java.util.concurrent.Executors;
 
 public class Server {
 
-    private ArrayList<ClientData> listOfClients; //associa ad ogni nme di un client il relativo stato
-    private ArrayList<String> listOfPlayers;
+    private ArrayList<ClientData> listOfClients; //associa ad ogni nome di un client il relativo stato
+    private ArrayList<String> listOfPlayers; //Nomi dei giocatori in partita
     private static Server instance = null;
     private Controller controller;
     private int port;
@@ -25,7 +24,7 @@ public class Server {
     private ClientState disableClient;
     private final int timeSearch;
     private final int playerTimeMove;
-    private ArrayList<WindowPattern> windowChosen;
+
 
     public static void main(String[] args) throws RemoteException {
         Server server = Server.instance(1080);
@@ -45,7 +44,6 @@ public class Server {
         timeSearch = in.nextInt();
         System.out.print("Inserisci tempo massimo per fare una mossa: ");
         playerTimeMove = in.nextInt();
-        windowChosen = new ArrayList<>();
         try {
             controller = new Controller(this);
         } catch (RemoteException e) {
@@ -89,10 +87,6 @@ public class Server {
         return playerTimeMove;
     }
 
-    public ArrayList<WindowPattern> getWindowChosen() {
-        return windowChosen;
-    }
-
     public void addPlayers(String account) {
         listOfPlayers.add(account);
     }
@@ -105,11 +99,7 @@ public class Server {
         listOfClients.add(new ClientData(account, handler));
         controller.disableClient(account);
     }
-    //Metodo da aggiustare, deve aggiungere la vera WP e non una lista di celle
-    public void addWindow(List<Cell> myWindow) {
-        if(myWindow!=null)
-            getWindowChosen().add((WindowPattern) myWindow);
-    }
+
 
     public void setClientState(String clientName, ClientState state) {
         for (ClientData client : listOfClients) {
@@ -156,5 +146,6 @@ public class Server {
             }
         }
     }
+
 
 }

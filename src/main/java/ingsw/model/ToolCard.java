@@ -68,7 +68,7 @@ public class ToolCard {
         toolStrategy.doOp(objective);
     }
 
-    public static void generateToolCard(InitializerView init) {
+    public static void generateToolCard(ViewData init) {
         RandomGenerator rg = new RandomGenerator(10);
         for(int i=0;i<3;i++){
             int select = rg.random();

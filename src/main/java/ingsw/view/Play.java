@@ -1,8 +1,8 @@
 package ingsw.view;
 
 import ingsw.Client;
-import ingsw.controller.WPViewChoise;
-import ingsw.model.InitializerView;
+import ingsw.controller.ViewWP;
+import ingsw.model.ViewData;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -25,6 +25,8 @@ import javafx.util.Callback;
 
 import java.util.ArrayList;
 
+import static ingsw.view.WPRendering.pathCell;
+
 
 /**author : Alessio Tonelli
  *
@@ -35,7 +37,7 @@ public class Play {
 
 
     private Client client;
-    private InitializerView init = new InitializerView();
+    private ViewData init = new ViewData();
 
 
     public Play(Client client){
@@ -43,7 +45,7 @@ public class Play {
 
     }
 
-    public void display(WPViewChoise myWindow){
+    public void display(ViewWP myWindow){
 
         Stage table = new Stage();
         table.setWidth(1200);
@@ -305,7 +307,7 @@ public class Play {
     }
 
 
-    private AnchorPane paginationPlayers(InitializerView init){
+    private AnchorPane paginationPlayers(ViewData init){
         Pagination pagination = new Pagination(3, 0);
         pagination.setPageFactory(new Callback<Integer, Node>() {
             @Override
@@ -326,16 +328,15 @@ public class Play {
 
     private VBox createPageWp(int pageIndex){
         VBox box = new VBox(5);
+        final String styleSheet ="-fx-text-fill: blue; -fx-font: italic 15 \"serif\"";
+        ArrayList<String> listOfPllayers = client.getListOfPlayers();
+        listOfPllayers.remove(client.getName());
 
         Pane paneWP = new Pane();
 
         switch (pageIndex) {
             case 0: {
-                GridPane gridWP = new GridPane();
-                gridWP.setPrefSize(280, 280);
-                gridWP.setHgap(3);
-                gridWP.setVgap(8);
-                String imagePath = "/Virtus.png";
+                /*String imagePath = "/Virtus.png";
                 Image image1 = new Image(imagePath, 280, 280, false, false);
                 BackgroundImage myBI= new BackgroundImage(image1,
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
@@ -350,74 +351,97 @@ public class Play {
                         gridWP.add(b, col, row);
 
                     }
+                }*/
+
+                Label lblName0 = new Label(listOfPllayers.get(0));
+                //lblName0.setTextFill(javafx.scene.paint.Color.BLUE);
+                lblName0.setStyle(styleSheet);
+                lblName0.setLayoutX(10);
+                lblName0.setLayoutY(200);
+
+                ViewWP wp0 = client.getPlayerWPs().get(0);
+
+                GridPane gridWP0 = new GridPane();
+
+                for(int i=0; i<4; i++){
+                    for( int j=0; j<5; j++){
+                        Button btnCell = new Button();
+                        btnCell.setPrefSize(50, 50);
+                        String numCell = wp0.getWps()[i][j].getNumCol().get(0);
+                        String colorCell = wp0.getWps()[i][j].getNumCol().get(1);
+                        String pathCell = pathCell(numCell, colorCell);
+                        Image myImage = new Image(pathCell, 50, 50, false, false);
+                        BackgroundImage myBI= new BackgroundImage(myImage,
+                                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                                BackgroundSize.DEFAULT);
+                        btnCell.setBackground(new Background(myBI));
+                        gridWP0.add(btnCell, i, j);
+
+                    }
                 }
-                paneWP.getChildren().add(gridWP);
-                /*final ImageView wpPlayer = new ImageView();
-                String imagePath = "/Virtus.png";
-                Image image1 = new Image(imagePath, 280, 280, false, false);
-                wpPlayer.setImage(image1);*/
+
+                paneWP.getChildren().addAll(gridWP0, lblName0);
+
                 break;
             }
             case 1: {
-                GridPane gridWP = new GridPane();
-                gridWP.setPrefSize(280, 280);
-                gridWP.setHgap(3);
-                gridWP.setVgap(8);
-                String imagePath = "/SunCatcher.png";
-                Image image1 = new Image(imagePath, 280, 280, false, false);
-                BackgroundImage myBI= new BackgroundImage(image1,
-                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                        BackgroundSize.DEFAULT);
-                gridWP.setBackground(new Background(myBI));
+                Label lblName1 = new Label(listOfPllayers.get(1));
+                lblName1.setStyle(styleSheet);
+                lblName1.setLayoutX(10);
+                lblName1.setLayoutY(200);
 
-                for(int row=0; row<4; row++){
-                    for(int col=0; col<5; col++){
-                        Button b= new Button();
-                        b.setOpacity(0.6);
-                        b.setPrefSize(58, 58);
-                        gridWP.add(b, col, row);
+                ViewWP wp1 = client.getPlayerWPs().get(1);
+
+                GridPane gridWP1 = new GridPane();
+
+                for(int i=0; i<4; i++){
+                    for( int j=0; j<5; j++){
+                        Button btnCell = new Button();
+                        btnCell.setPrefSize(50, 50);
+                        String numCell = wp1.getWps()[i][j].getNumCol().get(0);
+                        String colorCell = wp1.getWps()[i][j].getNumCol().get(1);
+                        String pathCell = pathCell(numCell, colorCell);
+                        Image myImage = new Image(pathCell, 50, 50, false, false);
+                        BackgroundImage myBI= new BackgroundImage(myImage,
+                                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                                BackgroundSize.DEFAULT);
+                        btnCell.setBackground(new Background(myBI));
+                        gridWP1.add(btnCell, i, j);
 
                     }
                 }
-                paneWP.getChildren().add(gridWP);
 
-                /*
-                final ImageView wpPlayer = new ImageView();
-
-                String imagePath = "/SunCatcher.png";
-                Image image1 = new Image(imagePath, 280, 280, false, false);
-                wpPlayer.setImage(image1);*/
+                paneWP.getChildren().addAll(gridWP1, lblName1);
                 break;
             }
             case 2: {
-                GridPane gridWP = new GridPane();
-                gridWP.setPrefSize(280, 280);
-                gridWP.setHgap(3);
-                gridWP.setVgap(8);
-                String imagePath = "/KaleidoscopicDream.png";
-                Image image1 = new Image(imagePath, 280, 280, false, false);
-                BackgroundImage myBI= new BackgroundImage(image1,
-                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                        BackgroundSize.DEFAULT);
-                gridWP.setBackground(new Background(myBI));
+                Label lblName2 = new Label(listOfPllayers.get(2));
+                lblName2.setStyle(styleSheet);
+                lblName2.setLayoutX(10);
+                lblName2.setLayoutY(200);
 
-                for(int row=0; row<4; row++){
-                    for(int col=0; col<5; col++){
-                        Button b= new Button();
-                        b.setOpacity(0.6);
-                        b.setPrefSize(58, 58);
-                        gridWP.add(b, col, row);
+                ViewWP wp2 = client.getPlayerWPs().get(2);
+
+                GridPane gridWP2 = new GridPane();
+
+                for(int i=0; i<4; i++){
+                    for( int j=0; j<5; j++){
+                        Button btnCell = new Button();
+                        btnCell.setPrefSize(50, 50);
+                        String numCell = wp2.getWps()[i][j].getNumCol().get(0);
+                        String colorCell = wp2.getWps()[i][j].getNumCol().get(1);
+                        String pathCell = pathCell(numCell, colorCell);
+                        Image myImage = new Image(pathCell, 50, 50, false, false);
+                        BackgroundImage myBI= new BackgroundImage(myImage,
+                                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                                BackgroundSize.DEFAULT);
+                        btnCell.setBackground(new Background(myBI));
+                        gridWP2.add(btnCell, i, j);
 
                     }
                 }
-                paneWP.getChildren().add(gridWP);
 
-                /*
-                final ImageView wpPlayer = new ImageView();
-
-                String imagePath = "/KaleidoscopicDream.png";
-                Image image1 = new Image(imagePath, 280, 280, false, false);
-                wpPlayer.setImage(image1);*/
+                paneWP.getChildren().addAll(gridWP2, lblName2);
                 break;
             }
 
@@ -428,7 +452,7 @@ public class Play {
         return box;
     }
 
-    private AnchorPane paginationPublic(InitializerView init){
+    private AnchorPane paginationPublic(ViewData init){
         Pagination pagination = new Pagination(3, 0);
         pagination.setPageFactory(new Callback<Integer, Node>() {
             @Override
@@ -447,7 +471,7 @@ public class Play {
         return anchor;
     }
 
-    private VBox createPagePb(int pageIndex,InitializerView init){
+    private VBox createPagePb(int pageIndex,ViewData init){
         VBox box = new VBox(5);
         String name=null;
         ArrayList<String> pbCards = init.getPbCard();
@@ -495,7 +519,7 @@ public class Play {
         return box;
     }
 
-    private AnchorPane paginationTool(InitializerView init){
+    private AnchorPane paginationTool(ViewData init){
         Pagination pagination = new Pagination(3, 0);
         pagination.setPageFactory(new Callback<Integer, Node>() {
             @Override
@@ -514,7 +538,7 @@ public class Play {
         return anchor;
     }
 
-    private VBox createPageTool(int pageIndex,InitializerView init){
+    private VBox createPageTool(int pageIndex,ViewData init){
         VBox box = new VBox(5);
         String name=null;
         ArrayList<String> toolCards = init.getToolCard();

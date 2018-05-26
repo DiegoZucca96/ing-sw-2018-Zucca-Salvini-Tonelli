@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Timer;
 
 public class Controller extends UnicastRemoteObject implements RMIController {
@@ -22,6 +22,8 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     private int timeSearch;
     private int playerMoveTime;
     private static int access=0;
+    private ArrayList<ViewWP> windowChosen;
+    private HashMap<String,Integer> hashPlayers; //Associa ogni player alla sua WP selezionata (usata nella costruzione di match)
 
     //NB -->    tutti i metodi del controller devono essere boolean, per un motivo o per l'altro
     //          non sempre possono fare l'azione richiesta, in quel caso restituiscono false
@@ -35,6 +37,8 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             e.printStackTrace();
         }
         this.rg = new RandomGenerator(wpFactory.getNumOfWPs());
+        this.windowChosen = new ArrayList<>();
+        this.hashPlayers = new HashMap<>();
         this.timeSearch = server.getTimeSearch();
         this.playerMoveTime = server.getPlayerTimeMove();
         this.timer = new Timer();
@@ -63,14 +67,22 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
 
     @Override
-    public ArrayList<WindowPattern> getWindowChosen() throws RemoteException {
-        return server.getWindowChosen();
+    public ArrayList<ViewWP> getWindowChosen() throws RemoteException {
+        return getWindowChosen();
     }
 
-    @Override
-    public void addWindow(List<Cell> myWindow) throws RemoteException {
-        server.addWindow(myWindow);
+    public void setWindowChosen(ArrayList<ViewWP> windowChosen) {
+        this.windowChosen = windowChosen;
     }
+
+    public HashMap<String, Integer> getHashPlayers() {
+        return hashPlayers;
+    }
+
+    public void setHashPlayers(HashMap<String, Integer> hashPlayers) {
+        this.hashPlayers = hashPlayers;
+    }
+
 
     @Override
     public boolean takeDie(int row, int column) throws RemoteException{
@@ -155,36 +167,72 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return false;
     }
 
-    public synchronized ArrayList<WPViewChoise> getRandomWPs(){
-        ArrayList<WPViewChoise> wps = new ArrayList<>();
-        WPViewChoise wpobject = new WPViewChoise();
-        WindowPattern wp1 = wpFactory.createWindowPattern(rg.random());
-        wpobject.setName(wp1.getTitle());
-        wpobject.setDifficulty(Integer.toString(wp1.getDifficulty()));
-        wpobject.setWps(wp1.toMatrix());
-        wps.add(wpobject);
+    public synchronized ArrayList<ViewWP> getRandomWPs(){
+        ArrayList<ViewWP> wps = new ArrayList<>();
+        for(int i=0; i<4; i++){
+            ViewWP wpobject = new ViewWP();
+            int x = rg.random();
+            WindowPattern wp = wpFactory.createWindowPattern(x);
+            wpobject.setName(wp.getTitle());
+            wpobject.setDifficulty(Integer.toString(wp.getDifficulty()));
+            wpobject.setWps(wp.toMatrix());
+            wpobject.setNumberWP(x);
+            wps.add(wpobject);
+        }
+        return wps;
 
-        WPViewChoise wpobject2 = new WPViewChoise();
-        WindowPattern wp2 = wpFactory.createWindowPattern(rg.random());
+        /*ViewWP wpobject2 = new ViewWP();
+        int y = rg.random();
+        WindowPattern wp2 = wpFactory.createWindowPattern(y);
         wpobject2.setName(wp2.getTitle());
         wpobject2.setDifficulty(Integer.toString(wp2.getDifficulty()));
         wpobject2.setWps(wp2.toMatrix());
+        wpobject2.setNumberWP(y);
         wps.add(wpobject2);
 
-        WPViewChoise wpobject3 = new WPViewChoise();
-        WindowPattern wp3 = wpFactory.createWindowPattern(rg.random());
+        ViewWP wpobject3 = new ViewWP();
+        int z = rg.random();
+        WindowPattern wp3 = wpFactory.createWindowPattern(z);
         wpobject3.setName(wp3.getTitle());
         wpobject3.setDifficulty(Integer.toString(wp3.getDifficulty()));
         wpobject3.setWps(wp3.toMatrix());
+        wpobject3.setNumberWP(z);
         wps.add(wpobject3);
 
-        WPViewChoise wpobject4 = new WPViewChoise();
-        WindowPattern wp4 = wpFactory.createWindowPattern(rg.random());
+        ViewWP wpobject4 = new ViewWP();
+        int w = rg.random();
+        WindowPattern wp4 = wpFactory.createWindowPattern(w);
         wpobject4.setName(wp4.getTitle());
         wpobject4.setDifficulty(Integer.toString(wp4.getDifficulty()));
         wpobject4.setWps(wp4.toMatrix());
+        wpobject4.setNumberWP(w);
         wps.add(wpobject4);
-        return wps;
+        return wps;*/
+    }
+
+    @Override
+    public boolean readyToPlay() throws RemoteException {
+        if(windowChosen.size()<getSizeOfPlayers())
+            return false;
+        else return true;
+    }
+
+    //Crea una corrispondenza Player-WP sfruttata nel model per assegnare la giusta WP
+    @Override
+    public void createHash(int numberWP, String nameClient) {
+        hashPlayers.put(nameClient,numberWP);
+    }
+
+    //Deve aggiornare il tutto, da fare con gli observer
+    @Override
+    public ArrayList<ViewData> updateView() {
+        return null;
+    }
+
+    //Aggiunge la finestra scelta
+    @Override
+    public void addWindow(ViewWP wpmodel){
+        windowChosen.add(wpmodel);
     }
 
     @Override
@@ -249,17 +297,27 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return controllerTimer.getTimeRemaining();
     }
 
+
     @Override
-    public boolean getOthersChoice() throws RemoteException{
-        if(server.getWindowChosen().size()< getSizeOfPlayers())
-            return false;
-        else
-            return true;
+    public ArrayList<ViewWP> getPlayersWPs() throws RemoteException{
+        ArrayList<ViewWP> enemyWPs = new ArrayList<>();
+        for(ViewWP windowPattern: getWindowChosen()){
+            ViewWP enemyWp = new ViewWP();
+            InfoCell [][] infoCell = windowPattern.getWps();
+            enemyWp.setWps(infoCell);
+            String name = windowPattern.getName();
+            enemyWp.setName(name);
+            String difficulty = windowPattern.getDifficulty();
+            enemyWp.setDifficulty(difficulty);
+            enemyWPs.add(enemyWp);
+        }
+        return enemyWPs;
+
     }
     //Chiama il metodo inizializzatore del Match
     @Override
-    public InitializerView initializeView() throws RemoteException {
-        return Match.initialize();
+    public ViewData initializeView() throws RemoteException {
+        //...
+        return null;
     }
-
 }

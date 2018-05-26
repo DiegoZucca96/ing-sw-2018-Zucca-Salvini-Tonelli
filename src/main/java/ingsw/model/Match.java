@@ -55,8 +55,8 @@ public class Match {
         draftPool = new DraftPool(roundTrack);
     }
     //Metodo che inizializza tutto (solo grafica per ora)
-    public static InitializerView initialize(){
-        InitializerView init = new InitializerView();
+    public static ViewData initialize(){
+        ViewData init = new ViewData();
         WindowPattern.generateWindowPattern(init);
         PBObjectiveCard.generatePBCard(init);
         ToolCard.generateToolCard(init);

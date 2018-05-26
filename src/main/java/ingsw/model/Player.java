@@ -24,6 +24,7 @@ public class Player {       //Classe che rappresenta un giocatore della partita
         score = 0;
         pvScore = 0;
         try {
+
             windowPattern = new WindowPFactory().createWindowPattern(wpType);
         } catch (IOException e) {
             e.printStackTrace();

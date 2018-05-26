@@ -47,7 +47,7 @@ public class PVObjectiveCard {
         this.color = color;
     }
 
-    public static void generatePVCard(InitializerView init) {
+    public static void generatePVCard(ViewData init) {
         RandomGenerator rg = new RandomGenerator(5);
         int select = rg.random();
         switch(select){

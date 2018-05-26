@@ -66,7 +66,7 @@ public class GridPaneDraftPool extends GridPane {
 
             });
 
-        this.add(button, row, col);
+        this.add(button, col, row);
         return button;
 
     }

@@ -1,6 +1,7 @@
 package ingsw;
 
-import ingsw.controller.WPViewChoise;
+import ingsw.controller.ViewWP;
+import ingsw.model.ViewData;
 import ingsw.view.GUI;
 
 import java.io.IOException;
@@ -119,20 +120,46 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public ArrayList<String> initializeView() {
+    public ViewData initializeView() {
         return null;
     }
 
     @Override
-    public ArrayList<String> updateView() {
+    public ViewData updateView() {
         return null;
     }
 
     @Override
-    public boolean getOthersChoice() {
-        out.print("getOthersChoice:");
+    public boolean readyToPlay() {
+        out.print("readyToPlay:");
         if(in.nextLine().equals("ok")) return  true;
         else return false;
+    }
+
+    @Override
+    public String getName() {
+        out.print("getName:");
+        return name;
+    }
+
+    @Override
+    public void createHash(int nameWindow, String nameClient) {
+
+    }
+
+
+    @Override
+    public ArrayList<ViewWP> getPlayerWPs(){
+        out.print("getPlayersWPs:");
+        try {
+            return (ArrayList<ViewWP>) is.readObject();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     @Override
@@ -155,13 +182,18 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public ArrayList<WPViewChoise> getRandomWps() throws IOException {
+    public ArrayList<ViewWP> getRandomWps() throws IOException {
         out.print("getRandomWPs:");
         try {
-            return (ArrayList<WPViewChoise>) is.readObject();
+            return (ArrayList<ViewWP>) is.readObject();
         } catch (ClassNotFoundException e) {
             return null;
         }
+    }
+
+    @Override
+    public void addWindow(ViewWP wpmodel) {
+
     }
 
     @Override

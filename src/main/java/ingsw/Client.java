@@ -1,6 +1,7 @@
 package ingsw;
 
-import ingsw.controller.WPViewChoise;
+import ingsw.controller.ViewWP;
+import ingsw.model.ViewData;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +21,9 @@ public interface Client {
     boolean register(String nickname);
 
     //NB: -> Metodo che crea le 4 WP da scegliere ritornando le informazioni per creare il background dei bottoni
-    ArrayList<WPViewChoise> getRandomWps() throws IOException;
+    ArrayList<ViewWP> getRandomWps() throws IOException;
+
+    void addWindow(ViewWP wpmodel);
 
     //Restituisce la lista dei nomi dei giocatori
     ArrayList<String> getListOfPlayers();
@@ -52,17 +55,27 @@ public interface Client {
     //Restituisce il timer rimanente del server durante la ricerca
     int getTimeSearch();
 
-    //restituisce true se hanno scelto tutti la wp e si avvia la partita
-    boolean getOthersChoice();
+    //restituisce arraylist della scelta di tutti i giocatori
+    ArrayList<ViewWP> getPlayerWPs();
 
     //mette il giocatore in attesa di nuovi giocatori
     boolean waitForPlayers();
 
     //restituisce una lista di stringhe rappresentanti gli oggetti da inizializzare nella view
-    ArrayList<String> initializeView();
+    ViewData initializeView();
 
     //restituisce una lista di stringhe rappresentanti gli oggetti da aggiornare nella view
-    ArrayList<String> updateView();
+    ViewData updateView();
+
+    //restituisce true se tutti hanno scelto la propria wp e si avvia la partita
+    boolean readyToPlay();
+
+    //restituisce il nome del client che viene chiamato
+    String getName();
+
+    //crea un hash di valori player-WP scelta
+    void createHash(int nameWindow, String nameClient);
+
 
     /*
     "windowpattern(name(ciao),difficulty(4),cell(row(0),column(0),number(0),color(RED),Die(number(5),color(RED)),cell(..."

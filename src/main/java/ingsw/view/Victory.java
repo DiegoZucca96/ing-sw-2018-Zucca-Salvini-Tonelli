@@ -3,6 +3,7 @@ package ingsw.view;
 
 
 
+import ingsw.Client;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -22,18 +23,20 @@ import javafx.stage.Stage;
  * click the second time and it will give you the winner
  * */
 
-public class Victory extends Application {
+public class Victory {
 
     private Label timerLabel ;
     private static int event =1;
     private Label nameLabel;
     private final String styleSheet ="-fx-text-fill: goldenrod; -fx-font: italic 100 \"serif\"; -fx-padding: 0 0 20 0";
+    private Client client;
 
-    @Override
-    public void start(Stage primaryStage) {
+    public void start( Client c) {
 
+        this.client=c;
 
         // Setup the Stage and the Scene (the scene graph)
+        Stage primaryStage = new Stage();
         primaryStage.setTitle("Victory");
         Pane root= new Pane();
         Scene scene = new Scene(root, 1200, 700);
@@ -63,7 +66,7 @@ public class Victory extends Application {
                     timerLabel=new Label();
                     MultiScore threadScore = new MultiScore(timerLabel);
                     threadScore.start();
-                    nameLabel.setText("Player"+(i+1));
+                    nameLabel.setText(client.getListOfPlayers().get(i));
                     nameLabel.setStyle(styleSheet);
                     timerLabel.setStyle(styleSheet);
 
@@ -90,13 +93,6 @@ public class Victory extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
-
-
-
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
 

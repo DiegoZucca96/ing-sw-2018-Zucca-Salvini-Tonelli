@@ -1,7 +1,7 @@
 package ingsw.view;
 
 import ingsw.Client;
-import ingsw.controller.WPViewChoise;
+import ingsw.controller.ViewWP;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -16,7 +16,7 @@ public class GridPaneWindow extends GridPane {
     private Client client;
     private GridPaneDraftPool draftPool;
 
-    public GridPaneWindow(int indexString, WPViewChoise myWindow, Client client) {
+    public GridPaneWindow(int indexString, ViewWP myWindow, Client client) {
 
         this.client=client;
         int numCols = 5 ;
@@ -38,8 +38,8 @@ public class GridPaneWindow extends GridPane {
             for (int j = 0; j < numCols; j++) {
                 Button btnCell = addButtonWp(i, j);
                 btnCell.setPrefSize(55, 55);
-                String numCell = myWindow.getWps()[i][j].get(0);
-                String colorCell = myWindow.getWps()[i][j].get(1);
+                String numCell = myWindow.getWps()[i][j].getNumCol().get(0);
+                String colorCell = myWindow.getWps()[i][j].getNumCol().get(1);
                 String pathCell = WPRendering.pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 55, 55, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
@@ -64,7 +64,7 @@ public class GridPaneWindow extends GridPane {
                 Toolkit.getDefaultToolkit().beep();
             //System.out.printf("Mouse enetered cell [%d, %d]%n", colIndex, rowIndex);
         });
-        this.add(button, i, j);
+        this.add(button, j, i);
         return button;
     }
 

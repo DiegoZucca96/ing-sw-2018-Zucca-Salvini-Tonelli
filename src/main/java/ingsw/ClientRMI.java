@@ -1,7 +1,8 @@
 package ingsw;
 
 import ingsw.controller.RMIController;
-import ingsw.controller.WPViewChoise;
+import ingsw.controller.ViewWP;
+import ingsw.model.ViewData;
 import ingsw.view.GUI;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class ClientRMI implements Client {
         }
         new GUI().display(this);
     }
+
 
     @Override
     public boolean login(String nickname) {
@@ -97,21 +99,48 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public ArrayList<String> initializeView() {
-        return null;
-    }
-
-    @Override
-    public ArrayList<String> updateView() {
-        return null;
-    }
-
-    @Override
-    public boolean getOthersChoice() {
+    public ViewData initializeView() {
         try {
-            return controller.getOthersChoice();
+            return controller.initializeView();
         } catch (RemoteException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public ViewData updateView() {
+        return null;
+    }
+
+    @Override
+    public boolean readyToPlay() {
+        try {
+            return controller.readyToPlay();
+        }catch (RemoteException e){
             return false;
+        }
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void createHash(int numberWP, String nameClient) {
+        try {
+            controller.createHash(numberWP,nameClient);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public ArrayList<ViewWP> getPlayerWPs() {
+        try {
+            return controller.getPlayersWPs();
+        } catch (RemoteException e) {
+            return null;
         }
     }
 
@@ -143,11 +172,20 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public ArrayList<WPViewChoise> getRandomWps() {
+    public ArrayList<ViewWP> getRandomWps() {
         try {
             return controller.getRandomWPs();
         } catch (RemoteException e) {
             return null;
+        }
+    }
+
+    @Override
+    public void addWindow(ViewWP wpmodel){
+        try {
+            controller.addWindow(wpmodel);
+        } catch (RemoteException e) {
+            e.printStackTrace();
         }
     }
 
