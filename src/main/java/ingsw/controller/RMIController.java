@@ -7,8 +7,8 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public interface RMIController extends Remote {
-    //Qua ci vanno tutti i metodi che il controller implementerà
 
+    //Qua ci vanno tutti i metodi che il controller implementerà
     ArrayList<String> getListOfPlayers() throws RemoteException;
 
     int getSizeOfPlayers() throws RemoteException;
@@ -19,6 +19,7 @@ public interface RMIController extends Remote {
 
     ArrayList<ViewWP> getWindowChosen() throws RemoteException;
 
+    //per associare ad un giocatore la sua wp è sufficiente una stringa, o un int
     void addWindow(ViewWP wpmodel) throws RemoteException;
 
     String getCurrentPlayerName() throws RemoteException;

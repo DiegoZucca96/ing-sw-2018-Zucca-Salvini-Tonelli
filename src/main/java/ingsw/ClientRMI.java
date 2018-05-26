@@ -72,9 +72,9 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public boolean takeDie(int index, int index2) {
+    public boolean takeDie(int row, int column) {
         try {
-            return controller.takeDie(index, index2);
+            return controller.takeDie(row, column);
         } catch (RemoteException e) {
             return false;
         }
@@ -145,7 +145,7 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public int getSizeOfPlayers() {
+    public int getNumberOfPlayers() {
         try {
             return controller.getSizeOfPlayers();
         } catch (RemoteException e) {
@@ -181,9 +181,9 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public void addWindow(ViewWP wpmodel){
+    public void addWP(String wp){
         try {
-            controller.addWindow(wpmodel);
+            controller.addWindow(wp);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -194,8 +194,7 @@ public class ClientRMI implements Client {
         try {
             return controller.getListOfPlayers();
         } catch (RemoteException e) {
-            e.printStackTrace();
+            return null;
         }
-        return null;
     }
 }

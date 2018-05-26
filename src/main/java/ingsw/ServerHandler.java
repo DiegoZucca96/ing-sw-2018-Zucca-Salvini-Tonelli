@@ -50,13 +50,20 @@ public class ServerHandler implements Runnable {
                 else if (command.equals("login")) login(parameter);
                 else if (command.equals("register")) register(parameter);
                 else if (command.equals("getPlayerState")) getPlayerState(parameter);
-                else if (command.equals("skip")) controller.skip(parameter);
+                else if (command.equals("skip")) skip(parameter);
                 else if (command.equals("takeDie")) takeDie(parameter);
                 else if (command.equals("positionDie")) positionDie(parameter);
-                else if (command.equals("getSizeOfPlayers")) getSizeOfPlayers();
+                else if (command.equals("getNumberOfPlayers")) getNumberOfPlayers();
                 else if (command.equals("getTimeSearch")) getTimeSearch();
                 else if (command.equals("takeWPDie")) takeWPDie(parameter);
                 else if (command.equals("getRandomWPs")) getRandomWPs();
+                else if (command.equals("createHash")) createHash(parameter);
+                else if (command.equals("addWP")) addWP(parameter);
+                else if (command.equals("getListOfPlayers")) getListOfPlayers();
+                else if (command.equals("getPlayersWPs")) getPlayersWPs();
+                else if (command.equals("waitForPlayers")) waitForPlayers();
+                else if (command.equals("initializeView")) initializeView();
+                else if (command.equals("readyToPlay")) readyToPlay();
             }
             socket.close();
         }
@@ -88,7 +95,7 @@ public class ServerHandler implements Runnable {
     }
 
     private void takeDie(String parameter) throws RemoteException {
-        if(controller.takeDie(Integer.parseInt(parameter),0))out.print("ok");
+        if(controller.takeDie(Integer.parseInt(firstParameter(parameter)),Integer.parseInt(secondParameter(parameter))))out.print("ok");
         else out.print("ko");
     }
 
@@ -105,7 +112,7 @@ public class ServerHandler implements Runnable {
         return parameter.substring(parameter.indexOf(',')+1,parameter.length()-1);
     }
 
-    private void getSizeOfPlayers() throws RemoteException {
+    private void getNumberOfPlayers() throws RemoteException {
         out.print(controller.getSizeOfPlayers());
     }
 
@@ -124,6 +131,39 @@ public class ServerHandler implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void createHash(String parameter){
+        controller.createHash(Integer.parseInt(firstParameter(parameter)), secondParameter(parameter));
+    }
+
+    private void addWP(String parameter){
+        controller.addWindow(parameter);
+    }
+
+    private void getListOfPlayers() throws IOException {
+        os.writeObject(controller.getListOfPlayers());
+    }
+
+    private void getPlayersWPs() throws IOException {
+        os.writeObject(controller.getPlayersWPs());
+    }
+
+    private void readyToPlay() throws RemoteException {
+        if(controller.readyToPlay()) out.print("ok");
+        else out.print("ko");
+    }
+
+    private void skip(String parameter) throws RemoteException {
+        controller.skip(parameter);
+    }
+
+    private void waitForPlayers() throws RemoteException {
+        controller.waitForPlayers();
+    }
+
+    private void initializeView() throws IOException {
+        os.writeObject(controller.initializeView());
     }
 
 }

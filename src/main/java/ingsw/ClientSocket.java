@@ -98,12 +98,12 @@ public class ClientSocket implements Client {
         return false;
     }
 
-   /* @Override
-    public boolean takeDie(int index) {
-        out.print("takeDie:" + index);
+    @Override
+    public boolean takeDie(int row, int column) {
+        out.print("takeDie:" + row + "," + column);
         if(in.nextLine().equals("ok")) return true;
         else return false;
-    }*/
+    }
 
     @Override
     public boolean positionDie(int row, int column) {
@@ -138,13 +138,12 @@ public class ClientSocket implements Client {
 
     @Override
     public String getName() {
-        out.print("getName:");
         return name;
     }
 
     @Override
     public void createHash(int nameWindow, String nameClient) {
-
+        out.print("createHash:");
     }
 
 
@@ -154,17 +153,15 @@ public class ClientSocket implements Client {
         try {
             return (ArrayList<ViewWP>) is.readObject();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            return null;
+        } catch (IOException e){
+            return null;
         }
-
-        return null;
     }
 
     @Override
-    public int getSizeOfPlayers() {
-        out.print("getSizeOfPlayers:");
+    public int getNumberOfPlayers() {
+        out.print("getNumberOfPlayers:");
         return Integer.parseInt(in.nextLine());
     }
 
@@ -182,27 +179,32 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public ArrayList<ViewWP> getRandomWps() throws IOException {
+    public ArrayList<ViewWP> getRandomWps() {
         out.print("getRandomWPs:");
         try {
             return (ArrayList<ViewWP>) is.readObject();
         } catch (ClassNotFoundException e) {
             return null;
+        } catch (IOException e){
+            return null;
         }
     }
 
     @Override
-    public void addWindow(ViewWP wpmodel) {
-
+    public void addWP(String wp) {
+        out.print("addWP:" + wp);
     }
 
     @Override
     public ArrayList<String> getListOfPlayers() {
-        return null;
+        out.print("getListOfPlayers:");
+        try {
+            return (ArrayList<String>) is.readObject();
+        } catch (IOException e) {
+            return null;
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
     }
 
-    @Override
-    public boolean takeDie(int row, int col) {
-        return false;
-    }
 }

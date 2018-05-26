@@ -20,15 +20,15 @@ public interface Client {
     //permette al giocatore di registrarsi, restituisce false se il nickname è già usato
     boolean register(String nickname);
 
-    //NB: -> Metodo che crea le 4 WP da scegliere ritornando le informazioni per creare il background dei bottoni
+    //Metodo che crea le 4 WP da scegliere ritornando le informazioni per creare il background dei bottoni
     ArrayList<ViewWP> getRandomWps() throws IOException;
 
-    void addWindow(ViewWP wpmodel);
+    void addWP(String wp);
 
     //Restituisce la lista dei nomi dei giocatori
     ArrayList<String> getListOfPlayers();
 
-    //prende dalla draftpool il dado in posizione index
+    //prende dalla draftpool il dado in posizione (row, column)
     boolean takeDie(int row, int col);
 
     //prende un dado in posizione (row, column) dalla wp del giocatore corrente,
@@ -50,7 +50,7 @@ public interface Client {
     String getPlayerState();
 
     //Restituisce il numero dei giocatori della partita
-    int getSizeOfPlayers();
+    int getNumberOfPlayers();
 
     //Restituisce il timer rimanente del server durante la ricerca
     int getTimeSearch();
@@ -73,7 +73,7 @@ public interface Client {
     //restituisce il nome del client che viene chiamato
     String getName();
 
-    //crea un hash di valori player-WP scelta
+    //crea un hash di valori player-WP scelta (credo aggiunga la wp scelta all'hashmap del controller)
     void createHash(int nameWindow, String nameClient);
 
 
