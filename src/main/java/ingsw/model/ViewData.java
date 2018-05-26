@@ -18,6 +18,8 @@ public class ViewData implements Serializable {
 
 
     public ViewData() {
+        info = new InfoWindow();
+        images = new ArrayList<>();
         wps = new ArrayList<>();
         pbCards = new ArrayList<>();
         toolCards = new ArrayList<>();
