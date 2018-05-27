@@ -1,6 +1,7 @@
 package ingsw;
 
 import ingsw.controller.Controller;
+import ingsw.controller.RMIController;
 import ingsw.controller.ViewWP;
 
 import java.io.IOException;
@@ -15,7 +16,7 @@ import java.util.Scanner;
 public class ServerHandler implements Runnable {
 
     private Server server;
-    private Controller controller;
+    private RMIController controller;
     private Socket socket;
     private Scanner in;
     private PrintWriter out;
@@ -134,11 +135,11 @@ public class ServerHandler implements Runnable {
         }
     }
 
-    private void createHash(String parameter){
+    private void createHash(String parameter) throws RemoteException {
         controller.createHash(Integer.parseInt(firstParameter(parameter)), secondParameter(parameter));
     }
 
-    private void addWP(String parameter){
+    private void addWP(String parameter) throws RemoteException {
         controller.addWindowName(parameter);
     }
 

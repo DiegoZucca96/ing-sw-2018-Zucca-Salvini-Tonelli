@@ -1,10 +1,14 @@
 package ingsw;
 
-public class DisableClient implements ClientState {
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+public class DisableClient extends UnicastRemoteObject implements ClientState {
 
     private Server server;
 
-    public DisableClient(){
+    public DisableClient() throws RemoteException {
+        super();
         server = Server.instance(1080);
     }
 

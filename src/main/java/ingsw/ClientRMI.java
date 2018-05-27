@@ -27,6 +27,9 @@ public class ClientRMI implements Client {
         new GUI().display(this);
     }
 
+    public void setController(RMIController controller) {
+        this.controller = controller;
+    }
 
     @Override
     public boolean login(String nickname) {

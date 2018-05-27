@@ -266,12 +266,14 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
 
     //disabilita il client (il server ignora le sue richieste)
-    public ClientState enableClient(String clientName){
+    @Override
+    public ClientState enableClient(String clientName) throws RemoteException {
         return new EnableClient().setState(clientName);
     }
 
     //attiva il client (il server ascolta le sue richieste
-    public ClientState disableClient(String clientName){
+    @Override
+    public ClientState disableClient(String clientName) throws RemoteException {
         return new DisableClient().setState(clientName);
     }
 

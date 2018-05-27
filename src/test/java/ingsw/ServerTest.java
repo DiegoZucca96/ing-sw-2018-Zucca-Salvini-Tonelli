@@ -1,6 +1,7 @@
 package ingsw;
 
 import ingsw.controller.Controller;
+import ingsw.controller.RMIController;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,10 +18,13 @@ public class ServerTest {
 
     //NB --> in.nextLnt() in Server() non funziona con junit, commentare tali istruzioni prima dei test
 
-    private Controller controller;
+    private RMIController controller;
 
     @Before
     public void setUpTests() throws RemoteException {
+
+        //System.setProperty("java.security.policy", "stupid.policy");
+        //System.setSecurityManager(new SecurityManager());
 
         controller = mock(Controller.class);
         Server server = Server.instance(1080);

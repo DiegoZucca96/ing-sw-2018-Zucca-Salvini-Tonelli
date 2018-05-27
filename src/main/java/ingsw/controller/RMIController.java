@@ -1,5 +1,6 @@
 package ingsw.controller;
 
+import ingsw.ClientState;
 import ingsw.ServerHandler;
 import ingsw.model.ViewData;
 import java.rmi.Remote;
@@ -27,6 +28,12 @@ public interface RMIController extends Remote {
     String getCurrentPlayerName() throws RemoteException;
 
     void skip(String clientName) throws RemoteException;
+
+    //disabilita il client (il server ignora le sue richieste)
+    ClientState enableClient(String clientName) throws RemoteException;
+
+    //attiva il client (il server ascolta le sue richieste
+    ClientState disableClient(String clientName) throws RemoteException;
 
     boolean useToolCard(String parameter) throws RemoteException;
 

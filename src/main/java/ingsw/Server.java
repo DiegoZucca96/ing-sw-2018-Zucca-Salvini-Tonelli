@@ -1,6 +1,7 @@
 package ingsw;
 
 import ingsw.controller.Controller;
+import ingsw.controller.RMIController;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -17,7 +18,7 @@ public class Server {
     private ArrayList<ClientData> listOfClients; //associa ad ogni nome di un client il relativo stato
     private ArrayList<String> listOfPlayers; //Nomi dei giocatori in partita
     private static Server instance = null;
-    private Controller controller;
+    private RMIController controller;
     private int port;
     private ClientState enableClient;
     private ClientState disableClient;
@@ -39,9 +40,11 @@ public class Server {
         this.port = port;
         Scanner in = new Scanner(System.in);
         System.out.println("Inserisci tempo di ricerca massimo: ");
-        timeSearch = in.nextInt();
+        //timeSearch = in.nextInt();
+        timeSearch = 120;
         System.out.println("Inserisci tempo massimo per fare una mossa: ");
-        playerTimeMove = in.nextInt();
+        //playerTimeMove = in.nextInt();
+        playerTimeMove = 120;
         try {
             controller = new Controller(this);
         } catch (RemoteException e) {
@@ -54,11 +57,11 @@ public class Server {
         return instance;
     }
 
-    public Controller getController() {
+    public RMIController getController() {
         return controller;
     }
 
-    public void setController(Controller controller) {
+    public void setController(RMIController controller) {
         this.controller = controller;
     }
 
@@ -97,7 +100,7 @@ public class Server {
         listOfClients.add(new ClientData(account));
     }
 
-    public void addAccount(String account, ServerHandler handler) {
+    public void addAccount(String account, ServerHandler handler) throws RemoteException {
         listOfClients.add(new ClientData(account, handler));
         controller.disableClient(account);
     }
