@@ -21,10 +21,12 @@ public class GridPaneDraftPool extends GridPane {
 
     public GridPaneDraftPool(Client client) {
         this.client = client;
-        int numCols = 3;
-        int numRows = 3;
+        int diceThrows = client.getNumberOfPlayers()*2+1;
 
-        for (int i = 0; i < numCols; i++) {
+        this.setHgap(10);
+        this.setVgap(10);
+
+        /*for (int i = 0; i < numCols; i++) {
             ColumnConstraints colConstraints = new ColumnConstraints();
             colConstraints.setHgrow(Priority.SOMETIMES);
             this.getColumnConstraints().add(colConstraints);
@@ -34,9 +36,9 @@ public class GridPaneDraftPool extends GridPane {
             RowConstraints rowConstraints = new RowConstraints();
             rowConstraints.setVgrow(Priority.SOMETIMES);
             this.getRowConstraints().add(rowConstraints);
-        }
+        }*/
 
-        for (int row = 0; row < 3; row++) {
+        /*for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
                 b = addButtonDP(row, col);
                 b.setPrefSize(58, 58);
@@ -45,20 +47,27 @@ public class GridPaneDraftPool extends GridPane {
                 } else b.setDisable(false);
 
             }
+*/
 
+        for(int col = 0; col < diceThrows; col++){
+            b = addButtonDP( col);
+            b.setPrefSize(58, 58);
+            if (client.getPlayerState().equalsIgnoreCase("disabled")) {
+                b.setDisable(true);
+            } else b.setDisable(false);
         }
     }
 
-    private Button addButtonDP(int row, int col) {
+    private Button addButtonDP( int col) {
         Button button = new Button();
 
             button.setOnMouseEntered(e -> {
-                dieInfo = new DieInfo(button.getBackground(), row, col);
+                dieInfo = new DieInfo(button.getBackground(), col);
 
                 if(!dieInfo.getBackground().equals(Color.TRANSPARENT)){
                     button.setStyle("-fx-border-color: yellow");
                     setDieInfo(dieInfo);
-                    client.takeDie( row, col);
+                    client.takeDie( 0, col);
                 }else{
                     Toolkit.getDefaultToolkit().beep();
                     dieInfo=null;
@@ -66,7 +75,7 @@ public class GridPaneDraftPool extends GridPane {
 
             });
 
-        this.add(button, col, row);
+        this.add(button, col, 0);
         return button;
 
     }
