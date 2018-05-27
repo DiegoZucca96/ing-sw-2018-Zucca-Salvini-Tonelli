@@ -45,7 +45,8 @@ public class ServerHandler implements Runnable {
             while(true){
                 request = in.nextLine();
                 command = request.substring(0,request.indexOf(':'));
-                parameter = request.substring(request.indexOf(':')+1, request.length()-1);
+                if(request.indexOf(':') != request.length()-1) parameter = request.substring(request.indexOf(':')+1, request.length()-1);
+                else parameter = null;
                 if(command.equals("close")) break;
                 else if (command.equals("login")) login(parameter);
                 else if (command.equals("register")) register(parameter);
@@ -77,31 +78,31 @@ public class ServerHandler implements Runnable {
     }
 
     /*public void setClientState(ClientState state){
-        out.print("Set state:" + state.toString());
+        out.println("Set state:" + state.toString());
     }*/
 
     private void login(String parameter) throws RemoteException {
-        if(controller.login(parameter)) out.print("ok");
-        else out.print("ko");
+        if(controller.login(parameter)) out.println("ok");
+        else out.println("ko");
     }
 
     private void register(String parameter) throws RemoteException {
-        if(controller.register(parameter, this)) out.print("ok");
-        else out.print("ko");
+        if(controller.register(parameter, this)) out.println("ok");
+        else out.println("ko");
     }
 
     private void getPlayerState(String clientName) throws RemoteException {
-         out.print(controller.getPlayerState(clientName));
+         out.println(controller.getPlayerState(clientName));
     }
 
     private void takeDie(String parameter) throws RemoteException {
-        if(controller.takeDie(Integer.parseInt(firstParameter(parameter)),Integer.parseInt(secondParameter(parameter))))out.print("ok");
-        else out.print("ko");
+        if(controller.takeDie(Integer.parseInt(firstParameter(parameter)),Integer.parseInt(secondParameter(parameter))))out.println("ok");
+        else out.println("ko");
     }
 
     private void positionDie(String parameter) throws RemoteException {
-        if(controller.positionDie(Integer.parseInt(firstParameter(parameter)),Integer.parseInt(secondParameter(parameter)))) out.print("ok");
-        else out.print("ko");
+        if(controller.positionDie(Integer.parseInt(firstParameter(parameter)),Integer.parseInt(secondParameter(parameter)))) out.println("ok");
+        else out.println("ko");
     }
 
     private String firstParameter(String parameter){
@@ -113,16 +114,16 @@ public class ServerHandler implements Runnable {
     }
 
     private void getNumberOfPlayers() throws RemoteException {
-        out.print(controller.getSizeOfPlayers());
+        out.println(controller.getSizeOfPlayers());
     }
 
     private void getTimeSearch() throws RemoteException {
-        out.print(controller.getTimeSearch());
+        out.println(controller.getTimeSearch());
     }
 
     private void takeWPDie(String parameter) throws RemoteException {
-        if(controller.takeWPDie(Integer.parseInt(firstParameter(parameter)), Integer.parseInt(secondParameter(parameter)))) out.print("ok");
-        else out.print("ko");
+        if(controller.takeWPDie(Integer.parseInt(firstParameter(parameter)), Integer.parseInt(secondParameter(parameter)))) out.println("ok");
+        else out.println("ko");
     }
 
     private void getRandomWPs() throws RemoteException{
@@ -150,8 +151,8 @@ public class ServerHandler implements Runnable {
     }
 
     private void readyToPlay() throws RemoteException {
-        if(controller.readyToPlay()) out.print("ok");
-        else out.print("ko");
+        if(controller.readyToPlay()) out.println("ok");
+        else out.println("ko");
     }
 
     private void skip(String parameter) throws RemoteException {

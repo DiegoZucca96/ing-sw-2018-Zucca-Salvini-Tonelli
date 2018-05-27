@@ -31,7 +31,7 @@ public class ClientSocket implements Client {
         try {
             socket = new Socket(ip, port);
             in = new Scanner(socket.getInputStream());
-            out = new PrintWriter(socket.getOutputStream());
+            out = new PrintWriter(socket.getOutputStream(), true);
             os = new ObjectOutputStream(socket.getOutputStream());
             is = new ObjectInputStream(socket.getInputStream());
         } catch (IOException e) {
@@ -56,9 +56,7 @@ public class ClientSocket implements Client {
             System.err.println(e.getMessage());
         }
         finally{
-            in.close();
-            out.close();
-            socket.close();
+            closeConnection();
             System.out.println("Connection closed");
         }
     }
@@ -69,7 +67,7 @@ public class ClientSocket implements Client {
 
     @Override
     public boolean login(String nickname) {
-        out.print("login:" + nickname);
+        out.println("login:" + nickname);
         if(in.nextLine().equals("ok")) return true;
         else return  false;
     }
@@ -77,20 +75,20 @@ public class ClientSocket implements Client {
     @Override
     public boolean register(String nickname) {
         name = nickname;
-        out.print("register:" + nickname);
+        out.println("register:" + nickname);
         if(in.nextLine().equals("ok")) return true;
         else return  false;
     }
 
     @Override
     public String getPlayerState() {
-        out.print("getPlayerState:" + name);
+        out.println("getPlayerState:" + name);
         return in.nextLine();
     }
 
     @Override
     public void skip() {
-        out.print("skip:" + name);
+        out.println("skip:" + name);
     }
 
     @Override
@@ -100,21 +98,21 @@ public class ClientSocket implements Client {
 
     @Override
     public boolean takeDie(int row, int column) {
-        out.print("takeDie:" + row + "," + column);
+        out.println("takeDie:" + row + "," + column);
         if(in.nextLine().equals("ok")) return true;
         else return false;
     }
 
     @Override
     public boolean positionDie(int row, int column) {
-        out.print("positionDie:" + row + "," + column);
+        out.println("positionDie:" + row + "," + column);
         if(in.nextLine().equals("ok")) return true;
         else return false;
     }
 
     @Override
     public boolean waitForPlayers() {
-        out.print("waitForPlayers:");
+        out.println("waitForPlayers:");
         if(in.nextLine().equals("ok")) return  true;
         else return false;
     }
@@ -131,7 +129,7 @@ public class ClientSocket implements Client {
 
     @Override
     public boolean readyToPlay() {
-        out.print("readyToPlay:");
+        out.println("readyToPlay:");
         if(in.nextLine().equals("ok")) return  true;
         else return false;
     }
@@ -143,7 +141,7 @@ public class ClientSocket implements Client {
 
     @Override
     public void createHash(int nameWindow, String nameClient) {
-        out.print("createHash:");
+        out.println("createHash:");
     }
 
     @Override
@@ -154,7 +152,7 @@ public class ClientSocket implements Client {
 
     @Override
     public ArrayList<ViewWP> getPlayerWPs(){
-        out.print("getPlayersWPs:");
+        out.println("getPlayersWPs:");
         try {
             return (ArrayList<ViewWP>) is.readObject();
         } catch (ClassNotFoundException e) {
@@ -166,26 +164,26 @@ public class ClientSocket implements Client {
 
     @Override
     public int getNumberOfPlayers() {
-        out.print("getNumberOfPlayers:");
+        out.println("getNumberOfPlayers:");
         return Integer.parseInt(in.nextLine());
     }
 
     @Override
     public int getTimeSearch() {
-        out.print("getTimeSearch:");
+        out.println("getTimeSearch:");
         return Integer.parseInt(in.nextLine());
     }
 
     @Override
     public boolean takeWPDie(int row, int column) {
-        out.print("takeWPDie:" + row + "," + column);
+        out.println("takeWPDie:" + row + "," + column);
         if(in.nextLine().equals(("ok"))) return  true;
         else return false;
     }
 
     @Override
     public ArrayList<ViewWP> getRandomWps() {
-        out.print("getRandomWPs:");
+        out.println("getRandomWPs:");
         try {
             return (ArrayList<ViewWP>) is.readObject();
         } catch (ClassNotFoundException e) {
@@ -197,7 +195,7 @@ public class ClientSocket implements Client {
 
     @Override
     public void addWPName(String wp) {
-        out.print("addWP:" + wp);
+        out.println("addWP:" + wp);
     }
 
     @Override
@@ -207,7 +205,7 @@ public class ClientSocket implements Client {
 
     @Override
     public ArrayList<String> getListOfPlayers() {
-        out.print("getListOfPlayers:");
+        out.println("getListOfPlayers:");
         try {
             return (ArrayList<String>) is.readObject();
         } catch (IOException e) {
@@ -215,6 +213,12 @@ public class ClientSocket implements Client {
         } catch (ClassNotFoundException e) {
             return null;
         }
+    }
+
+    public void closeConnection() throws IOException {
+        in.close();
+        out.close();
+        socket.close();
     }
 
 }

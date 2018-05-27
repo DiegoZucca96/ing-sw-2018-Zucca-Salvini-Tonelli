@@ -1,7 +1,6 @@
 package ingsw;
 
 import ingsw.controller.Controller;
-import ingsw.controller.ViewWP;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -31,7 +30,6 @@ public class Server {
         Registry registry = LocateRegistry.createRegistry(1081);
         registry.rebind("controller", server.getController());
         server.startServerSocket();
-        System.out.println("Server ready");
     }
 
 
@@ -40,9 +38,9 @@ public class Server {
         listOfPlayers = new ArrayList<>();
         this.port = port;
         Scanner in = new Scanner(System.in);
-        System.out.print("Inserisci tempo di ricerca massimo: ");
+        System.out.println("Inserisci tempo di ricerca massimo: ");
         timeSearch = in.nextInt();
-        System.out.print("Inserisci tempo massimo per fare una mossa: ");
+        System.out.println("Inserisci tempo massimo per fare una mossa: ");
         playerTimeMove = in.nextInt();
         try {
             controller = new Controller(this);
@@ -58,6 +56,10 @@ public class Server {
 
     public Controller getController() {
         return controller;
+    }
+
+    public void setController(Controller controller) {
+        this.controller = controller;
     }
 
     public ArrayList<String> getListOfClient() {
