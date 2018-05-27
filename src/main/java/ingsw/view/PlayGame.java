@@ -4,6 +4,7 @@ package ingsw.view;
 import ingsw.Client;
 import ingsw.controller.ViewWP;
 import ingsw.model.ViewData;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -22,6 +23,15 @@ public class PlayGame {
 
     private Client client;
     private ViewData init ;
+    private Button skipBtn;
+    private Button useToolBtn;
+    private Button takeDieBtn;
+    private Button exitBtn;
+    private GridPane gridRound;
+    private GridPane toolGrid;
+    private GridPane pbGrid;
+    private GridPane myWindowGrid;
+    private GridPane draftPoolGrid;
 
 
     public PlayGame(Client client){
@@ -38,7 +48,7 @@ public class PlayGame {
         Scene scene = new Scene(root);
 
         //GLIGLIA DI BOTTONI PER LA ROUNDTRACK
-        GridPane gridRound=addGridRound();
+        gridRound=addGridRound();
         gridRound.setLayoutY(10);
         gridRound.setLayoutX(336);
 
@@ -49,17 +59,20 @@ public class PlayGame {
         Image imageB = new Image(imagePathB, 1200, 700, false, false);
         backGround.setImage(imageB);
 
+
+        init = client.initializeView();
+
         //PRIVATE
-        Pane pvPane = Pane(init.getPvCard(), 0);
-        pvPane.setLayoutX(550);
-        pvPane.setLayoutY(400);
+        Pane pvPane = pvPane(client.getPVCard(client.getName()));          //come associo a quella giusta
+        pvPane.setLayoutX(800);
+        pvPane.setLayoutY(350);
 
         //TOOLCARD
         Pane toolPane1 = Pane(init.getToolCard(), 0);
         Pane toolPane2 = Pane(init.getToolCard(), 1);
         Pane toolPane3 = Pane(init.getToolCard(), 2);
 
-        GridPane toolGrid = new GridPane();
+        toolGrid = new GridPane();
         toolGrid.setLayoutX(10);
         toolGrid.setLayoutY(20);
         toolGrid.setVgap(20);
@@ -73,7 +86,7 @@ public class PlayGame {
         Pane pbPane2 = Pane(init.getPbCard(), 1);
         Pane pbPane3 = Pane(init.getPbCard(), 2);
 
-        GridPane pbGrid = new GridPane();
+        pbGrid = new GridPane();
         pbGrid.setLayoutX(1050);
         pbGrid.setLayoutY(20);
         pbGrid.setVgap(20);
@@ -83,20 +96,55 @@ public class PlayGame {
         pbGrid.add(pbPane3, 0, 2);
 
         //LA MIA WP
-        GridPane myWindowGrid = new GridPaneWindow(2, myWindow, client);
+        myWindowGrid = new GridPaneWindow(2, myWindow, client);
         myWindowGrid.setLayoutX(200);
         myWindowGrid.setLayoutY(350);
 
         //BOTTONI
-        BorderPane btnPane = new BorderPane();
-        Button skipBtn = new Button("end Turn");
-        btnPane.setLeft(skipBtn);
-        Button useToolBtn = new Button("use Tool");
-        btnPane.setCenter(useToolBtn);
-        Button takeDieBtn = new Button("take Die");
-        btnPane.setRight(takeDieBtn);
-        btnPane.setLayoutX(200);
-        btnPane.setLayoutY(600);
+        GridPane btnGrid = new GridPane();
+        btnGrid.setVgap(20);
+        skipBtn = new Button("End Turn");
+        if(client.getPlayerState().equalsIgnoreCase("enable")){
+            skipBtn.setOnAction(e-> {
+                toolGrid.setDisable(true);
+                client.skip();
+            });
+        }
+        btnGrid.add(skipBtn, 0, 0);
+
+        useToolBtn = new Button("Use Tool");
+        if(client.getPlayerState().equalsIgnoreCase("enable")){
+            useToolBtn.setOnAction(e-> {
+                skipBtn.setDisable(true);
+            });
+        }
+        btnGrid.add(useToolBtn, 0, 1);
+
+        takeDieBtn = new Button("Take Die");
+        if(client.getPlayerState().equalsIgnoreCase("enable")){
+            takeDieBtn.setOnAction(e-> {
+                new Warning("Select die", "Follow me");
+                toolGrid.setDisable(true);
+                skipBtn.setDisable(true);
+                client.skip();
+            });
+        }
+        btnGrid.add(takeDieBtn, 0, 2);
+
+        exitBtn = new Button("Exit game");
+        exitBtn.setOnAction(e-> {
+            Boolean answer= ConfirmExit.display("Quit", "Are you sure to exit without saving?");
+            if(answer)
+                Platform.exit();
+        });
+        btnGrid.add(exitBtn, 0, 3);
+        btnGrid.setLayoutX(600);
+        btnGrid.setLayoutY(350);
+
+        //DRAFTPOOL
+        draftPoolGrid = new GridPaneDraftPool(client);
+        draftPoolGrid.setLayoutX(200);
+        draftPoolGrid.setLayoutY(600);
 
         //WP AVVERSARIE
         GridPane eachGrid = new GridPane();
@@ -104,18 +152,49 @@ public class PlayGame {
         eachGrid.setPrefSize(720, 200);
         eachGrid.setLayoutX(240);
         eachGrid.setLayoutY(80);
-        for(int index= 0; index < 3; index++){
+        for(int index= 0; index < client.getNumberOfPlayers(); index++){
+
             GridPane gridPane = createGridEn(index);
 
             eachGrid.add(gridPane, index, 0);
         }
 
 
-        root.getChildren().addAll(backGround, toolGrid, pbGrid, gridRound, myWindowGrid, btnPane, eachGrid, pvPane);
+        root.getChildren().addAll(backGround, toolGrid, pbGrid, gridRound, myWindowGrid, btnGrid, eachGrid, pvPane, draftPoolGrid);
         stage.setScene(scene);
         stage.setTitle("Sagrada - " +client.getName());
         stage.resizableProperty().setValue(Boolean.FALSE);
         stage.show();
+    }
+
+    private Pane pvPane(String stringPvCard){
+        Pane pane = new Pane();
+        pane.setLayoutY(200);
+        pane.setLayoutX(120);
+
+
+        final ImageView View = new ImageView();
+        String imagePathT = stringPvCard;
+        Image imageT = new Image(imagePathT, 120, 200, false, false);
+        View.setImage(imageT);
+
+        View.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override public void handle(MouseEvent e) {
+                View.setScaleX(1.3);
+                View.setScaleY(1.3);
+            }
+        });
+
+        View.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override public void handle(MouseEvent e) {
+                View.setScaleX(1);
+                View.setScaleY(1);
+            }
+        });
+
+        pane.getChildren().add(View);
+
+        return pane;
     }
 
     private Pane Pane(ArrayList<String> stringCard, int i){
@@ -184,8 +263,12 @@ public class PlayGame {
         root.setPrefSize(150, 50);
         GridPane grid = new GridPane();
         grid.setHgap(50);
+        //DieInfo client.getDieFromRoundTrack(j);
+
         for(int numDie=0; numDie<2; numDie++){
             Button button = new Button();
+            button.setPrefSize(40, 40);
+
             //mettere immagine del dado
 
             grid.add(button, numDie, 0);
@@ -196,30 +279,28 @@ public class PlayGame {
         return stage;
     }
 
-    private GridPane myWindow(ViewWP myWindow){
 
-        GridPane gridWP = new GridPane();
-        gridWP.setPrefSize(200, 200);
-        Image myImage = new Image("/Symphony of Light.png", 200, 200, false, false);
-        BackgroundImage myBI= new BackgroundImage(myImage,
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
-        gridWP.setBackground(new Background(myBI));
-
-        return gridWP;
-
-    }
 
     private GridPane createGridEn(int player){
         GridPane grid = new GridPane();
 
-        grid.setPrefSize(200, 200);
-        Image myImage = new Image("/Symphony of Light.png", 200, 200, false, false);
-        BackgroundImage myBI= new BackgroundImage(myImage,
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
-        grid.setBackground(new Background(myBI));
+        ViewWP wp = client.getPlayerWPs().get(player);      //devo togliere me stesso.. introdurre attributo nome nella viewWp
 
+        for (int i = 0 ; i < 4 ; i++) {
+            for (int j = 0; j < 5; j++) {
+                Button btnCell = new Button();
+                btnCell.setPrefSize(40, 40);
+                String numCell = wp.getWps()[i][j].getNumCol().get(0);
+                String colorCell = wp.getWps()[i][j].getNumCol().get(1);
+                String pathCell = WPRendering.pathCell(numCell, colorCell);
+                Image myImage = new Image(pathCell, 40, 40, false, false);
+                BackgroundImage myBI= new BackgroundImage(myImage,
+                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                        BackgroundSize.DEFAULT);
+                btnCell.setBackground(new Background(myBI));
+                grid.add(btnCell, j, i);
+            }
+        }
 
         return grid;
     }

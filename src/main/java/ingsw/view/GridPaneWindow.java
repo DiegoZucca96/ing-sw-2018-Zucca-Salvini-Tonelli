@@ -73,7 +73,7 @@ public class GridPaneWindow extends GridPane {
     }
 
     public void addDieInfo(Background image, int i, int j) {
-        DieInfo dieInfo = new DieInfo(image, i, j);
+        DieInfo dieInfo = new DieInfo(image, i);
         dieInfos.add(dieInfo);
     }
 

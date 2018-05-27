@@ -5,12 +5,14 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 
 public class Warning {
-    public Warning(String alert){
+    public Warning(String alert, String title){
         Stage stage= new Stage();
         Pane root = new Pane();
         root.setPrefSize(300, 100);
@@ -24,8 +26,10 @@ public class Warning {
         text.setLayoutY(50);
         root.getChildren().add(text);
         root.setStyle("-fx-background-color:black;");
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
-        stage.setTitle("WARNING");
+        stage.setTitle(title);
         stage.show();
     }
 }
