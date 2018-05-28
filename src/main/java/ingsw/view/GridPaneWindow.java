@@ -41,7 +41,7 @@ public class GridPaneWindow extends GridPane {
                 String numCell = myWindow.getWps()[i][j].getNumCol().get(0);
                 String colorCell = myWindow.getWps()[i][j].getNumCol().get(1);
                 String pathCell = WPRendering.pathCell(numCell, colorCell);
-                Image myImage = new Image(pathCell, 50, 50, false, false);
+                Image myImage = new Image(pathCell, 50, 50, false, true);
                 BackgroundImage myBI= new BackgroundImage(myImage,
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                         BackgroundSize.DEFAULT);

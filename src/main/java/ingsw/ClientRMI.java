@@ -164,6 +164,15 @@ public class ClientRMI implements Client {
     }
 
     @Override
+    public void setActive() {
+        try {
+            controller.setActive();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public ArrayList<ViewWP> getPlayerWPs(String name) {
         try {
             return controller.getPlayersWPs(name);

@@ -26,10 +26,11 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
     }
 
     //mette i dadi in avanzo relativi al turno precedente nella round track, lancia nDice nuovi dadi.
-    public void throwsDice(int nDice){
+    public ArrayList<Die> throwsDice(int nDice){
         for(int i=0; i<nDice; i++){
             diceList.add(diceBag.randomDice());
         }
+        return diceList;
     }
 
     //restituisce il riferimento al dado in posizione index

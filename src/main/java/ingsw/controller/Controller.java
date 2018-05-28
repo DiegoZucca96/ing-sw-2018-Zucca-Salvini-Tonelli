@@ -25,6 +25,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     private ArrayList<ViewWP> windowChosen;
     private ArrayList<String> nameWPChosen;
     private HashMap<String,Integer> hashPlayers; //Associa ogni player alla sua WP selezionata (usata nella costruzione di match)
+    private boolean active;
 
     //NB -->    tutti i metodi del controller devono essere boolean, per un motivo o per l'altro
     //          non sempre possono fare l'azione richiesta, in quel caso restituiscono false
@@ -44,6 +45,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         this.playerMoveTime = server.getPlayerTimeMove();
         this.timer = new Timer();
         this.controllerTimer = new ControllerTimer(timeSearch,playerMoveTime);
+        this.active=false;
     }
 
     //Lista dei vari metodi invocabili da grafica che vanno a interagire con il model
@@ -253,6 +255,9 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     @Override
     public void skip(String clientName) throws RemoteException{
         if(getPlayerState(clientName).equals("enabled")){
+            if(!active){
+                timeout(clientName);
+            }
             timer.cancel();
             disableClient(getCurrentPlayerName());
             match.nextTurn();
@@ -261,6 +266,11 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             timer = new Timer();
             controllerTimer.startPlayerTimer(this,timer);
         }
+    }
+
+    //Serve a segnalare il giocatore inattivo oppure uscito dalla partita
+    private void timeout(String clientName) {
+        server.addBannedPlayers(clientName);
     }
 
     @Override
@@ -332,6 +342,11 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
 
     @Override
+    public void setActive() {
+        this.active=true;
+    }
+
+    @Override
     public String getPVCard(String name) throws RemoteException {
         String colorPV = null;
         ArrayList<Player> playersModel = match.getPlayers();
@@ -349,7 +364,18 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         match = istanceMatch();
         ViewData init = match.getInit();
         init.setWps(windowChosen);
+        ArrayList<Die> dicelist = match.startRound();
+        for(Die d : dicelist)
+            init.getDraftPoolDice().add(convertDieToString(d));
+        timer = new Timer();
+        controllerTimer.startPlayerTimer(this,timer);
         return init;
+    }
+
+    private String convertDieToString(Die d) {
+        String num = Integer.toString(d.getNumber());
+        String color = String.valueOf(d.getColor());
+        return num+","+color;
     }
 
     private Match istanceMatch() throws RemoteException {

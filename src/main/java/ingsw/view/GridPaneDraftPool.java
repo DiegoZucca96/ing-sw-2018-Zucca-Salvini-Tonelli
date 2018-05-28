@@ -19,7 +19,7 @@ public class GridPaneDraftPool extends GridPane {
     private Button b;
 
 
-    public GridPaneDraftPool(Client client) {
+    public GridPaneDraftPool(Client client, ArrayList<String> diceList) {
         this.client = client;
         int diceThrows = client.getNumberOfPlayers()*2+1;
 
@@ -52,6 +52,14 @@ public class GridPaneDraftPool extends GridPane {
         for(int col = 0; col < diceThrows; col++){
             b = addButtonDP( col);
             b.setPrefSize(58, 58);
+            String numDie = diceList.get(col).substring(0,diceList.get(col).indexOf(","));
+            String colorDie = diceList.get(col).substring(diceList.get(col).indexOf(","));
+            String pathDie = WPRendering.pathDie(numDie, colorDie);
+            Image myImage = new Image(pathDie, 50, 50, false, true);
+            BackgroundImage myBI= new BackgroundImage(myImage,
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                    BackgroundSize.DEFAULT);
+            b.setBackground(new Background(myBI));
             if (client.getPlayerState().equalsIgnoreCase("disabled")) {
                 b.setDisable(true);
             } else b.setDisable(false);

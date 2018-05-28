@@ -83,4 +83,6 @@ public interface RMIController extends Remote {
 
     //Restituisce le wps scelte dai giocatori
     ArrayList<ViewWP> getPlayersWPs(String name) throws RemoteException;
+
+    void setActive() throws RemoteException;
 }

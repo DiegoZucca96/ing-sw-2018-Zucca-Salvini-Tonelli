@@ -33,10 +33,9 @@ public class PlayGame {
     private GridPane myWindowGrid;
     private GridPane draftPoolGrid;
 
-
     public PlayGame(Client client){
         this.client=client;
-        init= client.initializeView();
+        init= null;
     }
 
 
@@ -106,6 +105,7 @@ public class PlayGame {
         skipBtn = new Button("End Turn");
         if(client.getPlayerState().equalsIgnoreCase("enable")){
             skipBtn.setOnAction(e-> {
+                client.setActive();
                 toolGrid.setDisable(true);
                 client.skip();
             });
@@ -115,6 +115,7 @@ public class PlayGame {
         useToolBtn = new Button("Use Tool");
         if(client.getPlayerState().equalsIgnoreCase("enable")){
             useToolBtn.setOnAction(e-> {
+                client.setActive();
                 skipBtn.setDisable(true);
             });
         }
@@ -124,9 +125,9 @@ public class PlayGame {
         if(client.getPlayerState().equalsIgnoreCase("enable")){
             takeDieBtn.setOnAction(e-> {
                 new Warning("Select die", "Follow me");
+                client.setActive();
                 toolGrid.setDisable(true);
                 skipBtn.setDisable(true);
-                client.skip();
             });
         }
         btnGrid.add(takeDieBtn, 0, 2);
@@ -142,7 +143,7 @@ public class PlayGame {
         btnGrid.setLayoutY(350);
 
         //DRAFTPOOL
-        draftPoolGrid = new GridPaneDraftPool(client);
+        draftPoolGrid = new GridPaneDraftPool(client,init.getDraftPoolDice());
         draftPoolGrid.setLayoutX(200);
         draftPoolGrid.setLayoutY(600);
 
@@ -174,7 +175,7 @@ public class PlayGame {
 
         final ImageView View = new ImageView();
         String imagePathT = stringPvCard;
-        Image imageT = new Image(imagePathT, 130, 200, false, false);
+        Image imageT = new Image(imagePathT, 130, 200, false, true);
         View.setImage(imageT);
 
         View.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -204,19 +205,19 @@ public class PlayGame {
 
         final ImageView View = new ImageView();
         String imagePathT = stringCard.get(i);
-        Image imageT = new Image(imagePathT, 130, 200, false, false);
+        Image imageT = new Image(imagePathT, 130, 200, false, true);
         View.setImage(imageT);
 
         View.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent e) {
-                scale(imageT,160,230, false);
-                //View.setScaleY(1.3);
+                View.setScaleX(1.3);
+                View.setScaleY(1.3);
             }
         });
 
         View.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent e) {
-                scale(imageT,130,200, false);
+                View.setScaleX(1);
                 View.setScaleY(1);
             }
         });
@@ -293,7 +294,7 @@ public class PlayGame {
                 String numCell = wp.getWps()[i][j].getNumCol().get(0);
                 String colorCell = wp.getWps()[i][j].getNumCol().get(1);
                 String pathCell = WPRendering.pathCell(numCell, colorCell);
-                Image myImage = new Image(pathCell, 40, 40, false, false);
+                Image myImage = new Image(pathCell, 40, 40, false, true);
                 BackgroundImage myBI = new BackgroundImage(myImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
                 btnCell.setBackground(new Background(myBI));
                 grid.add(btnCell, j, i);
@@ -302,12 +303,12 @@ public class PlayGame {
         return grid;
     }
 
-
+/*
     private Image scale(Image source, int targetWidth, int targetHeight, boolean preserveRatio) {
         ImageView imageView = new ImageView(source);
         imageView.setPreserveRatio(preserveRatio);
         imageView.setFitWidth(targetWidth);
         imageView.setFitHeight(targetHeight);
         return imageView.snapshot(null, null);
-    }
+    }*/
 }

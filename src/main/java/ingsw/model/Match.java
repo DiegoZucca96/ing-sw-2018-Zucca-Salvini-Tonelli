@@ -106,8 +106,8 @@ public class Match {
     }
 
     //inizia il round (lancia i dadi), con turno già sul primo giocatore
-    public void startRound() {
-        draftPool.throwsDice(nPlayers * 2 + 1);
+    public ArrayList<Die> startRound() {
+        return draftPool.throwsDice(nPlayers * 2 + 1);
     }
 
     //termina il round e setta a tutti i giocatori il loro primo turno

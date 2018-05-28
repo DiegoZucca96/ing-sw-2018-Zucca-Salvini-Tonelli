@@ -2,6 +2,7 @@ package ingsw;
 
 import ingsw.controller.Controller;
 import ingsw.controller.RMIController;
+import ingsw.model.RandomGenerator;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -24,6 +25,7 @@ public class Server {
     private ClientState disableClient;
     private final int timeSearch;
     private final int playerTimeMove;
+    private ArrayList<String> bannedPlayers;
 
 
     public static void main(String[] args) throws RemoteException {
@@ -53,6 +55,7 @@ public class Server {
         System.out.println("Inserisci tempo massimo per fare una mossa: ");
         playerTimeMove = in.nextInt();
         //playerTimeMove = 120;
+        bannedPlayers = new ArrayList<>();
         try {
             controller = new Controller(this);
         } catch (RemoteException e) {
@@ -161,4 +164,7 @@ public class Server {
     }
 
 
+    public void addBannedPlayers(String clientName) {
+        bannedPlayers.add(clientName);
+    }
 }

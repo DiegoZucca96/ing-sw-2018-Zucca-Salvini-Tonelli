@@ -14,7 +14,7 @@ public class ViewData implements Serializable {
     private ArrayList<ViewWP> wps;
     private ArrayList<String> pbCards;
     private ArrayList<String> toolCards;
-    private ArrayList<String> pvCards;
+    private ArrayList<String> draftPoolDice;
 
 
     public ViewData() {
@@ -23,7 +23,7 @@ public class ViewData implements Serializable {
         wps = new ArrayList<>();
         pbCards = new ArrayList<>();
         toolCards = new ArrayList<>();
-        pvCards = new ArrayList<>();
+        draftPoolDice = new ArrayList<>();
     }
 
     public InfoWindow getInfo() {
@@ -50,8 +50,8 @@ public class ViewData implements Serializable {
         return toolCards;
     }
 
-    public ArrayList<String>  getPvCard() {
-        return pvCards;
+    public ArrayList<String>  getDraftPoolDice() {
+        return draftPoolDice;
     }
 
     public void addWp(ViewWP wp){

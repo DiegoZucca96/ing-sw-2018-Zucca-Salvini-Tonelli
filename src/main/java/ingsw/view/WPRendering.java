@@ -302,4 +302,71 @@ public class WPRendering {
     }
 
 
+    public static String pathDie(String number, String color){
+
+        if (number == null || color == null)
+            return null;
+        else if (number.equalsIgnoreCase("1") && color.equalsIgnoreCase("RED"))
+            return "/1red.png";
+        else if (number.equalsIgnoreCase("2")&& color.equalsIgnoreCase("RED"))
+            return "/2red.png";
+        else if (number.equalsIgnoreCase("3")&& color.equalsIgnoreCase("RED"))
+            return "/3red.png";
+        else if (number.equalsIgnoreCase("4")&& color.equalsIgnoreCase("RED"))
+            return "/4red.png";
+        else if (number.equalsIgnoreCase("5")&& color.equalsIgnoreCase("RED"))
+            return "/5red.png";
+        else if (number.equalsIgnoreCase("6")&& color.equalsIgnoreCase("RED"))
+            return "/6red.png";
+        else if (number.equalsIgnoreCase("1") && color.equalsIgnoreCase("YELLOW"))
+            return "/1yellow.png";
+        else if (number.equalsIgnoreCase("2")&& color.equalsIgnoreCase("YELLOW"))
+            return "/2yellow.png";
+        else if (number.equalsIgnoreCase("3")&& color.equalsIgnoreCase("YELLOW"))
+            return "/3yellow.png";
+        else if (number.equalsIgnoreCase("4")&& color.equalsIgnoreCase("YELLOW"))
+            return "/4yellow.png";
+        else if (number.equalsIgnoreCase("5")&& color.equalsIgnoreCase("YELLOW"))
+            return "/5yellow.png";
+        else if (number.equalsIgnoreCase("6")&& color.equalsIgnoreCase("YELLOW"))
+            return "/6yellow.png";
+        else if (number.equalsIgnoreCase("1") && color.equalsIgnoreCase("BLUE"))
+            return "/1blue.png";
+        else if (number.equalsIgnoreCase("2")&& color.equalsIgnoreCase("BLUE"))
+            return "/2blue.png";
+        else if (number.equalsIgnoreCase("3")&& color.equalsIgnoreCase("BLUE"))
+            return "/3blue.png";
+        else if (number.equalsIgnoreCase("4")&& color.equalsIgnoreCase("BLUE"))
+            return "/4blue.png";
+        else if (number.equalsIgnoreCase("5")&& color.equalsIgnoreCase("BLUE"))
+            return "/5blue.png";
+        else if (number.equalsIgnoreCase("6")&& color.equalsIgnoreCase("BLUE"))
+            return "/6blue.png";
+        else if (number.equalsIgnoreCase("1") && color.equalsIgnoreCase("VIOLET"))
+            return "/1violet.png";
+        else if (number.equalsIgnoreCase("2")&& color.equalsIgnoreCase("VIOLET"))
+            return "/2violet.png";
+        else if (number.equalsIgnoreCase("3")&& color.equalsIgnoreCase("VIOLET"))
+            return "/3violet.png";
+        else if (number.equalsIgnoreCase("4")&& color.equalsIgnoreCase("VIOLET"))
+            return "/4violet.png";
+        else if (number.equalsIgnoreCase("5")&& color.equalsIgnoreCase("VIOLET"))
+            return "/5violet.png";
+        else if (number.equalsIgnoreCase("6")&& color.equalsIgnoreCase("VIOLET"))
+            return "/6violet.png";
+        else if (number.equalsIgnoreCase("1") && color.equalsIgnoreCase("GREEN"))
+            return "/1green.png";
+        else if (number.equalsIgnoreCase("2")&& color.equalsIgnoreCase("GREEN"))
+            return "/2green.png";
+        else if (number.equalsIgnoreCase("3")&& color.equalsIgnoreCase("GREEN"))
+            return "/3green.png";
+        else if (number.equalsIgnoreCase("4")&& color.equalsIgnoreCase("GREEN"))
+            return "/4green.png";
+        else if (number.equalsIgnoreCase("5")&& color.equalsIgnoreCase("GREEN"))
+            return "/5green.png";
+        else if (number.equalsIgnoreCase("6")&& color.equalsIgnoreCase("GREEN"))
+            return "/6green.png";
+        return null;
+    }
+
 }

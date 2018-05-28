@@ -154,7 +154,13 @@ public class ClientSocket implements Client {
 
     @Override
     public String getPVCard(String name) {
+        //da implementare
         return null;
+    }
+
+    @Override
+    public void setActive() {
+        //da implementare
     }
 
 

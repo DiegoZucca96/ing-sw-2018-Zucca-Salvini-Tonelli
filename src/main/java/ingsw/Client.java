@@ -84,6 +84,9 @@ public interface Client {
 
     String getPVCard(String name);
 
+    //serve per controllare che il client sia attivo
+    void setActive();
+
 
     /*
     "windowpattern(name(ciao),difficulty(4),cell(row(0),column(0),number(0),color(RED),Die(number(5),color(RED)),cell(..."
