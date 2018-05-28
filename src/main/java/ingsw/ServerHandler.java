@@ -46,7 +46,7 @@ public class ServerHandler implements Runnable {
             while(true){
                 request = in.nextLine();
                 command = request.substring(0,request.indexOf(':'));
-                if(request.indexOf(':') != request.length()-1) parameter = request.substring(request.indexOf(':')+1, request.length()-1);
+                if(request.indexOf(':') != request.length()-1) parameter = request.substring(request.indexOf(':')+1, request.length());
                 else parameter = null;
                 if(command.equals("close")) break;
                 else if (command.equals("login")) login(parameter);
@@ -107,11 +107,11 @@ public class ServerHandler implements Runnable {
     }
 
     private String firstParameter(String parameter){
-        return parameter.substring(0,parameter.indexOf(',')-1);
+        return parameter.substring(0,parameter.indexOf(','));
     }
 
     private String secondParameter(String parameter){
-        return parameter.substring(parameter.indexOf(',')+1,parameter.length()-1);
+        return parameter.substring(parameter.indexOf(',')+1,parameter.length());
     }
 
     private void getNumberOfPlayers() throws RemoteException {

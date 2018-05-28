@@ -28,8 +28,16 @@ public class Server {
 
     public static void main(String[] args) throws RemoteException {
         Server server = Server.instance(1080);
+
+        //cambio la policy per grantire l'accesso ad RMI
+        System.setProperty("java.security.policy", "src/policy/sagrada.policy");
+        System.setSecurityManager(new SecurityManager());
+
+        //lego il controller al registry
         Registry registry = LocateRegistry.createRegistry(1081);
         registry.rebind("controller", server.getController());
+
+        //lancio il server socket
         server.startServerSocket();
     }
 
@@ -40,11 +48,11 @@ public class Server {
         this.port = port;
         Scanner in = new Scanner(System.in);
         System.out.println("Inserisci tempo di ricerca massimo: ");
-        //timeSearch = in.nextInt();
-        timeSearch = 120;
+        timeSearch = in.nextInt();
+        //timeSearch = 120;
         System.out.println("Inserisci tempo massimo per fare una mossa: ");
-        //playerTimeMove = in.nextInt();
-        playerTimeMove = 120;
+        playerTimeMove = in.nextInt();
+        //playerTimeMove = 120;
         try {
             controller = new Controller(this);
         } catch (RemoteException e) {

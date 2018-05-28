@@ -22,7 +22,7 @@ public class ClientSocketTest {
     @Test
     public void registerTest() throws IOException {
         try{
-            assertTrue(clientSocket.register("Norma"));            //...
+            assertTrue(clientSocket.register("Zaga"));
         }catch(NoSuchElementException e){
             System.err.println(e.getMessage());
         }
@@ -63,5 +63,12 @@ public class ClientSocketTest {
         }
     }
 
+    public void StringTest(){
+        String s = "Norma";
+        System.out.println("a è in posizione:"+s.indexOf('a'));
+        System.out.println("N è in posizione:"+s.indexOf('N'));
+        System.out.println("r è in posizione:"+s.indexOf('r'));
+        System.out.println("lunghezza:"+s.length());
+    }
 
 }

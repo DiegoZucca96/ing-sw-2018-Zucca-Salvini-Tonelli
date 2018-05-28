@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-    public class ClientRMITest {
+public class ClientRMITest {
 
         private ClientRMI clientRMI;
         private RMIController controller;
@@ -21,8 +21,8 @@ import static org.junit.Assert.assertTrue;
         @Before
         public void setUpTests() throws RemoteException {
 
-            System.setProperty("java.security.policy", "stupid.policy");
-            System.setSecurityManager(new SecurityManager());
+            //System.setProperty("java.security.policy", "stupid.policy");
+            //System.setSecurityManager(new SecurityManager());
 
             clientRMI = new ClientRMI();
             Registry registry = LocateRegistry.getRegistry("localhost",1081);
@@ -32,6 +32,7 @@ import static org.junit.Assert.assertTrue;
                 e.printStackTrace();
             }
             clientRMI.setController(controller);
+            clientRMI.setName("Norma");
         }
 
         @Test
@@ -40,16 +41,18 @@ import static org.junit.Assert.assertTrue;
         }
 
         @Test
+        public void loginTest() {
+            assertTrue(clientRMI.login("Norma"));
+        }
+
+        @Test
         public void getPlayerStateTest(){
-            assertEquals("enabled",clientRMI.getPlayerState());
+            assertEquals("disabled",clientRMI.getPlayerState());
         }
 
         @Test
         public void getListOfPlayersTest(){
             ArrayList<String> players = new ArrayList<String>();
-            players.add("Elio");
-            players.add("Alessio");
-            players.add("Diego");
             players.add("Norma");
 
             assertEquals(players,clientRMI.getListOfPlayers());

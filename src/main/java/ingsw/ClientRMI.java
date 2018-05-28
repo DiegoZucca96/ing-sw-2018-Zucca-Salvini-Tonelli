@@ -31,6 +31,10 @@ public class ClientRMI implements Client {
         this.controller = controller;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public boolean login(String nickname) {
         try {
