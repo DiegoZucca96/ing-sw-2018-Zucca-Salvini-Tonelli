@@ -6,6 +6,7 @@ import ingsw.model.ViewData;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface RMIController extends Remote {
 
@@ -41,13 +42,16 @@ public interface RMIController extends Remote {
 
     int getTimeRemaining() throws RemoteException;
 
-    //restituisce le wps scelte dai giocatori
-    ArrayList<ViewWP> getPlayersWPs() throws RemoteException;
-
     //restituisce un oggetto contenete i dati relativi agli oggetti da rappresentare nella view
     ViewData initializeView() throws RemoteException;
 
     boolean login(String account) throws RemoteException;
+
+    void setWindowChosen(ArrayList<ViewWP> windowChosen) throws RemoteException;
+
+    HashMap<String, Integer> getHashPlayers() throws RemoteException;
+
+    void setHashPlayers(HashMap<String, Integer> hashPlayers) throws RemoteException;
 
     boolean takeDie(int row, int column) throws RemoteException;
 
@@ -76,4 +80,7 @@ public interface RMIController extends Remote {
     ArrayList<ViewData> updateView() throws RemoteException;
 
     String getPVCard(String name) throws RemoteException;
+
+    //Restituisce le wps scelte dai giocatori
+    ArrayList<ViewWP> getPlayersWPs(String name) throws RemoteException;
 }

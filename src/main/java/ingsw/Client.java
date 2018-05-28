@@ -5,6 +5,7 @@ import ingsw.model.ViewData;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Author: Elio Salvini*/
@@ -58,7 +59,7 @@ public interface Client {
     int getTimeSearch();
 
     //restituisce arraylist della scelta di tutti i giocatori
-    ArrayList<ViewWP> getPlayerWPs();
+    ArrayList<ViewWP> getPlayerWPs(String name);
 
     //mette il giocatore in attesa di nuovi giocatori
     boolean waitForPlayers();
@@ -77,6 +78,9 @@ public interface Client {
 
     //crea un hash di valori player-WP scelta (credo aggiunga la wp scelta all'hashmap del controller)
     void createHash(int nameWindow, String nameClient);
+
+    //Restituisce l'hashmap per la view
+    HashMap<String, Integer> getHashPlayers();
 
     String getPVCard(String name);
 

@@ -362,7 +362,7 @@ public class Play {
                 lblName0.setLayoutX(10);
                 lblName0.setLayoutY(200);
 
-                ViewWP wp0 = client.getPlayerWPs().get(0);
+                ViewWP wp0 = client.getPlayerWPs(client.getName()).get(0);
 
                 GridPane gridWP0 = new GridPane();
 
@@ -393,7 +393,7 @@ public class Play {
                 lblName1.setLayoutX(10);
                 lblName1.setLayoutY(200);
 
-                ViewWP wp1 = client.getPlayerWPs().get(1);
+                ViewWP wp1 = client.getPlayerWPs(client.getName()).get(1);
 
                 GridPane gridWP1 = new GridPane();
 
@@ -423,7 +423,7 @@ public class Play {
                 lblName2.setLayoutX(10);
                 lblName2.setLayoutY(200);
 
-                ViewWP wp2 = client.getPlayerWPs().get(2);
+                ViewWP wp2 = client.getPlayerWPs(client.getName()).get(2);
 
                 GridPane gridWP2 = new GridPane();
 

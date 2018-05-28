@@ -62,7 +62,7 @@ public class ServerHandler implements Runnable {
                 else if (command.equals("createHash")) createHash(parameter);
                 else if (command.equals("addWP")) addWP(parameter);
                 else if (command.equals("getListOfPlayers")) getListOfPlayers();
-                else if (command.equals("getPlayersWPs")) getPlayersWPs();
+                else if (command.equals("getPlayersWPs")) getPlayersWPs(parameter);
                 else if (command.equals("waitForPlayers")) waitForPlayers();
                 else if (command.equals("initializeView")) initializeView();
                 else if (command.equals("readyToPlay")) readyToPlay();
@@ -147,8 +147,8 @@ public class ServerHandler implements Runnable {
         os.writeObject(controller.getListOfPlayers());
     }
 
-    private void getPlayersWPs() throws IOException {
-        os.writeObject(controller.getPlayersWPs());
+    private void getPlayersWPs(String name) throws IOException {
+        os.writeObject(controller.getPlayersWPs(name));
     }
 
     private void readyToPlay() throws RemoteException {

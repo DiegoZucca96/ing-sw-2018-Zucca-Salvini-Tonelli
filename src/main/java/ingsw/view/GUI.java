@@ -215,7 +215,6 @@ public class GUI  {
         stage.setScene(scene1);
         stage.setTitle("Nickname");
         stage.resizableProperty().setValue(Boolean.FALSE);
-        stage.setOpacity(0.7);
         stage.show();
 
         return stage;

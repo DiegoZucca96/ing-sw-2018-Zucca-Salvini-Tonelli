@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -145,13 +146,20 @@ public class ClientSocket implements Client {
     }
 
     @Override
+    public HashMap<String, Integer> getHashPlayers() {
+
+        //Da implementare
+        return null;
+    }
+
+    @Override
     public String getPVCard(String name) {
         return null;
     }
 
 
     @Override
-    public ArrayList<ViewWP> getPlayerWPs(){
+    public ArrayList<ViewWP> getPlayerWPs(String name){
         out.println("getPlayersWPs:");
         try {
             return (ArrayList<ViewWP>) is.readObject();

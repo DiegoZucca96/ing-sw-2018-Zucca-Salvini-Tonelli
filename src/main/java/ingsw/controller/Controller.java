@@ -72,14 +72,17 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return windowChosen;
     }
 
+    @Override
     public void setWindowChosen(ArrayList<ViewWP> windowChosen) {
         this.windowChosen = windowChosen;
     }
 
+    @Override
     public HashMap<String, Integer> getHashPlayers() {
         return hashPlayers;
     }
 
+    @Override
     public void setHashPlayers(HashMap<String, Integer> hashPlayers) {
         this.hashPlayers = hashPlayers;
     }
@@ -307,9 +310,9 @@ public class Controller extends UnicastRemoteObject implements RMIController {
 
 
     @Override
-    public ArrayList<ViewWP> getPlayersWPs() throws RemoteException{
+    public synchronized ArrayList<ViewWP> getPlayersWPs(String name) throws RemoteException{
         ArrayList<ViewWP> enemyWPs = new ArrayList<>();
-        for(ViewWP windowPattern: getWindowChosen()){
+        /*for(ViewWP windowPattern: getWindowChosen()){
             ViewWP enemyWp = new ViewWP();
             InfoCell [][] infoCell = windowPattern.getWps();
             enemyWp.setWps(infoCell);
@@ -319,8 +322,13 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             enemyWp.setDifficulty(difficulty);
             enemyWPs.add(enemyWp);
         }
+        return enemyWPs;*/
+        for(ViewWP wp : getWindowChosen()){
+            if(getHashPlayers().get(name) != wp.getNumberWP()) {
+                enemyWPs.add(wp);
+            }
+        }
         return enemyWPs;
-
     }
 
     @Override
@@ -339,7 +347,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     @Override
     public synchronized ViewData initializeView() throws RemoteException {
         match = istanceMatch();
-        ViewData init = match.initialize();
+        ViewData init = match.getInit();
         init.setWps(windowChosen);
         return init;
     }

@@ -11,6 +11,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ClientRMI implements Client {
 
@@ -143,6 +144,16 @@ public class ClientRMI implements Client {
     }
 
     @Override
+    public HashMap<String, Integer> getHashPlayers() {
+        try {
+            return controller.getHashPlayers();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public String getPVCard(String name) {
         try {
             return controller.getPVCard(name);
@@ -153,9 +164,9 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public ArrayList<ViewWP> getPlayerWPs() {
+    public ArrayList<ViewWP> getPlayerWPs(String name) {
         try {
-            return controller.getPlayersWPs();
+            return controller.getPlayersWPs(name);
         } catch (RemoteException e) {
             return null;
         }

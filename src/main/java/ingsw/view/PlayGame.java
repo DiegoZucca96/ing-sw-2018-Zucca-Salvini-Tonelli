@@ -152,10 +152,9 @@ public class PlayGame {
         eachGrid.setPrefSize(720, 200);
         eachGrid.setLayoutX(240);
         eachGrid.setLayoutY(80);
-        for(int index= 0; index < client.getNumberOfPlayers(); index++){
+        for(int index= 0; index < client.getNumberOfPlayers()-1; index++){
 
             GridPane gridPane = createGridEn(index);
-
             eachGrid.add(gridPane, index, 0);
         }
 
@@ -170,12 +169,12 @@ public class PlayGame {
     private Pane pvPane(String stringPvCard){
         Pane pane = new Pane();
         pane.setLayoutY(200);
-        pane.setLayoutX(120);
+        pane.setLayoutX(130);
 
 
         final ImageView View = new ImageView();
         String imagePathT = stringPvCard;
-        Image imageT = new Image(imagePathT, 120, 200, false, false);
+        Image imageT = new Image(imagePathT, 130, 200, false, false);
         View.setImage(imageT);
 
         View.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -200,24 +199,24 @@ public class PlayGame {
     private Pane Pane(ArrayList<String> stringCard, int i){
         Pane pane = new Pane();
         pane.setLayoutY(200);
-        pane.setLayoutX(120);
+        pane.setLayoutX(130);
 
 
         final ImageView View = new ImageView();
         String imagePathT = stringCard.get(i);
-        Image imageT = new Image(imagePathT, 120, 200, false, false);
+        Image imageT = new Image(imagePathT, 130, 200, false, false);
         View.setImage(imageT);
 
         View.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent e) {
-                View.setScaleX(1.3);
-                View.setScaleY(1.3);
+                scale(imageT,160,230, false);
+                //View.setScaleY(1.3);
             }
         });
 
         View.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent e) {
-                View.setScaleX(1);
+                scale(imageT,130,200, false);
                 View.setScaleY(1);
             }
         });
@@ -281,12 +280,13 @@ public class PlayGame {
 
 
 
-    private GridPane createGridEn(int player){
+    private GridPane createGridEn(int player) {
         GridPane grid = new GridPane();
 
-        ViewWP wp = client.getPlayerWPs().get(player);      //devo togliere me stesso.. introdurre attributo nome nella viewWp
+        ViewWP wp = client.getPlayerWPs(client.getName()).get(player);      //devo togliere me stesso.. introdurre attributo nome nella viewWp
 
-        for (int i = 0 ; i < 4 ; i++) {
+
+        for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
                 Button btnCell = new Button();
                 btnCell.setPrefSize(40, 40);
@@ -294,14 +294,20 @@ public class PlayGame {
                 String colorCell = wp.getWps()[i][j].getNumCol().get(1);
                 String pathCell = WPRendering.pathCell(numCell, colorCell);
                 Image myImage = new Image(pathCell, 40, 40, false, false);
-                BackgroundImage myBI= new BackgroundImage(myImage,
-                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                        BackgroundSize.DEFAULT);
+                BackgroundImage myBI = new BackgroundImage(myImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
                 btnCell.setBackground(new Background(myBI));
                 grid.add(btnCell, j, i);
             }
         }
-
         return grid;
+    }
+
+
+    private Image scale(Image source, int targetWidth, int targetHeight, boolean preserveRatio) {
+        ImageView imageView = new ImageView(source);
+        imageView.setPreserveRatio(preserveRatio);
+        imageView.setFitWidth(targetWidth);
+        imageView.setFitHeight(targetHeight);
+        return imageView.snapshot(null, null);
     }
 }

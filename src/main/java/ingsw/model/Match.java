@@ -15,6 +15,7 @@ public class Match {
     private ArrayList<PBObjectiveCard> pbCards;  //public objective card relative alla partita
     private RoundTrack roundTrack;
     private DraftPool draftPool;
+    ViewData init;
 
     public Match(int id, ArrayList<String> playersNames, ArrayList<Integer> playersWP) {    //viene passato l'id dal Server per identificare il match
         this.id = id;
@@ -27,23 +28,21 @@ public class Match {
 
         //Inizializzazione dei giocatori sulla base dei dati ricevuti dal costruttore
         players = new ArrayList<Player>();
+        RandomGenerator rg = new RandomGenerator(4);
         for (int i = 0; i < playersNames.size(); i++) {
-            Player player = new Player(playersNames.get(i), playersWP.get(i), Color.values()[new RandomGenerator(4).random()]);
+            Player player = new Player(playersNames.get(i), playersWP.get(i), Color.values()[rg.random()]);
             players.add(player);
         }
         nPlayers = players.size();
         clockwiseRound = true;
         currentPlayer = players.get(0);
 
-        //Inizializzazione delle componenti del gioco
+        //Inizializzazione delle componenti del gioco lato model e grafico
         tools = new ArrayList<ToolCard>();
         pbCards = new ArrayList<PBObjectiveCard>();
         roundTrack = new RoundTrack();
         draftPool = new DraftPool(roundTrack);
-    }
-    //Metodo che istanzia il gioco lato model e restituisce a lato view
-    public ViewData initialize(){
-        ViewData init = new ViewData();
+        init = new ViewData();
 
         ArrayList<Integer> numToolCards = ToolCard.generateToolCard(init);
         tools.add(new ToolCard(numToolCards.get(0)));
@@ -54,7 +53,9 @@ public class Match {
         pbCards.add(new PBObjectiveCard(numPBCards.get(0)));
         pbCards.add(new PBObjectiveCard(numPBCards.get(1)));
         pbCards.add(new PBObjectiveCard(numPBCards.get(2)));
-
+    }
+    //Metodo che istanzia il gioco lato model e restituisce a lato view
+    public ViewData getInit(){
         return init;
     }
 
