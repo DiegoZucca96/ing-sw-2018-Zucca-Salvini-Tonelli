@@ -85,4 +85,10 @@ public interface RMIController extends Remote {
     ArrayList<ViewWP> getPlayersWPs(String name) throws RemoteException;
 
     void setActive() throws RemoteException;
+
+    boolean getActive() throws RemoteException;
+
+    void rejoinedPlayer(String name) throws RemoteException;
+
+    int getTimeMove() throws RemoteException;
 }

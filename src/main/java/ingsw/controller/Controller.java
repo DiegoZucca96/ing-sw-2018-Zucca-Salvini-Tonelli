@@ -347,6 +347,23 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
 
     @Override
+    public boolean getActive() throws RemoteException {
+        return active;
+    }
+
+    @Override
+    public void rejoinedPlayer(String name) throws RemoteException {
+        if(server.getBannedPlayer().contains(name)){
+            server.getBannedPlayer().remove(name);
+        }
+    }
+
+    @Override
+    public int getTimeMove() throws RemoteException {
+        return controllerTimer.getTimeMoveRemaining();
+    }
+
+    @Override
     public String getPVCard(String name) throws RemoteException {
         String colorPV = null;
         ArrayList<Player> playersModel = match.getPlayers();

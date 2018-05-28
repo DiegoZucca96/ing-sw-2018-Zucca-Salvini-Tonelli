@@ -174,17 +174,31 @@ public class ClientRMI implements Client {
 
     @Override
     public boolean getActive() {
-        return controller.getActive();
+        try {
+            return controller.getActive();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
     public void rejoinedPlayer(String name) {
-        controller.rejoinedPlayer(name);
+        try {
+            controller.rejoinedPlayer(name);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public int getTimeMove() {
-        return controller.getTimeMove();
+        try {
+            return controller.getTimeMove();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
     @Override
@@ -194,6 +208,7 @@ public class ClientRMI implements Client {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     @Override

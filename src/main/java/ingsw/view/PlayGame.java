@@ -27,6 +27,7 @@ import java.util.ArrayList;
 
 public class PlayGame {
 
+    private int timeseconds;
     private Timeline timeline;
     private Client client;
     private ViewData init ;
@@ -203,7 +204,7 @@ public class PlayGame {
 
                                 }
                             }else {
-                                clockLbl.setText("Tocca a "client.getCurrentPlayer()+"      "+Integer.toString(client.getTimeMove()));
+                                clockLbl.setText("Tocca a "+client.getCurrentPlayer()+"      "+Integer.toString(client.getTimeMove()));
 
                             }
                         }));

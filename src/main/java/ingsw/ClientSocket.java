@@ -166,6 +166,7 @@ public class ClientSocket implements Client {
     @Override
     public boolean getActive() {
         //da impl
+        return false;
     }
 
     @Override
@@ -176,11 +177,13 @@ public class ClientSocket implements Client {
     @Override
     public int getTimeMove() {
         //da iml
+        return 0;
     }
 
     @Override
     public String getCurrentPlayer() {
         //da impl
+        return null;
     }
 
 

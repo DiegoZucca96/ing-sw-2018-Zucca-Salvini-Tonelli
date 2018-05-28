@@ -4,6 +4,7 @@ import ingsw.controller.Controller;
 import ingsw.controller.RMIController;
 import ingsw.model.RandomGenerator;
 
+import javax.naming.directory.Attribute;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -166,5 +167,9 @@ public class Server {
 
     public void addBannedPlayers(String clientName) {
         bannedPlayers.add(clientName);
+    }
+
+    public ArrayList<String> getBannedPlayer() {
+        return bannedPlayers;
     }
 }
