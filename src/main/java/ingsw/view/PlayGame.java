@@ -4,23 +4,30 @@ package ingsw.view;
 import ingsw.Client;
 import ingsw.controller.ViewWP;
 import ingsw.model.ViewData;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class PlayGame {
 
+    private Timeline timeline;
     private Client client;
     private ViewData init ;
     private Button skipBtn;
@@ -60,6 +67,16 @@ public class PlayGame {
 
 
         init = client.initializeView();
+
+
+        //COUNTDOWN
+        Pane currentInfo = new Pane();
+        currentInfo.setLayoutX(300);
+        currentInfo.setLayoutY(300);
+        Label countdownLabel = countDown();
+        countdownLabel.setPrefSize(20, 20);
+
+        currentInfo.getChildren().add(countdownLabel);
 
         //PRIVATE
         Pane pvPane = pvPane(client.getPVCard(client.getName()));          //come associo a quella giusta
@@ -105,6 +122,7 @@ public class PlayGame {
         skipBtn = new Button("End Turn");
         if(client.getPlayerState().equalsIgnoreCase("enable")){
             skipBtn.setOnAction(e-> {
+                timeseconds=0;
                 client.setActive();
                 toolGrid.setDisable(true);
                 client.skip();
@@ -165,6 +183,33 @@ public class PlayGame {
         stage.setTitle("Sagrada - " +client.getName());
         stage.resizableProperty().setValue(Boolean.FALSE);
         stage.show();
+    }
+
+    private Label countDown(){
+        timeline = new Timeline();
+        Label clockLbl = new Label();
+        timeseconds = client.getTimeMove();
+        timeline.getKeyFrames().add(
+                new KeyFrame(Duration.millis(500),
+                        event -> {
+                            if(client.getPlayerState()=="enable"){
+
+                                clockLbl.setText("Tocca a te    "+Integer.toString(client.getTimeMove()));
+
+                                if(client.getTimeMove()<=0){
+                                    if(!client.getActive()){
+                                        ConfirmExit.display(client);
+                                    }
+
+                                }
+                            }else {
+                                clockLbl.setText("Tocca a "client.getCurrentPlayer()+"      "+Integer.toString(client.getTimeMove()));
+
+                            }
+                        }));
+        timeline.playFromStart();
+
+        return clockLbl;
     }
 
     private Pane pvPane(String stringPvCard){
@@ -303,12 +348,5 @@ public class PlayGame {
         return grid;
     }
 
-/*
-    private Image scale(Image source, int targetWidth, int targetHeight, boolean preserveRatio) {
-        ImageView imageView = new ImageView(source);
-        imageView.setPreserveRatio(preserveRatio);
-        imageView.setFitWidth(targetWidth);
-        imageView.setFitHeight(targetHeight);
-        return imageView.snapshot(null, null);
-    }*/
+
 }

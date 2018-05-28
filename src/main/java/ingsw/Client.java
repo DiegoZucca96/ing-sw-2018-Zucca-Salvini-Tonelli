@@ -87,6 +87,20 @@ public interface Client {
     //serve per controllare che il client sia attivo
     void setActive();
 
+    //attivo o no?
+    boolean getActive();
+
+    //rejoin client to list of Player
+    void rejoinedPlayer(String name);
+
+    //tempo per fare una mossa
+    int getTimeMove();
+
+    //il turno di?
+    String getCurrentPlayer();
+
+
+
 
     /*
     "windowpattern(name(ciao),difficulty(4),cell(row(0),column(0),number(0),color(RED),Die(number(5),color(RED)),cell(..."

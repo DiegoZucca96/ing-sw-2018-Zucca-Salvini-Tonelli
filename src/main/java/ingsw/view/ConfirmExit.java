@@ -1,4 +1,6 @@
 package ingsw.view;
+import ingsw.Client;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -47,5 +49,36 @@ public class ConfirmExit {
         window.setScene(scene);
         window.showAndWait();
         return answer;
+    }
+
+    public static void display(Client client){
+        Stage window = new Stage();
+
+        //Block event outside the window
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("Disconnected");
+        window.setMinWidth(250);
+
+        Label label = new Label();
+        label.setText("Do you still want to play?");
+        Button b1 = new Button("Yes");
+        Button b2 = new Button("No");
+        b1.setOnAction(e -> {
+            client.rejoinedPlayer(client.getName());
+            window.close();
+        });
+        b2.setOnAction(e-> {
+            Platform.exit();
+        });
+
+
+        HBox layout = new HBox(40);
+        layout.getChildren().addAll(label, b1, b2);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout);
+        window.setScene(scene);
+        window.showAndWait();
+
     }
 }

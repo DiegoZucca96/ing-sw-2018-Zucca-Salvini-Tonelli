@@ -163,6 +163,26 @@ public class ClientSocket implements Client {
         //da implementare
     }
 
+    @Override
+    public boolean getActive() {
+        //da impl
+    }
+
+    @Override
+    public void rejoinedPlayer(String name) {
+        //da iml
+    }
+
+    @Override
+    public int getTimeMove() {
+        //da iml
+    }
+
+    @Override
+    public String getCurrentPlayer() {
+        //da impl
+    }
+
 
     @Override
     public ArrayList<ViewWP> getPlayerWPs(String name){

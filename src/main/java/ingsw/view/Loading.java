@@ -88,19 +88,7 @@ public class Loading {
                 new KeyFrame(Duration.millis(500),
                         event -> {
                             if(myWindow==null){
-                               /* try {
-                                    if(controller.getListOfPlayers().size()==1){ //Fa qualcosa mentre aspetta
-                                        //System.out.println(controller.getTimeSearch());
-                                        single++;
-                                    }
-                                    if(controller.getListOfPlayers().size()==2 && access == 0 && single == 0){
-                                        controller.search();
-                                        access++;
-                                    }
-                                    //System.out.println("ControllerTimer pari a:"+controller.getTimeSearch());
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }*/
+
                                 if(client.waitForPlayers()){
                                     timeline.stop();
 
@@ -114,16 +102,11 @@ public class Loading {
                                 }
                             }
                             if (myWindow!=null) {
-                                /*try {
-                                    while(controller.getWindowChosen().size()< controller.getListOfPlayers().size())
-                                        lbl1.setText("Players are choosing, wait");
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }*/
+
                                 if (client.readyToPlay()){
                                     timeline.stop();
                                     new PlayGame(client).display(myWindow);
-                                    //new Play(client).display(myWindow);
+
                                     primaryStage.close();
                                 }
                             }

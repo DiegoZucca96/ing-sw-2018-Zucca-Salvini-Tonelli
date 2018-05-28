@@ -173,6 +173,30 @@ public class ClientRMI implements Client {
     }
 
     @Override
+    public boolean getActive() {
+        return controller.getActive();
+    }
+
+    @Override
+    public void rejoinedPlayer(String name) {
+        controller.rejoinedPlayer(name);
+    }
+
+    @Override
+    public int getTimeMove() {
+        return controller.getTimeMove();
+    }
+
+    @Override
+    public String getCurrentPlayer()  {
+        try {
+            return controller.getCurrentPlayerName();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public ArrayList<ViewWP> getPlayerWPs(String name) {
         try {
             return controller.getPlayersWPs(name);
