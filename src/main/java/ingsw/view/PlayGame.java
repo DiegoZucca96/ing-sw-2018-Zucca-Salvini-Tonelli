@@ -79,22 +79,22 @@ public class PlayGame {
         currentInfo.setLayoutX(300);
         currentInfo.setLayoutY(300);
         clockLbl= new Label();
-        clockLbl.setPrefSize(20, 20);
+        clockLbl.setStyle(styleSheet);
         currentInfo.getChildren().add(clockLbl);
 
 
         timeline = new Timeline();
-        clockLbl.setStyle(styleSheet);
+        timeline.setCycleCount(Timeline.INDEFINITE);
         timeseconds=client.getTimeMove();
         timeline.getKeyFrames().add(
-                new KeyFrame(Duration.millis(500),
+                new KeyFrame(Duration.seconds(1),
                         event -> {
                             if(client.getPlayerState()=="enable"){
                                 timeseconds--;
                                 clockLbl.setText("Tocca a te    "+Integer.toString(timeseconds));
 
 
-                                if(client.getTimeMove()<=0){
+                                if(timeseconds<=0){
                                     if(!client.getActive()){
                                         ConfirmExit.display(client);
                                     }
