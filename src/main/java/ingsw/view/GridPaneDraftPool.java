@@ -70,7 +70,7 @@ public class GridPaneDraftPool extends GridPane {
         Button button = new Button();
         button.setOpacity(1);
 
-            button.setOnMouseEntered(e -> {
+            button.setOnAction(e -> {
                 dieInfo = new DieInfo(button.getBackground(), col);
 
                 if(!dieInfo.getBackground().equals(Color.TRANSPARENT)){

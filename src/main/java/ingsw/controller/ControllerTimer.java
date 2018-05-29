@@ -45,15 +45,17 @@ public class ControllerTimer {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if(timeMoveRemaining<0){
+                if(timeMoveRemaining==0){
                     try {
                         controller.skip(controller.getCurrentPlayerName());
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
                 }
-                if(timeMoveRemaining>=0)
+                if(timeMoveRemaining>0){
                     timeMoveRemaining--;
+                }
+                System.out.println(timeMoveRemaining);
             }
         }, delay, period);
     }

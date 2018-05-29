@@ -54,7 +54,7 @@ public class GridPaneWindow extends GridPane {
     private Button addButtonWp(int i, int j) {
         Button button = new Button();
 
-        button.setOnMouseEntered(e -> {
+        button.setOnAction(e -> {
 
             if(client.positionDie(i, j)){
                 addCellInfo(button.getBackground(), i, j);      //salvo il backgruond della cella

@@ -22,6 +22,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     private int timeSearch;
     private int playerMoveTime;
     private static int access=0;
+    private static int startTimer = 0;
     private ArrayList<ViewWP> windowChosen;
     private ArrayList<String> nameWPChosen;
     private HashMap<String,Integer> hashPlayers; //Associa ogni player alla sua WP selezionata (usata nella costruzione di match)
@@ -384,8 +385,12 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         ArrayList<Die> dicelist = match.startRound();
         for(Die d : dicelist)
             init.getDraftPoolDice().add(convertDieToString(d));
-        timer = new Timer();
-        controllerTimer.startPlayerTimer(this,timer);
+        enableClient(getCurrentPlayerName());
+        if(startTimer==0){
+            timer = new Timer();
+            controllerTimer.startPlayerTimer(this,timer);
+            startTimer++;
+        }
         return init;
     }
 

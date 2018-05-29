@@ -69,8 +69,6 @@ public class PlayGame {
         backGround.setImage(imageB);
 
 
-        init = client.initializeView();
-
 
         //COUNTDOWN
         Pane currentInfo = new Pane();
@@ -80,26 +78,29 @@ public class PlayGame {
         clockLbl.setStyle(styleSheet);
         currentInfo.getChildren().add(clockLbl);
 
+        init = client.initializeView();
+
 
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
-        timeseconds=client.getTimeMove();
         timeline.getKeyFrames().add(
-                new KeyFrame(Duration.seconds(1),
+                new KeyFrame(Duration.millis(1000),
                         event -> {
-                            if(client.getPlayerState()=="enable"){
-                                timeseconds--;
+                            timeseconds = client.getTimeMove();
+                            if(client.getPlayerState().equals("enabled")){
                                 clockLbl.setText("Tocca a te    "+Integer.toString(timeseconds));
-
-
-                                if(timeseconds<=0){
+                                if(timeseconds==0){
                                     if(!client.getActive()){
-                                        ConfirmExit.display(client);
+                                        Platform.runLater(() -> {
+                                            Boolean answer= ConfirmExit.display("Disconnected", "Do you still want to play?");
+                                            if(answer)
+                                                client.rejoinedPlayer(client.getName());
+                                            else
+                                                Platform.exit();
+                                        });
                                     }
-
                                 }
                             }else {
-                                timeseconds--;
                                 clockLbl.setText("Tocca a "+client.getCurrentPlayer()+"      "+Integer.toString(timeseconds));
                                 if(timeseconds%5==0){
                                     updateView = client.updateView();
@@ -151,18 +152,18 @@ public class PlayGame {
         GridPane btnGrid = new GridPane();
         btnGrid.setVgap(20);
         skipBtn = new Button("End Turn");
-        if(client.getPlayerState().equalsIgnoreCase("enable")){
-            skipBtn.setOnAction(e-> {
+        skipBtn.setOnAction(e-> {
+            if(client.getPlayerState().equalsIgnoreCase("enabled")){
                 timeseconds=0;
                 client.setActive();
                 toolGrid.setDisable(true);
                 client.skip();
-            });
-        }
+            }
+        });
         btnGrid.add(skipBtn, 0, 0);
 
         useToolBtn = new Button("Use Tool");
-        if(client.getPlayerState().equalsIgnoreCase("enable")){
+        if(client.getPlayerState().equalsIgnoreCase("enabled")){
             useToolBtn.setOnAction(e-> {
                 client.setActive();
                 skipBtn.setDisable(true);
@@ -171,7 +172,7 @@ public class PlayGame {
         btnGrid.add(useToolBtn, 0, 1);
 
         takeDieBtn = new Button("Take Die");
-        if(client.getPlayerState().equalsIgnoreCase("enable")){
+        if(client.getPlayerState().equalsIgnoreCase("enabled")){
             takeDieBtn.setOnAction(e-> {
                 new Warning("Select die", "Follow me");
                 client.setActive();
@@ -335,6 +336,7 @@ public class PlayGame {
 
     private GridPane createGridEn(int player) {
         GridPane grid = new GridPane();
+
 
         ViewWP wp = client.getPlayerWPs(client.getName()).get(player);      //devo togliere me stesso.. introdurre attributo nome nella viewWp
 
