@@ -2,7 +2,7 @@ package ingsw.view;
 
 
 import ingsw.Client;
-import ingsw.controller.ViewWP;
+import ingsw.model.ViewWP;
 import ingsw.model.ViewData;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -18,11 +18,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class PlayGame {

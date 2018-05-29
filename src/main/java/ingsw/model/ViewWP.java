@@ -1,4 +1,6 @@
-package ingsw.controller;
+package ingsw.model;
+
+import ingsw.controller.InfoCell;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -7,7 +9,7 @@ public class ViewWP implements Serializable {
 
     private String name;
     private String difficulty;
-    private InfoCell [][] wps;
+    private InfoCell[][] wps;
     private int numberWP;
 
 

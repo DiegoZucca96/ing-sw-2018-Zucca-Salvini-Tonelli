@@ -28,10 +28,13 @@ public class RoundTrackTest{
         die3 = mock(Die.class);
         when(die1.getNumber()).thenReturn(1);
         when(die1.getColor()).thenReturn(Color.BLUE);
+        when(die1.toString()).thenReturn("Die(1,BLUE)");
         when(die2.getNumber()).thenReturn(2);
         when(die2.getColor()).thenReturn(Color.BLUE);
+        when(die2.toString()).thenReturn("Die(2,BLUE)");
         when(die3.getNumber()).thenReturn(3);
         when(die3.getColor()).thenReturn(Color.BLUE);
+        when(die3.toString()).thenReturn("Die(3,BLUE)");
     }
 
 
@@ -66,6 +69,16 @@ public class RoundTrackTest{
         assertNull(rt.getDie(3, 0));
         assertNull(rt.getDie(5, 0));
         assertEquals(die1, rt.getDie(7, 0));
+    }
+
+    @Test
+    public void testToString(){
+        rt.addDie(die2,1);
+        rt.addDie(die3,1);
+        rt.addDie(die1,2);
+        rt.addDie(die3,4);
+        rt.addDie(die1,10);
+        assertEquals("RoundTrack:\n1:Die(2,BLUE),Die(3,BLUE)\n2:Die(1,BLUE)\n3:\n4:Die(3,BLUE)\n5:\n6:\n7:\n8:\n9:\n10:Die(1,BLUE)", rt.toString());
     }
 
 }

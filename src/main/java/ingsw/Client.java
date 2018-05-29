@@ -1,6 +1,6 @@
 package ingsw;
 
-import ingsw.controller.ViewWP;
+import ingsw.model.ViewWP;
 import ingsw.model.ViewData;
 
 import java.io.IOException;

@@ -1,7 +1,7 @@
 package ingsw;
 
 import ingsw.controller.RMIController;
-import ingsw.controller.ViewWP;
+import ingsw.model.ViewWP;
 import ingsw.model.ViewData;
 import ingsw.view.GUI;
 

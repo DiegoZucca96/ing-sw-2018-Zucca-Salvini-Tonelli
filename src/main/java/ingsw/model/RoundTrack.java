@@ -60,5 +60,31 @@ public class RoundTrack {
         return result;
     }
 
+    /*Es.  "RoundTrack:
+            1:Die(2,RED),Die(3,YELLOW)
+            2:Die(1,BLUE)
+            3:
+            4:Die(5,GREEN)
+            5:
+            ...
+            10:Die(6,YELLOW)"
+    */
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("RoundTrack:");
+        for(int i=0; i<10; i++){
+            stringBuilder.append("\n");
+            stringBuilder.append(Integer.toString(i+1));
+            stringBuilder.append(":");
+            for(int j=0; j<9; j++){
+                Die die = getDie(i+1,j);
+                if(die==null) break;
+                if(j!=0) stringBuilder.append(",");
+                stringBuilder.append(die.toString());
+            }
+        }
+        return stringBuilder.toString();
+    }
 }
 

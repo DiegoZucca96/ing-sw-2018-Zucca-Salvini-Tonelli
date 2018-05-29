@@ -3,6 +3,8 @@ package ingsw.controller;
 import ingsw.ClientState;
 import ingsw.ServerHandler;
 import ingsw.model.ViewData;
+import ingsw.model.ViewWP;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;

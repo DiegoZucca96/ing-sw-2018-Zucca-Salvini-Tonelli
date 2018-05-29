@@ -1,8 +1,7 @@
 package ingsw;
 
-import ingsw.controller.Controller;
 import ingsw.controller.RMIController;
-import ingsw.controller.ViewWP;
+import ingsw.model.ViewWP;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

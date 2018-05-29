@@ -2,9 +2,7 @@ package ingsw;
 
 import ingsw.controller.Controller;
 import ingsw.controller.RMIController;
-import ingsw.model.RandomGenerator;
 
-import javax.naming.directory.Attribute;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;

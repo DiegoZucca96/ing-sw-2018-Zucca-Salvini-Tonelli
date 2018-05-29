@@ -23,6 +23,8 @@ public class WindowPattern implements Serializable {
 
     private Integer difficulty;
 
+    private int id;
+
     private final Cell[][] cellMatrix;
 
     private boolean wpEmpty;
@@ -310,6 +312,15 @@ public class WindowPattern implements Serializable {
             }
         }
         return matrix;
+    }
+
+    public ViewWP toViewWP(){
+        ViewWP viewWP = new ViewWP();
+        viewWP.setDifficulty(Integer.toString(getDifficulty()));
+        viewWP.setName(getTitle());
+        viewWP.setNumberWP(id);
+        viewWP.setWps(toMatrix());
+        return viewWP;
     }
 
 }

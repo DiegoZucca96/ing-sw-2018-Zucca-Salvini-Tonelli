@@ -1,6 +1,5 @@
 package ingsw.model;
 
-import ingsw.controller.ViewWP;
 import ingsw.model.windowpattern.InfoWindow;
 
 import java.io.Serializable;
@@ -15,6 +14,7 @@ public class ViewData implements Serializable {
     private ArrayList<String> pbCards;
     private ArrayList<String> toolCards;
     private ArrayList<String> draftPoolDice;
+    private String roundTrack;
 
 
     public ViewData() {
@@ -24,6 +24,7 @@ public class ViewData implements Serializable {
         pbCards = new ArrayList<>();
         toolCards = new ArrayList<>();
         draftPoolDice = new ArrayList<>();
+        roundTrack = null;
     }
 
     public InfoWindow getInfo() {
@@ -68,5 +69,13 @@ public class ViewData implements Serializable {
 
     public void addToolCard(String toolCard){
         toolCards.add(toolCard);
+    }
+
+    public void addDPDie(String Die){
+        draftPoolDice.add(Die);
+    }
+
+    public void setRoundTrack(String roundTrack) {
+        this.roundTrack = roundTrack;
     }
 }

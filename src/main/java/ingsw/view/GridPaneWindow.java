@@ -1,7 +1,7 @@
 package ingsw.view;
 
 import ingsw.Client;
-import ingsw.controller.ViewWP;
+import ingsw.model.ViewWP;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;

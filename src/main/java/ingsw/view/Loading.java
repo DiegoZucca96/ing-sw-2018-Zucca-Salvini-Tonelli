@@ -2,7 +2,7 @@ package ingsw.view;
 
 
 import ingsw.Client;
-import ingsw.controller.ViewWP;
+import ingsw.model.ViewWP;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
