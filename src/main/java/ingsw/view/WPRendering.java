@@ -70,7 +70,7 @@ public class WPRendering {
         String namePath1 = displayWindow.get(0).getName();
         String diffPath1 = displayWindow.get(0).getDifficulty();
         final Label label1 = new Label();
-        label1.setText("                "+namePath1+diffPath1);
+        label1.setText("                "+namePath1+"   "+diffPath1);
         label1.setStyle(styleSheet);
         root.add(label1, 0, 1);
 
@@ -78,9 +78,9 @@ public class WPRendering {
             ViewWP myWindow= displayWindow.get(0);
             client.createHash(myWindow.getNumberWP(), client.getName());
             client.addWP(myWindow);
+            windowPattern.close();
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             //new Private().display(client);
-            windowPattern.close();
         });
 
         label1.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -123,7 +123,7 @@ public class WPRendering {
         String namePath2 = displayWindow.get(1).getName();
         String diffPath2 = displayWindow.get(1).getDifficulty();
         final Label label2 = new Label();
-        label2.setText("                "+namePath2+diffPath2);
+        label2.setText("                "+namePath2+"   "+diffPath2);
         label2.setStyle(styleSheet);
         root.add(label2, 1, 1);
 
@@ -131,9 +131,9 @@ public class WPRendering {
             ViewWP myWindow= displayWindow.get(1);
             client.createHash(myWindow.getNumberWP(), client.getName());
             client.addWP(myWindow);
+            windowPattern.close();
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             //new Private().display(client);
-            windowPattern.close();
         });
 
 
@@ -175,7 +175,7 @@ public class WPRendering {
         String namePath3 = displayWindow.get(2).getName();
         String diffPath3 = displayWindow.get(2).getDifficulty();
         final Label label3 = new Label();
-        label3.setText("                "+namePath3+diffPath3);
+        label3.setText("                "+namePath3+"   "+diffPath3);
         label3.setStyle(styleSheet);
         root.add(label3, 2, 1);
 
@@ -183,9 +183,9 @@ public class WPRendering {
             ViewWP myWindow= displayWindow.get(2);
             client.createHash(myWindow.getNumberWP(), client.getName());
             client.addWP(myWindow);
+            windowPattern.close();
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             //new Private().display(client);
-            windowPattern.close();
         });
 
 
@@ -228,7 +228,7 @@ public class WPRendering {
         String namePath4 = displayWindow.get(3).getName();
         String diffPath4 = displayWindow.get(3).getDifficulty();
         final Label label4 = new Label();
-        label4.setText("                "+namePath4+diffPath4);
+        label4.setText("                "+namePath4+"   "+diffPath4);
         label4.setStyle(styleSheet);
         root.add(label4, 3, 1);
 
@@ -236,9 +236,9 @@ public class WPRendering {
             ViewWP myWindow= displayWindow.get(3);
             client.createHash(myWindow.getNumberWP(), client.getName());
             client.addWP(myWindow);
+            windowPattern.close();
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
             //new Private().display(client);
-            windowPattern.close();
         });
 
 

@@ -68,6 +68,7 @@ public class GridPaneDraftPool extends GridPane {
 
     private Button addButtonDP( int col) {
         Button button = new Button();
+        button.setOpacity(1);
 
             button.setOnMouseEntered(e -> {
                 dieInfo = new DieInfo(button.getBackground(), col);

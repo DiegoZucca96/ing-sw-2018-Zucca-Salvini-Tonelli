@@ -27,6 +27,7 @@ import java.util.ArrayList;
 
 public class PlayGame {
 
+    private Label clockLbl;
     private int timeseconds;
     private Timeline timeline;
     private Client client;
@@ -40,6 +41,9 @@ public class PlayGame {
     private GridPane pbGrid;
     private GridPane myWindowGrid;
     private GridPane draftPoolGrid;
+    private static final String styleSheet = "-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"";
+    private ViewData updateView;
+
 
     public PlayGame(Client client){
         this.client=client;
@@ -74,10 +78,38 @@ public class PlayGame {
         Pane currentInfo = new Pane();
         currentInfo.setLayoutX(300);
         currentInfo.setLayoutY(300);
-        Label countdownLabel = countDown();
-        countdownLabel.setPrefSize(20, 20);
+        clockLbl= new Label();
+        clockLbl.setPrefSize(20, 20);
+        currentInfo.getChildren().add(clockLbl);
 
-        currentInfo.getChildren().add(countdownLabel);
+
+        timeline = new Timeline();
+        clockLbl.setStyle(styleSheet);
+        timeseconds=client.getTimeMove();
+        timeline.getKeyFrames().add(
+                new KeyFrame(Duration.millis(500),
+                        event -> {
+                            if(client.getPlayerState()=="enable"){
+                                timeseconds--;
+                                clockLbl.setText("Tocca a te    "+Integer.toString(timeseconds));
+
+
+                                if(client.getTimeMove()<=0){
+                                    if(!client.getActive()){
+                                        ConfirmExit.display(client);
+                                    }
+
+                                }
+                            }else {
+                                timeseconds--;
+                                clockLbl.setText("Tocca a "+client.getCurrentPlayer()+"      "+Integer.toString(timeseconds));
+                                if(timeseconds%5==0){
+                                    updateView = client.updateView();
+                                }
+                            }
+                        }));
+        timeline.playFromStart();
+
 
         //PRIVATE
         Pane pvPane = pvPane(client.getPVCard(client.getName()));          //come associo a quella giusta
@@ -179,39 +211,15 @@ public class PlayGame {
         }
 
 
-        root.getChildren().addAll(backGround, toolGrid, pbGrid, gridRound, myWindowGrid, btnGrid, eachGrid, pvPane, draftPoolGrid);
+        root.getChildren().addAll(backGround, toolGrid, pbGrid, gridRound, myWindowGrid, btnGrid, eachGrid, pvPane, draftPoolGrid, currentInfo);
         stage.setScene(scene);
         stage.setTitle("Sagrada - " +client.getName());
         stage.resizableProperty().setValue(Boolean.FALSE);
         stage.show();
     }
 
-    private Label countDown(){
-        timeline = new Timeline();
-        Label clockLbl = new Label();
-        timeseconds = client.getTimeMove();
-        timeline.getKeyFrames().add(
-                new KeyFrame(Duration.millis(500),
-                        event -> {
-                            if(client.getPlayerState()=="enable"){
 
-                                clockLbl.setText("Tocca a te    "+Integer.toString(client.getTimeMove()));
 
-                                if(client.getTimeMove()<=0){
-                                    if(!client.getActive()){
-                                        ConfirmExit.display(client);
-                                    }
-
-                                }
-                            }else {
-                                clockLbl.setText("Tocca a "+client.getCurrentPlayer()+"      "+Integer.toString(client.getTimeMove()));
-
-                            }
-                        }));
-        timeline.playFromStart();
-
-        return clockLbl;
-    }
 
     private Pane pvPane(String stringPvCard){
         Pane pane = new Pane();
