@@ -51,7 +51,7 @@ public class WindowPFactory {
         }
     }
 
-        //inutile poichè i file vengono aggiunti manualmente nella cartella e non dal programma
+    //inutile poichè i file vengono aggiunti manualmente nella cartella e non dal programma
     //file vengono solo acceduti
     /*public void addNewWP(String pathname){
 

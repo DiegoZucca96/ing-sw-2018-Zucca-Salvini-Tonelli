@@ -1,5 +1,8 @@
 package ingsw.model;
 
+import ingsw.observers.DraftPoolObserver;
+import ingsw.observers.Observer;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -9,11 +12,13 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
     private ArrayList<Die> diceList;
     private DiceBag diceBag;
     private RoundTrack roundTrack;
+    private Observer viewObserver;
 
     public  DraftPool(RoundTrack roundTrack){
         diceList = new ArrayList<Die>();
         diceBag = new DiceBag();
         this.roundTrack = roundTrack;
+        viewObserver = new DraftPoolObserver();
     }
 
     public DiceBag getDiceBag() {
@@ -30,6 +35,7 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
         for(int i=0; i<nDice; i++){
             diceList.add(diceBag.randomDice());
         }
+        notifyViewObserver();
         return diceList;
     }
 
@@ -47,6 +53,7 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
         Die result = getDie(index);
         try{
             diceList.set(index,new Die(0,Color.WHITE));
+            notifyViewObserver();
         } catch(IndexOutOfBoundsException e){
             return null;
         }
@@ -57,6 +64,7 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
     //aggiunge un dado nella draft pool
     public void addDie(Die die){
         diceList.add(die);
+        notifyViewObserver();
     }
 
     //Metodo che serve nella Tool11 per prendere il nuovo dado estratto con throwsDice
@@ -71,6 +79,7 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
             for(int i=0; i<size; i++){
                 roundTrack.addDie(takeDie(0), roundTrack.getRound());
             }
+            notifyViewObserver();
         }
     }
 
@@ -80,7 +89,12 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
        for(Die die: diceList){
             RandomGenerator rg = new RandomGenerator(6);
             die.setNumber(rg.random());
-        }
+       }
+        notifyViewObserver();
+    }
+
+    public void notifyViewObserver(){
+        viewObserver.update(this, ViewData.instance());
     }
 
 }

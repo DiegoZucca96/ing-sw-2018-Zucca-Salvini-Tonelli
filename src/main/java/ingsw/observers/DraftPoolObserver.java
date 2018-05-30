@@ -1,4 +1,4 @@
-package ingsw.Observers;
+package ingsw.observers;
 
 import ingsw.model.DraftPool;
 import ingsw.model.ViewData;

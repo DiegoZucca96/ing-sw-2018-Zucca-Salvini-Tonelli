@@ -1,4 +1,4 @@
-package ingsw.Observers;
+package ingsw.observers;
 
 import ingsw.model.RoundTrack;
 import ingsw.model.ViewData;

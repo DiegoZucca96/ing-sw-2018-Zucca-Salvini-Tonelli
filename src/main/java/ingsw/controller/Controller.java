@@ -232,8 +232,8 @@ public class Controller extends UnicastRemoteObject implements RMIController {
 
     //Deve aggiornare il tutto, da fare con gli observer
     @Override
-    public ArrayList<ViewData> updateView() {
-        return null;
+    public ViewData updateView() {
+        return ViewData.instance();
     }
 
     //Aggiunge la finestra scelta

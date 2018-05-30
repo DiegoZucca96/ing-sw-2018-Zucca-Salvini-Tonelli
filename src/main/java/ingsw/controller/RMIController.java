@@ -79,7 +79,7 @@ public interface RMIController extends Remote {
     void createHash(int nameWindow, String nameClient) throws RemoteException;
 
     //con il supporto degli observer mette nell'oggetto che restituisce gli ultimi cambiamenti del model
-    ArrayList<ViewData> updateView() throws RemoteException;
+    ViewData updateView() throws RemoteException;
 
     String getPVCard(String name) throws RemoteException;
 

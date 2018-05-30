@@ -1,5 +1,8 @@
 package ingsw.model;
 
+import ingsw.observers.Observer;
+import ingsw.observers.RoundTrackObserver;
+
 import java.util.ArrayList;
 
 //Classe che rappresenta la round track del gioco, contiene tutti i dadi che avanzano nella draft pool alla fine di ogni round,
@@ -8,13 +11,15 @@ import java.util.ArrayList;
 public class RoundTrack {
 
     private int currentRound;                           //round corrente
-    private ArrayList<ArrayList<Die>> extraDice;        /*lista di liste di tipo Die che contiene i dadi della round track.
+    private ArrayList<ArrayList<Die>> extraDice;
+    private Observer viewObserver;                      /*lista di liste di tipo Die che contiene i dadi della round track.
                                                           All'iesima posizione della prima lista troviamo la lista di dadi
                                                           avanzati all'iesimo round.*/
 
     public RoundTrack() {
         currentRound = 1;
         extraDice = new ArrayList<ArrayList<Die>>();
+        viewObserver = new RoundTrackObserver();
     }
 
     //restituisce il round corrente
@@ -39,6 +44,7 @@ public class RoundTrack {
                 extraDice.add(new ArrayList<Die>());
             }
             extraDice.get(round-1).add(die);
+            notifyViewObserver();
         }
     }
 
@@ -57,7 +63,12 @@ public class RoundTrack {
         Die result = getDie(round, index);
         if(result == null) return null;
         extraDice.get(round-1).remove(index);
+        notifyViewObserver();
         return result;
+    }
+
+    public void notifyViewObserver(){
+        viewObserver.update(this, ViewData.instance());
     }
 
     /*Es.  "RoundTrack:
