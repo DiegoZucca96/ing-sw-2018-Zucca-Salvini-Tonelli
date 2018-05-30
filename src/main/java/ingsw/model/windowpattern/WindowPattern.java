@@ -4,6 +4,8 @@ package ingsw.model.windowpattern;
 
 import ingsw.controller.InfoCell;
 import ingsw.model.*;
+import ingsw.observers.Observer;
+import ingsw.observers.WindowPatternObserver;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,6 +31,8 @@ public class WindowPattern implements Serializable {
 
     private boolean wpEmpty;
 
+    private Observer viewObserver;
+
     public WindowPattern(SAXParser parser, int select ){
 
         List<Cell> readConfig = parser.readConfig("src/main/java/ingsw/model/windowpattern/wpxml/wp"+select+".xml");
@@ -50,6 +54,7 @@ public class WindowPattern implements Serializable {
 
         this.title=readInfo.getName();
         this.difficulty=Integer.parseInt(readInfo.getDifficulty());
+        viewObserver = new WindowPatternObserver();
     }
 
     public String getTitle() {
@@ -107,6 +112,7 @@ public class WindowPattern implements Serializable {
                         cellMatrix[destination.getX()][destination.getY()].setEmpty(false);
                         cellMatrix[destination.getX()][destination.getY()].insertDie(die);
                         setWpEmpty(false);
+                        notifyViewObserver();
                         return true;
                     }
                     else{
@@ -127,6 +133,7 @@ public class WindowPattern implements Serializable {
                 if(verifyCellColorConstraint(destination, die, cellMatrix) && verifyCellNumberConstraint(destination, die, cellMatrix) &&verifyDieColorConstraint(destination, die, cellMatrix) && verifyDieNumberConstraint(destination, die, cellMatrix)){
                     cellMatrix[destination.getX()][destination.getY()].setEmpty(false);
                     cellMatrix[destination.getX()][destination.getY()].insertDie(die);
+                    notifyViewObserver();
                     return true;
                 }
                 else{
@@ -150,6 +157,7 @@ public class WindowPattern implements Serializable {
             return false;
         }else {
             getCell(destination, cellMatrix).takeDie();
+            notifyViewObserver();
             return true;
         }
     }
@@ -321,6 +329,10 @@ public class WindowPattern implements Serializable {
         viewWP.setNumberWP(id);
         viewWP.setWps(toMatrix());
         return viewWP;
+    }
+
+    public void notifyViewObserver(){
+        viewObserver.update(this, ViewData.instance());
     }
 
 }

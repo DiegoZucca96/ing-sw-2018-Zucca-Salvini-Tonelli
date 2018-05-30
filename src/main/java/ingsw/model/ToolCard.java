@@ -2,6 +2,8 @@ package ingsw.model;
 
 
 import ingsw.model.toolcard.*;
+import ingsw.observers.Observer;
+import ingsw.observers.ToolCardsObserver;
 
 import java.util.ArrayList;
 
@@ -9,8 +11,10 @@ public class ToolCard {
 
     private ToolStrategy toolStrategy;
     private boolean alreadyUsed;
+    private Observer viewObserver;
 
     public ToolCard(int idCard){
+        viewObserver = new ToolCardsObserver();
         switch(idCard){
             case 1 : {
                 toolStrategy = new Tool1(idCard);
@@ -60,6 +64,7 @@ public class ToolCard {
 
     public void setAlreadyUsed(boolean alreadyUsed) {
         toolStrategy.setAlreadyUsed(alreadyUsed);
+        notifyViewObserver();
     }
 
     public boolean isAlreadyUsed(){
@@ -142,5 +147,15 @@ public class ToolCard {
             }
         }
         return numToolCards;
+    }
+
+    @Override
+    public String toString() {
+        //...
+        return super.toString();
+    }
+
+    public void notifyViewObserver(){
+        viewObserver.update(this, ViewData.instance());
     }
 }

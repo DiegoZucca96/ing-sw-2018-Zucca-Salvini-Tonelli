@@ -1,4 +1,4 @@
-package ingsw.Observers;
+package ingsw.observers;
 
 import ingsw.model.ToolCard;
 import ingsw.model.ViewData;

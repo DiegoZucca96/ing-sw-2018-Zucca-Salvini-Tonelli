@@ -42,7 +42,7 @@ public class Match {
         pbCards = new ArrayList<PBObjectiveCard>();
         roundTrack = new RoundTrack();
         draftPool = new DraftPool(roundTrack);
-        init = new ViewData();
+        init = ViewData.instance();
 
         ArrayList<Integer> numToolCards = ToolCard.generateToolCard(init);
         tools.add(new ToolCard(numToolCards.get(0)));
@@ -159,6 +159,7 @@ public class Match {
         return currentPlayer.getWindowPattern().takeDie(diePosition);
     }
 
+    //posiziona un dado nella wp del current player
     public boolean positionDie(Die die, Coordinate destination){
         return currentPlayer.positionDie(die, destination);
     }

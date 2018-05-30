@@ -1,4 +1,4 @@
-package ingsw.Observers;
+package ingsw.observers;
 
 import ingsw.model.ViewData;
 import ingsw.model.windowpattern.WindowPattern;

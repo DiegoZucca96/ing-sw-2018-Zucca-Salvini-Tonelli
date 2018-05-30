@@ -15,9 +15,10 @@ public class ViewData implements Serializable {
     private ArrayList<String> toolCards;
     private ArrayList<String> draftPoolDice;
     private String roundTrack;
+    private static ViewData instance;
 
 
-    public ViewData() {
+    private ViewData() {
         info = new InfoWindow();
         images = new ArrayList<>();
         wps = new ArrayList<>();
@@ -25,6 +26,11 @@ public class ViewData implements Serializable {
         toolCards = new ArrayList<>();
         draftPoolDice = new ArrayList<>();
         roundTrack = null;
+    }
+
+    public static ViewData instance() {
+        if (instance == null) instance = new ViewData();
+        return instance;
     }
 
     public InfoWindow getInfo() {

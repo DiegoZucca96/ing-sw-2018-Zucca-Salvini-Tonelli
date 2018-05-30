@@ -208,6 +208,12 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         hashPlayers.put(nameClient,numberWP);
     }
 
+    //Deve aggiornare il tutto, da fare con gli observer
+    @Override
+    public ViewData updateView() {
+        return ViewData.instance();
+    }
+
     //Aggiunge la finestra scelta
     @Override
     public void addWindow(ViewWP wpmodel){
@@ -245,7 +251,6 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             controllerTimer.setTimeMoveRemaining(playerMoveTime);
             timer = new Timer();
             controllerTimer.startPlayerTimer(this,timer);
-
         }
     }
 
