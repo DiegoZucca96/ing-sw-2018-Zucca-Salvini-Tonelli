@@ -112,7 +112,6 @@ public class Match {
 
     //termina il round e setta a tutti i giocatori il loro primo turno
     public void endRound() {
-        Player tmp;
         draftPool.cleanDraftPool();
         roundTrack.nextRound();
         clockwiseRound = true;
@@ -120,8 +119,7 @@ public class Match {
         players.remove(currentPlayer);
         players.add(currentPlayer);
         currentPlayer = players.get(0);
-        /*for (Player p : players)
-            p.setMyRound(1);*/
+        draftPool.throwsDice(getNumOfPlayers()*2 + 1);
     }
 
     //NB nextTurn va chiamata 7 volte con 4 giocatori, al termine si chiama endRound (tengo conto se è il primo o secondo turno tramite clockwiseRound)
@@ -148,6 +146,11 @@ public class Match {
 
     //riceve indice del dado nella draft pool che si vuole posizionare e destinazione sulla WP del currentPlayer
     public Die playerTakeDie(int dieIndex) {
+        return draftPool.getDie(dieIndex);
+    }
+
+    //Mette un dado fittizio per mantenere la dimensione della draftpool (non viene mai più preso)
+    public Die draftpoolRemoveDie(int dieIndex) {
         return draftPool.takeDie(dieIndex);
     }
 
@@ -297,4 +300,7 @@ public class Match {
         return winner;
     }
 
+    public int getRound() {
+        return roundTrack.getRound();
+    }
 }

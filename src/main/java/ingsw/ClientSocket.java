@@ -186,6 +186,18 @@ public class ClientSocket implements Client {
         return null;
     }
 
+    @Override
+    public void nullSelection() {
+        //da impl
+    }
+
+    @Override
+    public int getRound() {
+        //da impl
+
+        return 0;
+    }
+
 
     @Override
     public ArrayList<ViewWP> getPlayerWPs(String name){
@@ -250,6 +262,20 @@ public class ClientSocket implements Client {
         } catch (ClassNotFoundException e) {
             return null;
         }
+    }
+
+    @Override
+    public int getCoordinateSelectedX() {
+        //Da impl
+
+        return 0;
+    }
+
+    @Override
+    public int getCoordinateSelectedY() {
+        //Da impl
+
+        return 0;
     }
 
     public void closeConnection() throws IOException {

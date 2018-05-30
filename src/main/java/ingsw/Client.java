@@ -31,6 +31,11 @@ public interface Client {
     //Restituisce la lista dei nomi dei giocatori
     ArrayList<String> getListOfPlayers();
 
+    //Ritornano le coordinate cliccate dal giocatore
+    int getCoordinateSelectedX();
+    int getCoordinateSelectedY();
+
+
     //prende dalla draftpool il dado in posizione (row, column)
     boolean takeDie(int row, int col);
 
@@ -99,6 +104,11 @@ public interface Client {
     //il turno di?
     String getCurrentPlayer();
 
+    //Setta i valori di selection player a null in caso di annullamento della mossa
+    void nullSelection();
+
+    //Restituisce il round
+    int getRound();
 
 
 

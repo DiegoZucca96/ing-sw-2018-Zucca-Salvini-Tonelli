@@ -27,6 +27,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     private ArrayList<String> nameWPChosen;
     private HashMap<String,Integer> hashPlayers; //Associa ogni player alla sua WP selezionata (usata nella costruzione di match)
     private boolean active;
+    private int turn;
 
     //NB -->    tutti i metodi del controller devono essere boolean, per un motivo o per l'altro
     //          non sempre possono fare l'azione richiesta, in quel caso restituiscono false
@@ -41,12 +42,14 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         }
         this.rg = new RandomGenerator(wpFactory.getNumOfWPs());
         this.windowChosen = new ArrayList<>();
+        this.nameWPChosen = new ArrayList<>();
         this.hashPlayers = new HashMap<>();
         this.timeSearch = server.getTimeSearch();
         this.playerMoveTime = server.getPlayerTimeMove();
         this.timer = new Timer();
         this.controllerTimer = new ControllerTimer(timeSearch,playerMoveTime);
         this.active=false;
+        this.turn=0;
     }
 
     //Lista dei vari metodi invocabili da grafica che vanno a interagire con il model
@@ -90,6 +93,15 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         this.hashPlayers = hashPlayers;
     }
 
+    @Override
+    public int getCoordinateSelectedX(){
+        return match.getCurrentPlayer().getCoordinateDieSelected().getX();
+    }
+
+    @Override
+    public int getCoordinateSelectedY(){
+        return match.getCurrentPlayer().getCoordinateDieSelected().getY();
+    }
 
     @Override
     public boolean takeDie(int row, int column) throws RemoteException{
@@ -118,6 +130,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         if(match.getCurrentPlayer().getDieSelected()!=null){
             Coordinate coordinate = new Coordinate(row,column);
             if(match.positionDie(match.getCurrentPlayer().getDieSelected(),coordinate)){
+                match.draftpoolRemoveDie(match.getCurrentPlayer().getCoordinateDieSelected().getY());
                 match.getCurrentPlayer().setCoordinateDieSelected(null);
                 match.getCurrentPlayer().setDieSelected(null);
                 return true;
@@ -126,13 +139,6 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return false;
     }
 
-    //aggiunge il nuovo account alla lista degli account del server, se l'account è già presente restituisce false
-    /*@Override
-    public synchronized boolean addAccount(String account){
-        if (access(account)) return false;
-        server.addAccount(account);
-        return true;
-    }*/
 
     @Override
     public synchronized boolean register(String account) throws RemoteException{
@@ -187,34 +193,6 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             wps.add(wpobject);
         }
         return wps;
-
-        /*ViewWP wpobject2 = new ViewWP();
-        int y = rg.random();
-        WindowPattern wp2 = wpFactory.createWindowPattern(y);
-        wpobject2.setName(wp2.getTitle());
-        wpobject2.setDifficulty(Integer.toString(wp2.getDifficulty()));
-        wpobject2.setWps(wp2.toMatrix());
-        wpobject2.setNumberWP(y);
-        wps.add(wpobject2);
-
-        ViewWP wpobject3 = new ViewWP();
-        int z = rg.random();
-        WindowPattern wp3 = wpFactory.createWindowPattern(z);
-        wpobject3.setName(wp3.getTitle());
-        wpobject3.setDifficulty(Integer.toString(wp3.getDifficulty()));
-        wpobject3.setWps(wp3.toMatrix());
-        wpobject3.setNumberWP(z);
-        wps.add(wpobject3);
-
-        ViewWP wpobject4 = new ViewWP();
-        int w = rg.random();
-        WindowPattern wp4 = wpFactory.createWindowPattern(w);
-        wpobject4.setName(wp4.getTitle());
-        wpobject4.setDifficulty(Integer.toString(wp4.getDifficulty()));
-        wpobject4.setWps(wp4.toMatrix());
-        wpobject4.setNumberWP(w);
-        wps.add(wpobject4);
-        return wps;*/
     }
 
     @Override
@@ -228,12 +206,6 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     @Override
     public void createHash(int numberWP, String nameClient) {
         hashPlayers.put(nameClient,numberWP);
-    }
-
-    //Deve aggiornare il tutto, da fare con gli observer
-    @Override
-    public ArrayList<ViewData> updateView() {
-        return null;
     }
 
     //Aggiunge la finestra scelta
@@ -261,11 +233,19 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             }
             timer.cancel();
             disableClient(getCurrentPlayerName());
-            match.nextTurn();
-            controllerTimer.setTimeMoveRemaining(playerMoveTime);
+            turn++;
+            if (turn == getSizeOfPlayers()*2) {
+                match.endRound();
+                turn=0;
+            }
+            else{
+                match.nextTurn();
+            }
             enableClient(getCurrentPlayerName());
+            controllerTimer.setTimeMoveRemaining(playerMoveTime);
             timer = new Timer();
             controllerTimer.startPlayerTimer(this,timer);
+
         }
     }
 
@@ -363,6 +343,25 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     public int getTimeMove() throws RemoteException {
         return controllerTimer.getTimeMoveRemaining();
     }
+
+    @Override
+    public void setNullPlayer() throws RemoteException {
+        match.getCurrentPlayer().setDieSelected(null);
+        match.getCurrentPlayer().setCoordinateDieSelected(null);
+    }
+
+    @Override
+    public int getRound() throws RemoteException {
+        return match.getRound();
+    }
+
+
+    //Deve aggiornare il tutto, da fare con gli observer
+    @Override
+    public ArrayList<ViewData> updateView() {
+        return null;
+    }
+
 
     @Override
     public String getPVCard(String name) throws RemoteException {

@@ -212,6 +212,25 @@ public class ClientRMI implements Client {
     }
 
     @Override
+    public void nullSelection() {
+        try {
+            controller.setNullPlayer();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public int getRound() {
+        try {
+            return controller.getRound();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    @Override
     public ArrayList<ViewWP> getPlayerWPs(String name) {
         try {
             return controller.getPlayersWPs(name);
@@ -281,5 +300,25 @@ public class ClientRMI implements Client {
         } catch (RemoteException e) {
             return null;
         }
+    }
+
+    @Override
+    public int getCoordinateSelectedX() {
+        try {
+            return controller.getCoordinateSelectedX();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    @Override
+    public int getCoordinateSelectedY() {
+        try {
+            return controller.getCoordinateSelectedY();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }

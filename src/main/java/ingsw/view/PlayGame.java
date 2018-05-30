@@ -88,6 +88,7 @@ public class PlayGame {
                         event -> {
                             timeseconds = client.getTimeMove();
                             if(client.getPlayerState().equals("enabled")){
+                                clockLbl.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 22 \"serif\"");
                                 clockLbl.setText("Tocca a te    "+Integer.toString(timeseconds));
                                 if(timeseconds==0){
                                     if(!client.getActive()){

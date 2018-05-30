@@ -2,6 +2,7 @@ package ingsw.controller;
 
 import ingsw.ClientState;
 import ingsw.ServerHandler;
+import ingsw.model.Coordinate;
 import ingsw.model.ViewData;
 import ingsw.model.ViewWP;
 
@@ -55,6 +56,10 @@ public interface RMIController extends Remote {
 
     void setHashPlayers(HashMap<String, Integer> hashPlayers) throws RemoteException;
 
+    int getCoordinateSelectedY() throws RemoteException;
+
+    int getCoordinateSelectedX() throws RemoteException;
+
     boolean takeDie(int row, int column) throws RemoteException;
 
     boolean positionDie(int row, int column) throws RemoteException;
@@ -93,4 +98,8 @@ public interface RMIController extends Remote {
     void rejoinedPlayer(String name) throws RemoteException;
 
     int getTimeMove() throws RemoteException;
+
+    void setNullPlayer() throws RemoteException;
+
+    int getRound() throws RemoteException;
 }

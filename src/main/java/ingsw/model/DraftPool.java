@@ -67,6 +67,11 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
     //mette i dadi che non sono stati usati nella round track
     public void cleanDraftPool(){
         if(!diceList.isEmpty()){
+            for(Die die: diceList){
+                if(die.getNumber()==0 || die.getColor()==Color.WHITE){
+                    diceList.remove(die);
+                }
+            }
             int size = diceList.size();
             for(int i=0; i<size; i++){
                 roundTrack.addDie(takeDie(0), roundTrack.getRound());
