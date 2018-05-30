@@ -361,13 +361,6 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
 
 
-    //Deve aggiornare il tutto, da fare con gli observer
-    @Override
-    public ArrayList<ViewData> updateView() {
-        return null;
-    }
-
-
     @Override
     public String getPVCard(String name) throws RemoteException {
         String colorPV = null;
