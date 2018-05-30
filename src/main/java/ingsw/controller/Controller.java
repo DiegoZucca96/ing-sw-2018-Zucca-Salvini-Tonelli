@@ -394,7 +394,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     private String convertDieToString(Die d) {
         String num = Integer.toString(d.getNumber());
         String color = String.valueOf(d.getColor());
-        return num+","+color;
+        return "die("+num+","+color+")";
     }
 
     private Match istanceMatch() throws RemoteException {

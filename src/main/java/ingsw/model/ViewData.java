@@ -14,7 +14,7 @@ public class ViewData implements Serializable {
     private ArrayList<String> pbCards;
     private ArrayList<String> toolCards;
     private ArrayList<String> draftPoolDice;
-    private String roundTrack;
+    private ArrayList<String> roundTrack;
     private static ViewData instance;
 
 
@@ -57,6 +57,10 @@ public class ViewData implements Serializable {
         return toolCards;
     }
 
+    public void setDraftPoolDice(ArrayList<String> draftPoolDice) {
+        this.draftPoolDice = draftPoolDice;
+    }
+
     public ArrayList<String>  getDraftPoolDice() {
         return draftPoolDice;
     }
@@ -81,7 +85,11 @@ public class ViewData implements Serializable {
         draftPoolDice.add(Die);
     }
 
-    public void setRoundTrack(String roundTrack) {
+    public void setRoundTrack(ArrayList<String> roundTrack) {
         this.roundTrack = roundTrack;
+    }
+
+    public ArrayList<String> getRoundTrack() {
+        return roundTrack;
     }
 }

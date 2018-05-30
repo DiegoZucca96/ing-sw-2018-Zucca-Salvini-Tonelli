@@ -9,6 +9,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -37,11 +38,14 @@ public class PlayGame {
     private GridPane gridRound;
     private GridPane toolGrid;
     private GridPane pbGrid;
-    private GridPane myWindowGrid;
-    private GridPane draftPoolGrid;
+    private GridPaneWindow myWindowGrid;
+    private GridPaneDraftPool draftPoolGrid;
     private static final String styleSheet = "-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"";
     private ViewData updateView;
-
+    private Button infoBtn;
+    private GridPane gridEn;
+    private static int begin=0;
+    private Button cancelBtn;
 
     public PlayGame(Client client){
         this.client=client;
@@ -56,10 +60,7 @@ public class PlayGame {
         Pane root = new Pane();
         Scene scene = new Scene(root);
 
-        //GLIGLIA DI BOTTONI PER LA ROUNDTRACK
-        gridRound=addGridRound();
-        gridRound.setLayoutY(10);
-        gridRound.setLayoutX(336);
+
 
 
         //IMMAGINE BACKGROUND
@@ -78,6 +79,7 @@ public class PlayGame {
         clockLbl.setStyle(styleSheet);
         currentInfo.getChildren().add(clockLbl);
 
+        //INIZIALIZZAZIONE
         init = client.initializeView();
 
 
@@ -90,7 +92,10 @@ public class PlayGame {
                             if(client.getPlayerState().equals("enabled")){
                                 clockLbl.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 22 \"serif\"");
                                 clockLbl.setText("Tocca a te    "+Integer.toString(timeseconds));
+                                skipBtn.setDisable(false);
+                                takeDieBtn.setDisable(false);
                                 if(timeseconds==0){
+
                                     if(!client.getActive()){
                                         Platform.runLater(() -> {
                                             Boolean answer= ConfirmExit.display("Disconnected", "Do you still want to play?");
@@ -104,11 +109,29 @@ public class PlayGame {
                             }else {
                                 clockLbl.setText("Tocca a "+client.getCurrentPlayer()+"      "+Integer.toString(timeseconds));
                                 if(timeseconds%5==0){
-                                    updateView = client.updateView();
+                                    this.updateView = client.updateView();
+
+                                    for(int i =0; i<client.getNumberOfPlayers(); i++){
+                                        if(updateView.getWps().get(i)!=null)
+                                            gridEn = createGridEn(i);
+                                    }
+
+                                    if(updateView.getRoundTrack()!=null)
+                                        gridRound=new GridPaneRound(client, updateView.getRoundTrack(), client.getRound());
+                                    if(updateView.getDraftPoolDice()!=null){
+                                        draftPoolGrid = new GridPaneDraftPool(client, updateView.getDraftPoolDice(), myWindowGrid);
+                                    }
                                 }
+
                             }
                         }));
         timeline.playFromStart();
+
+
+        //ROUNDTRACK
+        gridRound= new GridPaneRound(client, init.getRoundTrack(), 1);
+        gridRound.setLayoutY(10);
+        gridRound.setLayoutX(336);
 
 
         //PRIVATE
@@ -145,56 +168,13 @@ public class PlayGame {
         pbGrid.add(pbPane3, 0, 2);
 
         //LA MIA WP
-        myWindowGrid = new GridPaneWindow(2, myWindow, client);
+        myWindowGrid = new GridPaneWindow(myWindow, client, draftPoolGrid);
         myWindowGrid.setLayoutX(200);
         myWindowGrid.setLayoutY(350);
 
-        //BOTTONI
-        GridPane btnGrid = new GridPane();
-        btnGrid.setVgap(20);
-        skipBtn = new Button("End Turn");
-        skipBtn.setOnAction(e-> {
-            if(client.getPlayerState().equalsIgnoreCase("enabled")){
-                timeseconds=0;
-                client.setActive();
-                toolGrid.setDisable(true);
-                client.skip();
-            }
-        });
-        btnGrid.add(skipBtn, 0, 0);
-
-        useToolBtn = new Button("Use Tool");
-        if(client.getPlayerState().equalsIgnoreCase("enabled")){
-            useToolBtn.setOnAction(e-> {
-                client.setActive();
-                skipBtn.setDisable(true);
-            });
-        }
-        btnGrid.add(useToolBtn, 0, 1);
-
-        takeDieBtn = new Button("Take Die");
-        if(client.getPlayerState().equalsIgnoreCase("enabled")){
-            takeDieBtn.setOnAction(e-> {
-                new Warning("Select die", "Follow me");
-                client.setActive();
-                toolGrid.setDisable(true);
-                skipBtn.setDisable(true);
-            });
-        }
-        btnGrid.add(takeDieBtn, 0, 2);
-
-        exitBtn = new Button("Exit game");
-        exitBtn.setOnAction(e-> {
-            Boolean answer= ConfirmExit.display("Quit", "Are you sure to exit without saving?");
-            if(answer)
-                Platform.exit();
-        });
-        btnGrid.add(exitBtn, 0, 3);
-        btnGrid.setLayoutX(600);
-        btnGrid.setLayoutY(350);
 
         //DRAFTPOOL
-        draftPoolGrid = new GridPaneDraftPool(client,init.getDraftPoolDice());
+        draftPoolGrid = new GridPaneDraftPool(client,init.getDraftPoolDice(), myWindowGrid);
         draftPoolGrid.setLayoutX(200);
         draftPoolGrid.setLayoutY(600);
 
@@ -206,9 +186,79 @@ public class PlayGame {
         eachGrid.setLayoutY(80);
         for(int index= 0; index < client.getNumberOfPlayers()-1; index++){
 
-            GridPane gridPane = createGridEn(index);
-            eachGrid.add(gridPane, index, 0);
+            gridEn = createGridEn(index);
+            eachGrid.add(gridEn, index, 0);
         }
+
+        //BOTTONI
+        GridPane btnGrid = new GridPane();
+        btnGrid.setVgap(20);
+        skipBtn = new Button("End Turn");
+        skipBtn.setOnAction(e-> {
+            if(client.getPlayerState().equalsIgnoreCase("enabled")){
+                client.setActive();
+                takeDieBtn.setDisable(true);
+                toolGrid.setDisable(true);
+                skipBtn.setDisable(true);
+                draftPoolGrid.setDisable(true);
+                myWindowGrid.setDisable(true);
+                gridRound.setDisable(true);
+                client.skip();
+            }
+        });
+        btnGrid.add(skipBtn, 0, 0);
+
+        useToolBtn = new Button("Use Tool");
+        if(client.getPlayerState().equalsIgnoreCase("enabled")){
+            useToolBtn.setOnAction(e-> {
+                client.setActive();
+                skipBtn.setDisable(true);
+                useToolBtn.setDisable(false);
+                draftPoolGrid.setDisable(false);
+                gridRound.setDisable(false);
+            });
+        }
+        btnGrid.add(useToolBtn, 0, 1);
+
+        takeDieBtn = new Button("Take Die");
+        if(client.getPlayerState().equalsIgnoreCase("enabled")){
+            takeDieBtn.setOnAction(e-> {
+                new Warning("Select die", "Follow me");
+                client.setActive();
+                toolGrid.setDisable(true);
+                skipBtn.setDisable(true);
+                cancelBtn.setDisable(false);
+                draftPoolGrid.setDisable(false);
+            });
+        }
+        btnGrid.add(takeDieBtn, 0, 2);
+
+        exitBtn = new Button("Exit game");
+        exitBtn.setOnAction(e-> {
+            Boolean answer= ConfirmExit.display("Quit", "Are you sure to exit without saving?");
+            if(answer)
+                Platform.exit();
+        });
+        btnGrid.add(exitBtn, 0, 3);
+
+        cancelBtn = new Button("Cancel");
+        cancelBtn.setOnAction(e-> {
+            draftPoolGrid.setDisable(false);
+            client.nullSelection();
+            draftPoolGrid.deselectBtn(0, client.getCoordinateSelectedY() );
+        });
+        btnGrid.add(cancelBtn, 0, 4);
+
+        infoBtn = new Button("Authors");
+        infoBtn.setOnAction(e-> {
+            InfoStage.displayAuthor(new Stage());
+        });
+        btnGrid.add(infoBtn, 0, 5);
+        btnGrid.setLayoutX(600);
+        btnGrid.setLayoutY(350);
+
+
+
 
 
         root.getChildren().addAll(backGround, toolGrid, pbGrid, gridRound, myWindowGrid, btnGrid, eachGrid, pvPane, draftPoolGrid, currentInfo);
@@ -282,74 +332,37 @@ public class PlayGame {
     }
 
 
-    private GridPane addGridRound(){
-        GridPane grid = new GridPane();
-        grid.setHgap(15);
-        grid.setVgap(0);
-        grid.setPadding(new Insets(0, 20, 0, 20));
 
-
-        for( int i=1; i<=10; i++){
-            Button btnRound = buttonRound(i);
-            grid.add(btnRound, i-1, 0);
-        }
-
-
-        return grid;
-
-    }
-
-    private Button buttonRound(int index){
-        Button button= new Button(Integer.toString(index));
-        button.setFont(new Font("Tahoma", 20));
-        button.setOpacity(0.6);
-        final Tooltip tooltip = new Tooltip("Colore"+"\nNumero");
-        tooltip.setFont(new Font("Arial", 16));
-        button.setTooltip(tooltip);
-        button.setOnAction(e-> diceRoundTrack(index));
-        return button;
-    }
-
-    private Stage diceRoundTrack(int i){
-        Stage stage = new Stage();
-        Pane root = new Pane();
-        Scene scene = new Scene(root);
-        root.setPrefSize(150, 50);
-        GridPane grid = new GridPane();
-        grid.setHgap(50);
-        //DieInfo client.getDieFromRoundTrack(j);
-
-        for(int numDie=0; numDie<2; numDie++){
-            Button button = new Button();
-            button.setPrefSize(40, 40);
-
-            //mettere immagine del dado
-
-            grid.add(button, numDie, 0);
-        }
-        root.getChildren().add(grid);
-        stage.setScene(scene);
-        stage.show();
-        return stage;
-    }
 
 
 
     private GridPane createGridEn(int player) {
         GridPane grid = new GridPane();
+        String number;
+        String color;
+        ViewWP wp;
+        if(begin<4){
+            wp= client.getPlayerWPs(client.getName()).get(player);
+            begin++;
+        }else
+            wp = updateView.getWps().get(player);
 
-
-        ViewWP wp = client.getPlayerWPs(client.getName()).get(player);      //devo togliere me stesso.. introdurre attributo nome nella viewWp
 
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
                 Button btnCell = new Button();
                 btnCell.setPrefSize(40, 40);
-                String numCell = wp.getWps()[i][j].getNumCol().get(0);
-                String colorCell = wp.getWps()[i][j].getNumCol().get(1);
-                String pathCell = WPRendering.pathCell(numCell, colorCell);
-                Image myImage = new Image(pathCell, 40, 40, false, true);
+                String dieStr = wp.getWp()[i][j].getDie();
+                if(dieStr==null){
+                    number = Integer.toString(wp.getWp()[i][j].getNum());
+                    color = String.valueOf(wp.getWp()[i][j].getColor());
+                }else{
+                    number =dieStr.substring(dieStr.indexOf("(")+1, dieStr.indexOf(","));
+                    color = dieStr.substring(dieStr.indexOf(",")+1, dieStr.indexOf(")"));
+                }
+                String path = WPRendering.path(number, color);
+                Image myImage = new Image(path, 40, 40, false, true);
                 BackgroundImage myBI = new BackgroundImage(myImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
                 btnCell.setBackground(new Background(myBI));
                 grid.add(btnCell, j, i);

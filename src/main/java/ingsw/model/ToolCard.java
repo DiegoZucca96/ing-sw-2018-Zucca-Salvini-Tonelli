@@ -151,8 +151,7 @@ public class ToolCard {
 
     @Override
     public String toString() {
-        //...
-        return super.toString();
+        return "Tool"+Integer.toString(getIdCard());
     }
 
     public void notifyViewObserver(){

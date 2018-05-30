@@ -35,6 +35,8 @@ public class WindowPattern implements Serializable {
 
     public WindowPattern(SAXParser parser, int select ){
 
+        this.id=select;
+
         List<Cell> readConfig = parser.readConfig("src/main/java/ingsw/model/windowpattern/wpxml/wp"+select+".xml");
 
         InfoWindow readInfo = parser.readInfo("src/main/java/ingsw/model/windowpattern/wpxml/wp"+select+".xml");
@@ -61,6 +63,9 @@ public class WindowPattern implements Serializable {
         return this.title;
     }
 
+    public int getId() {
+        return id;
+    }
 
     public int getDifficulty() {
         return this.difficulty;
@@ -311,11 +316,12 @@ public class WindowPattern implements Serializable {
         InfoCell[][] matrix = new InfoCell[4][5];
         for(int row = 0; row < 4; row++) {
             for (int column = 0; column < 5; column++) {
-                InfoCell x = new InfoCell();
-                ArrayList<String> numCol = new ArrayList<>();
-                numCol.add(Integer.toString(cellMatrix[row][column].getNumber()));
-                numCol.add(String.valueOf(cellMatrix[row][column].getColor()));
-                x.setNumCol(numCol);
+                Cell cell = getCell(new Coordinate(row, column), getCellMatrix());
+                Die die = cell.getDie();
+                String dieStr;
+                if(die == null) dieStr=null;
+                else dieStr=die.toString();
+                InfoCell x = new InfoCell(cell.getNumber(), cell.getColor(), dieStr);
                 matrix[row][column] = x;
             }
         }
@@ -326,7 +332,7 @@ public class WindowPattern implements Serializable {
         ViewWP viewWP = new ViewWP();
         viewWP.setDifficulty(Integer.toString(getDifficulty()));
         viewWP.setName(getTitle());
-        viewWP.setNumberWP(id);
+        viewWP.setNumberWP(getId());
         viewWP.setWps(toMatrix());
         return viewWP;
     }

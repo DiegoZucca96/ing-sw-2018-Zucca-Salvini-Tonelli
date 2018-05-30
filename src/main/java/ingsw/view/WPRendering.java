@@ -52,9 +52,9 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String numCell = displayWindow.get(0).getWps()[i][j].getNumCol().get(0);
-                String colorCell = displayWindow.get(0).getWps()[i][j].getNumCol().get(1);
-                String pathCell = pathCell(numCell, colorCell);
+                String numCell = Integer.toString(displayWindow.get(0).getWp()[i][j].getNum());
+                String colorCell = String.valueOf(displayWindow.get(0).getWp()[i][j].getColor());
+                String pathCell = path(numCell, colorCell);
                 Image myImage = new Image(pathCell, 50, 50, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
@@ -105,9 +105,9 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String numCell = displayWindow.get(1).getWps()[i][j].getNumCol().get(0);
-                String colorCell = displayWindow.get(1).getWps()[i][j].getNumCol().get(1);
-                String pathCell = pathCell(numCell, colorCell);
+                String numCell = Integer.toString(displayWindow.get(1).getWp()[i][j].getNum());
+                String colorCell = String.valueOf(displayWindow.get(1).getWp()[i][j].getColor());
+                String pathCell = path(numCell, colorCell);
                 Image myImage = new Image(pathCell, 50, 50, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
@@ -158,9 +158,9 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String numCell = displayWindow.get(2).getWps()[i][j].getNumCol().get(0);
-                String colorCell = displayWindow.get(2).getWps()[i][j].getNumCol().get(1);
-                String pathCell = pathCell(numCell, colorCell);
+                String numCell = Integer.toString(displayWindow.get(2).getWp()[i][j].getNum());
+                String colorCell = String.valueOf(displayWindow.get(2).getWp()[i][j].getColor());
+                String pathCell = path(numCell, colorCell);
                 Image myImage = new Image(pathCell, 50, 50, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
@@ -210,9 +210,9 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
                 btnCell.setPrefSize(50, 50);
-                String numCell = displayWindow.get(3).getWps()[i][j].getNumCol().get(0);
-                String colorCell = displayWindow.get(3).getWps()[i][j].getNumCol().get(1);
-                String pathCell = pathCell(numCell, colorCell);
+                String numCell = Integer.toString(displayWindow.get(3).getWp()[i][j].getNum());
+                String colorCell = String.valueOf(displayWindow.get(3).getWp()[i][j].getColor());
+                String pathCell = path(numCell, colorCell);
                 Image myImage = new Image(pathCell, 50, 50, false, false);
                 BackgroundImage myBI= new BackgroundImage(myImage,
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
@@ -269,7 +269,7 @@ public class WPRendering {
         windowPattern.show();
     }
 
-    public static String pathCell(String number, String color) {
+    public static String path(String number, String color) {
 
         if (number == null || color == null)
             return null;
@@ -297,76 +297,69 @@ public class WPRendering {
             return "/blue.png";
         else if (color.equalsIgnoreCase("YELLOW"))
             return "/yellow.png";
-
-        return null;
-    }
-
-
-    public static String pathDie(String number, String color){
-
-        if (number == null || color == null)
-            return null;
-        else if (number.equalsIgnoreCase("1") && color.equalsIgnoreCase(",RED"))
+        else if (number.equalsIgnoreCase("1") && color.equalsIgnoreCase("RED"))
             return "/1red.png";
-        else if (number.equalsIgnoreCase("2")&& color.equalsIgnoreCase(",RED"))
+        else if (number.equalsIgnoreCase("2")&& color.equalsIgnoreCase("RED"))
             return "/2red.png";
-        else if (number.equalsIgnoreCase("3")&& color.equalsIgnoreCase(",RED"))
+        else if (number.equalsIgnoreCase("3")&& color.equalsIgnoreCase("RED"))
             return "/3red.png";
-        else if (number.equalsIgnoreCase("4")&& color.equalsIgnoreCase(",RED"))
+        else if (number.equalsIgnoreCase("4")&& color.equalsIgnoreCase("RED"))
             return "/4red.png";
-        else if (number.equalsIgnoreCase("5")&& color.equalsIgnoreCase(",RED"))
+        else if (number.equalsIgnoreCase("5")&& color.equalsIgnoreCase("RED"))
             return "/5red.png";
-        else if (number.equalsIgnoreCase("6")&& color.equalsIgnoreCase(",RED"))
+        else if (number.equalsIgnoreCase("6")&& color.equalsIgnoreCase("RED"))
             return "/6red.png";
-        else if (number.equalsIgnoreCase("1") && color.equalsIgnoreCase(",YELLOW"))
+        else if (number.equalsIgnoreCase("1") && color.equalsIgnoreCase("YELLOW"))
             return "/1yellow.png";
-        else if (number.equalsIgnoreCase("2")&& color.equalsIgnoreCase(",YELLOW"))
+        else if (number.equalsIgnoreCase("2")&& color.equalsIgnoreCase("YELLOW"))
             return "/2yellow.png";
-        else if (number.equalsIgnoreCase("3")&& color.equalsIgnoreCase(",YELLOW"))
+        else if (number.equalsIgnoreCase("3")&& color.equalsIgnoreCase("YELLOW"))
             return "/3yellow.png";
-        else if (number.equalsIgnoreCase("4")&& color.equalsIgnoreCase(",YELLOW"))
+        else if (number.equalsIgnoreCase("4")&& color.equalsIgnoreCase("YELLOW"))
             return "/4yellow.png";
-        else if (number.equalsIgnoreCase("5")&& color.equalsIgnoreCase(",YELLOW"))
+        else if (number.equalsIgnoreCase("5")&& color.equalsIgnoreCase("YELLOW"))
             return "/5yellow.png";
-        else if (number.equalsIgnoreCase("6")&& color.equalsIgnoreCase(",YELLOW"))
+        else if (number.equalsIgnoreCase("6")&& color.equalsIgnoreCase("YELLOW"))
             return "/6yellow.png";
-        else if (number.equalsIgnoreCase("1") && color.equalsIgnoreCase(",BLUE"))
+        else if (number.equalsIgnoreCase("1") && color.equalsIgnoreCase("BLUE"))
             return "/1blue.png";
-        else if (number.equalsIgnoreCase("2")&& color.equalsIgnoreCase(",BLUE"))
+        else if (number.equalsIgnoreCase("2")&& color.equalsIgnoreCase("BLUE"))
             return "/2blue.png";
-        else if (number.equalsIgnoreCase("3")&& color.equalsIgnoreCase(",BLUE"))
+        else if (number.equalsIgnoreCase("3")&& color.equalsIgnoreCase("BLUE"))
             return "/3blue.png";
-        else if (number.equalsIgnoreCase("4")&& color.equalsIgnoreCase(",BLUE"))
+        else if (number.equalsIgnoreCase("4")&& color.equalsIgnoreCase("BLUE"))
             return "/4blue.png";
-        else if (number.equalsIgnoreCase("5")&& color.equalsIgnoreCase(",BLUE"))
+        else if (number.equalsIgnoreCase("5")&& color.equalsIgnoreCase("BLUE"))
             return "/5blue.png";
-        else if (number.equalsIgnoreCase("6")&& color.equalsIgnoreCase(",BLUE"))
+        else if (number.equalsIgnoreCase("6")&& color.equalsIgnoreCase("BLUE"))
             return "/6blue.png";
-        else if (number.equalsIgnoreCase("1") && color.equalsIgnoreCase(",VIOLET"))
+        else if (number.equalsIgnoreCase("1") && color.equalsIgnoreCase("VIOLET"))
             return "/1violet.png";
-        else if (number.equalsIgnoreCase("2")&& color.equalsIgnoreCase(",VIOLET"))
+        else if (number.equalsIgnoreCase("2")&& color.equalsIgnoreCase("VIOLET"))
             return "/2violet.png";
-        else if (number.equalsIgnoreCase("3")&& color.equalsIgnoreCase(",VIOLET"))
+        else if (number.equalsIgnoreCase("3")&& color.equalsIgnoreCase("VIOLET"))
             return "/3violet.png";
-        else if (number.equalsIgnoreCase("4")&& color.equalsIgnoreCase(",VIOLET"))
+        else if (number.equalsIgnoreCase("4")&& color.equalsIgnoreCase("VIOLET"))
             return "/4violet.png";
-        else if (number.equalsIgnoreCase("5")&& color.equalsIgnoreCase(",VIOLET"))
+        else if (number.equalsIgnoreCase("5")&& color.equalsIgnoreCase("VIOLET"))
             return "/5violet.png";
-        else if (number.equalsIgnoreCase("6")&& color.equalsIgnoreCase(",VIOLET"))
+        else if (number.equalsIgnoreCase("6")&& color.equalsIgnoreCase("VIOLET"))
             return "/6violet.png";
-        else if (number.equalsIgnoreCase("1") && color.equalsIgnoreCase(",GREEN"))
+        else if (number.equalsIgnoreCase("1") && color.equalsIgnoreCase("GREEN"))
             return "/1green.png";
-        else if (number.equalsIgnoreCase("2")&& color.equalsIgnoreCase(",GREEN"))
+        else if (number.equalsIgnoreCase("2")&& color.equalsIgnoreCase("GREEN"))
             return "/2green.png";
-        else if (number.equalsIgnoreCase("3")&& color.equalsIgnoreCase(",GREEN"))
+        else if (number.equalsIgnoreCase("3")&& color.equalsIgnoreCase("GREEN"))
             return "/3green.png";
-        else if (number.equalsIgnoreCase("4")&& color.equalsIgnoreCase(",GREEN"))
+        else if (number.equalsIgnoreCase("4")&& color.equalsIgnoreCase("GREEN"))
             return "/4green.png";
-        else if (number.equalsIgnoreCase("5")&& color.equalsIgnoreCase(",GREEN"))
+        else if (number.equalsIgnoreCase("5")&& color.equalsIgnoreCase("GREEN"))
             return "/5green.png";
-        else if (number.equalsIgnoreCase("6")&& color.equalsIgnoreCase(",GREEN"))
+        else if (number.equalsIgnoreCase("6")&& color.equalsIgnoreCase("GREEN"))
             return "/6green.png";
         return null;
     }
+
+
 
 }

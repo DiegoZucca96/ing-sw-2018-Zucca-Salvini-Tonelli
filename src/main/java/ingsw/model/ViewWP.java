@@ -9,7 +9,7 @@ public class ViewWP implements Serializable {
 
     private String name;
     private String difficulty;
-    private InfoCell[][] wps;
+    private InfoCell[][] wp;
     private int numberWP;
 
 
@@ -29,12 +29,12 @@ public class ViewWP implements Serializable {
         this.difficulty = difficulty;
     }
 
-    public InfoCell [][] getWps() {
-        return wps;
+    public InfoCell [][] getWp() {
+        return wp;
     }
 
     public void setWps(InfoCell [][] wps) {
-        this.wps = wps;
+        this.wp = wps;
     }
 
     public int getNumberWP() {

@@ -80,7 +80,7 @@ public class RoundTrack {
             ...
             10:Die(6,YELLOW)"
     */
-    @Override
+  /*  @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("RoundTrack:");
@@ -96,6 +96,21 @@ public class RoundTrack {
             }
         }
         return stringBuilder.toString();
+    }*/
+
+
+    public ArrayList<String> toArrayString() {
+        ArrayList<String> roundTrack = new ArrayList<>();
+        for(int i=0; i<10; i++){
+            for(int j=0; j<9; j++) {
+                Die die = getDie(i + 1, j);
+                if (die == null) break;
+                if(j!=0) roundTrack.add(die.toString());
+            }
+
+        }
+
+        return roundTrack;
     }
 }
 

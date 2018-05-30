@@ -8,9 +8,9 @@ public class DieInfo {
     private int row;
     private  int column;
 
-    public DieInfo(Background background, int column){
+    public DieInfo(Background background, int row, int column){
         this.background=background;
-        //this.row=row;
+        this.row=row;
         this.column=column;
     }
 

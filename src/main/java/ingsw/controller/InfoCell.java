@@ -1,22 +1,46 @@
 package ingsw.controller;
 
+import ingsw.model.Color;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class InfoCell  implements Serializable {
 
-    private ArrayList<String> numCol;
+    private int num;
+    private Color color;
+    private String die;
 
-    public InfoCell() {
-        this.numCol= new ArrayList<>();
+    public InfoCell(int num, Color color, String die){
+        this.num=num;
+        this.color=color;
+        this.die=die;
     }
 
 
-    public ArrayList<String> getNumCol() {
-        return numCol;
+
+
+    public int getNum() {
+        return num;
     }
 
-    public void setNumCol(ArrayList<String> numCol) {
-        this.numCol = numCol;
+    public void setNum(int num) {
+        this.num = num;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public String getDie() {
+        return die;
+    }
+
+    public void setDie(String die) {
+        this.die = die;
     }
 }
