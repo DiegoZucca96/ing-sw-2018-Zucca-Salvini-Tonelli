@@ -65,6 +65,7 @@ public class ServerHandler implements Runnable {
                 else if (command.equals("waitForPlayers")) waitForPlayers();
                 else if (command.equals("initializeView")) initializeView();
                 else if (command.equals("readyToPlay")) readyToPlay();
+                else if (command.equals("updateView")) updateView();
             }
             socket.close();
         }
@@ -167,4 +168,7 @@ public class ServerHandler implements Runnable {
         os.writeObject(controller.initializeView());
     }
 
+    private void updateView() throws IOException {
+        os.writeObject(controller.updateView());
+    }
 }

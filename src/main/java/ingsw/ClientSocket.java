@@ -125,7 +125,14 @@ public class ClientSocket implements Client {
 
     @Override
     public ViewData updateView() {
-        return null;
+        out.println("updateView:");
+        try {
+            return (ViewData) is.readObject();
+        } catch (ClassNotFoundException e) {
+            return null;
+        } catch (IOException e){
+            return null;
+        }
     }
 
     @Override
