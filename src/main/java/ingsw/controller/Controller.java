@@ -381,7 +381,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         init.setWps(windowChosen);
         ArrayList<Die> dicelist = match.startRound();
         for(Die d : dicelist)
-            init.getDraftPoolDice().add(convertDieToString(d));
+            init.getDraftPoolDice().add(d.toString());
         enableClient(getCurrentPlayerName());
         if(startTimer==0){
             timer = new Timer();

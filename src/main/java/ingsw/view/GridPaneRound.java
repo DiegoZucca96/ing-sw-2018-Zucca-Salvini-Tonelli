@@ -8,6 +8,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -31,32 +32,33 @@ public class GridPaneRound extends GridPane {
 
         for( int i=1; i<=10; i++){
             Button btnRound=buttonRound(i);
-            grid.add(btnRound, i-1, 0);
+            btnRound.setOpacity(0.6);
         }
-
 
     }
 
-    private Button buttonRound(int index){
+    private Button buttonRound(int currentRound){
         Button button;
-        if(index<=round){
+        if(currentRound<round){
             final ImageView imageOk = new ImageView();
             String imagePath = "/ok.png";
             Image image = new Image(imagePath, 20, 20, false, false);
             imageOk.setImage(image);
             button = new Button("", imageOk);
         }else{
-            button= new Button(Integer.toString(index));
+            button= new Button(Integer.toString(currentRound));
             button.setFont(new Font("Tahoma", 20));
         }
-        button.setOpacity(0.6);
+
         button.setOnAction(e-> {
-            if(index<=round){
-                diceRoundTrack(index);
+            if(currentRound<=round){
+                Stage diceExtraGrid = diceRoundTrack(currentRound);
+                diceExtraGrid.show();
             }else{
                 Toolkit.getDefaultToolkit().beep();
             }
         });
+        this.add(button, currentRound-1, 0);
         return button;
     }
 
@@ -88,7 +90,7 @@ public class GridPaneRound extends GridPane {
         }
         root.getChildren().add(grid);
         stage.setScene(scene);
-        stage.show();
+        //stage.show();
         return stage;
     }
 
@@ -96,7 +98,10 @@ public class GridPaneRound extends GridPane {
         Button button = new Button();
 
         button.setOnAction(e -> {
-
+            if(!button.getBackground().equals(Color.TRANSPARENT)){
+                //...chiama un metodo del client che prende il dado dalla draftpool
+            }else
+                Toolkit.getDefaultToolkit().beep();
 
         });
         this.add(button, numDice, 0);

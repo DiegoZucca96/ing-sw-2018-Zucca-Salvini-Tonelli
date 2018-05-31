@@ -28,28 +28,13 @@ public class GridPaneDraftPool extends GridPane {
         this.setHgap(10);
         this.setVgap(10);
 
-        /*for (int i = 0; i < numCols; i++) {
+        for (int col = 0; col < diceThrows; col++) {
             ColumnConstraints colConstraints = new ColumnConstraints();
             colConstraints.setHgrow(Priority.SOMETIMES);
             this.getColumnConstraints().add(colConstraints);
         }
 
-        for (int i = 0; i < numRows; i++) {
-            RowConstraints rowConstraints = new RowConstraints();
-            rowConstraints.setVgrow(Priority.SOMETIMES);
-            this.getRowConstraints().add(rowConstraints);
-        }*/
 
-        /*for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
-                b = addButtonDP(row, col);
-                b.setPrefSize(58, 58);
-                if (client.getPlayerState().equalsIgnoreCase("disabled")) {
-                    b.setDisable(true);
-                } else b.setDisable(false);
-
-            }
-*/
 
         for(int col = 0; col < diceThrows; col++){
             b = addButtonDP(col);
@@ -57,14 +42,14 @@ public class GridPaneDraftPool extends GridPane {
             String numDie = diceList.get(col).substring(diceList.get(col).indexOf("(")+1,diceList.get(col).indexOf(","));
             String colorDie = diceList.get(col).substring(diceList.get(col).indexOf(",")+1, diceList.get(col).indexOf(")"));
             String pathDie = WPRendering.path(numDie, colorDie);
-            Image myImage = new Image(pathDie, 50, 50, false, true);
+            Image myImage = new Image(pathDie, 58, 58, false, true);
             BackgroundImage myBI= new BackgroundImage(myImage,
                     BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                     BackgroundSize.DEFAULT);
             b.setBackground(new Background(myBI));
-            if (client.getPlayerState().equalsIgnoreCase("disabled")) {
+            /*if (client.getPlayerState().equalsIgnoreCase("disabled")) {
                 b.setDisable(true);
-            } else b.setDisable(false);
+            } else b.setDisable(false);*/
         }
     }
 

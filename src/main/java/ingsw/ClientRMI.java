@@ -117,7 +117,11 @@ public class ClientRMI implements Client {
 
     @Override
     public ViewData updateView() {
-        return null;
+        try {
+            return controller.updateView();
+        } catch (RemoteException e) {
+            return null;
+        }
     }
 
     @Override

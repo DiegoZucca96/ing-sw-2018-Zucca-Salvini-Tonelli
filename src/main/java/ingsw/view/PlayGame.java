@@ -92,8 +92,10 @@ public class PlayGame {
                             if(client.getPlayerState().equals("enabled")){
                                 clockLbl.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 22 \"serif\"");
                                 clockLbl.setText("Tocca a te    "+Integer.toString(timeseconds));
-                                skipBtn.setDisable(false);
+                                /*skipBtn.setDisable(false);
                                 takeDieBtn.setDisable(false);
+                                useToolBtn.setDisable(true);
+                                cancelBtn.setDisable(true);*/
                                 if(timeseconds==0){
 
                                     if(!client.getActive()){
@@ -108,6 +110,11 @@ public class PlayGame {
                                 }
                             }else {
                                 clockLbl.setText("Tocca a "+client.getCurrentPlayer()+"      "+Integer.toString(timeseconds));
+                                /*skipBtn.setDisable(true);
+                                exitBtn.setDisable(false);
+                                takeDieBtn.setDisable(true);
+                                useToolBtn.setDisable(true);
+                                cancelBtn.setDisable(true);*/
                                 if(timeseconds%5==0){
                                     this.updateView = client.updateView();
 
@@ -196,13 +203,13 @@ public class PlayGame {
         skipBtn = new Button("End Turn");
         skipBtn.setOnAction(e-> {
             if(client.getPlayerState().equalsIgnoreCase("enabled")){
-                client.setActive();
+                /*client.setActive();
                 takeDieBtn.setDisable(true);
                 toolGrid.setDisable(true);
                 skipBtn.setDisable(true);
                 draftPoolGrid.setDisable(true);
                 myWindowGrid.setDisable(true);
-                gridRound.setDisable(true);
+                gridRound.setDisable(true);*/
                 client.skip();
             }
         });
@@ -212,10 +219,10 @@ public class PlayGame {
         if(client.getPlayerState().equalsIgnoreCase("enabled")){
             useToolBtn.setOnAction(e-> {
                 client.setActive();
-                skipBtn.setDisable(true);
+                /*skipBtn.setDisable(true);
                 useToolBtn.setDisable(false);
                 draftPoolGrid.setDisable(false);
-                gridRound.setDisable(false);
+                gridRound.setDisable(false);*/
             });
         }
         btnGrid.add(useToolBtn, 0, 1);
@@ -223,12 +230,11 @@ public class PlayGame {
         takeDieBtn = new Button("Take Die");
         if(client.getPlayerState().equalsIgnoreCase("enabled")){
             takeDieBtn.setOnAction(e-> {
-                new Warning("Select die", "Follow me");
                 client.setActive();
-                toolGrid.setDisable(true);
+                /*toolGrid.setDisable(true);
                 skipBtn.setDisable(true);
                 cancelBtn.setDisable(false);
-                draftPoolGrid.setDisable(false);
+                draftPoolGrid.setDisable(false);*/
             });
         }
         btnGrid.add(takeDieBtn, 0, 2);
@@ -243,7 +249,7 @@ public class PlayGame {
 
         cancelBtn = new Button("Cancel");
         cancelBtn.setOnAction(e-> {
-            draftPoolGrid.setDisable(false);
+            //draftPoolGrid.setDisable(false);
             client.nullSelection();
             draftPoolGrid.deselectBtn(0, client.getCoordinateSelectedY() );
         });
@@ -341,7 +347,7 @@ public class PlayGame {
         String number;
         String color;
         ViewWP wp;
-        if(begin<4){
+        if(begin<client.getNumberOfPlayers()){
             wp= client.getPlayerWPs(client.getName()).get(player);
             begin++;
         }else

@@ -25,8 +25,8 @@ public class GridPaneWindow extends GridPane {
         this.draftPool=draftPool;
         int numCols = 5 ;
         int numRows = 4 ;
-/*
-        for (int i = 0 ; i < numCols ; i++) {
+
+        for (int j = 0 ; j < numCols ; j++) {
             ColumnConstraints colConstraints = new ColumnConstraints();
             colConstraints.setHgrow(Priority.SOMETIMES);
             this.getColumnConstraints().add(colConstraints);
@@ -36,7 +36,7 @@ public class GridPaneWindow extends GridPane {
             RowConstraints rowConstraints = new RowConstraints();
             rowConstraints.setVgrow(Priority.SOMETIMES);
             this.getRowConstraints().add(rowConstraints);
-        }*/
+        }
 
         for (int i = 0 ; i < numRows ; i++) {
             for (int j = 0; j < numCols; j++) {
@@ -57,7 +57,6 @@ public class GridPaneWindow extends GridPane {
                 BackgroundImage myBI= new BackgroundImage(myImage,
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                         BackgroundSize.DEFAULT);
-
                 btnCell.setBackground(new Background(myBI));
             }
         }
