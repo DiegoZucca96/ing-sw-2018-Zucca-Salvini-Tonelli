@@ -107,6 +107,8 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     public boolean takeDie(int row, int column) throws RemoteException{
         if(match.getCurrentPlayer().getDieSelected()==null){
             int index = 3*row + column;
+            Coordinate c = new Coordinate(row,column);
+            match.getCurrentPlayer().setCoordinateDieSelected(c);
             match.getCurrentPlayer().setDieSelected(match.playerTakeDie(index));
             return true;
         }
@@ -379,9 +381,6 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         match = istanceMatch();
         ViewData init = match.getInit();
         init.setWps(windowChosen);
-        ArrayList<Die> dicelist = match.startRound();
-        for(Die d : dicelist)
-            init.getDraftPoolDice().add(d.toString());
         enableClient(getCurrentPlayerName());
         if(startTimer==0){
             timer = new Timer();

@@ -273,30 +273,6 @@ public class WPRendering {
 
         if (number == null || color == null)
             return null;
-        else if (number.equalsIgnoreCase("1"))
-            return "/1.png";
-        else if (number.equalsIgnoreCase("2"))
-            return "/2.png";
-        else if (number.equalsIgnoreCase("3"))
-            return "/3.png";
-        else if (number.equalsIgnoreCase("4"))
-            return "/4.png";
-        else if (number.equalsIgnoreCase("5"))
-            return "/5.png";
-        else if (number.equalsIgnoreCase("6"))
-            return "/6.png";
-        else if (color.equalsIgnoreCase("WHITE"))
-            return "/white.png";
-        else if (color.equalsIgnoreCase("RED"))
-            return "/red.png";
-        else if (color.equalsIgnoreCase("VIOLET"))
-            return "/violet.png";
-        else if (color.equalsIgnoreCase("GREEN"))
-            return "/green.png";
-        else if (color.equalsIgnoreCase("BLUE"))
-            return "/blue.png";
-        else if (color.equalsIgnoreCase("YELLOW"))
-            return "/yellow.png";
         else if (number.equalsIgnoreCase("1") && color.equalsIgnoreCase("RED"))
             return "/1red.png";
         else if (number.equalsIgnoreCase("2")&& color.equalsIgnoreCase("RED"))
@@ -357,6 +333,30 @@ public class WPRendering {
             return "/5green.png";
         else if (number.equalsIgnoreCase("6")&& color.equalsIgnoreCase("GREEN"))
             return "/6green.png";
+        else if (number.equalsIgnoreCase("1"))
+            return "/1.png";
+        else if (number.equalsIgnoreCase("2"))
+            return "/2.png";
+        else if (number.equalsIgnoreCase("3"))
+            return "/3.png";
+        else if (number.equalsIgnoreCase("4"))
+            return "/4.png";
+        else if (number.equalsIgnoreCase("5"))
+            return "/5.png";
+        else if (number.equalsIgnoreCase("6"))
+            return "/6.png";
+        else if (color.equalsIgnoreCase("WHITE"))
+            return "/white.png";
+        else if (color.equalsIgnoreCase("RED"))
+            return "/red.png";
+        else if (color.equalsIgnoreCase("VIOLET"))
+            return "/violet.png";
+        else if (color.equalsIgnoreCase("GREEN"))
+            return "/green.png";
+        else if (color.equalsIgnoreCase("BLUE"))
+            return "/blue.png";
+        else if (color.equalsIgnoreCase("YELLOW"))
+            return "/yellow.png";
         return null;
     }
 

@@ -56,6 +56,7 @@ public class WindowPattern implements Serializable {
 
         this.title=readInfo.getName();
         this.difficulty=Integer.parseInt(readInfo.getDifficulty());
+        this.wpEmpty=true;
         viewObserver = new WindowPatternObserver();
     }
 
@@ -185,7 +186,7 @@ public class WindowPattern implements Serializable {
     public boolean verifyCellColorConstraint(Coordinate destination, Die die, Cell[][] cellMatrix){
         int x =destination.getX();
         int y =destination.getY();
-        if(cellMatrix[x][y].getColor()==null)
+        if(String.valueOf(cellMatrix[x][y].getColor()).equalsIgnoreCase("WHITE"))
             return true;
         else if (cellMatrix[x][y].getColor()== die.getColor()) {
             return true;

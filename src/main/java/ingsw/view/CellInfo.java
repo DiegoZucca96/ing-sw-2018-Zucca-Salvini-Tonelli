@@ -11,7 +11,7 @@ public class CellInfo {
     public CellInfo(Background background, int row, int column){
         this.background=background;
         this.row=row;
-        this.column=row;
+        this.column=column;
     }
 
     public Background getBackground() {

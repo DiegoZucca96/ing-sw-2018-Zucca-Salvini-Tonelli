@@ -55,7 +55,6 @@ public class ControllerTimer {
                 if(timeMoveRemaining>0){
                     timeMoveRemaining--;
                 }
-                System.out.println(timeMoveRemaining);
             }
         }, delay, period);
     }

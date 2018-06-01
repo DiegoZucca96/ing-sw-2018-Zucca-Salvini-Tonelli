@@ -28,13 +28,16 @@ public class PlayGame {
 
     private Label clockLbl;
     private int timeseconds;
+    private int timeBegin;
     private Timeline timeline;
     private Client client;
     private ViewData init ;
-    private Button skipBtn;
-    private Button useToolBtn;
-    private Button takeDieBtn;
-    private Button exitBtn;
+    private static Button skipBtn;
+    private static Button useToolBtn;
+    private static Button takeDieBtn;
+    private static Button exitBtn;
+    private static Button infoBtn;
+    private static Button cancelBtn;
     private GridPane gridRound;
     private GridPane toolGrid;
     private GridPane pbGrid;
@@ -42,10 +45,9 @@ public class PlayGame {
     private GridPaneDraftPool draftPoolGrid;
     private static final String styleSheet = "-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"";
     private ViewData updateView;
-    private Button infoBtn;
     private GridPane gridEn;
     private static int begin=0;
-    private Button cancelBtn;
+
 
     public PlayGame(Client client){
         this.client=client;
@@ -81,7 +83,7 @@ public class PlayGame {
 
         //INIZIALIZZAZIONE
         init = client.initializeView();
-
+        timeBegin = client.getTimeMove();
 
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -92,10 +94,12 @@ public class PlayGame {
                             if(client.getPlayerState().equals("enabled")){
                                 clockLbl.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 22 \"serif\"");
                                 clockLbl.setText("Tocca a te    "+Integer.toString(timeseconds));
-                                /*skipBtn.setDisable(false);
-                                takeDieBtn.setDisable(false);
-                                useToolBtn.setDisable(true);
-                                cancelBtn.setDisable(true);*/
+                                if (timeseconds == timeBegin) {
+                                    skipBtn.setDisable(false);
+                                    takeDieBtn.setDisable(false);
+                                    useToolBtn.setDisable(false);
+                                    cancelBtn.setDisable(true);
+                                }
                                 if(timeseconds==0){
 
                                     if(!client.getActive()){
@@ -110,11 +114,13 @@ public class PlayGame {
                                 }
                             }else {
                                 clockLbl.setText("Tocca a "+client.getCurrentPlayer()+"      "+Integer.toString(timeseconds));
-                                /*skipBtn.setDisable(true);
-                                exitBtn.setDisable(false);
-                                takeDieBtn.setDisable(true);
-                                useToolBtn.setDisable(true);
-                                cancelBtn.setDisable(true);*/
+                                if (timeseconds == timeBegin) {
+                                    skipBtn.setDisable(true);
+                                    exitBtn.setDisable(false);
+                                    takeDieBtn.setDisable(true);
+                                    useToolBtn.setDisable(true);
+                                    cancelBtn.setDisable(true);
+                                }
                                 if(timeseconds%5==0){
                                     this.updateView = client.updateView();
 
@@ -126,7 +132,7 @@ public class PlayGame {
                                     if(updateView.getRoundTrack()!=null)
                                         gridRound=new GridPaneRound(client, updateView.getRoundTrack(), client.getRound());
                                     if(updateView.getDraftPoolDice()!=null){
-                                        draftPoolGrid = new GridPaneDraftPool(client, updateView.getDraftPoolDice(), myWindowGrid);
+                                        draftPoolGrid = new GridPaneDraftPool(client, updateView.getDraftPoolDice());
                                     }
                                 }
 
@@ -174,16 +180,16 @@ public class PlayGame {
         pbGrid.add(pbPane2, 0, 1);
         pbGrid.add(pbPane3, 0, 2);
 
+        //DRAFTPOOL
+        draftPoolGrid = new GridPaneDraftPool(client,init.getDraftPoolDice());
+        draftPoolGrid.setLayoutX(200);
+        draftPoolGrid.setLayoutY(600);
+
         //LA MIA WP
         myWindowGrid = new GridPaneWindow(myWindow, client, draftPoolGrid);
         myWindowGrid.setLayoutX(200);
         myWindowGrid.setLayoutY(350);
 
-
-        //DRAFTPOOL
-        draftPoolGrid = new GridPaneDraftPool(client,init.getDraftPoolDice(), myWindowGrid);
-        draftPoolGrid.setLayoutX(200);
-        draftPoolGrid.setLayoutY(600);
 
         //WP AVVERSARIE
         GridPane eachGrid = new GridPane();
@@ -203,13 +209,12 @@ public class PlayGame {
         skipBtn = new Button("End Turn");
         skipBtn.setOnAction(e-> {
             if(client.getPlayerState().equalsIgnoreCase("enabled")){
-                /*client.setActive();
+                client.setActive();
                 takeDieBtn.setDisable(true);
                 toolGrid.setDisable(true);
                 skipBtn.setDisable(true);
                 draftPoolGrid.setDisable(true);
-                myWindowGrid.setDisable(true);
-                gridRound.setDisable(true);*/
+                gridRound.setDisable(true);
                 client.skip();
             }
         });
@@ -219,10 +224,10 @@ public class PlayGame {
         if(client.getPlayerState().equalsIgnoreCase("enabled")){
             useToolBtn.setOnAction(e-> {
                 client.setActive();
-                /*skipBtn.setDisable(true);
+                skipBtn.setDisable(true);
                 useToolBtn.setDisable(false);
                 draftPoolGrid.setDisable(false);
-                gridRound.setDisable(false);*/
+                gridRound.setDisable(false);
             });
         }
         btnGrid.add(useToolBtn, 0, 1);
@@ -231,10 +236,12 @@ public class PlayGame {
         if(client.getPlayerState().equalsIgnoreCase("enabled")){
             takeDieBtn.setOnAction(e-> {
                 client.setActive();
-                /*toolGrid.setDisable(true);
+                toolGrid.setDisable(true);
                 skipBtn.setDisable(true);
                 cancelBtn.setDisable(false);
-                draftPoolGrid.setDisable(false);*/
+                draftPoolGrid.setDisable(false);
+                exitBtn.setDisable(true);
+                infoBtn.setDisable(true);
             });
         }
         btnGrid.add(takeDieBtn, 0, 2);
@@ -249,9 +256,10 @@ public class PlayGame {
 
         cancelBtn = new Button("Cancel");
         cancelBtn.setOnAction(e-> {
-            //draftPoolGrid.setDisable(false);
-            client.nullSelection();
+            draftPoolGrid.setDisable(false);
             draftPoolGrid.deselectBtn(0, client.getCoordinateSelectedY() );
+            client.nullSelection();
+            exitBtn.setDisable(false);
         });
         btnGrid.add(cancelBtn, 0, 4);
 
@@ -378,4 +386,12 @@ public class PlayGame {
     }
 
 
+    public static void resetButton(){
+        skipBtn.setDisable(false);
+        useToolBtn.setDisable(false);
+        takeDieBtn.setDisable(false);
+        exitBtn.setDisable(false);
+        infoBtn.setDisable(false);
+        cancelBtn.setDisable(false);
+    }
 }

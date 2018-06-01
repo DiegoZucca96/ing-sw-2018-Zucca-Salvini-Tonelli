@@ -17,12 +17,10 @@ public class GridPaneDraftPool extends GridPane {
     private DieInfo dieInfo;
     private Client client;
     private Button b;
-    private GridPaneWindow windowPattern;
 
 
-    public GridPaneDraftPool(Client client, ArrayList<String> diceList, GridPaneWindow windowPattern) {
+    public GridPaneDraftPool(Client client, ArrayList<String> diceList) {
         this.client = client;
-        this.windowPattern=windowPattern;
         int diceThrows = client.getNumberOfPlayers()*2+1;
 
         this.setHgap(10);
@@ -64,7 +62,6 @@ public class GridPaneDraftPool extends GridPane {
 
             if(!dieInfo.getBackground().equals(Color.TRANSPARENT)){
                 this.setDisable(true);
-                windowPattern.setDisable(false);
                 button.setStyle("-fx-border-color: yellow");
                 setDieInfo(dieInfo);
                 client.takeDie( 0, col);

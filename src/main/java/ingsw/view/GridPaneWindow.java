@@ -23,6 +23,8 @@ public class GridPaneWindow extends GridPane {
 
         this.client=client;
         this.draftPool=draftPool;
+        this.setHgap(3);
+        this.setVgap(3);
         int numCols = 5 ;
         int numRows = 4 ;
 
@@ -70,7 +72,8 @@ public class GridPaneWindow extends GridPane {
             if(client.positionDie(i, j)){
                 addCellInfo(button.getBackground(), i, j);      //salvo il backgruond della cella
                 button.setBackground(draftPool.getDieInfo().getBackground());       //setto il nuovo background col dado
-                draftPool.getButton(draftPool.getDieInfo().getRow(), draftPool.getDieInfo().getColumn()).setTextFill(javafx.scene.paint.Color.TRANSPARENT);
+                draftPool.getButton(draftPool.getDieInfo().getRow(), draftPool.getDieInfo().getColumn()).setOpacity(0);
+                PlayGame.resetButton();
             }else{
                 Toolkit.getDefaultToolkit().beep();
                 draftPool.getButton(0, client.getCoordinateSelectedY()).setStyle(null);
