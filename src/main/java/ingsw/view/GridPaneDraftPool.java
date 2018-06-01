@@ -54,22 +54,22 @@ public class GridPaneDraftPool extends GridPane {
     private Button addButtonDP( int col) {
         Button button = new Button();
         button.setOpacity(1);
-
-
+        button.setStyle("-fx-border-color: black");
         button.setOnAction(e -> {
 
-            dieInfo = new DieInfo(button.getBackground(), 0, col);
-
-            if(!dieInfo.getBackground().equals(Color.TRANSPARENT)){
-                button.setStyle("-fx-border-color: yellow");
-                setDieInfo(dieInfo);
-                client.takeDie( 0, col);
-
-            }else{
-                Toolkit.getDefaultToolkit().beep();
-                dieInfo=null;
+            if(button.getOpacity()!=0){
+                if(PlayGame.getChoosePressed()){
+                    if(client.takeDie( 0, col)){
+                        dieInfo = new DieInfo(button.getBackground(), 0, col);
+                        button.setStyle("-fx-border-style: solid; -fx-border-color: orange; -fx-border-width: 3");
+                        setDieInfo(dieInfo);
+                    }else{
+                        Toolkit.getDefaultToolkit().beep();
+                    }
+                }else{
+                    Toolkit.getDefaultToolkit().beep();
+                }
             }
-
         });
 
         this.add(button, col, 0);
@@ -80,7 +80,13 @@ public class GridPaneDraftPool extends GridPane {
     public void deselectBtn(int row, int col){
         for(Node b : this.getChildren()){
             if(GridPaneDraftPool.getRowIndex(b).intValue()==row && GridPaneDraftPool.getColumnIndex(b).intValue()== col){
-                b.setStyle(null);
+                Button button = new Button();
+                button.setBackground(getDieInfo().getBackground());
+                button.setStyle("-fx-border-color: black");
+                getChildren().remove(b);
+                button.setPrefSize(58, 58);
+                button.setOpacity(1);
+                add(button,col, 0);
             }
         }
     }

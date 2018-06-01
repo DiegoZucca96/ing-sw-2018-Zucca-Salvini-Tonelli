@@ -100,7 +100,10 @@ public class Controller extends UnicastRemoteObject implements RMIController {
 
     @Override
     public int getCoordinateSelectedY(){
-        return match.getCurrentPlayer().getCoordinateDieSelected().getY();
+        if(match.getCurrentPlayer().getCoordinateDieSelected()==null)
+            return -1;
+        else
+            return match.getCurrentPlayer().getCoordinateDieSelected().getY();
     }
 
     @Override
@@ -330,8 +333,8 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
 
     @Override
-    public void setActive() {
-        this.active=true;
+    public void setActive(Boolean active) {
+        this.active=active;
     }
 
     @Override

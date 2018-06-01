@@ -47,6 +47,7 @@ public class PlayGame {
     private ViewData updateView;
     private GridPane gridEn;
     private static int begin=0;
+    private static boolean choosePressed=false;
 
 
     public PlayGame(Client client){
@@ -97,10 +98,10 @@ public class PlayGame {
                                 clockLbl.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 22 \"serif\"");
                                 clockLbl.setText("Tocca a te    "+Integer.toString(timeseconds));
                                 if (timeseconds == timeBegin) {
+                                    //draftPoolGrid.setDisable(true);
                                     resetOnButton();
                                 }
-                                if(timeseconds==0){
-
+                                if(timeseconds==0) {
                                     if(!client.getActive()){
                                         Platform.runLater(() -> {
                                             Boolean answer= ConfirmExit.display("Disconnected", "Do you still want to play?");
@@ -114,6 +115,7 @@ public class PlayGame {
                             }else {
                                 clockLbl.setText("Tocca a "+client.getCurrentPlayer()+"      "+Integer.toString(timeseconds));
                                 if (timeseconds == timeBegin) {
+                                    //draftPoolGrid.setDisable(true);
                                     resetOffButton();
                                 }
                                 if(timeseconds%5==0){
@@ -203,43 +205,62 @@ public class PlayGame {
         skipBtn = new Button("End Turn");
         skipBtn.setOnAction(e-> {
             if(client.getPlayerState().equalsIgnoreCase("enabled")){
-                client.setActive();
+                choosePressed=false;
+                client.setActive(true);
                 client.skip();
             }
         });
         btnGrid.add(skipBtn, 0, 0);
 
         useToolBtn = new Button("Use Tool");
-        if(client.getPlayerState().equalsIgnoreCase("enabled")){
             useToolBtn.setOnAction(e-> {
-                client.setActive();
-                skipBtn.setDisable(true);
-                useToolBtn.setDisable(false);
+                if(client.getPlayerState().equalsIgnoreCase("enabled"))  {
+                    choosePressed=true;
+                    client.setActive(true);
+                    skipBtn.setDisable(true);
+                    useToolBtn.setDisable(false);
+                }
             });
-        }
+
         btnGrid.add(useToolBtn, 0, 1);
 
         takeDieBtn = new Button("Take Die");
-        if(client.getPlayerState().equalsIgnoreCase("enabled")){
             takeDieBtn.setOnAction(e-> {
-                client.setActive();
-                setBtnOnTakeDieClicked();
+                if(client.getPlayerState().equalsIgnoreCase("enabled")){
+                    choosePressed=true;
+                    client.setActive(true);
+                    //draftPoolGrid.setDisable(false);
+                    setBtnOnTakeDieClicked();
+                }
             });
-        }
+
         btnGrid.add(takeDieBtn, 0, 2);
 
         exitBtn = new Button("Exit game");
         exitBtn.setOnAction(e-> {
             Boolean answer= ConfirmExit.display("Quit", "Are you sure to exit without saving?");
-            if(answer)
+            if(answer){
+                client.setActive(false);
+                client.skip();
                 Platform.exit();
+            }
         });
         btnGrid.add(exitBtn, 0, 3);
 
         cancelBtn = new Button("Cancel");
         cancelBtn.setOnAction(e-> {
-            draftPoolGrid.deselectBtn(0, client.getCoordinateSelectedY() );
-            client.nullSelection();
+            if(client.getPlayerState().equalsIgnoreCase("enabled")){
+                int col = client.getCoordinateSelectedY();
+                if(col==-1){
+                    resetOnButton();
+                }else{
+                    draftPoolGrid.deselectBtn(0, col);
+                    client.nullSelection();
+                    //draftPoolGrid.setDisable(true);
+                    resetOnButton();
+                }
+                choosePressed=false;
+            }
         });
         btnGrid.add(cancelBtn, 0, 4);
 
@@ -324,10 +345,6 @@ public class PlayGame {
     }
 
 
-
-
-
-
     private GridPane createGridEn(int player) {
         GridPane grid = new GridPane();
         String number;
@@ -363,6 +380,9 @@ public class PlayGame {
         return grid;
     }
 
+    public static boolean getChoosePressed(){
+        return choosePressed;
+    }
 
     public static void resetOnButton(){
         skipBtn.setDisable(false);
@@ -385,14 +405,18 @@ public class PlayGame {
         useToolBtn.setDisable(false);
         takeDieBtn.setDisable(true);
         infoBtn.setDisable(false);
-        cancelBtn.setDisable(false);
+        cancelBtn.setDisable(true);
     }
 
     public static void setBtnOnTakeDieClicked(){
         skipBtn.setDisable(true);
         cancelBtn.setDisable(false);
         infoBtn.setDisable(true);
+        useToolBtn.setDisable(true);
     }
 
 
+    public static void setChoosePressed(boolean b) {
+        choosePressed = b;
+    }
 }

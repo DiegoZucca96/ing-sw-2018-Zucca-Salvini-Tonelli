@@ -168,9 +168,9 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public void setActive() {
+    public void setActive(Boolean active) {
         try {
-            controller.setActive();
+            controller.setActive(active);
         } catch (RemoteException e) {
             e.printStackTrace();
         }

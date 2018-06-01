@@ -90,7 +90,7 @@ public interface Client {
     String getPVCard(String name);
 
     //serve per controllare che il client sia attivo
-    void setActive();
+    void setActive(Boolean active);
 
     //attivo o no?
     boolean getActive();

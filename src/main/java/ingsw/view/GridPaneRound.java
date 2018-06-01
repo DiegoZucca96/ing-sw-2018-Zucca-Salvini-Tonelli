@@ -31,7 +31,6 @@ public class GridPaneRound extends GridPane {
 
         for( int i=1; i<=10; i++){
             Button btnRound=buttonRound(i);
-            btnRound.setPrefSize(40, 40);
             btnRound.setOpacity(0.6);
         }
 

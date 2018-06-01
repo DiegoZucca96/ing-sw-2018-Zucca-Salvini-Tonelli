@@ -76,7 +76,7 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
     public void cleanDraftPool(){
         if(!diceList.isEmpty()){
             for(Die die: diceList){
-                if(die.getNumber()==0 || die.getColor()==Color.WHITE){
+                if(die.getNumber()==0 || String.valueOf(die.getColor()).equalsIgnoreCase("WHITE")){
                     diceList.remove(die);
                 }
             }

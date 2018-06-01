@@ -73,14 +73,12 @@ public class GridPaneWindow extends GridPane {
                 addCellInfo(button.getBackground(), i, j);      //salvo il backgruond della cella
                 button.setBackground(draftPool.getDieInfo().getBackground());       //setto il nuovo background col dado
                 draftPool.getButton(draftPool.getDieInfo().getRow(), draftPool.getDieInfo().getColumn()).setOpacity(0);
+                //draftPool.setDisable(true);
+                PlayGame.setChoosePressed(false);
                 PlayGame.onPositionWPButton();
             }else{
                 Toolkit.getDefaultToolkit().beep();
-                draftPool.getButton(0, client.getCoordinateSelectedY()).setStyle(null);
             }
-
-
-            //System.out.printf("Mouse enetered cell [%d, %d]%n", colIndex, rowIndex);
         });
         this.add(button, j, i);
         return button;

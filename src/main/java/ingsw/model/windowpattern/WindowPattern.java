@@ -114,7 +114,7 @@ public class WindowPattern implements Serializable {
         if(isWpEmpty()){
             if(verifyOnBoard(destination)){
                 if (cellMatrix[destination.getX()][destination.getY()].isEmpty()){
-                    if(verifyCellColorConstraint(destination, die, cellMatrix) && verifyCellNumberConstraint(destination, die, cellMatrix) &&verifyDieColorConstraint(destination, die, cellMatrix) && verifyDieNumberConstraint(destination, die, cellMatrix)){
+                    if(verifyCellColorConstraint(destination, die, cellMatrix) && verifyCellNumberConstraint(destination, die, cellMatrix)){
                         cellMatrix[destination.getX()][destination.getY()].setEmpty(false);
                         cellMatrix[destination.getX()][destination.getY()].insertDie(die);
                         setWpEmpty(false);

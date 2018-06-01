@@ -166,7 +166,7 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public void setActive() {
+    public void setActive(Boolean active) {
         //da implementare
     }
 
