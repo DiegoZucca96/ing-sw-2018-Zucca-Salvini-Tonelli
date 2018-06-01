@@ -24,14 +24,14 @@ public class GridPaneRound extends GridPane {
         this.client=client;
         this.roundTrack=roundTrack;
         this.round=round;
-        GridPane grid = new GridPane();
-        grid.setHgap(15);
-        grid.setVgap(0);
-        grid.setPadding(new Insets(0, 20, 0, 20));
+        this.setHgap(15);
+        this.setVgap(0);
+        this.setPadding(new Insets(0, 20, 0, 20));
 
 
         for( int i=1; i<=10; i++){
             Button btnRound=buttonRound(i);
+            btnRound.setPrefSize(40, 40);
             btnRound.setOpacity(0.6);
         }
 
@@ -42,7 +42,7 @@ public class GridPaneRound extends GridPane {
         if(currentRound<round){
             final ImageView imageOk = new ImageView();
             String imagePath = "/ok.png";
-            Image image = new Image(imagePath, 20, 20, false, false);
+            Image image = new Image(imagePath, 20, 20, false, true);
             imageOk.setImage(image);
             button = new Button("", imageOk);
         }else{

@@ -55,6 +55,8 @@ public class PlayGame {
     }
 
 
+
+
     public void display(ViewWP myWindow){
         Stage stage=new Stage();
         stage.setWidth(1200);
@@ -95,10 +97,7 @@ public class PlayGame {
                                 clockLbl.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 22 \"serif\"");
                                 clockLbl.setText("Tocca a te    "+Integer.toString(timeseconds));
                                 if (timeseconds == timeBegin) {
-                                    skipBtn.setDisable(false);
-                                    takeDieBtn.setDisable(false);
-                                    useToolBtn.setDisable(false);
-                                    cancelBtn.setDisable(true);
+                                    resetOnButton();
                                 }
                                 if(timeseconds==0){
 
@@ -115,11 +114,7 @@ public class PlayGame {
                             }else {
                                 clockLbl.setText("Tocca a "+client.getCurrentPlayer()+"      "+Integer.toString(timeseconds));
                                 if (timeseconds == timeBegin) {
-                                    skipBtn.setDisable(true);
-                                    exitBtn.setDisable(false);
-                                    takeDieBtn.setDisable(true);
-                                    useToolBtn.setDisable(true);
-                                    cancelBtn.setDisable(true);
+                                    resetOffButton();
                                 }
                                 if(timeseconds%5==0){
                                     this.updateView = client.updateView();
@@ -198,7 +193,6 @@ public class PlayGame {
         eachGrid.setLayoutX(240);
         eachGrid.setLayoutY(80);
         for(int index= 0; index < client.getNumberOfPlayers()-1; index++){
-
             gridEn = createGridEn(index);
             eachGrid.add(gridEn, index, 0);
         }
@@ -210,11 +204,6 @@ public class PlayGame {
         skipBtn.setOnAction(e-> {
             if(client.getPlayerState().equalsIgnoreCase("enabled")){
                 client.setActive();
-                takeDieBtn.setDisable(true);
-                toolGrid.setDisable(true);
-                skipBtn.setDisable(true);
-                draftPoolGrid.setDisable(true);
-                gridRound.setDisable(true);
                 client.skip();
             }
         });
@@ -226,8 +215,6 @@ public class PlayGame {
                 client.setActive();
                 skipBtn.setDisable(true);
                 useToolBtn.setDisable(false);
-                draftPoolGrid.setDisable(false);
-                gridRound.setDisable(false);
             });
         }
         btnGrid.add(useToolBtn, 0, 1);
@@ -236,12 +223,7 @@ public class PlayGame {
         if(client.getPlayerState().equalsIgnoreCase("enabled")){
             takeDieBtn.setOnAction(e-> {
                 client.setActive();
-                toolGrid.setDisable(true);
-                skipBtn.setDisable(true);
-                cancelBtn.setDisable(false);
-                draftPoolGrid.setDisable(false);
-                exitBtn.setDisable(true);
-                infoBtn.setDisable(true);
+                setBtnOnTakeDieClicked();
             });
         }
         btnGrid.add(takeDieBtn, 0, 2);
@@ -256,10 +238,8 @@ public class PlayGame {
 
         cancelBtn = new Button("Cancel");
         cancelBtn.setOnAction(e-> {
-            draftPoolGrid.setDisable(false);
             draftPoolGrid.deselectBtn(0, client.getCoordinateSelectedY() );
             client.nullSelection();
-            exitBtn.setDisable(false);
         });
         btnGrid.add(cancelBtn, 0, 4);
 
@@ -272,9 +252,7 @@ public class PlayGame {
         btnGrid.setLayoutY(350);
 
 
-
-
-
+        //ATTACH DI TUTTO
         root.getChildren().addAll(backGround, toolGrid, pbGrid, gridRound, myWindowGrid, btnGrid, eachGrid, pvPane, draftPoolGrid, currentInfo);
         stage.setScene(scene);
         stage.setTitle("Sagrada - " +client.getName());
@@ -386,12 +364,35 @@ public class PlayGame {
     }
 
 
-    public static void resetButton(){
+    public static void resetOnButton(){
         skipBtn.setDisable(false);
         useToolBtn.setDisable(false);
         takeDieBtn.setDisable(false);
-        exitBtn.setDisable(false);
         infoBtn.setDisable(false);
         cancelBtn.setDisable(false);
     }
+
+    public static void resetOffButton(){
+        skipBtn.setDisable(true);
+        useToolBtn.setDisable(true);
+        takeDieBtn.setDisable(true);
+        infoBtn.setDisable(true);
+        cancelBtn.setDisable(true);
+    }
+
+    public static void onPositionWPButton() {
+        skipBtn.setDisable(false);
+        useToolBtn.setDisable(false);
+        takeDieBtn.setDisable(true);
+        infoBtn.setDisable(false);
+        cancelBtn.setDisable(false);
+    }
+
+    public static void setBtnOnTakeDieClicked(){
+        skipBtn.setDisable(true);
+        cancelBtn.setDisable(false);
+        infoBtn.setDisable(true);
+    }
+
+
 }

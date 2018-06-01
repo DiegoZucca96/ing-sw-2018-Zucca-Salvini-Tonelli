@@ -61,7 +61,6 @@ public class GridPaneDraftPool extends GridPane {
             dieInfo = new DieInfo(button.getBackground(), 0, col);
 
             if(!dieInfo.getBackground().equals(Color.TRANSPARENT)){
-                this.setDisable(true);
                 button.setStyle("-fx-border-color: yellow");
                 setDieInfo(dieInfo);
                 client.takeDie( 0, col);
