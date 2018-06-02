@@ -94,10 +94,15 @@ public class PlayGame {
                 new KeyFrame(Duration.millis(1000),
                         event -> {
                             timeseconds = client.getTimeMove();
+                            if(timeseconds == timeBegin-1){
+                                this.updateView = client.updateView();
+                                if(updateView.getRoundTrack()!=null)
+                                    gridRound=new GridPaneRound(client, updateView.getRoundTrack(), client.getRound());
+                            }
                             if(client.getPlayerState().equals("enabled")){
                                 clockLbl.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 22 \"serif\"");
                                 clockLbl.setText("Tocca a te    "+Integer.toString(timeseconds));
-                                if (timeseconds == timeBegin) {
+                                if (timeseconds == timeBegin-1) {
                                     //draftPoolGrid.setDisable(true);
                                     resetOnButton();
                                 }
@@ -114,20 +119,19 @@ public class PlayGame {
                                 }
                             }else {
                                 clockLbl.setText("Tocca a "+client.getCurrentPlayer()+"      "+Integer.toString(timeseconds));
-                                if (timeseconds == timeBegin) {
+                                if (timeseconds == timeBegin-1) {
                                     //draftPoolGrid.setDisable(true);
                                     resetOffButton();
                                 }
                                 if(timeseconds%5==0){
-                                    this.updateView = client.updateView();
+
 
                                     for(int i =0; i<client.getNumberOfPlayers(); i++){
                                         if(updateView.getWps().get(i)!=null)
                                             gridEn = createGridEn(i);
                                     }
 
-                                    if(updateView.getRoundTrack()!=null)
-                                        gridRound=new GridPaneRound(client, updateView.getRoundTrack(), client.getRound());
+
                                     if(updateView.getDraftPoolDice()!=null){
                                         draftPoolGrid = new GridPaneDraftPool(client, updateView.getDraftPoolDice());
                                     }
