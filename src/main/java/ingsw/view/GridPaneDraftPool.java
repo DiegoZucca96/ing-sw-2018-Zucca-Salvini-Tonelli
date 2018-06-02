@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class GridPaneDraftPool extends GridPane {
 
 
-    private DieInfo dieInfo;
+    private DieInfo dieInfo = new DieInfo(null,-1,-1);
     private Client client;
     private Button b;
 
@@ -62,26 +62,33 @@ public class GridPaneDraftPool extends GridPane {
     }
 
     public void deselectBtn(int row, int col){
-        for(Node b : this.getChildren()){
-            Integer rowIndex = GridPane.getRowIndex(b);
-            Integer columnIndex = GridPane.getColumnIndex(b);
-            if(rowIndex != null && rowIndex.intValue()==row && columnIndex != null && columnIndex.intValue()== col){
+        for(int i=0; i<this.getChildren().size();i++){
+            Button buttonReset = (Button) getChildren().get(i);
+            if(buttonReset.getStyle().equalsIgnoreCase("-fx-border-style: solid; -fx-border-color: orange; -fx-border-width: 3")){
+                buttonReset.setStyle("-fx-border-color: black");
+                i=getChildren().size();
+            }
+
+           /* Button x = (Button) getChildren().get(i);
+            Integer rowIndex = GridPane.getRowIndex(x);
+            Integer columnIndex = GridPane.getColumnIndex(x);
+            if(rowIndex != null && rowIndex==row && columnIndex != null && columnIndex== col){
                 Button button = new Button();
-                button.setBackground(this.dieInfo.getBackground());
+                button.setBackground(dieInfo.getBackground());
                 button.setStyle("-fx-border-color: black");
-                getChildren().remove(b);
+                getChildren().remove(x);
                 button.setPrefSize(58, 58);
                 button.setOpacity(1);
                 action(button, 0, col);
                 add(button,col, 0);
-            }
+            }*/
         }
     }
 
     public Button getButton(int row, int col){
-        for(Node b : this.getChildren()){
-            if(GridPaneDraftPool.getRowIndex(b).intValue()==row && GridPaneDraftPool.getColumnIndex(b).intValue()== col){
-                return (Button)b;
+        for(Node node : this.getChildren()){
+            if(GridPaneDraftPool.getRowIndex(node)==row && GridPaneDraftPool.getColumnIndex(node)== col){
+                return (Button)node;
             }
         }
         return null;
@@ -97,8 +104,11 @@ public class GridPaneDraftPool extends GridPane {
             if(button.getOpacity()!=0){
                 if(PlayGame.getChoosePressed()){
                     if(client.takeDie( row, col)){
-                        this.dieInfo = new DieInfo(button.getBackground(), row, col);
+                        getDieInfo().setBackground(button.getBackground());
+                        getDieInfo().setColumn(col);
+                        getDieInfo().setRow(row);
                         button.setStyle("-fx-border-style: solid; -fx-border-color: orange; -fx-border-width: 3");
+                        int x = 1;
                     }else{
                         Toolkit.getDefaultToolkit().beep();
                     }
@@ -107,8 +117,6 @@ public class GridPaneDraftPool extends GridPane {
                 }
             }
         });
-
-
     }
 
 }
