@@ -73,7 +73,6 @@ public class GridPaneWindow extends GridPane {
                 addCellInfo(button.getBackground(), i, j);      //salvo il backgruond della cella
                 button.setBackground(draftPool.getDieInfo().getBackground());       //setto il nuovo background col dado
                 draftPool.getButton(draftPool.getDieInfo().getRow(), draftPool.getDieInfo().getColumn()).setOpacity(0);
-                //draftPool.setDisable(true);
                 PlayGame.setChoosePressed(false);
                 PlayGame.onPositionWPButton();
             }else{
