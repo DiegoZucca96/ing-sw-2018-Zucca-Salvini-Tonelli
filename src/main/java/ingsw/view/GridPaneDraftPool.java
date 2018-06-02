@@ -60,9 +60,8 @@ public class GridPaneDraftPool extends GridPane {
             if(button.getOpacity()!=0){
                 if(PlayGame.getChoosePressed()){
                     if(client.takeDie( 0, col)){
-                        dieInfo = new DieInfo(button.getBackground(), 0, col);
+                        this.dieInfo = new DieInfo(button.getBackground(), 0, col);
                         button.setStyle("-fx-border-style: solid; -fx-border-color: orange; -fx-border-width: 3");
-                        setDieInfo(dieInfo);
                     }else{
                         Toolkit.getDefaultToolkit().beep();
                     }
@@ -79,7 +78,9 @@ public class GridPaneDraftPool extends GridPane {
 
     public void deselectBtn(int row, int col){
         for(Node b : this.getChildren()){
-            if(GridPaneDraftPool.getRowIndex(b).intValue()==row && GridPaneDraftPool.getColumnIndex(b).intValue()== col){
+            Integer rowIndex = GridPane.getRowIndex(b);
+            Integer columnIndex = GridPane.getColumnIndex(b);
+            if(rowIndex != null && rowIndex.intValue()==row && columnIndex != null && columnIndex.intValue()== col){
                 Button button = new Button();
                 button.setBackground(getDieInfo().getBackground());
                 button.setStyle("-fx-border-color: black");
@@ -105,7 +106,4 @@ public class GridPaneDraftPool extends GridPane {
         return dieInfo;
     }
 
-    public void setDieInfo(DieInfo dieInfo) {
-        this.dieInfo = dieInfo;
-    }
 }

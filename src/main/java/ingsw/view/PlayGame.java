@@ -229,7 +229,7 @@ public class PlayGame {
                 if(client.getPlayerState().equalsIgnoreCase("enabled")){
                     choosePressed=true;
                     client.setActive(true);
-                    //draftPoolGrid.setDisable(false);
+                    draftPoolGrid.setDisable(false);
                     setBtnOnTakeDieClicked();
                 }
             });
@@ -250,16 +250,16 @@ public class PlayGame {
         cancelBtn = new Button("Cancel");
         cancelBtn.setOnAction(e-> {
             if(client.getPlayerState().equalsIgnoreCase("enabled")){
+                choosePressed=false;
                 int col = client.getCoordinateSelectedY();
-                if(col==-1){
+                if(col==-1){            //se non ha selezionato nulla
                     resetOnButton();
                 }else{
-                    draftPoolGrid.deselectBtn(0, col);
                     client.nullSelection();
                     //draftPoolGrid.setDisable(true);
                     resetOnButton();
+                    draftPoolGrid.deselectBtn(0, col);
                 }
-                choosePressed=false;
             }
         });
         btnGrid.add(cancelBtn, 0, 4);
