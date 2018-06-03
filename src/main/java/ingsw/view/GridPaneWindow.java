@@ -75,6 +75,7 @@ public class GridPaneWindow extends GridPane {
                 draftPool.getButton(draftPool.getDieInfo().getRow(), draftPool.getDieInfo().getColumn()).setOpacity(0);
                 PlayGame.setChoosePressed(false);
                 PlayGame.onPositionWPButton();
+                draftPool.getButtonDieSelected().setOpacity(0);
             }else{
                 Toolkit.getDefaultToolkit().beep();
             }

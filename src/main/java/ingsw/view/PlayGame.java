@@ -48,6 +48,8 @@ public class PlayGame {
     private GridPane gridEn;
     private static int begin=0;
     private static boolean choosePressed=false;
+    private Label textLbl;
+    private Button buttonDie;
 
 
     public PlayGame(Client client){
@@ -78,11 +80,30 @@ public class PlayGame {
 
         //COUNTDOWN
         Pane currentInfo = new Pane();
-        currentInfo.setLayoutX(300);
-        currentInfo.setLayoutY(300);
+        currentInfo.setLayoutX(280);
+        currentInfo.setLayoutY(290);
         clockLbl= new Label();
         clockLbl.setStyle(styleSheet);
         currentInfo.getChildren().add(clockLbl);
+
+        //DADO SCELTO
+        Pane currentInfo2 = new Pane();
+        currentInfo2.setLayoutX(820);
+        currentInfo2.setLayoutY(580);
+        textLbl= new Label();
+        textLbl.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 18 \"serif\"");
+        textLbl.setText("Dado selezionato");
+        currentInfo2.getChildren().add(textLbl);
+
+        Pane currentInfo3 = new Pane();
+        currentInfo3.setLayoutX(830);
+        currentInfo3.setLayoutY(600);
+        buttonDie = new Button();
+        buttonDie.setOpacity(0);
+        buttonDie.setPrefSize(58,58);
+        buttonDie.setOnAction(event -> event.consume());
+        currentInfo3.getChildren().add(buttonDie);
+
 
         //INIZIALIZZAZIONE
         init = client.initializeView();
@@ -94,7 +115,7 @@ public class PlayGame {
                 new KeyFrame(Duration.millis(1000),
                         event -> {
                             timeseconds = client.getTimeMove();
-                            if(timeseconds == timeBegin-1){
+                            if(timeseconds == timeBegin){
                                 this.updateView = client.updateView();
                                 if(updateView.getRoundTrack()!=null)
                                     gridRound=new GridPaneRound(client, updateView.getRoundTrack(), client.getRound());
@@ -118,8 +139,9 @@ public class PlayGame {
                                     }
                                 }
                             }else {
+                                clockLbl.setStyle(styleSheet);
                                 clockLbl.setText("Tocca a "+client.getCurrentPlayer()+"      "+Integer.toString(timeseconds));
-                                if (timeseconds == timeBegin-1) {
+                                if (timeseconds == timeBegin) {
                                     //draftPoolGrid.setDisable(true);
                                     resetOffButton();
                                 }
@@ -133,7 +155,7 @@ public class PlayGame {
 
 
                                     if(updateView.getDraftPoolDice()!=null){
-                                        draftPoolGrid = new GridPaneDraftPool(client, updateView.getDraftPoolDice());
+                                        draftPoolGrid = new GridPaneDraftPool(client, updateView.getDraftPoolDice(),buttonDie);
                                     }
                                 }
 
@@ -150,8 +172,8 @@ public class PlayGame {
 
         //PRIVATE
         Pane pvPane = pvPane(client.getPVCard(client.getName()));          //come associo a quella giusta
-        pvPane.setLayoutX(800);
-        pvPane.setLayoutY(350);
+        pvPane.setLayoutX(760);
+        pvPane.setLayoutY(225);
 
         //TOOLCARD
         Pane toolPane1 = Pane(init.getToolCard(), 0);
@@ -182,14 +204,14 @@ public class PlayGame {
         pbGrid.add(pbPane3, 0, 2);
 
         //DRAFTPOOL
-        draftPoolGrid = new GridPaneDraftPool(client,init.getDraftPoolDice());
+        draftPoolGrid = new GridPaneDraftPool(client,init.getDraftPoolDice(),buttonDie);
         draftPoolGrid.setLayoutX(200);
         draftPoolGrid.setLayoutY(600);
 
         //LA MIA WP
         myWindowGrid = new GridPaneWindow(myWindow, client, draftPoolGrid);
         myWindowGrid.setLayoutX(200);
-        myWindowGrid.setLayoutY(350);
+        myWindowGrid.setLayoutY(330);
 
 
         //WP AVVERSARIE
@@ -274,11 +296,11 @@ public class PlayGame {
         });
         btnGrid.add(infoBtn, 0, 5);
         btnGrid.setLayoutX(600);
-        btnGrid.setLayoutY(350);
+        btnGrid.setLayoutY(330);
 
 
         //ATTACH DI TUTTO
-        root.getChildren().addAll(backGround, toolGrid, pbGrid, gridRound, myWindowGrid, btnGrid, eachGrid, pvPane, draftPoolGrid, currentInfo);
+        root.getChildren().addAll(backGround, toolGrid, pbGrid, gridRound, myWindowGrid, btnGrid, eachGrid, pvPane, draftPoolGrid, currentInfo,currentInfo2, currentInfo3);
         stage.setScene(scene);
         stage.setTitle("Sagrada - " +client.getName());
         stage.resizableProperty().setValue(Boolean.FALSE);
@@ -293,27 +315,43 @@ public class PlayGame {
         pane.setLayoutY(200);
         pane.setLayoutX(130);
 
-
-        final ImageView View = new ImageView();
+        final ImageView view = new ImageView();
         String imagePathT = stringPvCard;
-        Image imageT = new Image(imagePathT, 130, 200, false, true);
-        View.setImage(imageT);
-
-        View.setOnMouseEntered(new EventHandler<MouseEvent>() {
+        /*pane.setBackground(new Background(new BackgroundImage(new Image(imagePathT, 300, 420, true, true), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(pane.getWidth(), pane.getHeight(), false, false, false, true))));
+        pane.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent e) {
-                View.setScaleX(1.3);
-                View.setScaleY(1.3);
+                pane.resize(169,260);
+                //view.setScaleY(1.3);
+            }
+        });
+        pane.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override public void handle(MouseEvent e) {
+                pane.resize(130,200);
+                //view.setScaleY(1);
+            }
+        });*/
+        Image imageT = new Image(imagePathT, 300, 420, false, true);
+        view.setImage(imageT);
+        view.scaleXProperty().setValue(0.43);
+        view.scaleYProperty().setValue(0.476);
+
+        view.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override public void handle(MouseEvent e) {
+                view.scaleXProperty().setValue(0.7);
+                view.scaleYProperty().setValue(0.7);
+                //view.setScaleY(1.3);
             }
         });
 
-        View.setOnMouseExited(new EventHandler<MouseEvent>() {
+        view.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent e) {
-                View.setScaleX(1);
-                View.setScaleY(1);
+                view.scaleXProperty().setValue(0.43);
+                view.scaleYProperty().setValue(0.476);
+                //view.setScaleY(1);
             }
         });
 
-        pane.getChildren().add(View);
+        pane.getChildren().add(view);
 
         return pane;
     }
