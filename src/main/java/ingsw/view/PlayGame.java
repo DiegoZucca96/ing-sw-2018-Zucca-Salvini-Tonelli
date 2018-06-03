@@ -41,15 +41,17 @@ public class PlayGame {
     private GridPane gridRound;
     private GridPane toolGrid;
     private GridPane pbGrid;
+    private GridPane cellsGrid;
+    private GridPane gridEn;
     private GridPaneWindow myWindowGrid;
     private GridPaneDraftPool draftPoolGrid;
     private static final String styleSheet = "-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"";
     private ViewData updateView;
-    private GridPane gridEn;
     private static int begin=0;
     private static boolean choosePressed=false;
     private Label textLbl;
     private Button buttonDie;
+    private ViewWP myWindow;
 
 
     public PlayGame(Client client){
@@ -61,6 +63,7 @@ public class PlayGame {
 
 
     public void display(ViewWP myWindow){
+        this.myWindow=myWindow;
         Stage stage=new Stage();
         stage.setWidth(1200);
         stage.setHeight(700);
@@ -176,28 +179,28 @@ public class PlayGame {
         pvPane.setLayoutY(225);
 
         //TOOLCARD
-        Pane toolPane1 = Pane(init.getToolCard(), 0);
-        Pane toolPane2 = Pane(init.getToolCard(), 1);
-        Pane toolPane3 = Pane(init.getToolCard(), 2);
+        ImageView toolPane1 = Images(init.getToolCard(), 0);
+        ImageView toolPane2 = Images(init.getToolCard(), 1);
+        ImageView toolPane3 = Images(init.getToolCard(), 2);
 
         toolGrid = new GridPane();
-        toolGrid.setLayoutX(10);
-        toolGrid.setLayoutY(20);
-        toolGrid.setVgap(20);
+        toolGrid.setLayoutX(-50);
+        toolGrid.setLayoutY(-100);
+        toolGrid.setVgap(-200);
 
         toolGrid.add(toolPane1, 0, 0);
         toolGrid.add(toolPane2, 0, 1);
         toolGrid.add(toolPane3, 0, 2);
 
         //PBCARD
-        Pane pbPane1 = Pane(init.getPbCard(), 0);
-        Pane pbPane2 = Pane(init.getPbCard(), 1);
-        Pane pbPane3 = Pane(init.getPbCard(), 2);
+        ImageView pbPane1 = Images(init.getPbCard(), 0);
+        ImageView pbPane2 = Images(init.getPbCard(), 1);
+        ImageView pbPane3 = Images(init.getPbCard(), 2);
 
         pbGrid = new GridPane();
-        pbGrid.setLayoutX(1050);
-        pbGrid.setLayoutY(20);
-        pbGrid.setVgap(20);
+        pbGrid.setLayoutX(950);
+        pbGrid.setLayoutY(-100);
+        pbGrid.setVgap(-200);
 
         pbGrid.add(pbPane1, 0, 0);
         pbGrid.add(pbPane2, 0, 1);
@@ -207,6 +210,16 @@ public class PlayGame {
         draftPoolGrid = new GridPaneDraftPool(client,init.getDraftPoolDice(),buttonDie);
         draftPoolGrid.setLayoutX(200);
         draftPoolGrid.setLayoutY(600);
+
+
+        //IMMUTABLE WINDOW MADE OF ONLY BY CELLS
+        cellsGrid = addGridPane();
+
+        //PANE WHICH IS BETWEEN THE TWO GRIDS
+        Pane divideGrids = new Pane();
+        divideGrids.setLayoutX(200);
+        divideGrids.setLayoutY(330);
+        divideGrids.getChildren().add(cellsGrid);
 
         //LA MIA WP
         myWindowGrid = new GridPaneWindow(myWindow, client, draftPoolGrid);
@@ -300,14 +313,34 @@ public class PlayGame {
 
 
         //ATTACH DI TUTTO
-        root.getChildren().addAll(backGround, toolGrid, pbGrid, gridRound, myWindowGrid, btnGrid, eachGrid, pvPane, draftPoolGrid, currentInfo,currentInfo2, currentInfo3);
+        root.getChildren().addAll(backGround, toolGrid, pbGrid,/*toolPane1, toolPane2, toolPane3, pbPane1, pbPane2, pbPane3,*/ gridRound, divideGrids, myWindowGrid, btnGrid, eachGrid, pvPane, draftPoolGrid, currentInfo,currentInfo2, currentInfo3);
         stage.setScene(scene);
         stage.setTitle("Sagrada - " +client.getName());
         stage.resizableProperty().setValue(Boolean.FALSE);
         stage.show();
     }
 
-
+    private GridPane addGridPane() {
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(3);
+        gridPane.setVgap(3);
+        String number;
+        String color;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 5; j++) {
+                Button btnCell = new Button();
+                btnCell.setPrefSize(50, 50);
+                number = Integer.toString(myWindow.getWp()[i][j].getNum());
+                color = String.valueOf(myWindow.getWp()[i][j].getColor());
+                String path = WPRendering.path(number, color);
+                Image myImage = new Image(path, 50, 50, false, true);
+                BackgroundImage myBI = new BackgroundImage(myImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                btnCell.setBackground(new Background(myBI));
+                gridPane.add(btnCell, j, i);
+            }
+        }
+        return gridPane;
+    }
 
 
     private Pane pvPane(String stringPvCard){
@@ -335,7 +368,7 @@ public class PlayGame {
         view.scaleXProperty().setValue(0.43);
         view.scaleYProperty().setValue(0.476);
 
-        view.setOnMouseEntered(new EventHandler<MouseEvent>() {
+        /*view.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent e) {
                 view.scaleXProperty().setValue(0.7);
                 view.scaleYProperty().setValue(0.7);
@@ -349,22 +382,19 @@ public class PlayGame {
                 view.scaleYProperty().setValue(0.476);
                 //view.setScaleY(1);
             }
-        });
+        });*/
 
         pane.getChildren().add(view);
 
         return pane;
     }
 
-    private Pane Pane(ArrayList<String> stringCard, int i){
-        Pane pane = new Pane();
-        pane.setLayoutY(200);
-        pane.setLayoutX(130);
+    private ImageView Images(ArrayList<String> stringCard, int i){
 
 
-        final ImageView View = new ImageView();
+        final ImageView view = new ImageView();
         String imagePathT = stringCard.get(i);
-        Image imageT = new Image(imagePathT, 130, 200, false, true);
+        /*Image imageT = new Image(imagePathT, 130, 200, false, true);
         View.setImage(imageT);
 
         View.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -379,11 +409,14 @@ public class PlayGame {
                 View.setScaleX(1);
                 View.setScaleY(1);
             }
-        });
+        });*/
+        Image imageT = new Image(imagePathT, 300, 420, false, true);
+        view.setImage(imageT);
+        view.scaleXProperty().setValue(0.43);
+        view.scaleYProperty().setValue(0.476);
 
-        pane.getChildren().add(View);
 
-        return pane;
+        return view;
     }
 
 

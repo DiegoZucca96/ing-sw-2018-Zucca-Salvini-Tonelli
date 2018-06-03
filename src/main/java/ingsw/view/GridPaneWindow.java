@@ -45,21 +45,26 @@ public class GridPaneWindow extends GridPane {
 
                 Button btnCell = addButtonWp(i, j);
                 btnCell.setPrefSize(50, 50);
-                String dieStr = myWindow.getWp()[i][j].getDie();
-                if(dieStr==null){
-                    number = Integer.toString(myWindow.getWp()[i][j].getNum());
-                    color = String.valueOf(myWindow.getWp()[i][j].getColor());
+                if(client.getPlayerWPs(client.getName()).equals(myWindow)){
+                    btnCell.setOpacity(0.5);
                 }else{
-                    number =dieStr.substring(dieStr.indexOf("(")+1, dieStr.indexOf(","));
-                    color = dieStr.substring(dieStr.indexOf(",")+1, dieStr.indexOf(")"));
+                    String dieStr = myWindow.getWp()[i][j].getDie();
+                    if(dieStr==null){
+                        number = Integer.toString(myWindow.getWp()[i][j].getNum());
+                        color = String.valueOf(myWindow.getWp()[i][j].getColor());
+                    }else{
+                        number =dieStr.substring(dieStr.indexOf("(")+1, dieStr.indexOf(","));
+                        color = dieStr.substring(dieStr.indexOf(",")+1, dieStr.indexOf(")"));
+                    }
+
+                    String path = WPRendering.path(number, color);
+                    Image myImage = new Image(path, 50, 50, false, true);
+                    BackgroundImage myBI= new BackgroundImage(myImage,
+                            BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                            BackgroundSize.DEFAULT);
+                    btnCell.setBackground(new Background(myBI));
                 }
 
-                String path = WPRendering.path(number, color);
-                Image myImage = new Image(path, 50, 50, false, true);
-                BackgroundImage myBI= new BackgroundImage(myImage,
-                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                        BackgroundSize.DEFAULT);
-                btnCell.setBackground(new Background(myBI));
             }
         }
     }
