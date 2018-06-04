@@ -118,4 +118,23 @@ public class GridPaneDraftPool extends GridPane {
     public Button getButtonDieSelected() {
         return buttonDieSelected;
     }
+
+    public void updateDP(ArrayList<String> draftPoolDice) {
+        for(int i=0; i<draftPoolDice.size();i++){
+            Button b = getButton(0,i);
+            String numDie = draftPoolDice.get(i).substring(draftPoolDice.get(i).indexOf("(")+1,draftPoolDice.get(i).indexOf(","));
+            String colorDie = draftPoolDice.get(i).substring(draftPoolDice.get(i).indexOf(",")+1, draftPoolDice.get(i).indexOf(")"));
+            String pathDie = WPRendering.path(numDie, colorDie);
+            if(pathDie.equalsIgnoreCase("/white.png"))
+                b.setOpacity(0);
+            else{
+                b.setOpacity(1);
+                Image myImage = new Image(pathDie, 58, 58, false, true);
+                BackgroundImage myBI= new BackgroundImage(myImage,
+                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                        BackgroundSize.DEFAULT);
+                b.setBackground(new Background(myBI));
+            }
+        }
+    }
 }

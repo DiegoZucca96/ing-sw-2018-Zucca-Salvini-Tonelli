@@ -72,20 +72,31 @@ public class GridPaneRound extends GridPane {
         grid.setHgap(20);
         //DieInfo client.getDieFromRoundTrack(j);
 
+        ArrayList<String> currentDice = new ArrayList<>();
+        for(String s : roundTrack){
+            if(s.substring(0,1).equalsIgnoreCase(Integer.toString(i)))
+                currentDice.add(s);
+        }
+
         for(int numDice=0; numDice<client.getNumberOfPlayers()*2+1; numDice++){
             Button button = addDieBtn(numDice);
             button.setPrefSize(40, 40);
-            String dieStr = roundTrack.get(i);
-            String numDie = dieStr.substring(dieStr.indexOf("(")+1,dieStr.indexOf(","));
-            String colorDie = dieStr.substring(dieStr.indexOf(",")+1,dieStr.indexOf(")"));
-            String pathDie = WPRendering.path(numDie, colorDie);
-            Image myImage = new Image(pathDie, 50, 50, false, true);
-            BackgroundImage myBI= new BackgroundImage(myImage,
-                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                    BackgroundSize.DEFAULT);
-            button.setBackground(new Background(myBI));
+            if(currentDice.size()>numDice){
+                String dieStr = currentDice.get(numDice);
+                String numDie = dieStr.substring(dieStr.indexOf("(")+1,dieStr.indexOf(","));
+                String colorDie = dieStr.substring(dieStr.indexOf(",")+1,dieStr.indexOf(")"));
+                String pathDie = WPRendering.path(numDie, colorDie);
+                Image myImage = new Image(pathDie, 40, 40, false, true);
+                BackgroundImage myBI= new BackgroundImage(myImage,
+                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                        BackgroundSize.DEFAULT);
+                button.setBackground(new Background(myBI));
 
-            grid.add(button, numDice, 0);
+                grid.add(button, numDice, 0);
+            }
+            else{
+                numDice=client.getNumberOfPlayers()*2+1;
+            }
         }
         root.getChildren().add(grid);
         stage.setScene(scene);

@@ -100,17 +100,17 @@ public class RoundTrack {
 
 
     public ArrayList<String> toArrayString() {
-        ArrayList<String> roundTrack = new ArrayList<>();
+        ArrayList<String> newRoundTrack = new ArrayList<>();
         for(int i=0; i<10; i++){
             for(int j=0; j<9; j++) {
                 Die die = getDie(i + 1, j);
-                if (die == null) break;
-                if(j!=0) roundTrack.add(die.toString());
+                if (die != null){
+                    String path = Integer.toString(i+1).concat(die.toString());
+                    newRoundTrack.add(path);
+                }
             }
-
         }
-
-        return roundTrack;
+        return newRoundTrack;
     }
 }
 

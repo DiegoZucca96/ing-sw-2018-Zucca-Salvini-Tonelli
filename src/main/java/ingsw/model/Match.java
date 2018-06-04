@@ -55,9 +55,10 @@ public class Match {
         pbCards.add(new PBObjectiveCard(numPBCards.get(2)));
 
         ArrayList<Die> dicelist = startRound();
-        for(Die d : dicelist)
-            init.getDraftPoolDice().add(d.toString());
+        for(Die die : dicelist)
+            init.getDraftPoolDice().add(die.toString());
     }
+
     //Metodo che istanzia il gioco lato model e restituisce a lato view
     public ViewData getInit(){
         return init;

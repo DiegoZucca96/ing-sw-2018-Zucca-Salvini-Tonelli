@@ -168,23 +168,19 @@ public class GUI  {
                     }
                 }*/
                 if (!userName.isEmpty()) {
-                    if(client.login(userName)){
-
+                    if(!client.matchFound() && client.login(userName)){
                         stage.close();
                         window.close();
-
-/*
-                        try {
-                            Loading().display(new Stage(), randomWps, "LOADING MATCH", 1, null, null, null);
-                        } catch (RemoteException e1) {
-                            e1.printStackTrace();
-                        }*/
-
                         new Loading(client).display(new Stage(), "LOADING MATCH", null);
-
                     }else{
-                        warning1.setText("LOGIN IS NOT AVAILABLE");
-                        warning1.setTextFill(Color.RED);
+                        if(client.matchFound() && client.iAmBanned(userName)){
+                            //NB! Viene ricreata la schermata iniziale del gioco, ma non è sincronizzato con tutto il resto
+                            new PlayGame(client).display(client.getWP(userName));
+                        }
+                        else{
+                            warning1.setText("Match is full, sorry");
+                            warning1.setTextFill(Color.RED);
+                        }
                     }
                 }else{
                     warning1.setText("Insert at least one letter");

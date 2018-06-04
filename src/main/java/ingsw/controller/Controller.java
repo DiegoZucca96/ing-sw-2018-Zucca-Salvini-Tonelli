@@ -178,7 +178,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
 
     private boolean access(String account){
         //se esiste già il nome salvato nel server non puoi accedere
-        if(server.getListOfClient().contains(account) && !server.getListOfPlayers().contains(account)){
+        if(server.getListOfClient().contains(account) && !server.getListOfPlayers().contains(account) && server.getListOfPlayers().size()<4){
             server.addPlayers(account);
             return true;
         }
@@ -363,6 +363,21 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     @Override
     public int getRound() throws RemoteException {
         return match.getRound();
+    }
+
+    @Override
+    public ArrayList<String> getBannedList() {
+        return server.getBannedPlayer();
+    }
+
+    @Override
+    public ViewWP getWP(String userName) throws RemoteException {
+        for(int i=0; i<windowChosen.size(); i++){
+            if(windowChosen.get(i).getName().equalsIgnoreCase(match.getPlayers().get(match.getPlayers().indexOf(userName)).getWindowPattern().getTitle())){
+                return windowChosen.get(i);
+            }
+        }
+        return null;
     }
 
 

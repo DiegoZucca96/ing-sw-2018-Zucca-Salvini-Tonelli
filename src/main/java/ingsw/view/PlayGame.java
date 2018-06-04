@@ -118,50 +118,41 @@ public class PlayGame {
                 new KeyFrame(Duration.millis(1000),
                         event -> {
                             timeseconds = client.getTimeMove();
-                            if(timeseconds == timeBegin){
-                                this.updateView = client.updateView();
-                                if(updateView.getRoundTrack()!=null)
-                                    gridRound=new GridPaneRound(client, updateView.getRoundTrack(), client.getRound());
-                            }
                             if(client.getPlayerState().equals("enabled")){
                                 clockLbl.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 22 \"serif\"");
                                 clockLbl.setText("Tocca a te    "+Integer.toString(timeseconds));
                                 if (timeseconds == timeBegin-1) {
                                     //draftPoolGrid.setDisable(true);
+                                    this.updateView = client.updateView();
+                                    if(updateView!=null)
+                                        update();
                                     resetOnButton();
                                 }
+
                                 if(timeseconds==0) {
                                     if(!client.getActive()){
                                         Platform.runLater(() -> {
                                             Boolean answer= ConfirmExit.display("Disconnected", "Do you still want to play?");
                                             if(answer)
                                                 client.rejoinedPlayer(client.getName());
-                                            else
+                                            else{
                                                 Platform.exit();
+                                            }
                                         });
                                     }
                                 }
                             }else {
                                 clockLbl.setStyle(styleSheet);
                                 clockLbl.setText("Tocca a "+client.getCurrentPlayer()+"      "+Integer.toString(timeseconds));
-                                if (timeseconds == timeBegin) {
+                                if (timeseconds == timeBegin-1) {
                                     //draftPoolGrid.setDisable(true);
                                     resetOffButton();
                                 }
-                                if(timeseconds%5==0){
-
-
-                                    for(int i =0; i<client.getNumberOfPlayers(); i++){
-                                        if(updateView.getWps().get(i)!=null)
-                                            gridEn = createGridEn(i);
-                                    }
-
-
-                                    if(updateView.getDraftPoolDice()!=null){
-                                        draftPoolGrid = new GridPaneDraftPool(client, updateView.getDraftPoolDice(),buttonDie);
-                                    }
+                                if(timeseconds%50==0){
+                                    this.updateView = client.updateView();
+                                    if(updateView!=null)
+                                        update();
                                 }
-
                             }
                         }));
         timeline.playFromStart();
@@ -453,6 +444,22 @@ public class PlayGame {
             }
         }
         return grid;
+    }
+
+    private void update() {
+        for(int i =0; i<client.getNumberOfPlayers(); i++){
+            if(updateView.getWps()!=null){
+                if(updateView.getWps().get(i)!=null)
+                    gridEn = createGridEn(i);
+            }
+        }
+
+        if(updateView.getDraftPoolDice()!=null){
+            draftPoolGrid.updateDP(updateView.getDraftPoolDice());
+        }
+
+        if(updateView.getRoundTrack()!=null)
+            gridRound=new GridPaneRound(client, updateView.getRoundTrack(), client.getRound());
     }
 
     public static boolean getChoosePressed(){

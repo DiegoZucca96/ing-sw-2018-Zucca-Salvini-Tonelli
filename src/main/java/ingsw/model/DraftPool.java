@@ -13,12 +13,14 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
     private DiceBag diceBag;
     private RoundTrack roundTrack;
     private Observer viewObserver;
+    private int begin;
 
     public  DraftPool(RoundTrack roundTrack){
         diceList = new ArrayList<Die>();
         diceBag = new DiceBag();
         this.roundTrack = roundTrack;
         viewObserver = new DraftPoolObserver();
+        begin = 0;
     }
 
     public DiceBag getDiceBag() {
@@ -35,7 +37,10 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
         for(int i=0; i<nDice; i++){
             diceList.add(diceBag.randomDice());
         }
-        notifyViewObserver();
+        if(begin==1)
+            notifyViewObserver();
+        else
+            begin++;
         return diceList;
     }
 

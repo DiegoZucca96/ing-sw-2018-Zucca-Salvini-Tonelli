@@ -25,7 +25,7 @@ public class ViewData implements Serializable {
         pbCards = new ArrayList<>();
         toolCards = new ArrayList<>();
         draftPoolDice = new ArrayList<>();
-        roundTrack = null;
+        roundTrack = new ArrayList<>();
     }
 
     public static ViewData instance() {
@@ -66,7 +66,10 @@ public class ViewData implements Serializable {
     }
 
     public void addWp(ViewWP wp){
-        wps.add(wp);
+        for(ViewWP x : wps){
+            if(x.getNumberWP() == wp.getNumberWP())
+                wps.set(wps.indexOf(x),wp);
+        }
     }
 
     public void addPBCard(String pbCard){
@@ -81,8 +84,8 @@ public class ViewData implements Serializable {
         toolCards.add(toolCard);
     }
 
-    public void addDPDie(String Die){
-        draftPoolDice.add(Die);
+    public void addDPDie(int i, String die){
+        draftPoolDice.set(i,die);
     }
 
     public void setRoundTrack(ArrayList<String> roundTrack) {

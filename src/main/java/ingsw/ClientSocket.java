@@ -205,6 +205,27 @@ public class ClientSocket implements Client {
         return 0;
     }
 
+    @Override
+    public boolean matchFound() {
+        //da impl
+
+        return false;
+    }
+
+    @Override
+    public boolean iAmBanned(String userName) {
+        //da impl
+
+        return false;
+    }
+
+    @Override
+    public ViewWP getWP(String userName) {
+        //da impl
+
+        return null;
+    }
+
 
     @Override
     public ArrayList<ViewWP> getPlayerWPs(String name){

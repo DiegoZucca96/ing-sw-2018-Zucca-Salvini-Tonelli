@@ -235,6 +235,41 @@ public class ClientRMI implements Client {
     }
 
     @Override
+    public boolean matchFound() {
+        try {
+            if(controller.getTimeRemaining()>0)
+                return false;
+            else
+                return true;
+        } catch (RemoteException e) {
+            return true;
+        }
+    }
+
+    @Override
+    public boolean iAmBanned(String userName) {
+        try {
+            if(controller.getBannedList().contains(userName))
+                return true;
+            else
+                return false;
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
+    //Da implementare la equals di questo metodo
+    @Override
+    public ViewWP getWP(String userName) {
+        try {
+            return controller.getWP(userName);
+        } catch (RemoteException e1) {
+            e1.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public ArrayList<ViewWP> getPlayerWPs(String name) {
         try {
             return controller.getPlayersWPs(name);
