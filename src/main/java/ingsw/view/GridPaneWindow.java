@@ -3,6 +3,7 @@ package ingsw.view;
 import ingsw.Client;
 import ingsw.model.Color;
 import ingsw.model.ViewWP;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -69,6 +70,7 @@ public class GridPaneWindow extends GridPane {
         }
     }
 
+
     private Button addButtonWp(int i, int j) {
         Button button = new Button();
 
@@ -106,4 +108,6 @@ public class GridPaneWindow extends GridPane {
         CellInfo cellInfo= new CellInfo(image, i, j);
         cellInfos.add(cellInfo);
     }
+
+
 }

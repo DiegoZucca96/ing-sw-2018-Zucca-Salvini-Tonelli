@@ -23,6 +23,8 @@ import javafx.scene.transform.Shear;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.NoSuchElementException;
+
 /**Author : Alessio Tonelli _ Diego Zucca _ Elio Salvini
  *
  * GUI: start first Scene
@@ -135,52 +137,25 @@ public class GUI  {
         btnLogin.setOnAction(e->{
             // SERVER VERIFICA LE CREDENZIALI
             userName = tfName.getText();
-                /*if (!username.isEmpty()) {
-                    try {
-                        if(!controller.getListOfPlayers().contains(username)){
-                            if (controller.access(username)) {
-                                if(controller.getListOfPlayers().size()<4) {
-                                    controller.addPlayers(username);
-                                    stage.close();
-                                    window.close();
-                                    InitializerView init = null;
-                                    try {
-                                        init = controller.initializeView();
-                                    } catch (RemoteException e1) {
-                                        e1.printStackTrace();
-                                    }
-                                    Loading.display(new Stage(), init, "LOADING MATCH", 1, null, null, null, controller);
 
-                                } else {
-                                    warning1.setText("MATCH IS FULL, SORRY");
-                                    warning1.setTextFill(Color.RED);
-                                }
-                            } else {
-                                warning1.setText("REGISTER NOW");
+                if (!userName.isEmpty()) {
+                    try{
+                        if(!client.matchFound() && client.login(userName)){
+                            stage.close();
+                            window.close();
+                            new Loading(client).display(new Stage(), "LOADING MATCH", null);
+                        }else{
+                            if(client.matchFound() && client.iAmBanned(userName)){
+                                //NB! Viene ricreata la schermata iniziale del gioco, ma non è sincronizzato con tutto il resto
+                                new PlayGame(client).display(client.getWP(userName));
+                            }
+                            else{
+                                warning1.setText("Match is full, sorry");
                                 warning1.setTextFill(Color.RED);
                             }
-                        }else{
-                            warning1.setText("NICKNAME ALREADY TAKEN");
-                            warning1.setTextFill(Color.RED);
                         }
-                    } catch (RemoteException e1) {
-                        e1.printStackTrace();
-                    }
-                }*/
-                if (!userName.isEmpty()) {
-                    if(!client.matchFound() && client.login(userName)){
-                        stage.close();
-                        window.close();
-                        new Loading(client).display(new Stage(), "LOADING MATCH", null);
-                    }else{
-                        if(client.matchFound() && client.iAmBanned(userName)){
-                            //NB! Viene ricreata la schermata iniziale del gioco, ma non è sincronizzato con tutto il resto
-                            new PlayGame(client).display(client.getWP(userName));
-                        }
-                        else{
-                            warning1.setText("Match is full, sorry");
-                            warning1.setTextFill(Color.RED);
-                        }
+                    }catch (NoSuchElementException e2){
+                        System.err.println(e2.getMessage());
                     }
                 }else{
                     warning1.setText("Insert at least one letter");
@@ -253,13 +228,18 @@ public class GUI  {
         btnSubmit.setOnAction(e-> {
             saveUsername = tfName.getText();
             if (!saveUsername.isEmpty()) {
-                if(client.register(saveUsername)){
-                    stage.close();
-                    oldStage.show();
-                }else {
-                    warning1.setText("NICKNAME ALREADY EXISTS");
-                    warning1.setTextFill(Color.RED);
+                try{
+                    if(client.register(saveUsername)){
+                        stage.close();
+                        oldStage.show();
+                    }else {
+                        warning1.setText("NICKNAME ALREADY EXISTS");
+                        warning1.setTextFill(Color.RED);
+                    }
+                }catch (NoSuchElementException e1){
+                    System.err.println(e1.getMessage());
                 }
+
             }
         });
         btnExit.setOnAction(e-> stage.close());

@@ -47,9 +47,6 @@ public class GridPaneDraftPool extends GridPane {
                     BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                     BackgroundSize.DEFAULT);
             b.setBackground(new Background(myBI));
-            /*if (client.getPlayerState().equalsIgnoreCase("disabled")) {
-                b.setDisable(true);
-            } else b.setDisable(false);*/
         }
     }
 
@@ -64,20 +61,6 @@ public class GridPaneDraftPool extends GridPane {
 
     public void deselectBtn(int row, int col){
         buttonDieSelected.setOpacity(0);
-
-           /* Button x = (Button) getChildren().get(i);
-            Integer rowIndex = GridPane.getRowIndex(x);
-            Integer columnIndex = GridPane.getColumnIndex(x);
-            if(rowIndex != null && rowIndex==row && columnIndex != null && columnIndex== col){
-                Button button = new Button();
-                button.setBackground(dieInfo.getBackground());
-                button.setStyle("-fx-border-color: black");
-                getChildren().remove(x);
-                button.setPrefSize(58, 58);
-                button.setOpacity(1);
-                action(button, 0, col);
-                add(button,col, 0);
-            }*/
     }
 
     public Button getButton(int row, int col){

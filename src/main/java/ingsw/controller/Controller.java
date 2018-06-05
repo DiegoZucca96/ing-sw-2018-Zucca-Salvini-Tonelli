@@ -372,8 +372,15 @@ public class Controller extends UnicastRemoteObject implements RMIController {
 
     @Override
     public ViewWP getWP(String userName) throws RemoteException {
+        String nameWP = null;
+        for(Player p : match.getPlayers()){
+            if(p.getName().equals(userName)){
+                nameWP = p.getWindowPattern().getTitle();
+            }
+        }
         for(int i=0; i<windowChosen.size(); i++){
-            if(windowChosen.get(i).getName().equalsIgnoreCase(match.getPlayers().get(match.getPlayers().indexOf(userName)).getWindowPattern().getTitle())){
+            String nameWC = windowChosen.get(i).getName();
+            if(nameWC.equalsIgnoreCase(nameWP)){
                 return windowChosen.get(i);
             }
         }
