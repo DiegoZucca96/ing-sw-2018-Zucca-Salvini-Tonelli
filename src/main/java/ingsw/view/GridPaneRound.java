@@ -22,6 +22,7 @@ public class GridPaneRound extends GridPane {
     private int round;
     private boolean toolUsed=false;
     private GridPane gridOfdDice;
+    private int significantRound;
 
     public GridPaneRound(Client client, ArrayList<String> roundTrack, int round){
         this.client=client;
@@ -47,12 +48,15 @@ public class GridPaneRound extends GridPane {
 
     public void updateRound(ArrayList<String> roundTrack, int round){
         this.roundTrack = roundTrack;
-        updateButton(round-1);
+        this.significantRound=round;
+        round--;                                           //allineamento con la griglia
+        if(round > 0)
+            updateButton(round -1);         //aggiorno il round precedente
     }
 
     private void updateButton(int currentRound) {
         for(Node node : getChildren()){
-            if(GridPaneRound.getColumnIndex(node) < currentRound){
+            if(GridPaneRound.getColumnIndex(node) == currentRound){
                 Button button = (Button) node;
                 button.setText("");
                 String imagePath = "/ok.png";
@@ -62,9 +66,9 @@ public class GridPaneRound extends GridPane {
                 button.setBackground(new Background(back));
 
                 button.setOnAction(e-> {
-                    if(currentRound<=round){
-                        Stage diceExtraGrid = diceRoundTrack(currentRound);
-                        diceExtraGrid.setTitle("Round: "+currentRound);
+                    if(currentRound+1<=significantRound){
+                        Stage diceExtraGrid = diceRoundTrack(currentRound+1);
+                        diceExtraGrid.setTitle("Round: "+(currentRound+1));
                         diceExtraGrid.show();
                     }else{
                         Toolkit.getDefaultToolkit().beep();
