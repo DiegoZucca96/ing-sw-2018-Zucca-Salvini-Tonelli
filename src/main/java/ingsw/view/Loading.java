@@ -105,6 +105,7 @@ public class Loading {
 
                                 if (client.readyToPlay()){
                                     timeline.stop();
+                                    client.orderWPChoise();
                                     new PlayGame(client).display(myWindow);
 
                                     primaryStage.close();

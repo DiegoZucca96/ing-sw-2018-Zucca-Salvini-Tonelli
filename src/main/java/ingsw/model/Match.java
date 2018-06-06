@@ -55,9 +55,10 @@ public class Match {
         pbCards.add(new PBObjectiveCard(numPBCards.get(2)));
 
         ArrayList<Die> dicelist = startRound();
-        for(Die d : dicelist)
-            init.getDraftPoolDice().add(d.toString());
+        for(Die die : dicelist)
+            init.getDraftPoolDice().add(die.toString());
     }
+
     //Metodo che istanzia il gioco lato model e restituisce a lato view
     public ViewData getInit(){
         return init;
@@ -115,15 +116,21 @@ public class Match {
     }
 
     //termina il round e setta a tutti i giocatori il loro primo turno
-    public void endRound() {
+    public boolean endRound() {
         draftPool.cleanDraftPool();
         roundTrack.nextRound();
-        clockwiseRound = true;
-        //il primo giocatore viene messo in fondo alla lista in quanto diventa l'ultimo
-        players.remove(currentPlayer);
-        players.add(currentPlayer);
-        currentPlayer = players.get(0);
-        draftPool.throwsDice(getNumOfPlayers()*2 + 1);
+        if(getRound()==-1){
+            return true;
+        }
+        else{
+            clockwiseRound = true;
+            //il primo giocatore viene messo in fondo alla lista in quanto diventa l'ultimo
+            players.remove(currentPlayer);
+            players.add(currentPlayer);
+            currentPlayer = players.get(0);
+            draftPool.throwsDice(getNumOfPlayers()*2 + 1);
+        }
+        return false;
     }
 
     //NB nextTurn va chiamata 7 volte con 4 giocatori, al termine si chiama endRound (tengo conto se è il primo o secondo turno tramite clockwiseRound)

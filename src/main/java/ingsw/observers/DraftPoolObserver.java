@@ -11,7 +11,7 @@ public class DraftPoolObserver implements Observer{
     public void update(Object subject, ViewData viewData) {
         draftPool = (DraftPool) subject;
         for (int i=0; i<draftPool.getDiceListSize(); i++){
-            viewData.addDPDie(draftPool.getDie(i).toString());
+            viewData.addDPDie(i,draftPool.getDie(i).toString());
         }
     }
 }

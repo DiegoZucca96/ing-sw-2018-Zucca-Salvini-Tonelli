@@ -9,6 +9,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -38,12 +39,13 @@ public class PlayGame {
     private static Button exitBtn;
     private static Button infoBtn;
     private static Button cancelBtn;
-    private GridPane gridRound;
+    private GridPaneRound gridRound;
     private GridPane toolGrid;
     private GridPane pbGrid;
     private GridPane cellsGrid;
     private GridPane gridEn;
     private GridPaneWindow myWindowGrid;
+    private GridPaneWEnemy mutableGridEn;
     private GridPaneDraftPool draftPoolGrid;
     private static final String styleSheet = "-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"";
     private ViewData updateView;
@@ -52,6 +54,7 @@ public class PlayGame {
     private Label textLbl;
     private Button buttonDie;
     private ViewWP myWindow;
+    private GridPane secondGrid;
 
 
     public PlayGame(Client client){
@@ -70,16 +73,11 @@ public class PlayGame {
         Pane root = new Pane();
         Scene scene = new Scene(root);
 
-
-
-
         //IMMAGINE BACKGROUND
         final ImageView backGround = new ImageView();
         String imagePathB = "/backgroundtable.jpg";
         Image imageB = new Image(imagePathB, 1200, 700, false, false);
         backGround.setImage(imageB);
-
-
 
         //COUNTDOWN
         Pane currentInfo = new Pane();
@@ -118,50 +116,39 @@ public class PlayGame {
                 new KeyFrame(Duration.millis(1000),
                         event -> {
                             timeseconds = client.getTimeMove();
-                            if(timeseconds == timeBegin){
-                                this.updateView = client.updateView();
-                                if(updateView.getRoundTrack()!=null)
-                                    gridRound=new GridPaneRound(client, updateView.getRoundTrack(), client.getRound());
-                            }
                             if(client.getPlayerState().equals("enabled")){
                                 clockLbl.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 22 \"serif\"");
                                 clockLbl.setText("Tocca a te    "+Integer.toString(timeseconds));
                                 if (timeseconds == timeBegin-1) {
-                                    //draftPoolGrid.setDisable(true);
+                                    this.updateView = client.updateView();
+                                    if(updateView!=null)
+                                        update();
                                     resetOnButton();
                                 }
+
                                 if(timeseconds==0) {
                                     if(!client.getActive()){
                                         Platform.runLater(() -> {
                                             Boolean answer= ConfirmExit.display("Disconnected", "Do you still want to play?");
                                             if(answer)
                                                 client.rejoinedPlayer(client.getName());
-                                            else
+                                            else{
                                                 Platform.exit();
+                                            }
                                         });
                                     }
                                 }
                             }else {
                                 clockLbl.setStyle(styleSheet);
                                 clockLbl.setText("Tocca a "+client.getCurrentPlayer()+"      "+Integer.toString(timeseconds));
-                                if (timeseconds == timeBegin) {
-                                    //draftPoolGrid.setDisable(true);
+                                if (timeseconds == timeBegin-1) {
                                     resetOffButton();
                                 }
                                 if(timeseconds%5==0){
-
-
-                                    for(int i =0; i<client.getNumberOfPlayers(); i++){
-                                        if(updateView.getWps().get(i)!=null)
-                                            gridEn = createGridEn(i);
-                                    }
-
-
-                                    if(updateView.getDraftPoolDice()!=null){
-                                        draftPoolGrid = new GridPaneDraftPool(client, updateView.getDraftPoolDice(),buttonDie);
-                                    }
+                                    this.updateView = client.updateView();
+                                    if(updateView!=null)
+                                        update();
                                 }
-
                             }
                         }));
         timeline.playFromStart();
@@ -238,6 +225,21 @@ public class PlayGame {
             eachGrid.add(gridEn, index, 0);
         }
 
+        //SECOND GRID ON EACHGRID TO PUT DICE
+        secondGrid = new GridPane();
+        secondGrid.setPrefSize(720, 200);
+        secondGrid.setLayoutX(240);
+        secondGrid.setLayoutY(80);
+        int position = 0;
+        for(int index= 0; index < client.getNumberOfPlayers(); index++){
+            if(!(client.getListOfPlayers().get(index).equalsIgnoreCase(client.getName()))){
+                mutableGridEn = new GridPaneWEnemy(client,client.getWP(client.getListOfPlayers().get(index)).getNumberWP());
+                secondGrid.add(mutableGridEn, position, 0);
+                position++;
+            }
+        }
+        secondGrid.setHgap(40);
+
         //BOTTONI
         GridPane btnGrid = new GridPane();
         btnGrid.setVgap(20);
@@ -295,7 +297,6 @@ public class PlayGame {
                     resetOnButton();
                 }else{
                     client.nullSelection();
-                    //draftPoolGrid.setDisable(true);
                     resetOnButton();
                     draftPoolGrid.deselectBtn(0, col);
                 }
@@ -313,7 +314,7 @@ public class PlayGame {
 
 
         //ATTACH DI TUTTO
-        root.getChildren().addAll(backGround, toolGrid, pbGrid,/*toolPane1, toolPane2, toolPane3, pbPane1, pbPane2, pbPane3,*/ gridRound, divideGrids, myWindowGrid, btnGrid, eachGrid, pvPane, draftPoolGrid, currentInfo,currentInfo2, currentInfo3);
+        root.getChildren().addAll(backGround, toolGrid, pbGrid, gridRound, divideGrids, myWindowGrid, btnGrid, eachGrid, secondGrid, pvPane, draftPoolGrid, currentInfo,currentInfo2, currentInfo3);
         stage.setScene(scene);
         stage.setTitle("Sagrada - " +client.getName());
         stage.resizableProperty().setValue(Boolean.FALSE);
@@ -350,24 +351,10 @@ public class PlayGame {
 
         final ImageView view = new ImageView();
         String imagePathT = stringPvCard;
-        /*pane.setBackground(new Background(new BackgroundImage(new Image(imagePathT, 300, 420, true, true), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(pane.getWidth(), pane.getHeight(), false, false, false, true))));
-        pane.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override public void handle(MouseEvent e) {
-                pane.resize(169,260);
-                //view.setScaleY(1.3);
-            }
-        });
-        pane.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override public void handle(MouseEvent e) {
-                pane.resize(130,200);
-                //view.setScaleY(1);
-            }
-        });*/
         Image imageT = new Image(imagePathT, 300, 420, false, true);
         view.setImage(imageT);
         view.scaleXProperty().setValue(0.43);
         view.scaleYProperty().setValue(0.476);
-
         /*view.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent e) {
                 view.scaleXProperty().setValue(0.7);
@@ -383,20 +370,14 @@ public class PlayGame {
                 //view.setScaleY(1);
             }
         });*/
-
         pane.getChildren().add(view);
-
         return pane;
     }
 
     private ImageView Images(ArrayList<String> stringCard, int i){
-
-
         final ImageView view = new ImageView();
         String imagePathT = stringCard.get(i);
-        /*Image imageT = new Image(imagePathT, 130, 200, false, true);
-        View.setImage(imageT);
-
+        /*
         View.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent e) {
                 View.setScaleX(1.3);
@@ -414,37 +395,22 @@ public class PlayGame {
         view.setImage(imageT);
         view.scaleXProperty().setValue(0.43);
         view.scaleYProperty().setValue(0.476);
-
-
         return view;
     }
 
-
+    //CREA LA GRIGLIA AVVERSARIA DI SOLE CELLE SENZA DADI
     private GridPane createGridEn(int player) {
         GridPane grid = new GridPane();
         String number;
         String color;
-        ViewWP wp;
-        if(begin<client.getNumberOfPlayers()){
-            wp= client.getPlayerWPs(client.getName()).get(player);
-            begin++;
-        }else
-            wp = updateView.getWps().get(player);
-
-
+        ViewWP wp = client.getPlayerWPs(client.getName()).get(player);
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
                 Button btnCell = new Button();
                 btnCell.setPrefSize(40, 40);
-                String dieStr = wp.getWp()[i][j].getDie();
-                if(dieStr==null){
-                    number = Integer.toString(wp.getWp()[i][j].getNum());
-                    color = String.valueOf(wp.getWp()[i][j].getColor());
-                }else{
-                    number =dieStr.substring(dieStr.indexOf("(")+1, dieStr.indexOf(","));
-                    color = dieStr.substring(dieStr.indexOf(",")+1, dieStr.indexOf(")"));
-                }
+                number = Integer.toString(wp.getWp()[i][j].getNum());
+                color = String.valueOf(wp.getWp()[i][j].getColor());
                 String path = WPRendering.path(number, color);
                 Image myImage = new Image(path, 40, 40, false, true);
                 BackgroundImage myBI = new BackgroundImage(myImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
@@ -453,6 +419,27 @@ public class PlayGame {
             }
         }
         return grid;
+    }
+
+    private void update() {
+        for(int i = 0; i<client.getNumberOfPlayers()-1; i++){
+            if(updateView.getWps()!=null){
+                if(updateView.getWps().get(i)!=null){
+                    mutableGridEn = (GridPaneWEnemy) secondGrid.getChildren().get(i);
+                    if(mutableGridEn.getNumberWP() == updateView.getWps().get(i).getNumberWP())
+                        mutableGridEn.updateWindow(updateView.getWps().get(i));
+                    else
+                        mutableGridEn.updateWindow(updateView.getWps().get(i+1));
+                }
+            }
+        }
+
+        if(updateView.getDraftPoolDice()!=null){
+            draftPoolGrid.updateDP(updateView.getDraftPoolDice());
+        }
+
+        if(updateView.getRoundTrack()!=null)
+            gridRound.updateRound(updateView.getRoundTrack(), client.getRound());
     }
 
     public static boolean getChoosePressed(){

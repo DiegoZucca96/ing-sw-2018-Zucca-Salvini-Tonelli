@@ -4,6 +4,7 @@ package ingsw.view;
 
 
 import ingsw.Client;
+import ingsw.controller.RMIController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -12,6 +13,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
+import java.rmi.RemoteException;
 
 
 /**Author : Alessio Tonelli
@@ -29,11 +32,11 @@ public class Victory {
     private static int event =1;
     private Label nameLabel;
     private final String styleSheet ="-fx-text-fill: goldenrod; -fx-font: italic 100 \"serif\"; -fx-padding: 0 0 20 0";
-    private Client client;
+    //private Client client;
 
-    public void start( Client c) {
+    public void start( RMIController controller) {
 
-        this.client=c;
+        //this.client=c;
 
         // Setup the Stage and the Scene (the scene graph)
         Stage primaryStage = new Stage();
@@ -66,7 +69,11 @@ public class Victory {
                     timerLabel=new Label();
                     MultiScore threadScore = new MultiScore(timerLabel);
                     threadScore.start();
-                    nameLabel.setText(client.getListOfPlayers().get(i));
+                    try {
+                        nameLabel.setText(controller.getListOfPlayers().get(i));
+                    } catch (RemoteException e1) {
+                        e1.printStackTrace();
+                    }
                     nameLabel.setStyle(styleSheet);
                     timerLabel.setStyle(styleSheet);
 

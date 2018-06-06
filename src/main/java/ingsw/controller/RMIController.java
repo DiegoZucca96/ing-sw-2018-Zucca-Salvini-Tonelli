@@ -102,4 +102,10 @@ public interface RMIController extends Remote {
     void setNullPlayer() throws RemoteException;
 
     int getRound() throws RemoteException;
+
+    ArrayList<String> getBannedList() throws RemoteException;
+
+    ViewWP getWP(String userName) throws RemoteException;
+
+    void orderWPChoise() throws RemoteException;
 }
