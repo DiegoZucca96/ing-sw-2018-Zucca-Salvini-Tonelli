@@ -119,6 +119,9 @@ public interface Client {
     //Restituisce la WP che era scelta dal player
     ViewWP getWP(String userName);
 
+    //Ordina le windowChosen
+    void orderWPChoise();
+
     /*
     "windowpattern(name(ciao),difficulty(4),cell(row(0),column(0),number(0),color(RED),Die(number(5),color(RED)),cell(..."
 

@@ -3,6 +3,7 @@ package ingsw.controller;
 import ingsw.*;
 import ingsw.model.*;
 import ingsw.model.windowpattern.WindowPattern;
+import ingsw.view.Victory;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -28,6 +29,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     private HashMap<String,Integer> hashPlayers; //Associa ogni player alla sua WP selezionata (usata nella costruzione di match)
     private boolean active;
     private int turn;
+    private boolean isFinish;
 
     //NB -->    tutti i metodi del controller devono essere boolean, per un motivo o per l'altro
     //          non sempre possono fare l'azione richiesta, in quel caso restituiscono false
@@ -246,16 +248,21 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             disableClient(getCurrentPlayerName());
             turn++;
             if (turn == getSizeOfPlayers()*2) {
-                match.endRound();
+                isFinish = match.endRound();  //Da tener conto quando un giocatore ha riempito tutta la WP deve finire lo stesso
                 turn=0;
             }
             else{
                 match.nextTurn();
             }
-            enableClient(getCurrentPlayerName());
-            controllerTimer.setTimeMoveRemaining(playerMoveTime);
-            timer = new Timer();
-            controllerTimer.startPlayerTimer(this,timer);
+            if(isFinish)
+                new Victory().start(this);
+            else{
+                enableClient(getCurrentPlayerName());
+                controllerTimer.setTimeMoveRemaining(playerMoveTime);
+                timer = new Timer();
+                controllerTimer.startPlayerTimer(this,timer); 
+            }
+            
         }
     }
 
@@ -385,6 +392,23 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             }
         }
         return null;
+    }
+
+    @Override
+    public synchronized void orderWPChoise() throws RemoteException {
+        if(access==2){
+            ArrayList<ViewWP> windowOrdered = new ArrayList<>();
+            ArrayList<String> players = server.getListOfPlayers();
+            for(String p : players){
+                int num = hashPlayers.get(p);
+                for(ViewWP w: windowChosen){
+                    if(num==w.getNumberWP())
+                        windowOrdered.add(w);
+                }
+            }
+            windowChosen = windowOrdered;
+            access++;
+        }
     }
 
 

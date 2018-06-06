@@ -9,6 +9,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -53,6 +54,7 @@ public class PlayGame {
     private Label textLbl;
     private Button buttonDie;
     private ViewWP myWindow;
+    private GridPane secondGrid;
 
 
     public PlayGame(Client client){
@@ -142,7 +144,7 @@ public class PlayGame {
                                 if (timeseconds == timeBegin-1) {
                                     resetOffButton();
                                 }
-                                if(timeseconds%50==0){
+                                if(timeseconds%5==0){
                                     this.updateView = client.updateView();
                                     if(updateView!=null)
                                         update();
@@ -224,15 +226,19 @@ public class PlayGame {
         }
 
         //SECOND GRID ON EACHGRID TO PUT DICE
-        GridPane secondGrid = new GridPane();
-        secondGrid.setHgap(40);
+        secondGrid = new GridPane();
         secondGrid.setPrefSize(720, 200);
         secondGrid.setLayoutX(240);
         secondGrid.setLayoutY(80);
-        for(int index= 0; index < client.getNumberOfPlayers()-1; index++){
-            mutableGridEn = new GridPaneWEnemy(client, index);
-            secondGrid.add(mutableGridEn, index, 0);
+        int position = 0;
+        for(int index= 0; index < client.getNumberOfPlayers(); index++){
+            if(!(client.getListOfPlayers().get(index).equalsIgnoreCase(client.getName()))){
+                mutableGridEn = new GridPaneWEnemy(client,client.getWP(client.getListOfPlayers().get(index)).getNumberWP());
+                secondGrid.add(mutableGridEn, position, 0);
+                position++;
+            }
         }
+        secondGrid.setHgap(40);
 
         //BOTTONI
         GridPane btnGrid = new GridPane();
@@ -416,10 +422,15 @@ public class PlayGame {
     }
 
     private void update() {
-        for(int i = 0; i<client.getNumberOfPlayers(); i++){
+        for(int i = 0; i<client.getNumberOfPlayers()-1; i++){
             if(updateView.getWps()!=null){
-                if(updateView.getWps().get(i)!=null)
-                    mutableGridEn.updateWindow(updateView.getWps().get(i));
+                if(updateView.getWps().get(i)!=null){
+                    mutableGridEn = (GridPaneWEnemy) secondGrid.getChildren().get(i);
+                    if(mutableGridEn.getNumberWP() == updateView.getWps().get(i).getNumberWP())
+                        mutableGridEn.updateWindow(updateView.getWps().get(i));
+                    else
+                        mutableGridEn.updateWindow(updateView.getWps().get(i+1));
+                }
             }
         }
 

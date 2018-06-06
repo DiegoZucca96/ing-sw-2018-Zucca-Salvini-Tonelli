@@ -226,6 +226,12 @@ public class ClientSocket implements Client {
         return null;
     }
 
+    @Override
+    public void orderWPChoise() {
+        //da impl
+
+    }
+
 
     @Override
     public ArrayList<ViewWP> getPlayerWPs(String name){

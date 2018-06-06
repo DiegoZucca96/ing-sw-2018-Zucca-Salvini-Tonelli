@@ -106,4 +106,6 @@ public interface RMIController extends Remote {
     ArrayList<String> getBannedList() throws RemoteException;
 
     ViewWP getWP(String userName) throws RemoteException;
+
+    void orderWPChoise() throws RemoteException;
 }

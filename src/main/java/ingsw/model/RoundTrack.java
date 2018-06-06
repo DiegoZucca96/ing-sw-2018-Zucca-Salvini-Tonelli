@@ -34,7 +34,11 @@ public class RoundTrack {
 
     //incrementa il round corrente di uno, fino a raggiungere il valore massimo, 10
     public void nextRound(){
-        if(currentRound <10) currentRound++;
+        if(currentRound <10)
+            currentRound++;
+        else
+            currentRound=-1;
+
     }
 
     //inserisce il dado nella lista all'indice round.
