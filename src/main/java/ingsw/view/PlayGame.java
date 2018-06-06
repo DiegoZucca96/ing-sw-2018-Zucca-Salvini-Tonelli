@@ -2,6 +2,7 @@ package ingsw.view;
 
 
 import ingsw.Client;
+import ingsw.model.Color;
 import ingsw.model.ViewWP;
 import ingsw.model.ViewData;
 import javafx.animation.KeyFrame;
@@ -19,6 +20,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -55,6 +58,7 @@ public class PlayGame {
     private Button buttonDie;
     private ViewWP myWindow;
     private GridPane secondGrid;
+    private GridPane gridTks;
 
 
     public PlayGame(Client client){
@@ -153,6 +157,17 @@ public class PlayGame {
                         }));
         timeline.playFromStart();
 
+        //TOKENS
+        int numberOfTokens = Integer.parseInt(client.getWP(client.getName()).getDifficulty());
+        gridTks = new GridPane();
+        gridTks.setLayoutY(345);
+        gridTks.setLayoutX(720);
+        gridTks.setVgap(20);
+        for(int j = 0; j<numberOfTokens; j++){
+            Circle token = new Circle(10, Paint.valueOf(javafx.scene.paint.Color.GOLD.toString()));
+            gridTks.add(token, 0, j);
+        }
+
 
         //ROUNDTRACK
         gridRound= new GridPaneRound(client, init.getRoundTrack(), 1);
@@ -199,20 +214,26 @@ public class PlayGame {
         draftPoolGrid.setLayoutY(600);
 
 
-        //IMMUTABLE WINDOW MADE OF ONLY BY CELLS
+        //IMMUTABLE WINDOW MADE OF ONLY CELLS
         cellsGrid = addGridPane();
 
         //PANE WHICH IS BETWEEN THE TWO GRIDS
         Pane divideGrids = new Pane();
-        divideGrids.setLayoutX(200);
+        divideGrids.setLayoutX(240);
         divideGrids.setLayoutY(330);
         divideGrids.getChildren().add(cellsGrid);
 
         //LA MIA WP
         myWindowGrid = new GridPaneWindow(myWindow, client, draftPoolGrid);
-        myWindowGrid.setLayoutX(200);
+        myWindowGrid.setLayoutX(240);
         myWindowGrid.setLayoutY(330);
 
+        //TITLE
+        Label title = new Label();
+        title.setText(client.getWP(client.getName()).getName());
+        title.setStyle(styleSheet);
+        title.setLayoutX(300);
+        title.setLayoutY(550);
 
         //WP AVVERSARIE
         GridPane eachGrid = new GridPane();
@@ -314,7 +335,7 @@ public class PlayGame {
 
 
         //ATTACH DI TUTTO
-        root.getChildren().addAll(backGround, toolGrid, pbGrid, gridRound, divideGrids, myWindowGrid, btnGrid, eachGrid, secondGrid, pvPane, draftPoolGrid, currentInfo,currentInfo2, currentInfo3);
+        root.getChildren().addAll(backGround, toolGrid, pbGrid, gridRound, divideGrids, myWindowGrid, title, btnGrid, eachGrid, secondGrid, pvPane, draftPoolGrid, gridTks,currentInfo,currentInfo2, currentInfo3);
         stage.setScene(scene);
         stage.setTitle("Sagrada - " +client.getName());
         stage.resizableProperty().setValue(Boolean.FALSE);
@@ -401,6 +422,8 @@ public class PlayGame {
     //CREA LA GRIGLIA AVVERSARIA DI SOLE CELLE SENZA DADI
     private GridPane createGridEn(int player) {
         GridPane grid = new GridPane();
+        grid.setVgap(1.5);
+        grid.setHgap(1.5);
         String number;
         String color;
         ViewWP wp = client.getPlayerWPs(client.getName()).get(player);

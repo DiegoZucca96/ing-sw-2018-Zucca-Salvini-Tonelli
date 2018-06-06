@@ -47,7 +47,8 @@ public class WPRendering {
 
         //WP 1
         GridPane grid1 = new GridPane();
-
+        grid1.setVgap(1.5);
+        grid1.setHgap(1.5);
         for(int i=0; i<4; i++){
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
@@ -80,7 +81,6 @@ public class WPRendering {
             client.addWP(myWindow);
             windowPattern.close();
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
-            //new Private().display(client);
         });
 
         label1.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -100,7 +100,8 @@ public class WPRendering {
 
         //WP 2
         GridPane grid2 = new GridPane();
-
+        grid2.setVgap(1.5);
+        grid2.setHgap(1.5);
         for(int i=0; i<4; i++){
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
@@ -133,7 +134,6 @@ public class WPRendering {
             client.addWP(myWindow);
             windowPattern.close();
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
-            //new Private().display(client);
         });
 
 
@@ -153,7 +153,8 @@ public class WPRendering {
 
         //WP 3
         GridPane grid3 = new GridPane();
-
+        grid3.setVgap(1.5);
+        grid3.setHgap(1.5);
         for(int i=0; i<4; i++){
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
@@ -185,7 +186,6 @@ public class WPRendering {
             client.addWP(myWindow);
             windowPattern.close();
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
-            //new Private().display(client);
         });
 
 
@@ -205,7 +205,8 @@ public class WPRendering {
 
         //WP 4
         GridPane grid4 = new GridPane();
-
+        grid4.setVgap(1.5);
+        grid4.setHgap(1.5);
         for(int i=0; i<4; i++){
             for( int j=0; j<5; j++){
                 Button btnCell = new Button();
@@ -238,7 +239,6 @@ public class WPRendering {
             client.addWP(myWindow);
             windowPattern.close();
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
-            //new Private().display(client);
         });
 
 

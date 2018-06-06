@@ -15,6 +15,8 @@ public class GridPaneWEnemy extends GridPane {
     public GridPaneWEnemy(Client client, int index) {
         this.client=client;
         this.numberWP = index;
+        this.setVgap(1.5);
+        this.setHgap(1.5);
 
         for (int j = 0 ; j < 5 ; j++) {
             ColumnConstraints colConstraints = new ColumnConstraints();
