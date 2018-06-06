@@ -4,8 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -63,12 +65,19 @@ public class ClientSocketTest {
         }
     }
 
-    public void StringTest(){
+    @Test
+    public void stringTest(){
         String s = "Norma";
         System.out.println("a è in posizione:"+s.indexOf('a'));
         System.out.println("N è in posizione:"+s.indexOf('N'));
         System.out.println("r è in posizione:"+s.indexOf('r'));
         System.out.println("lunghezza:"+s.length());
+    }
+
+    @Test
+    public void ConnectionException() throws InterruptedException {
+        Thread.sleep(10000);
+        clientSocket.register("Norma");
     }
 
 }

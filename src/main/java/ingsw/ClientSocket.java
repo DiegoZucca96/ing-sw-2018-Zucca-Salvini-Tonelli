@@ -29,6 +29,20 @@ public class ClientSocket implements Client {
     public ClientSocket(String ip, int port) {
         this.ip = ip;
         this.port = port;
+    }
+
+    public static void main(String[] args) throws Exception{
+        ClientSocket clientSocket = new ClientSocket("127.0.0.1", 1080);
+        clientSocket.startClient();
+    }
+
+
+    @Override
+    public void startClient() throws IOException {
+        //...
+    }
+
+    private void setup(){
         try {
             socket = new Socket(ip, port);
             in = new Scanner(socket.getInputStream());
@@ -40,106 +54,116 @@ public class ClientSocket implements Client {
         }
     }
 
-    public static void main(String[] args) throws Exception{
-        ClientSocket clientSocket = new ClientSocket("127.0.0.1", 1080);
-        clientSocket.startClient();
-    }
-
-
-        @Override
-    public void startClient() throws IOException {
-        try{
-            setup();
-            //...
-            new GUI().display(this);
-            //...
-        }catch(NoSuchElementException e){
-            System.err.println(e.getMessage());
-        }
-        finally{
-            closeConnection();
-            System.out.println("Connection closed");
-        }
-    }
-
-    private void setup() throws IOException {
-        System.out.println("Client ready");
-    }
-
     @Override
     public boolean login(String nickname) {
+        setup();
+        name = nickname;
         out.println("login:" + nickname);
-        if(in.nextLine().equals("ok")) return true;
-        else return  false;
+        boolean response = Boolean.parseBoolean(in.nextLine());
+        closeConnection();
+        return response;
     }
 
     @Override
     public boolean register(String nickname) {
-        name = nickname;
+        setup();
         out.println("register:" + nickname);
-        if(in.nextLine().equals("ok")) return true;
-        else return  false;
+        boolean response = Boolean.parseBoolean(in.nextLine());
+        closeConnection();
+        return response;
     }
 
     @Override
     public String getPlayerState() {
+        setup();
         out.println("getPlayerState:" + name);
-        return in.nextLine();
+        String response = in.nextLine();
+        closeConnection();
+        return response;
     }
 
     @Override
     public void skip() {
+        setup();
         out.println("skip:" + name);
+        closeConnection();
     }
 
     @Override
     public boolean useToolCard(String parameter) {
+        setup();
+        closeConnection();
         return false;
     }
 
     @Override
     public boolean takeDie(int row, int column) {
+        setup();
         out.println("takeDie:" + row + "," + column);
-        if(in.nextLine().equals("ok")) return true;
-        else return false;
+        boolean response = Boolean.parseBoolean(in.nextLine());
+        closeConnection();
+        return response;
     }
 
     @Override
     public boolean positionDie(int row, int column) {
+        setup();
         out.println("positionDie:" + row + "," + column);
-        if(in.nextLine().equals("ok")) return true;
-        else return false;
+        boolean response = Boolean.parseBoolean(in.nextLine());
+        closeConnection();
+        return response;
     }
 
     @Override
     public boolean waitForPlayers() {
+        setup();
         out.println("waitForPlayers:");
-        if(in.nextLine().equals("ok")) return  true;
-        else return false;
+        boolean response = Boolean.parseBoolean(in.nextLine());
+        closeConnection();
+        return response;
     }
 
     @Override
     public ViewData initializeView() {
-        return null;
+        setup();
+        out.println("initializeView:");
+        try {
+            ViewData response =  (ViewData) is.readObject();
+            closeConnection();
+            return response;
+        } catch (ClassNotFoundException e) {
+            closeConnection();
+            return null;
+        } catch (IOException e) {
+            closeConnection();
+            return null;
+        }
     }
 
     @Override
     public ViewData updateView() {
+        setup();
         out.println("updateView:");
         try {
-            return (ViewData) is.readObject();
+            ViewData response = (ViewData) is.readObject();
+            closeConnection();
+            return response;
         } catch (ClassNotFoundException e) {
+            closeConnection();
             return null;
         } catch (IOException e){
+            closeConnection();
             return null;
         }
     }
 
     @Override
     public boolean readyToPlay() {
+        setup();
         out.println("readyToPlay:");
-        if(in.nextLine().equals("ok")) return  true;
-        else return false;
+        boolean response = Boolean.parseBoolean(in.nextLine());
+        closeConnection();
+        return response;
     }
 
     @Override
@@ -149,146 +173,223 @@ public class ClientSocket implements Client {
 
     @Override
     public void createHash(int nameWindow, String nameClient) {
-        out.println("createHash:");
+        setup();
+        out.println("createHash:"+Integer.toString(nameWindow)+','+nameClient);
+        closeConnection();
     }
 
     @Override
-    public HashMap<String, Integer> getHashPlayers() {
-
-        //Da implementare
-        return null;
+    public HashMap<String,Integer> getHashPlayers() {
+        setup();
+        out.println("getHashPlayers:");
+        try {
+            HashMap response = (HashMap<String, Integer>) is.readObject();
+            closeConnection();
+            return response;
+        } catch (IOException e) {
+            closeConnection();
+            return null;
+        } catch (ClassNotFoundException e) {
+            closeConnection();
+            return  null;
+        }
     }
 
     @Override
     public String getPVCard(String name) {
-        //da implementare
-        return null;
+        setup();
+        out.println("getPVCard:"+name);
+        String response = in.nextLine();
+        closeConnection();
+        return response;
     }
 
     @Override
     public void setActive(Boolean active) {
-        //da implementare
+        setup();
+        out.println("setActive:"+Boolean.toString(active));
+        closeConnection();
     }
 
     @Override
     public boolean getActive() {
-        //da impl
-        return false;
+        setup();
+        out.println("getActive:");
+        boolean response = Boolean.parseBoolean(in.nextLine());
+        closeConnection();
+        return response;
     }
 
     @Override
     public void rejoinedPlayer(String name) {
-        //da iml
+        setup();
+        out.println("rejoinedPlayer:"+name);
+        closeConnection();
     }
 
     @Override
     public int getTimeMove() {
-        //da iml
-        return 0;
+        setup();
+        out.println("getTimeMove:");
+        int response = Integer.parseInt(in.nextLine());
+        closeConnection();
+        return response;
     }
 
     @Override
     public String getCurrentPlayer() {
-        //da impl
-        return null;
+        setup();
+        out.println("getCurrentPlayer:");
+        String response = in.nextLine();
+        closeConnection();
+        return response;
     }
 
     @Override
     public void nullSelection() {
-        //da impl
+        setup();
+        out.println("nullSelection:");
+        closeConnection();
     }
 
     @Override
     public int getRound() {
-        //da impl
-
-        return 0;
+        setup();
+        out.println("getRound");
+        int response = Integer.parseInt(in.nextLine());
+        closeConnection();
+        return response;
     }
 
 
     @Override
     public ArrayList<ViewWP> getPlayerWPs(String name){
-        out.println("getPlayersWPs:");
+        setup();
+        out.println("getPlayersWPs:"+name);
         try {
-            return (ArrayList<ViewWP>) is.readObject();
+            ArrayList<ViewWP> response = (ArrayList<ViewWP>) is.readObject();
+            closeConnection();
+            return response;
         } catch (ClassNotFoundException e) {
+            closeConnection();
             return null;
         } catch (IOException e){
+            closeConnection();
             return null;
         }
     }
 
     @Override
     public int getNumberOfPlayers() {
+        setup();
         out.println("getNumberOfPlayers:");
-        return Integer.parseInt(in.nextLine());
+        int response = Integer.parseInt(in.nextLine());
+        closeConnection();
+        return response;
     }
 
     @Override
     public int getTimeSearch() {
+        setup();
         out.println("getTimeSearch:");
-        return Integer.parseInt(in.nextLine());
+        int response = Integer.parseInt(in.nextLine());
+        closeConnection();
+        return response;
     }
 
     @Override
     public boolean takeWPDie(int row, int column) {
+        setup();
         out.println("takeWPDie:" + row + "," + column);
-        if(in.nextLine().equals(("ok"))) return  true;
-        else return false;
+        boolean response = Boolean.parseBoolean(in.nextLine());
+        closeConnection();
+        return response;
     }
 
     @Override
     public ArrayList<ViewWP> getRandomWps() {
+        setup();
         out.println("getRandomWPs:");
         try {
-            return (ArrayList<ViewWP>) is.readObject();
+            ArrayList<ViewWP> response = (ArrayList<ViewWP>) is.readObject();
+            closeConnection();
+            return response;
         } catch (ClassNotFoundException e) {
+            closeConnection();
             return null;
         } catch (IOException e){
+            closeConnection();
             return null;
         }
     }
 
     @Override
     public void addWPName(String wp) {
-        out.println("addWP:" + wp);
+        setup();
+        out.println("addWPName:" + wp);
+        closeConnection();
     }
 
     @Override
     public void addWP(ViewWP wp) {
-        //Da implementare se serve
+        setup();
+        out.println("addWP:");
+        try {
+            in.nextLine();
+            os.writeObject(wp);
+            os.flush();
+            os.reset();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        closeConnection();
     }
 
     @Override
     public ArrayList<String> getListOfPlayers() {
+        setup();
         out.println("getListOfPlayers:");
         try {
-            return (ArrayList<String>) is.readObject();
+            ArrayList<String> response = (ArrayList<String>) is.readObject();
+            closeConnection();
+            return response;
         } catch (IOException e) {
+            closeConnection();
             return null;
         } catch (ClassNotFoundException e) {
+            closeConnection();
             return null;
         }
     }
 
     @Override
     public int getCoordinateSelectedX() {
-        //Da impl
-
-        return 0;
+        setup();
+        out.println("getCoordinateSelectedX:");
+        int response = Integer.parseInt(in.nextLine());
+        closeConnection();
+        return response;
     }
 
     @Override
     public int getCoordinateSelectedY() {
-        //Da impl
-
-        return 0;
+        setup();
+        out.println("getCoordinateSelectedY:");
+        int response = Integer.parseInt(in.nextLine());
+        closeConnection();
+        return response;
     }
 
-    public void closeConnection() throws IOException {
-        in.close();
-        out.close();
-        socket.close();
+    public void closeConnection() {
+        try {
+            in.close();
+            out.close();
+            os.close();
+            is.close();
+            socket.close();
+        } catch (IOException e) {
+            //gestione errore di connessione..
+        }
     }
 
 }
