@@ -2,6 +2,7 @@ package ingsw.view;
 
 import ingsw.Client;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
@@ -19,6 +20,8 @@ public class GridPaneRound extends GridPane {
     private Client client;
     private ArrayList<String> roundTrack;
     private int round;
+    private boolean toolUsed=false;
+    private GridPane gridOfdDice;
 
     public GridPaneRound(Client client, ArrayList<String> roundTrack, int round){
         this.client=client;
@@ -28,52 +31,61 @@ public class GridPaneRound extends GridPane {
         this.setVgap(0);
         this.setPadding(new Insets(0, 20, 0, 20));
 
-
         for( int i=1; i<=10; i++){
             Button btnRound=buttonRound(i);
             btnRound.setOpacity(0.6);
         }
-
     }
 
     private Button buttonRound(int currentRound){
         Button button;
-        if(currentRound<round){
-            final ImageView imageOk = new ImageView();
-            String imagePath = "/ok.png";
-            Image image = new Image(imagePath, 20, 20, false, true);
-            imageOk.setImage(image);
-            button = new Button("", imageOk);
-        }else{
-            button= new Button(Integer.toString(currentRound));
-            button.setFont(new Font("Tahoma", 20));
-        }
-
-        button.setOnAction(e-> {
-            if(currentRound<=round){
-                Stage diceExtraGrid = diceRoundTrack(currentRound);
-                diceExtraGrid.show();
-            }else{
-                Toolkit.getDefaultToolkit().beep();
-            }
-        });
+        button = new Button(Integer.toString(currentRound));
+        button.setFont(new Font("Tahoma", 20));
         this.add(button, currentRound-1, 0);
         return button;
     }
 
+    public void updateRound(ArrayList<String> roundTrack, int round){
+        this.roundTrack = roundTrack;
+        updateButton(round-1);
+    }
+
+    private void updateButton(int currentRound) {
+        for(Node node : getChildren()){
+            if(GridPaneRound.getColumnIndex(node) < currentRound){
+                Button button = (Button) node;
+                button.setText("");
+                String imagePath = "/ok.png";
+                Image image = new Image(imagePath, 25, 25, false, true);
+                BackgroundImage back = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                        BackgroundSize.DEFAULT);
+                button.setBackground(new Background(back));
+
+                button.setOnAction(e-> {
+                    if(currentRound<=round){
+                        Stage diceExtraGrid = diceRoundTrack(currentRound);
+                        diceExtraGrid.setTitle("Round: "+currentRound);
+                        diceExtraGrid.show();
+                    }else{
+                        Toolkit.getDefaultToolkit().beep();
+                    }
+                });
+            }
+        }
+    }
 
 
     private Stage diceRoundTrack(int i){
         Stage stage = new Stage();
         Pane root = new Pane();
         Scene scene = new Scene(root);
-        root.setPrefSize(client.getNumberOfPlayers()*70, 100);
-        GridPane grid = new GridPane();
-        grid.setHgap(20);
+        root.setPrefSize((client.getNumberOfPlayers()*2+1)*70, 70);
+        gridOfdDice = new GridPane();
+        gridOfdDice.setHgap(20);
         //DieInfo client.getDieFromRoundTrack(j);
 
         ArrayList<String> currentDice = new ArrayList<>();
-        for(String s : roundTrack){
+        for(String s : this.roundTrack){
             if(s.substring(0,1).equalsIgnoreCase(Integer.toString(i)))
                 currentDice.add(s);
         }
@@ -92,30 +104,28 @@ public class GridPaneRound extends GridPane {
                         BackgroundSize.DEFAULT);
                 button.setBackground(new Background(myBI));
 
-                grid.add(button, numDice, 0);
+                gridOfdDice.add(button, numDice, 0);
             }
             else{
                 numDice=client.getNumberOfPlayers()*2+1;
             }
         }
-        root.getChildren().add(grid);
+        root.getChildren().add(gridOfdDice);
         stage.setScene(scene);
-        //stage.show();
         return stage;
     }
 
     private Button addDieBtn(int numDice) {
+        //this.toolUsed = client.useToolCard();
         Button button = new Button();
-
         button.setOnAction(e -> {
-            if(!button.getBackground().equals(Color.TRANSPARENT)){
-                //...chiama un metodo del client che prende il dado dalla draftpool
+            if(!button.getBackground().equals(Color.TRANSPARENT) /*&& toolUsed*/){
+                //client.takeRTDie();
             }else
                 Toolkit.getDefaultToolkit().beep();
 
         });
         this.add(button, numDice, 0);
         return button;
-
     }
 }

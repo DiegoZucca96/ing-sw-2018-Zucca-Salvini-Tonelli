@@ -39,7 +39,7 @@ public class PlayGame {
     private static Button exitBtn;
     private static Button infoBtn;
     private static Button cancelBtn;
-    private GridPane gridRound;
+    private GridPaneRound gridRound;
     private GridPane toolGrid;
     private GridPane pbGrid;
     private GridPane cellsGrid;
@@ -439,7 +439,7 @@ public class PlayGame {
         }
 
         if(updateView.getRoundTrack()!=null)
-            gridRound=new GridPaneRound(client, updateView.getRoundTrack(), client.getRound());
+            gridRound.updateRound(updateView.getRoundTrack(), client.getRound());
     }
 
     public static boolean getChoosePressed(){
