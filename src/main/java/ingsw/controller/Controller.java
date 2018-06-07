@@ -52,6 +52,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         this.controllerTimer = new ControllerTimer(timeSearch,playerMoveTime);
         this.active=false;
         this.turn=0;
+        this.isFinish=false;
     }
 
     //Lista dei vari metodi invocabili da grafica che vanno a interagire con il model
@@ -248,22 +249,28 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             disableClient(getCurrentPlayerName());
             turn++;
             if (turn == getSizeOfPlayers()*2) {
-                isFinish = match.endRound();  //Da tener conto quando un giocatore ha riempito tutta la WP deve finire lo stesso
-                turn=0;
+                if(match.getRound() == 10)
+                    isFinish = true;
+                else{
+                    match.endRound();
+                    turn=0;
+                }
             }
             else{
                 match.nextTurn();
             }
-            if(isFinish)
-                new Victory().start(this);
-            else{
+            if(!isFinish){
                 enableClient(getCurrentPlayerName());
                 controllerTimer.setTimeMoveRemaining(playerMoveTime);
                 timer = new Timer();
                 controllerTimer.startPlayerTimer(this,timer); 
             }
-            
         }
+    }
+
+    @Override
+    public boolean isFinish() {
+        return isFinish;
     }
 
     //Serve a segnalare il giocatore inattivo oppure uscito dalla partita
@@ -320,17 +327,6 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     @Override
     public synchronized ArrayList<ViewWP> getPlayersWPs(String name) throws RemoteException{
         ArrayList<ViewWP> enemyWPs = new ArrayList<>();
-        /*for(ViewWP windowPattern: getWindowChosen()){
-            ViewWP enemyWp = new ViewWP();
-            InfoCell [][] infoCell = windowPattern.getWps();
-            enemyWp.setWps(infoCell);
-            String name = windowPattern.getName();
-            enemyWp.setName(name);
-            String difficulty = windowPattern.getDifficulty();
-            enemyWp.setDifficulty(difficulty);
-            enemyWPs.add(enemyWp);
-        }
-        return enemyWPs;*/
         for(ViewWP wp : getWindowChosen()){
             if(getHashPlayers().get(name) != wp.getNumberWP()) {
                 enemyWPs.add(wp);
@@ -409,6 +405,32 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             windowChosen = windowOrdered;
             access++;
         }
+    }
+
+    @Override
+    public Integer getScore(String name) throws RemoteException {
+        int indexPlayer = getListofMatchPlayers().indexOf(name);
+        return match.getPlayers().get(indexPlayer).getScore();
+    }
+
+    @Override
+    public void calculateScore() throws RemoteException {
+        match.playersScore();
+    }
+
+    @Override
+    public String findWinner() throws RemoteException {
+        return match.findWinner().getName();
+    }
+
+    @Override
+    public ArrayList<String> getListofMatchPlayers() throws RemoteException {
+        ArrayList<String> nameMatchPlayers = new ArrayList<>();
+        for(int i=0; i<getListOfPlayers().size();i++){
+            String name = match.getPlayers().get(i).getName();
+            nameMatchPlayers.add(name);
+        }
+        return nameMatchPlayers;
     }
 
 

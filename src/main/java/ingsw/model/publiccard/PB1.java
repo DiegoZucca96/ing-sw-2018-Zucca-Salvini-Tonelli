@@ -23,7 +23,7 @@ public class PB1 implements PBStrategy {
             ArrayList<Color> list = new ArrayList<Color>();
             for(j=0;j<5;j++){
                 if(cellMatrix[i][j].getDie()==null)
-                    j=5;
+                    j=6;
                 else {
                     Color color = cellMatrix[i][j].getDie().getColor();
                     if (color == null || list.contains(color))

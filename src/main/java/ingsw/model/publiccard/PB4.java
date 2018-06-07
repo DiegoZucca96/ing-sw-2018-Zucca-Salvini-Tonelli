@@ -23,11 +23,11 @@ public class PB4 implements PBStrategy {
             ArrayList<Integer> list = new ArrayList<Integer>();
             for(j=0;j<4;j++){
                 if(cellMatrix[j][i].getDie()==null)
-                    j=5;
+                    j=6;
                 else {
                     Integer num = cellMatrix[j][i].getDie().getNumber();
                     if(list.contains(num) || num==0)
-                        j=7;           //Metto un valore alto in modo da differenziare il caso in cui esco perchè trovata la colonna di colori diversi
+                        j=8;           //Metto un valore alto in modo da differenziare il caso in cui esco perchè trovata la colonna di colori diversi
                     else
                         list.add(num);
                 }

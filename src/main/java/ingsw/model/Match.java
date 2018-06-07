@@ -116,21 +116,15 @@ public class Match {
     }
 
     //termina il round e setta a tutti i giocatori il loro primo turno
-    public boolean endRound() {
+    public void endRound() {
         draftPool.cleanDraftPool();
         roundTrack.nextRound();
-        if(getRound()==-1){
-            return true;
-        }
-        else{
-            clockwiseRound = true;
-            //il primo giocatore viene messo in fondo alla lista in quanto diventa l'ultimo
-            players.remove(currentPlayer);
-            players.add(currentPlayer);
-            currentPlayer = players.get(0);
-            draftPool.throwsDice(getNumOfPlayers()*2 + 1);
-        }
-        return false;
+        clockwiseRound = true;
+        //il primo giocatore viene messo in fondo alla lista in quanto diventa l'ultimo
+        players.remove(currentPlayer);
+        players.add(currentPlayer);
+        currentPlayer = players.get(0);
+        draftPool.throwsDice(getNumOfPlayers()*2 + 1);
     }
 
     //NB nextTurn va chiamata 7 volte con 4 giocatori, al termine si chiama endRound (tengo conto se è il primo o secondo turno tramite clockwiseRound)

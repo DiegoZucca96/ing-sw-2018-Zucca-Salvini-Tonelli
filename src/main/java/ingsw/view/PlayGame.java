@@ -270,6 +270,12 @@ public class PlayGame {
                 choosePressed=false;
                 client.setActive(true);
                 client.skip();
+                if(client.isFinish()){
+                    client.calculateScore();
+                    new Victory().start(client);
+                    stage.close();
+                }
+
             }
         });
         btnGrid.add(skipBtn, 0, 0);

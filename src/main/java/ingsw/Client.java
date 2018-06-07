@@ -122,6 +122,21 @@ public interface Client {
     //Ordina le windowChosen
     void orderWPChoise();
 
+    //Va a controllare se la partita è giunta al termine
+    boolean isFinish();
+
+    //Restituisce il punteggio del giocatore
+    Integer getScore(String name);
+
+    //Avvia il calcolo dei punteggi giocatore
+    void calculateScore();
+
+    //Trova il vincitore
+    String findWinner();
+
+    //Restituisce i nomi dei players (serve nella schermata finale di vittoria)
+    ArrayList<String> getListOfMatchPlayers();
+
     /*
     "windowpattern(name(ciao),difficulty(4),cell(row(0),column(0),number(0),color(RED),Die(number(5),color(RED)),cell(..."
 

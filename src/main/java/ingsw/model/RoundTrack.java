@@ -36,9 +36,6 @@ public class RoundTrack {
     public void nextRound(){
         if(currentRound <10)
             currentRound++;
-        else
-            currentRound=-1;
-
     }
 
     //inserisce il dado nella lista all'indice round.

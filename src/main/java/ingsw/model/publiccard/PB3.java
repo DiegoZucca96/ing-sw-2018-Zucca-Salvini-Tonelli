@@ -23,7 +23,7 @@ public class PB3 implements PBStrategy {
             ArrayList<Integer> list = new ArrayList<Integer>();
             for(j=0;j<5;j++){
                 if(cellMatrix[i][j].getDie()==null)
-                    j=5;
+                    j=6;
                 else {
                     Integer num = cellMatrix[i][j].getDie().getNumber();
                     if(num == 0 || list.contains(num))

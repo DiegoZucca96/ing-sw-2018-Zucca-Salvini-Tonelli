@@ -101,7 +101,10 @@ public class WindowPattern implements Serializable {
         int count =0;
         for(int i=0; i<5; i++){
             for(int j=0; j<4; j++){
-                if(cellMatrix[j][i].getColor() == color) count++;
+                if(cellMatrix[j][i].getDie()!=null){
+                    if(String.valueOf(cellMatrix[j][i].getDie().getColor()).equalsIgnoreCase(String.valueOf(color)))
+                        count = count + cellMatrix[j][i].getDie().getNumber();
+                }
             }
         }
         return count;

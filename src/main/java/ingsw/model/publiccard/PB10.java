@@ -20,15 +20,15 @@ public class PB10 implements PBStrategy {
         int values[] = new int[]{0,0,0,0,0};
         for(int i=0;i<4;i++){
             for(int j=0;j<5;j++){
-                if(!cellMatrix[i][j].isEmpty() && cellMatrix[i][j].getDie().getColor() == Color.BLUE)
+                if(!cellMatrix[i][j].isEmpty() && String.valueOf(cellMatrix[i][j].getDie().getColor()).equalsIgnoreCase(String.valueOf(Color.BLUE)))
                     values[0]++;
-                if(!cellMatrix[i][j].isEmpty() && cellMatrix[i][j].getDie().getColor() == Color.VIOLET)
+                if(!cellMatrix[i][j].isEmpty() && String.valueOf(cellMatrix[i][j].getDie().getColor()).equalsIgnoreCase(String.valueOf(Color.VIOLET)))
                     values[1]++;
-                if(!cellMatrix[i][j].isEmpty() && cellMatrix[i][j].getDie().getColor() == Color.GREEN)
+                if(!cellMatrix[i][j].isEmpty() && String.valueOf(cellMatrix[i][j].getDie().getColor()).equalsIgnoreCase(String.valueOf(Color.GREEN)))
                     values[2]++;
-                if(!cellMatrix[i][j].isEmpty() && cellMatrix[i][j].getDie().getColor() == Color.RED)
+                if(!cellMatrix[i][j].isEmpty() && String.valueOf(cellMatrix[i][j].getDie().getColor()).equalsIgnoreCase(String.valueOf(Color.RED)))
                     values[3]++;
-                if(!cellMatrix[i][j].isEmpty() && cellMatrix[i][j].getDie().getColor() == Color.YELLOW)
+                if(!cellMatrix[i][j].isEmpty() && String.valueOf(cellMatrix[i][j].getDie().getColor()).equalsIgnoreCase(String.valueOf(Color.YELLOW)))
                     values[4]++;
             }
         }

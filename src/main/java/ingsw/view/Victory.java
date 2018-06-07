@@ -31,12 +31,12 @@ public class Victory {
     private Label timerLabel ;
     private static int event =1;
     private Label nameLabel;
-    private final String styleSheet ="-fx-text-fill: goldenrod; -fx-font: italic 100 \"serif\"; -fx-padding: 0 0 20 0";
-    //private Client client;
+    private final String styleSheet ="-fx-text-fill: goldenrod; -fx-font: italic 70 \"serif\"; -fx-padding: 0 0 20 0";
+    private Client client;
 
-    public void start( RMIController controller) {
+    public void start(Client c) {
 
-        //this.client=c;
+        this.client=c;
 
         // Setup the Stage and the Scene (the scene graph)
         Stage primaryStage = new Stage();
@@ -48,8 +48,7 @@ public class Victory {
         GridPane grid = new GridPane();
         grid.setLayoutX(100);
         grid.setLayoutY(10);
-        grid.setVgap(50);
-        grid.setHgap(400);
+        grid.setVgap(25);
 
         //BACKGROUND
         String imagePath = "/victory.jpg";
@@ -59,38 +58,25 @@ public class Victory {
 
 
 
-        scene.setOnMouseClicked( e-> {
-
-            if(event ==1){
+        scene.setOnMouseEntered( e-> {
+            if(event==1){
                 event++;
-                for (int i=0; i<4; i++) {
+                for (int i=0; i<client.getNumberOfPlayers(); i++) {
 
-                    nameLabel= new Label();
+                    //nameLabel= new Label();
                     timerLabel=new Label();
-                    MultiScore threadScore = new MultiScore(timerLabel);
-                    threadScore.start();
-                    try {
-                        nameLabel.setText(controller.getListOfPlayers().get(i));
-                    } catch (RemoteException e1) {
-                        e1.printStackTrace();
-                    }
-                    nameLabel.setStyle(styleSheet);
+                    //nameLabel.setText(client.getListOfPlayers().get(i));
+                    //nameLabel.setStyle(styleSheet);
                     timerLabel.setStyle(styleSheet);
 
-                    grid.add(nameLabel, 0, i);
-                    grid.add(timerLabel, 1, i);
+                    //grid.add(nameLabel, 0, i);
+                    grid.add(timerLabel, 0, i);
+
+                    MultiScore threadScore = new MultiScore(client.getListOfMatchPlayers().get(i),timerLabel, client,grid);
+                    threadScore.start();
 
                 }
-            }else{
-
-                grid.setOpacity(0);
-                Label lab = new Label("The winner is\n\n"+"     Tanta Roba");
-                lab.setStyle(styleSheet);
-                lab.setLayoutX(300);
-                lab.setLayoutY(200);
-                root.getChildren().add(lab);
             }
-
         });
 
 

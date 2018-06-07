@@ -68,6 +68,8 @@ public interface RMIController extends Remote {
 
     boolean register(String account, ServerHandler serverHandler) throws RemoteException;
 
+    boolean isFinish() throws RemoteException;
+
     //restituisce lo stato del client che lo richiede (usa toString dell'oggetto di tipo ClientState)
     String getPlayerState(String clientName) throws RemoteException;
 
@@ -108,4 +110,12 @@ public interface RMIController extends Remote {
     ViewWP getWP(String userName) throws RemoteException;
 
     void orderWPChoise() throws RemoteException;
+
+    Integer getScore(String name) throws RemoteException;
+
+    void calculateScore() throws RemoteException;
+
+    String findWinner() throws RemoteException;
+
+    ArrayList<String> getListofMatchPlayers() throws RemoteException;
 }

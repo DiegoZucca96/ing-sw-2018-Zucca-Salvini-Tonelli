@@ -303,6 +303,40 @@ public class ClientSocket implements Client {
         closeConnection();
     }
 
+    @Override
+    public boolean isFinish() {
+        //da impl
+
+        return false;
+    }
+
+    @Override
+    public Integer getScore(String name) {
+        //da impl
+
+        return null;
+    }
+
+    @Override
+    public void calculateScore() {
+        //da impl
+
+    }
+
+    @Override
+    public String findWinner() {
+        //da impl
+
+        return null;
+    }
+
+    @Override
+    public ArrayList<String> getListOfMatchPlayers() {
+        //da impl
+
+        return null;
+    }
+
 
     @Override
     public ArrayList<ViewWP> getPlayerWPs(String name){

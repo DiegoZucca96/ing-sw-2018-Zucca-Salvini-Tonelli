@@ -279,6 +279,51 @@ public class ClientRMI implements Client {
     }
 
     @Override
+    public boolean isFinish() {
+        try {
+            return controller.isFinish();
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public Integer getScore(String name) {
+        try {
+            return controller.getScore(name);
+        } catch (RemoteException e) {
+            return 0;
+        }
+    }
+
+    @Override
+    public void calculateScore() {
+        try {
+            controller.calculateScore();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public String findWinner() {
+        try {
+            return controller.findWinner();
+        } catch (RemoteException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public ArrayList<String> getListOfMatchPlayers() {
+        try {
+            return controller.getListofMatchPlayers();
+        } catch (RemoteException e) {
+            return null;
+        }
+    }
+
+    @Override
     public ArrayList<ViewWP> getPlayerWPs(String name) {
         try {
             return controller.getPlayersWPs(name);
