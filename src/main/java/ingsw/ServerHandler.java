@@ -77,6 +77,10 @@ public class ServerHandler implements Runnable {
             else if (command.equals("getRound")) getRound();
             else if (command.equals("getCoordinateSelectedX")) getCoordinateSelectedX();
             else if (command.equals("getCoordinateSelectedY")) getCoordinateSelectedY();
+            else if (command.equals("getWP")) getWP(parameter);
+            else if (command.equals("iAmLegend")) iAmBanned(parameter);
+            else if (command.equals("orderWPChoise")) orderWPChoise();
+            else if (command.equals("matchFound")) matchFound();
             closeConnection();
         }
          catch (IOException e) {
@@ -252,5 +256,23 @@ public class ServerHandler implements Runnable {
 
     private void getCoordinateSelectedY() throws RemoteException {
         out.println(controller.getCoordinateSelectedY());
+    }
+
+    private void getWP(String parameter) throws IOException {
+        os.writeObject(controller.getWP(parameter));
+        os.flush();
+        os.reset();
+    }
+
+    private void matchFound(){
+        out.println(false);
+    }
+
+    private void iAmBanned(String parameter){
+        out.println(false);
+    }
+
+    private void orderWPChoise() throws RemoteException {
+        controller.orderWPChoise();
     }
 }

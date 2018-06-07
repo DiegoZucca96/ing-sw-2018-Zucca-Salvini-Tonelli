@@ -263,29 +263,44 @@ public class ClientSocket implements Client {
 
     @Override
     public boolean matchFound() {
-        //da impl
-
-        return false;
+        setup();
+        out.println("matchFound:");
+        boolean response = Boolean.parseBoolean(in.nextLine());
+        closeConnection();
+        return response;
     }
 
     @Override
     public boolean iAmBanned(String userName) {
-        //da impl
-
-        return false;
+        setup();
+        out.println("iAmLegend:"+ userName);
+        boolean response = Boolean.parseBoolean(in.nextLine());
+        closeConnection();
+        return response;
     }
 
     @Override
     public ViewWP getWP(String userName) {
-        //da impl
-
-        return null;
+        setup();
+        out.println("getWP:" + userName);
+        try {
+            ViewWP response = (ViewWP) is.readObject();
+            closeConnection();
+            return response;
+        } catch (IOException e) {
+            closeConnection();
+            return null;
+        } catch (ClassNotFoundException e) {
+            closeConnection();
+            return null;
+        }
     }
 
     @Override
-    public void orderWPChoise() {
-        //da impl
-
+    public void orderWPChoise(){
+        setup();
+        out.println("orderWPChoise:");
+        closeConnection();
     }
 
 
