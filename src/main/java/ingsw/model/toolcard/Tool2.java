@@ -24,7 +24,7 @@ public class Tool2 implements ToolStrategy {
     }
 
     //Prima di estrarre davvero il dado, ne prendo il riferimento, verifico che posso metterlo in destination1 e poi lo inserisco rimuovendolo
-    public void doOp(ObjectiveTool object){
+    public boolean doOp(ObjectiveTool object){
         window = object.getWindow();
         cellMatrix = window.getCellMatrix();
         possibledie = cellMatrix[object.getC1().getX()][object.getC1().getY()].getDie();
@@ -34,6 +34,7 @@ public class Tool2 implements ToolStrategy {
         }
         else
             System.out.println("Posizione di destinazione non corretta");
+        return false;
     }
 
     public int getIdCard() {

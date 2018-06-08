@@ -22,7 +22,7 @@ public class Tool9 implements ToolStrategy{
         this.idCard=idCard;
     }
 
-    public void doOp(ObjectiveTool object){
+    public boolean doOp(ObjectiveTool object){
        die = object.getDie1();
        window = object.getWindow();
        d1 = object.getDestination1();
@@ -31,6 +31,7 @@ public class Tool9 implements ToolStrategy{
            cellMatrix[d1.getX()][d1.getY()].insertDie(die);
        else
            System.out.print("Non puoi posizionare qui questo dado");
+        return false;
     }
 
     public int getIdCard() {

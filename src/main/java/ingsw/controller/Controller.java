@@ -3,7 +3,7 @@ package ingsw.controller;
 import ingsw.*;
 import ingsw.model.*;
 import ingsw.model.windowpattern.WindowPattern;
-import ingsw.view.Victory;
+import ingsw.view.ToolView;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -297,8 +297,12 @@ public class Controller extends UnicastRemoteObject implements RMIController {
 
     //Utilizza la ToolCard, ancora da implementare (forse serve anche quale tool è stata scelta come parametro)
     @Override
-    public boolean useToolCard(String parameter){
-        return false;
+    public boolean useToolCard(int i, ToolView toolView){
+        PlayerToolParameter pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(),toolView.getStartCol1()),toolView.getDieModified());
+        if(match.playerUseTool(i,pt))
+            return true;
+        else
+            return false;
     }
 
     @Override

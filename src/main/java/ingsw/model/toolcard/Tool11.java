@@ -20,7 +20,7 @@ public class Tool11 implements ToolStrategy {
         this.idCard=idCard;
     }
 
-    public void doOp(ObjectiveTool object){
+    public boolean doOp(ObjectiveTool object){
         int inputNumber = 0;
         Coordinate inputDest = null;
         die = object.getDie1();
@@ -32,6 +32,7 @@ public class Tool11 implements ToolStrategy {
         die.setNumber(inputNumber);  //Serve inserire un numero scelto dal player "in diretta", in base al colore che esce ovviamente cambia
         window = object.getWindow();
         window.addDie(inputDest,die,window.getCellMatrix());  //Manca da passare inputDest in qualche modo come inputNumber
+        return false;
     }
 
     public int getIdCard() {

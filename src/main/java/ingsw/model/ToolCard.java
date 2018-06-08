@@ -12,6 +12,7 @@ public class ToolCard {
     private ToolStrategy toolStrategy;
     private boolean alreadyUsed;
     private Observer viewObserver;
+    private int numToken;
 
     public ToolCard(int idCard){
         viewObserver = new ToolCardsObserver();
@@ -71,14 +72,18 @@ public class ToolCard {
         return toolStrategy.isAlreadyUsed();
     }
 
-    public void doToolStrategy(ObjectiveTool objective){
-        toolStrategy.doOp(objective);
+    public boolean doToolStrategy(ObjectiveTool objective){
+        boolean b = toolStrategy.doOp(objective);
+        notifyViewObserver();
+        return b;
     }
 
     public static ArrayList<Integer> generateToolCard(ViewData init) {
         RandomGenerator rg = new RandomGenerator(10);
         ArrayList<Integer> numToolCards = new ArrayList<>();
-        for(int i=0;i<3;i++){
+        init.getToolCard().add("/Tool1.png");
+        numToolCards.add(1);
+        for(int i=1;i<3;i++){
             int select = rg.random();
             switch(select){
                 case 1:{

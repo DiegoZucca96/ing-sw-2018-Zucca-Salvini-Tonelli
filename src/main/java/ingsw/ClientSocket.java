@@ -2,7 +2,7 @@ package ingsw;
 
 import ingsw.model.ViewWP;
 import ingsw.model.ViewData;
-import ingsw.view.GUI;
+import ingsw.view.ToolView;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -11,7 +11,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class ClientSocket implements Client {
@@ -90,7 +89,7 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public boolean useToolCard(String parameter) {
+    public boolean useToolCard(int i, ToolView parameter) {
         setup();
         closeConnection();
         return false;

@@ -23,7 +23,7 @@ public class Tool5 implements ToolStrategy {
     }
 
     //Va a scambiare un dado dalla riserva con uno presente nel RoundTrack, indipendentemente dal round
-    public void doOp(ObjectiveTool object){
+    public boolean doOp(ObjectiveTool object){
         int indexRound =0, indexDieRound=0;
         die1 = object.getDie1();
         //die2 = object.getDie2(); //Sono inutili i dadi passati, qua mi servono gli indici passati dalla grafica per selezione
@@ -32,6 +32,7 @@ public class Tool5 implements ToolStrategy {
         die2 = rt.takeDie(indexRound,indexDieRound); //Non serve passare il dado perchè comunque devo rimuoverlo dalla RoundTrack
         dp.addDie(die2);
         rt.addDie(die1,indexRound);
+        return false;
     }
 
     public int getIdCard() {

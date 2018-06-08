@@ -42,11 +42,11 @@ public class PlayGame {
     private static Button exitBtn;
     private static Button infoBtn;
     private static Button cancelBtn;
-    private GridPaneRound gridRound;
     private GridPane toolGrid;
     private GridPane pbGrid;
     private GridPane cellsGrid;
     private GridPane gridEn;
+    private GridPaneRound gridRound;
     private GridPaneWindow myWindowGrid;
     private GridPaneWEnemy mutableGridEn;
     private GridPaneDraftPool draftPoolGrid;
@@ -54,19 +54,19 @@ public class PlayGame {
     private ViewData updateView;
     private static int begin=0;
     private static boolean choosePressed=false;
+    private static boolean usingTool=false;
     private Label textLbl;
     private Button buttonDie;
     private ViewWP myWindow;
     private GridPane secondGrid;
     private GridPane gridTks;
+    private static int cardSelected;
 
 
     public PlayGame(Client client){
         this.client=client;
         init= null;
     }
-
-
 
 
     public void display(ViewWP myWindow){
@@ -268,6 +268,9 @@ public class PlayGame {
         skipBtn.setOnAction(e-> {
             if(client.getPlayerState().equalsIgnoreCase("enabled")){
                 choosePressed=false;
+                usingTool = false;
+                draftPoolGrid.setDiePressed(false);
+                GridPaneRound.setAccessRound(false);
                 client.setActive(true);
                 client.skip();
                 if(client.isFinish()){
@@ -283,7 +286,8 @@ public class PlayGame {
         useToolBtn = new Button("Use Tool");
             useToolBtn.setOnAction(e-> {
                 if(client.getPlayerState().equalsIgnoreCase("enabled"))  {
-                    choosePressed=true;
+                    choosePressed=false;
+                    usingTool = true;
                     client.setActive(true);
                     skipBtn.setDisable(true);
                     useToolBtn.setDisable(false);
@@ -319,13 +323,16 @@ public class PlayGame {
         cancelBtn.setOnAction(e-> {
             if(client.getPlayerState().equalsIgnoreCase("enabled")){
                 choosePressed=false;
+                usingTool = false;
+                draftPoolGrid.setDiePressed(false);
+                GridPaneRound.setAccessRound(false);
                 int col = client.getCoordinateSelectedY();
                 if(col==-1){            //se non ha selezionato nulla
                     resetOnButton();
                 }else{
                     client.nullSelection();
                     resetOnButton();
-                    draftPoolGrid.deselectBtn(0, col);
+                    draftPoolGrid.deselectBtn();
                 }
             }
         });
@@ -404,21 +411,11 @@ public class PlayGame {
     private ImageView Images(ArrayList<String> stringCard, int i){
         final ImageView view = new ImageView();
         String imagePathT = stringCard.get(i);
-        /*
-        View.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override public void handle(MouseEvent e) {
-                View.setScaleX(1.3);
-                View.setScaleY(1.3);
-            }
-        });
-
-        View.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override public void handle(MouseEvent e) {
-                View.setScaleX(1);
-                View.setScaleY(1);
-            }
-        });*/
         Image imageT = new Image(imagePathT, 300, 420, false, true);
+        view.setOnMouseClicked(e->{
+            if(imagePathT.substring(1, 2).equals("T"))
+                cardSelected = Integer.parseInt(imagePathT.substring(imagePathT.indexOf("l")+1, imagePathT.indexOf(".")));
+        });
         view.setImage(imageT);
         view.scaleXProperty().setValue(0.43);
         view.scaleYProperty().setValue(0.476);
@@ -473,6 +470,14 @@ public class PlayGame {
 
     public static boolean getChoosePressed(){
         return choosePressed;
+    }
+
+    public static boolean getUsingTool() {
+        return usingTool;
+    }
+
+    public static int getCardSelected(){
+        return cardSelected;
     }
 
     public static void resetOnButton(){

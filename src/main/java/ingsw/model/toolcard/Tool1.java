@@ -1,5 +1,6 @@
 package ingsw.model.toolcard;
 
+import ingsw.model.Coordinate;
 import ingsw.model.Die;
 import ingsw.model.ObjectiveTool;
 
@@ -17,14 +18,16 @@ public class Tool1 implements ToolStrategy {
         this.idCard=idCard;
     }
     //Modifica il numero del dado scelto di 1 aumentandolo o diminuendolo in base al valore di getUp()
-    public void doOp(ObjectiveTool object){
-        die = object.getDie1();
-        if(1 <= die.getNumber() && die.getNumber()<=5 && object.getUp()== 1)
-            die.setNumber(die.getNumber() + 1);
-        else if(2 <= die.getNumber() && die.getNumber()<=6 && object.getUp()== -1)
-            die.setNumber(die.getNumber() - 1);
+    public boolean doOp(ObjectiveTool object){
+        Coordinate c = object.getC1();
+        die = object.getDp().getDie(c.getY());
+        if(1 <= die.getNumber() && die.getNumber()<=6){
+            die.setNumber(object.getDieModified());
+            return true;
+        }
         else
             System.out.println("Non puoi usare questa carta su questo dado");
+        return false;
     }
 
     public int getIdCard() {

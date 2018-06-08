@@ -8,7 +8,7 @@ import junit.framework.TestCase;
 
 class ToolCardTest extends TestCase{
 
-    @Test
+   /* @Test
     public void testTool1(){
         Die die1 = new Die(1, Color.BLUE);
         Die die2 = new Die(1, Color.GREEN);
@@ -38,7 +38,7 @@ class ToolCardTest extends TestCase{
         t1.doToolStrategy(object4);
 
         assertEquals(5,die4.getNumber());
-    }
+    }*/
 
     @Test
     public void testTool2(){

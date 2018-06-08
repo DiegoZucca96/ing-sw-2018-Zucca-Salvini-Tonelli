@@ -19,7 +19,7 @@ public class Tool10 implements ToolStrategy {
         this.idCard=idCard;
     }
 
-    public void doOp(ObjectiveTool object){
+    public boolean doOp(ObjectiveTool object){
         die = object.getDie1();
         switch(die.getNumber()){
             case 1:{
@@ -51,6 +51,7 @@ public class Tool10 implements ToolStrategy {
                 break;
             }
         }
+        return false;
     }
 
     public int getIdCard() {

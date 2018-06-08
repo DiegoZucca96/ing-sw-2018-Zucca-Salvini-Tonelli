@@ -22,7 +22,7 @@ public class Tool12 implements ToolStrategy {
         this.idCard=idCard;
     }
 
-    public void doOp(ObjectiveTool object){
+    public boolean doOp(ObjectiveTool object){
         color = object.getColor();
         window = object.getWindow();
         Cell[][] cellMatrix = window.getCellMatrix();
@@ -50,6 +50,7 @@ public class Tool12 implements ToolStrategy {
             else
                 System.out.print("Il dado selezionato non è dello stesso colore del RoundTrack");
         }
+        return false;
     }
 
     public int getIdCard() {

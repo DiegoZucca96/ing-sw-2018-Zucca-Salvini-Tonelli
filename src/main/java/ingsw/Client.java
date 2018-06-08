@@ -2,6 +2,7 @@ package ingsw;
 
 import ingsw.model.ViewWP;
 import ingsw.model.ViewData;
+import ingsw.view.ToolView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public interface Client {
 
     //utilizza la tool card, parameter è una stringa che serve per creare l'oggetto di tipo PlayerUseTool
     //restituisce false se la carta non può essere usata
-    boolean useToolCard(String parameter);
+    boolean useToolCard(int i, ToolView parameter);
 
     //restituisce lo stato del giocatore, "enabled" -> attivo. "disabled" -> disattivo (non è il suo turno)
     String getPlayerState();

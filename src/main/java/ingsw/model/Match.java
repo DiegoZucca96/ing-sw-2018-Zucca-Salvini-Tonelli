@@ -1,6 +1,10 @@
 package ingsw.model;
 
 import ingsw.model.windowpattern.WindowPattern;
+import ingsw.observers.DraftPoolObserver;
+import ingsw.observers.Observer;
+import ingsw.observers.RoundTrackObserver;
+import ingsw.observers.WindowPatternObserver;
 
 import java.util.ArrayList;
 
@@ -15,7 +19,8 @@ public class Match {
     private ArrayList<PBObjectiveCard> pbCards;  //public objective card relative alla partita
     private RoundTrack roundTrack;
     private DraftPool draftPool;
-    ViewData init;
+    private ViewData init;
+    private Observer viewObserver = null;
 
     public Match(int id, ArrayList<String> playersNames, ArrayList<Integer> playersWP) {    //viene passato l'id dal Server per identificare il match
         this.id = id;
@@ -171,13 +176,12 @@ public class Match {
 
     //raccoglie i dati necessari per l'utilizzo di una tool card in un oggetto di tipo ObjectiveTool
     //se non è possibile utilizzare la carta indicata in pTParameter restituisce null
-    private ObjectiveTool createToolParameter(PlayerToolParameter pTParameter) {
-        int idCard = pTParameter.getIdCard();
+    private ObjectiveTool createToolParameter(int idCard, PlayerToolParameter pTParameter) {
         ObjectiveTool toolParameter;
         boolean allow = true;  //Serve a dare il consenso all'uso della ToolCard o meno
         switch (idCard) {
             case 1: {
-                toolParameter = new ObjectiveTool(pTParameter.getDie1(), pTParameter.getUp());
+                toolParameter = new ObjectiveTool(pTParameter.getC1(), pTParameter.getDieModified(),draftPool);
                 break;
             }
             case 2: {
@@ -247,12 +251,28 @@ public class Match {
 
 
     //usa la ingsw.model.toolcard passata come parametro, restituisce false se non può essere usata
-    public boolean playerUseTool(ToolCard tool, PlayerToolParameter pTParameter) {
-        ObjectiveTool toolParameter = createToolParameter(pTParameter);
+    public boolean playerUseTool(int tool, PlayerToolParameter pTParameter) {
+        ObjectiveTool toolParameter = createToolParameter(tool,pTParameter);
         if (toolParameter == null) return false;
-        currentPlayer.useToken(tool);
-        tool.doToolStrategy(toolParameter);
-        return true;
+        for(ToolCard t : tools){
+            if(t.getIdCard()==tool){
+                currentPlayer.useToken(t);
+                boolean b = t.doToolStrategy(toolParameter);
+                notifyViewObserver();
+                return b;
+            }
+        }
+        return false;
+    }
+
+    public void notifyViewObserver() {
+        viewObserver = new DraftPoolObserver();
+        viewObserver.update(draftPool, ViewData.instance());
+        viewObserver = new WindowPatternObserver();
+        viewObserver.update(currentPlayer.getWindowPattern(), ViewData.instance());
+        viewObserver = new RoundTrackObserver();
+        viewObserver.update(roundTrack, ViewData.instance());
+        viewObserver = null;
     }
 
     //calcola e setta il punteggio a tutti i giocatori

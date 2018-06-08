@@ -7,7 +7,7 @@ public class ObjectiveTool {
     private Die die1;
     private Die die2;
     private WindowPattern window;
-    private int up;             //Per la ToolCard 1, serve a dire se si vuole alzare (1) o abbassare (-1) il valore (default 0)
+    private int dieModified;             //Per la ToolCard 1, serve a dire se si vuole alzare (1) o abbassare (-1) il valore (default 0)
     private Coordinate c1;
     private Coordinate c2;
     private Coordinate destination1;
@@ -19,9 +19,10 @@ public class ObjectiveTool {
     private Color color;
 
 
-    public ObjectiveTool(Die die1, int up){
-        this.die1 = die1;
-        this.up = up;
+    public ObjectiveTool(Coordinate c1, int dieModified, DraftPool dp){
+        this.c1 = c1;
+        this.dieModified = dieModified;
+        this.dp = dp;
     }
 
     public ObjectiveTool(WindowPattern window,Coordinate c1, Coordinate destination1){
@@ -113,12 +114,12 @@ public class ObjectiveTool {
         this.window = window;
     }
 
-    public int getUp() {
-        return up;
+    public int getDieModified() {
+        return dieModified;
     }
 
-    public void setUp(int up) {
-        this.up = up;
+    public void setDieModified(int dieModified) {
+        this.dieModified = dieModified;
     }
 
     public Coordinate getC1() {

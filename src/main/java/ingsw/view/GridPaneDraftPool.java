@@ -2,11 +2,16 @@ package ingsw.view;
 
 
 import ingsw.Client;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -18,13 +23,14 @@ public class GridPaneDraftPool extends GridPane {
     private Client client;
     private Button b;
     private Button buttonDieSelected;
+    private boolean diePressed;
 
 
     public GridPaneDraftPool(Client client, ArrayList<String> diceList,Button buttonDieSelected) {
         this.client = client;
         int diceThrows = client.getNumberOfPlayers()*2+1;
         this.buttonDieSelected = buttonDieSelected;
-
+        this.diePressed = false;
         this.setHgap(10);
         this.setVgap(10);
 
@@ -59,7 +65,125 @@ public class GridPaneDraftPool extends GridPane {
 
     }
 
-    public void deselectBtn(int row, int col){
+
+    private void action(Button button, int row, int col){
+        button.setOnAction(e->{
+            if(button.getOpacity()!=0){
+                if(PlayGame.getChoosePressed()){
+                    if(client.takeDie( row, col)){
+                        getDieInfo().setBackground(button.getBackground());
+                        getDieInfo().setColumn(col);
+                        getDieInfo().setRow(row);
+                        buttonDieSelected.setBackground(button.getBackground());
+                        buttonDieSelected.setOpacity(1);
+                    }else{
+                        Toolkit.getDefaultToolkit().beep();
+                    }
+                }else if(PlayGame.getUsingTool()){
+                    switch (PlayGame.getCardSelected()){
+                        case 1 :{
+                            client.takeDie(row,col);
+                            changeValueDie(button, row, col);
+                            break;
+                        }
+                        case 5 :{
+                            GridPaneRound.setAccessRound(true);
+                            break;
+                        }
+                        case 6 :{
+                            //client.rollDie(getDieInfo().getRow(), getDieInfo().getColumn());
+                            break;
+                        }
+                        case 7 :{
+
+                            break;
+                        }
+                        case 8 :{
+
+                            break;
+                        }
+                        case 9 :{
+
+                            break;
+                        }
+                        case 10 :{
+
+                            break;
+                        }
+                        case 11 :{
+
+                            break;
+                        }
+                        default:
+                            break;
+                    }
+                }else{
+                    Toolkit.getDefaultToolkit().beep();
+                }
+            }
+        });
+    }
+
+    private void changeValueDie(Button b, int row, int col) {
+        Stage stage = new Stage();
+        GridPane root = new GridPane();
+        root.setPadding(new Insets(20, 10, 20, 10));
+        Scene scene = new Scene(root, 400, 100);
+        root.setHgap(20);
+        root.setVgap(20);
+        Label label = new Label("Choose new value : ");
+        root.add(label, 0, 0);
+        final Spinner<Integer> spinner = new Spinner<>();
+        final String path = b.getBackground().getImages().get(0).getImage().impl_getUrl();
+        final int value = Integer.parseInt(path.substring(path.lastIndexOf("/")+1, path.lastIndexOf("/")+2));
+        if(value<=6 && value >=1){
+            if(value ==6){
+                SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(value-1, value, value);
+                spinner.setValueFactory(valueFactory);
+            }
+            else if(value==1){
+                SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(value, value+1, value);
+                spinner.setValueFactory(valueFactory);
+            }
+            else {
+                SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(value-1, value+1, value);
+                spinner.setValueFactory(valueFactory);
+            }
+
+        }
+        root.add(spinner, 1, 0);
+        Button button = new Button("Ok");
+        root.add(button, 1, 1);
+        ToolView toolView = new ToolView();
+        button.setOnAction(event -> {
+            if(value!=spinner.getValue()){
+                toolView.setDieModified(spinner.getValue());
+                toolView.setStartRow1(row);
+                toolView.setStartCol1(col);
+                if(client.useToolCard(1,toolView)){
+                    updateDP(client.updateView().getDraftPoolDice());
+                    getDieInfo().setBackground(b.getBackground());
+                    getDieInfo().setColumn(col);
+                    getDieInfo().setRow(row);
+                    buttonDieSelected.setBackground(b.getBackground());
+                    buttonDieSelected.setOpacity(1);
+                }
+                stage.close();
+            }
+            else {
+                Toolkit.getDefaultToolkit().beep();
+            }
+        });
+        stage.setTitle("Use tool 1");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void setDiePressed(boolean diePressed) {
+        this.diePressed = diePressed;
+    }
+
+    public void deselectBtn(){
         buttonDieSelected.setOpacity(0);
     }
 
@@ -70,28 +194,6 @@ public class GridPaneDraftPool extends GridPane {
             }
         }
         return null;
-    }
-
-
-    private void action(Button button, int row, int col){
-        button.setOnAction(e->{
-            if(button.getOpacity()!=0){
-                if(PlayGame.getChoosePressed()){
-                    if(client.takeDie( row, col)){
-                        getDieInfo().setBackground(button.getBackground());
-                        getDieInfo().setColumn(col);
-                        getDieInfo().setRow(row);
-                        //button.setStyle("-fx-border-style: solid; -fx-border-color: orange; -fx-border-width: 3");
-                        buttonDieSelected.setBackground(button.getBackground());
-                        buttonDieSelected.setOpacity(1);
-                    }else{
-                        Toolkit.getDefaultToolkit().beep();
-                    }
-                }else{
-                    Toolkit.getDefaultToolkit().beep();
-                }
-            }
-        });
     }
 
     public DieInfo getDieInfo(){

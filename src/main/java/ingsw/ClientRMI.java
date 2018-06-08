@@ -4,6 +4,7 @@ import ingsw.controller.RMIController;
 import ingsw.model.ViewWP;
 import ingsw.model.ViewData;
 import ingsw.view.GUI;
+import ingsw.view.ToolView;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -75,8 +76,12 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public boolean useToolCard(String parameter) {
-        return false;
+    public boolean useToolCard(int i, ToolView toolView) {
+        try {
+            return controller.useToolCard(i,toolView);
+        } catch (RemoteException e) {
+            return false;
+        }
     }
 
     @Override

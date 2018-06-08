@@ -22,7 +22,7 @@ public class Tool3 implements ToolStrategy {
         this.idCard=idCard;
     }
     //Stessa identica cosa per la Tool2 solo che qua passo oltre la restrizione del numero e non del colore
-    public void doOp(ObjectiveTool object){
+    public boolean doOp(ObjectiveTool object){
         window = object.getWindow();
         cellMatrix = window.getCellMatrix();
         possibledie = cellMatrix[object.getC1().getX()][object.getC1().getY()].getDie();
@@ -32,6 +32,7 @@ public class Tool3 implements ToolStrategy {
         }
         else
             System.out.println("Posizione di destinazione non corretta");
+        return false;
     }
 
     public int getIdCard() {

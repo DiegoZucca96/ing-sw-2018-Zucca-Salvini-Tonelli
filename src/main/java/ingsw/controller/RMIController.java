@@ -2,9 +2,9 @@ package ingsw.controller;
 
 import ingsw.ClientState;
 import ingsw.ServerHandler;
-import ingsw.model.Coordinate;
 import ingsw.model.ViewData;
 import ingsw.model.ViewWP;
+import ingsw.view.ToolView;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -39,7 +39,7 @@ public interface RMIController extends Remote {
     //attiva il client (il server ascolta le sue richieste
     ClientState disableClient(String clientName) throws RemoteException;
 
-    boolean useToolCard(String parameter) throws RemoteException;
+    boolean useToolCard(int i, ToolView parameter) throws RemoteException;
 
     boolean waitForPlayers() throws RemoteException;
 

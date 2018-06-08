@@ -1,7 +1,6 @@
 package ingsw.model.toolcard;
 
 import ingsw.model.Cell;
-import ingsw.model.Coordinate;
 import ingsw.model.Die;
 import ingsw.model.ObjectiveTool;
 import ingsw.model.windowpattern.WindowPattern;
@@ -23,7 +22,7 @@ public class Tool4 implements ToolStrategy {
         this.idCard=idCard;
     }
 //Prende due dadi e li sposta rispettando le restrizioni, se non può torna tutto come prima
-    public void doOp(ObjectiveTool object){
+    public boolean doOp(ObjectiveTool object){
         window = object.getWindow();
         cellMatrix = window.getCellMatrix();
         die1 = cellMatrix[object.getC1().getX()][object.getC1().getY()].takeDie();
@@ -39,6 +38,7 @@ public class Tool4 implements ToolStrategy {
                 System.out.print("Hai violato qualche restrizione, non puoi usare questa ToolCard");
             }
         }
+        return false;
     }
 
     public int getIdCard() {

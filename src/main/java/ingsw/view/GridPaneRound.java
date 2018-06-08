@@ -23,6 +23,7 @@ public class GridPaneRound extends GridPane {
     private boolean toolUsed=false;
     private GridPane gridOfdDice;
     private int significantRound;
+    private static boolean accessRound = false;
 
     public GridPaneRound(Client client, ArrayList<String> roundTrack, int round){
         this.client=client;
@@ -120,16 +121,20 @@ public class GridPaneRound extends GridPane {
     }
 
     private Button addDieBtn(int numDice) {
-        //this.toolUsed = client.useToolCard();
         Button button = new Button();
         button.setOnAction(e -> {
-            if(!button.getBackground().equals(Color.TRANSPARENT) /*&& toolUsed*/){
+            if(!button.getBackground().equals(Color.TRANSPARENT) && accessRound){
                 //client.takeRTDie();
+                accessRound = false;
             }else
                 Toolkit.getDefaultToolkit().beep();
 
         });
         this.add(button, numDice, 0);
         return button;
+    }
+
+    public static void setAccessRound(boolean accessRound) {
+        GridPaneRound.accessRound = accessRound;
     }
 }
