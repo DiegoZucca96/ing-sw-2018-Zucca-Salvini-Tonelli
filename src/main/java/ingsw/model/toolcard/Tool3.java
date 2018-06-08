@@ -26,9 +26,9 @@ public class Tool3 implements ToolStrategy {
         window = object.getWindow();
         cellMatrix = window.getCellMatrix();
         possibledie = cellMatrix[object.getC1().getX()][object.getC1().getY()].getDie();
-        if(window.verifyDieColorConstraint(object.getDestination1(),possibledie,cellMatrix) && window.verifyDieNumberConstraint(object.getDestination1(),possibledie,cellMatrix) && window.verifyPosition(object.getDestination1(),cellMatrix)){
+        if(window.verifyDieColorConstraint(object.getD1(),possibledie,cellMatrix) && window.verifyDieNumberConstraint(object.getD1(),possibledie,cellMatrix) && window.verifyPosition(object.getD1(),cellMatrix)){
             die = cellMatrix[object.getC1().getX()][object.getC1().getY()].takeDie();
-            cellMatrix[object.getDestination1().getX()][object.getDestination1().getY()].insertDie(die);
+            cellMatrix[object.getD1().getX()][object.getD1().getY()].insertDie(die);
         }
         else
             System.out.println("Posizione di destinazione non corretta");

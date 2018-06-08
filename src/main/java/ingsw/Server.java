@@ -24,7 +24,7 @@ public class Server {
     private ClientState disableClient;
     private final int timeSearch;
     private final int playerTimeMove;
-    private ArrayList<String> bannedPlayers;
+    private ArrayList<String> inactivePlayers;
 
 
     public static void main(String[] args) throws RemoteException {
@@ -54,7 +54,7 @@ public class Server {
         System.out.println("Inserisci tempo massimo per fare una mossa: ");
         playerTimeMove = in.nextInt();
         //playerTimeMove = 120;
-        bannedPlayers = new ArrayList<>();
+        inactivePlayers = new ArrayList<>();
         try {
             controller = new Controller(this);
         } catch (RemoteException e) {
@@ -163,11 +163,11 @@ public class Server {
     }
 
 
-    public void addBannedPlayers(String clientName) {
-        bannedPlayers.add(clientName);
+    public void addInactivePlayers(String clientName) {
+        inactivePlayers.add(clientName);
     }
 
     public ArrayList<String> getBannedPlayer() {
-        return bannedPlayers;
+        return inactivePlayers;
     }
 }

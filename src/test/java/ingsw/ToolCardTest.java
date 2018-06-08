@@ -258,7 +258,7 @@ class ToolCardTest extends TestCase{
 
     }
 
-    @Test
+    /*@Test
     public void testTool10(){
         Die die = new Die(4,Color.BLUE);
         Die die2 = new Die(1,Color.VIOLET);
@@ -274,7 +274,7 @@ class ToolCardTest extends TestCase{
         assertEquals(3,die.getNumber());
         assertEquals(6,die2.getNumber());
         assertEquals(-1,die3.getNumber());
-    }
+    }*/
 
     @Test
     public void testTool12(){

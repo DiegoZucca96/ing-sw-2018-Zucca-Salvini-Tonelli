@@ -20,31 +20,32 @@ public class Tool10 implements ToolStrategy {
     }
 
     public boolean doOp(ObjectiveTool object){
-        die = object.getDie1();
+        dp = object.getDp();
+        die = dp.getDie(object.getC1().getY());
         switch(die.getNumber()){
             case 1:{
                 die.setNumber(6);
-                break;
+                return true;
             }
             case 2:{
                 die.setNumber(5);
-                break;
+                return true;
             }
             case 3:{
                 die.setNumber(4);
-                break;
+                return true;
             }
             case 4:{
                 die.setNumber(3);
-                break;
+                return true;
             }
             case 5:{
                 die.setNumber(2);
-                break;
+                return true;
             }
             case 6:{
                 die.setNumber(1);
-                break;
+                return true;
             }
             default:{
                 System.out.print("Dado non valido");

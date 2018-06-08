@@ -138,6 +138,9 @@ public interface Client {
     //Restituisce i nomi dei players (serve nella schermata finale di vittoria)
     ArrayList<String> getListOfMatchPlayers();
 
+    //imposta lo stato del client a disconnected
+    void disconnectClient();
+
     /*
     "windowpattern(name(ciao),difficulty(4),cell(row(0),column(0),number(0),color(RED),Die(number(5),color(RED)),cell(..."
 

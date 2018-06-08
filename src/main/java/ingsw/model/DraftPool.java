@@ -67,8 +67,8 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
     }
 
     //aggiunge un dado nella draft pool
-    public void addDie(Die die){
-        diceList.add(die);
+    public void setDie(int index,Die die){
+        diceList.set(index,die);
         notifyViewObserver();
     }
 

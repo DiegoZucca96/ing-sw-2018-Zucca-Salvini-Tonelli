@@ -145,14 +145,18 @@ public class GUI  {
                             window.close();
                             new Loading(client).display(new Stage(), "LOADING MATCH", null);
                         }else{
-                            if(client.matchFound() && client.iAmBanned(userName)){
+                            if(client.matchFound() && client.login(userName)){
                                 //NB! Viene ricreata la schermata iniziale del gioco, ma non è sincronizzato con tutto il resto
+                                stage.close();
+                                window.close();
                                 new PlayGame(client).display(client.getWP(userName));
                             }
                             else{
-                                warning1.setText("Match is full, sorry");
+                                warning1.setText("Match is full or started, sorry");
                                 warning1.setTextFill(Color.RED);
                             }
+                            warning1.setText("Register now to play");
+                            warning1.setTextFill(Color.RED);
                         }
                     }catch (NoSuchElementException e2){
                         System.err.println(e2.getMessage());

@@ -197,11 +197,11 @@ public class Match {
                 break;
             }
             case 5: {
-                toolParameter = new ObjectiveTool(pTParameter.getDie1(), pTParameter.getDie2(), roundTrack, draftPool);
+                toolParameter = new ObjectiveTool(pTParameter.getC1(), pTParameter.getD1(), roundTrack, draftPool, pTParameter.getRound());
                 break;
             }
             case 6: {
-                toolParameter = new ObjectiveTool(pTParameter.getDie1(), currentPlayer.getWindowPattern(), draftPool);
+                toolParameter = new ObjectiveTool(pTParameter.getC1(),draftPool);
                 break;
             }
             case 7: {
@@ -227,7 +227,7 @@ public class Match {
                 break;
             }
             case 10: {
-                toolParameter = new ObjectiveTool(pTParameter.getDie1());
+                toolParameter = new ObjectiveTool(pTParameter.getC1(),draftPool);
                 break;
             }
             case 11: {

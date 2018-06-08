@@ -336,6 +336,12 @@ public class ClientSocket implements Client {
         return null;
     }
 
+    @Override
+    public void disconnectClient() {
+        //da impl
+
+    }
+
 
     @Override
     public ArrayList<ViewWP> getPlayerWPs(String name){

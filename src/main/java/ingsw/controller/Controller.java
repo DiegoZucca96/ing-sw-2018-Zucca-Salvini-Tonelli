@@ -111,7 +111,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
 
     @Override
     public boolean takeDie(int row, int column) throws RemoteException{
-        if(match.getCurrentPlayer().getDieSelected()==null){
+        if(match.getCurrentPlayer().getDieSelected()==null ){
             int index = 3*row + column;
             Coordinate c = new Coordinate(row,column);
             match.getCurrentPlayer().setCoordinateDieSelected(c);
@@ -181,9 +181,21 @@ public class Controller extends UnicastRemoteObject implements RMIController {
 
     private boolean access(String account){
         //se esiste già il nome salvato nel server non puoi accedere
-        if(server.getListOfClient().contains(account) && !server.getListOfPlayers().contains(account) && server.getListOfPlayers().size()<4){
-            server.addPlayers(account);
-            return true;
+        if(server.getListOfClient().contains(account)){
+            if(!server.getListOfPlayers().contains(account) && server.getListOfPlayers().size()<4){
+                server.addPlayers(account);
+                return true;
+            }
+            else{
+                try {
+                    if(getPlayerState(account).equalsIgnoreCase("disconnected") && server.getListOfPlayers().size()<=4){
+                        windowChosen = updateView().getWps();
+                        return true;
+                    }
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return false;
     }
@@ -260,10 +272,13 @@ public class Controller extends UnicastRemoteObject implements RMIController {
                 match.nextTurn();
             }
             if(!isFinish){
+                while(getPlayerState(getCurrentPlayerName()).equalsIgnoreCase("disconnected") && (turn<getSizeOfPlayers()*2)) {
+                    match.nextTurn();
+                }
                 enableClient(getCurrentPlayerName());
                 controllerTimer.setTimeMoveRemaining(playerMoveTime);
                 timer = new Timer();
-                controllerTimer.startPlayerTimer(this,timer); 
+                controllerTimer.startPlayerTimer(this,timer);
             }
         }
     }
@@ -275,7 +290,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
 
     //Serve a segnalare il giocatore inattivo oppure uscito dalla partita
     private void timeout(String clientName) {
-        server.addBannedPlayers(clientName);
+        server.addInactivePlayers(clientName);
     }
 
     @Override
@@ -295,11 +310,57 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return new DisableClient().setState(clientName);
     }
 
+    @Override
+    public void disconnectClient(String clientName) throws RemoteException {
+         new DisconnectedClient().setState(clientName);
+    }
+
     //Utilizza la ToolCard, ancora da implementare (forse serve anche quale tool è stata scelta come parametro)
     @Override
-    public boolean useToolCard(int i, ToolView toolView){
-        PlayerToolParameter pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(),toolView.getStartCol1()),toolView.getDieModified());
-        if(match.playerUseTool(i,pt))
+    public boolean useToolCard(int idCard, ToolView toolView){
+        PlayerToolParameter pt = null;
+        switch(idCard){
+            case 1: {
+                pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()), toolView.getDieModified());
+                break;
+            /*}case 2:{
+                pt = new PlayerToolParameter();
+                break;
+            }case 3:{
+                pt = new PlayerToolParameter();
+                break;
+            }case 4:{
+                pt = new PlayerToolParameter();
+                break;
+            */}case 5:{
+                pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()),new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()),toolView.getRound());
+                break;
+            }case 6:{
+                pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
+                break;/*
+            }case 7:{
+                pt = new PlayerToolParameter();
+                break;
+            }case 8:{
+                pt = new PlayerToolParameter();
+                break;
+            }case 9:{
+                pt = new PlayerToolParameter();
+                break;
+            */}case 10:{
+                pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
+                break;
+            /*}case 11:{
+                pt = new PlayerToolParameter();
+                break;
+            }case 12:{
+                pt = new PlayerToolParameter();
+                break;
+            */}default:{
+                break;
+            }
+        }
+        if(match.playerUseTool(idCard,pt))
             return true;
         else
             return false;

@@ -39,6 +39,9 @@ public interface RMIController extends Remote {
     //attiva il client (il server ascolta le sue richieste
     ClientState disableClient(String clientName) throws RemoteException;
 
+    //disabilita il client in caso di disconnessione
+    void disconnectClient(String clientName) throws RemoteException;
+
     boolean useToolCard(int i, ToolView parameter) throws RemoteException;
 
     boolean waitForPlayers() throws RemoteException;

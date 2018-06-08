@@ -1,9 +1,6 @@
 package ingsw.model.toolcard;
 
-import ingsw.model.Die;
-import ingsw.model.DraftPool;
-import ingsw.model.ObjectiveTool;
-import ingsw.model.RoundTrack;
+import ingsw.model.*;
 
 public class Tool5 implements ToolStrategy {
     private String title;
@@ -24,15 +21,14 @@ public class Tool5 implements ToolStrategy {
 
     //Va a scambiare un dado dalla riserva con uno presente nel RoundTrack, indipendentemente dal round
     public boolean doOp(ObjectiveTool object){
-        int indexRound =0, indexDieRound=0;
-        die1 = object.getDie1();
-        //die2 = object.getDie2(); //Sono inutili i dadi passati, qua mi servono gli indici passati dalla grafica per selezione
+        Coordinate dpCoordinate = object.getC1();
+        Coordinate rtCoordinate = object.getD1();
         rt = object.getRt();
         dp = object.getDp();
-        die2 = rt.takeDie(indexRound,indexDieRound); //Non serve passare il dado perchè comunque devo rimuoverlo dalla RoundTrack
-        dp.addDie(die2);
-        rt.addDie(die1,indexRound);
-        return false;
+        die1 = dp.takeDie(dpCoordinate.getY());
+        die2 = rt.replaceDie(object.getRound(),rtCoordinate.getY(),die1);
+        dp.setDie(dpCoordinate.getY(),die2);
+        return true;
     }
 
     public int getIdCard() {

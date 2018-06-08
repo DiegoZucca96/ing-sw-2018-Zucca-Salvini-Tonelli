@@ -26,13 +26,13 @@ public class Tool4 implements ToolStrategy {
         window = object.getWindow();
         cellMatrix = window.getCellMatrix();
         die1 = cellMatrix[object.getC1().getX()][object.getC1().getY()].takeDie();
-        if(!(window.addDie(object.getDestination1(),die1,cellMatrix))) { //Qui sarebbe da sfruttare le exception per il tipo di violazione
+        if(!(window.addDie(object.getD1(),die1,cellMatrix))) { //Qui sarebbe da sfruttare le exception per il tipo di violazione
             cellMatrix[object.getC1().getX()][object.getC1().getY()].insertDie(die1);
             System.out.print("Hai violato qualche restrizione, non puoi usare questa ToolCard");
         }else{
             die2 = cellMatrix[object.getC2().getX()][object.getC2().getY()].takeDie();
-            if(!(window.addDie(object.getDestination2(),die2,cellMatrix))){
-                window.removeDie(object.getDestination1(),cellMatrix);
+            if(!(window.addDie(object.getD2(),die2,cellMatrix))){
+                window.removeDie(object.getD1(),cellMatrix);
                 cellMatrix[object.getC1().getX()][object.getC1().getY()].insertDie(die1);
                 cellMatrix[object.getC2().getX()][object.getC2().getY()].insertDie(die2);
                 System.out.print("Hai violato qualche restrizione, non puoi usare questa ToolCard");

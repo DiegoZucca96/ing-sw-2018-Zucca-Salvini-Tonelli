@@ -25,7 +25,7 @@ public class Tool9 implements ToolStrategy{
     public boolean doOp(ObjectiveTool object){
        die = object.getDie1();
        window = object.getWindow();
-       d1 = object.getDestination1();
+       d1 = object.getD1();
        Cell[][] cellMatrix = window.getCellMatrix();
        if(window.verifyDieNumberConstraint(d1,die,cellMatrix) && window.verifyDieColorConstraint(d1,die,cellMatrix) && window.verifyCellNumberConstraint(d1,die,cellMatrix) && window.verifyCellColorConstraint(d1,die,cellMatrix))
            cellMatrix[d1.getX()][d1.getY()].insertDie(die);

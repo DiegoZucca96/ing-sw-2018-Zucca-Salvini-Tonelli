@@ -7,43 +7,46 @@ public class ObjectiveTool {
     private Die die1;
     private Die die2;
     private WindowPattern window;
-    private int dieModified;             //Per la ToolCard 1, serve a dire se si vuole alzare (1) o abbassare (-1) il valore (default 0)
+    private int dieModified;//Per la ToolCard 1, serve a dire se si vuole alzare (1) o abbassare (-1) il valore (default 0)
     private Coordinate c1;
     private Coordinate c2;
-    private Coordinate destination1;
-    private Coordinate destination2;
+    private Coordinate d1;
+    private Coordinate d2;
     private RoundTrack rt;
     private DraftPool dp;
     private int turnDie;        // Se 1 bisogna ruotare, altrimenti è zero di base
     private DiceBag diceBag;
     private Color color;
+    private int round;
 
-
+    //Tool1
     public ObjectiveTool(Coordinate c1, int dieModified, DraftPool dp){
         this.c1 = c1;
         this.dieModified = dieModified;
         this.dp = dp;
     }
 
-    public ObjectiveTool(WindowPattern window,Coordinate c1, Coordinate destination1){
+    public ObjectiveTool(WindowPattern window,Coordinate c1, Coordinate d1){
         this.window = window;
         this.c1 = c1;
-        this.destination1 = destination1;
+        this.d1 = d1;
     }
 
-    public ObjectiveTool(WindowPattern window, Coordinate c1, Coordinate c2, Coordinate destination1, Coordinate destination2){
+    public ObjectiveTool(WindowPattern window, Coordinate c1, Coordinate c2, Coordinate d1, Coordinate d2){
         this.window = window;
         this.c1 = c1;
         this.c2 = c2;
-        this.destination1 = destination1;
-        this.destination2 = destination2;
+        this.d1 = d1;
+        this.d2 = d2;
     }
 
-    public ObjectiveTool(Die die1, Die die2, RoundTrack rt, DraftPool dp ){
-        this.die1 = die1;
-        this.die2 = die2;
+    //Tool5
+    public ObjectiveTool(Coordinate c1, Coordinate d1, RoundTrack rt, DraftPool dp, int round){
+        this.c1 = c1;
+        this.d1 = d1;
         this.rt = rt;
         this.dp = dp;
+        this.round = round;
     }
 
     public ObjectiveTool(Die die1, WindowPattern window, DraftPool dp){
@@ -56,20 +59,22 @@ public class ObjectiveTool {
         this.dp = dp;
     }
 
-    public ObjectiveTool(WindowPattern window, Coordinate destination1, DraftPool dp){
+    public ObjectiveTool(WindowPattern window, Coordinate d1, DraftPool dp){
         this.window = window;
-        this.destination1 = destination1;
+        this.d1 = d1;
         this.dp = dp;
     }
 
-    public ObjectiveTool(Die die1, WindowPattern window, Coordinate destination1){
+    public ObjectiveTool(Die die1, WindowPattern window, Coordinate d1){
         this.die1 = die1;
         this.window = window;
-        this.destination1 = destination1;
+        this.d1 = d1;
     }
 
-    public ObjectiveTool(Die die1){
-        this.die1 = die1;
+    //Tool10
+    public ObjectiveTool(Coordinate c1, DraftPool dp){
+        this.c1 = c1;
+        this.dp = dp;
     }
 
     public ObjectiveTool(Die die1, WindowPattern window, DraftPool dp ,DiceBag diceBag){
@@ -79,12 +84,12 @@ public class ObjectiveTool {
         this.dp = dp;
     }
 
-    public ObjectiveTool(WindowPattern window, Coordinate c1, Coordinate c2, Coordinate destination1, Coordinate destination2, Color color){
+    public ObjectiveTool(WindowPattern window, Coordinate c1, Coordinate c2, Coordinate d1, Coordinate d2, Color color){
         this.window = window;
         this.c1 = c1;
         this.c2 = c2;
-        this.destination1 = destination1;
-        this.destination2 = destination2;
+        this.d1 = d1;
+        this.d2 = d2;
         this.color = color;
     }
 
@@ -138,20 +143,20 @@ public class ObjectiveTool {
         this.c2 = c2;
     }
 
-    public Coordinate getDestination1() {
-        return destination1;
+    public Coordinate getD1() {
+        return d1;
     }
 
-    public void setDestination1(Coordinate destination1) {
-        this.destination1 = destination1;
+    public void setD1(Coordinate d1) {
+        this.d1 = d1;
     }
 
-    public Coordinate getDestination2() {
-        return destination2;
+    public Coordinate getD2() {
+        return d2;
     }
 
-    public void setDestination2(Coordinate destination2) {
-        this.destination2 = destination2;
+    public void setD2(Coordinate d2) {
+        this.d2 = d2;
     }
 
     public RoundTrack getRt() {
@@ -190,4 +195,11 @@ public class ObjectiveTool {
 
     public void setColor(Color color) { this.color = color;}
 
+    public int getRound() {
+        return round;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
+    }
 }

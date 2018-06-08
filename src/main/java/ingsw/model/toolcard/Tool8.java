@@ -26,7 +26,7 @@ public class Tool8 implements ToolStrategy {
        dp = object.getDp();
        die = dp.takeDie(indexDie); //Stesso problema della ToolCard 5, mi serve una sorta di indice passato dal client
        window = object.getWindow();
-       window.addDie(object.getDestination1(),die,window.getCellMatrix());
+       window.addDie(object.getD1(),die,window.getCellMatrix());
         return false;
     }
 

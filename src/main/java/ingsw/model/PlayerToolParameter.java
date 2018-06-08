@@ -10,6 +10,7 @@ public class PlayerToolParameter {
     private Coordinate d1;
     private Coordinate d2;
     private int dieModified;
+    private int round;
     private Color color;
 
     public PlayerToolParameter( Coordinate c1, int dieModified){
@@ -21,9 +22,10 @@ public class PlayerToolParameter {
         this.die1 = die1;
     }
 
-    public PlayerToolParameter( Coordinate c1, Coordinate d1){
+    public PlayerToolParameter( Coordinate c1, Coordinate d1, int round){
         this.c1 = c1;
         this.d1 = d1;
+        this.round=round;
     }
 
     public PlayerToolParameter( Coordinate c1, Coordinate c2, Coordinate d1, Coordinate d2, Color color){
@@ -39,8 +41,8 @@ public class PlayerToolParameter {
         this.die2 = die2;
     }
 
-    public PlayerToolParameter( Coordinate d1){
-        this.d1 = d1;
+    public PlayerToolParameter( Coordinate c1){
+        this.c1 = c1;
     }
 
     public PlayerToolParameter( Die die1, Coordinate d1){
@@ -75,6 +77,14 @@ public class PlayerToolParameter {
 
     public int getDieModified() {
         return dieModified;
+    }
+
+    public int getRound() {
+        return round;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
     }
 
     public Color getColor() { return color;}

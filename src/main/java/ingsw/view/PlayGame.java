@@ -112,6 +112,9 @@ public class PlayGame {
 
         //INIZIALIZZAZIONE
         init = client.initializeView();
+        /*this.updateView = client.updateView();
+        if(updateView!=null)
+            update();*/
         timeBegin = client.getTimeMove();
 
         timeline = new Timeline();
@@ -126,7 +129,7 @@ public class PlayGame {
                                 if (timeseconds == timeBegin-1) {
                                     this.updateView = client.updateView();
                                     if(updateView!=null)
-                                        update();
+                                        update(1,1,1);
                                     resetOnButton();
                                 }
 
@@ -151,7 +154,7 @@ public class PlayGame {
                                 if(timeseconds%5==0){
                                     this.updateView = client.updateView();
                                     if(updateView!=null)
-                                        update();
+                                        update(1,1,1);
                                 }
                             }
                         }));
@@ -170,7 +173,7 @@ public class PlayGame {
 
 
         //ROUNDTRACK
-        gridRound= new GridPaneRound(client, init.getRoundTrack(), 1);
+        gridRound= new GridPaneRound(client, init.getRoundTrack(), 1,this);
         gridRound.setLayoutY(10);
         gridRound.setLayoutX(336);
 
@@ -209,7 +212,7 @@ public class PlayGame {
         pbGrid.add(pbPane3, 0, 2);
 
         //DRAFTPOOL
-        draftPoolGrid = new GridPaneDraftPool(client,init.getDraftPoolDice(),buttonDie);
+        draftPoolGrid = new GridPaneDraftPool(client,init.getDraftPoolDice(),buttonDie,this);
         draftPoolGrid.setLayoutX(200);
         draftPoolGrid.setLayoutY(600);
 
@@ -314,6 +317,7 @@ public class PlayGame {
             if(answer){
                 client.setActive(false);
                 client.skip();
+                client.disconnectClient();
                 Platform.exit();
             }
         });
@@ -447,25 +451,32 @@ public class PlayGame {
         return grid;
     }
 
-    private void update() {
-        for(int i = 0; i<client.getNumberOfPlayers()-1; i++){
-            if(updateView.getWps()!=null){
-                if(updateView.getWps().get(i)!=null){
-                    mutableGridEn = (GridPaneWEnemy) secondGrid.getChildren().get(i);
-                    if(mutableGridEn.getNumberWP() == updateView.getWps().get(i).getNumberWP())
-                        mutableGridEn.updateWindow(updateView.getWps().get(i));
-                    else
-                        mutableGridEn.updateWindow(updateView.getWps().get(i+1));
+    public void update(int wp, int dp, int rt) {
+        if(wp==1){
+            for(int i = 0; i<client.getNumberOfPlayers()-1; i++){
+                if(updateView.getWps()!=null){
+                    if(updateView.getWps().get(i)!=null){
+                        mutableGridEn = (GridPaneWEnemy) secondGrid.getChildren().get(i);
+                        if(mutableGridEn.getNumberWP() == updateView.getWps().get(i).getNumberWP())
+                            mutableGridEn.updateWindow(updateView.getWps().get(i));
+                        else
+                            mutableGridEn.updateWindow(updateView.getWps().get(i+1));
+                    }
                 }
             }
         }
 
-        if(updateView.getDraftPoolDice()!=null){
-            draftPoolGrid.updateDP(updateView.getDraftPoolDice());
+        if(dp==1){
+            if(updateView.getDraftPoolDice()!=null){
+                draftPoolGrid.updateDP(updateView.getDraftPoolDice());
+            }
         }
 
-        if(updateView.getRoundTrack()!=null)
-            gridRound.updateRound(updateView.getRoundTrack(), client.getRound());
+        if(rt==1){
+            if(updateView.getRoundTrack()!=null)
+                gridRound.updateRound(updateView.getRoundTrack(), client.getRound());
+        }
+
     }
 
     public static boolean getChoosePressed(){
@@ -515,4 +526,14 @@ public class PlayGame {
     public static void setChoosePressed(boolean b) {
         choosePressed = b;
     }
+
+
+    public GridPaneRound getGridRound() {
+        return gridRound;
+    }
+
+    public GridPaneDraftPool getDraftPoolGrid() {
+        return draftPoolGrid;
+    }
+
 }

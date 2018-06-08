@@ -329,6 +329,15 @@ public class ClientRMI implements Client {
     }
 
     @Override
+    public void disconnectClient() {
+        try {
+            controller.disconnectClient(name);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public ArrayList<ViewWP> getPlayerWPs(String name) {
         try {
             return controller.getPlayersWPs(name);

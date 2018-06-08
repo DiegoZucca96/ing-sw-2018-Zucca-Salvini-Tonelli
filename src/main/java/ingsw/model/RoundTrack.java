@@ -60,10 +60,10 @@ public class RoundTrack {
     }
 
     //esegue getDie e rimuove il riferiemento al dado dalla lista.
-    public Die takeDie(int round, int index){
+    public Die replaceDie(int round, int index, Die dpDie){
         Die result = getDie(round, index);
         if(result == null) return null;
-        extraDice.get(round-1).remove(index);
+        extraDice.get(round-1).set(index,dpDie);
         notifyViewObserver();
         return result;
     }

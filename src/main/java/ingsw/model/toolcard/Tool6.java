@@ -20,15 +20,17 @@ public class Tool6 implements ToolStrategy {
     }
 //Tiro di nuovo un dado, poi verifico se non posso inserirlo allora lo rimetto nella riserva
     public boolean doOp(ObjectiveTool object){
-        die = object.getDie1();
+        dp = object.getDp();
+        die = dp.getDie(object.getC1().getY());
         Random r = new Random();
-        die.setNumber(r.nextInt(6));
-        if(!isInsertable(object.getWindow(),die)){  //Metodo che controlla se ci sono possibili inserimenti
+        die.setNumber(r.nextInt(6)+1);
+        return true;
+        /*if(!isInsertable(object.getWindow(),die)){  //Metodo che controlla se ci sono possibili inserimenti
             dp = object.getDp();
-            dp.addDie(die);
+            //dp.addDie(die);
         }
         //Manca un pezzo in cui si chiede al player dove vuole inserire il dado se può inserirlo
-        return false;
+        return false;*/
     }
 
     public boolean isInsertable(WindowPattern window, Die die){

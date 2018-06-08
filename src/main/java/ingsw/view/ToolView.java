@@ -12,6 +12,7 @@ public class ToolView implements Serializable {
     private int endRow2;
     private int endCol2;
     private int dieModified;
+    private int round;
     private String color;
 
 
@@ -85,6 +86,14 @@ public class ToolView implements Serializable {
 
     public void setDieModified(int dieModified) {
         this.dieModified = dieModified;
+    }
+
+    public int getRound() {
+        return round;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
     }
 
     public String getColor() {
