@@ -84,8 +84,8 @@ public class ToolCard {
         //Righe da decommentare se si vogliono provare le ToolCard
         //init.getToolCard().add("/Tool5.png");
         //numToolCards.add(5);
-        init.getToolCard().add("/Tool8.png");
-        numToolCards.add(8);
+        //init.getToolCard().add("/Tool9.png");
+        //numToolCards.add(9);
         for(int i=0;i<3;i++){
             int select = rg.random();
             switch(select){

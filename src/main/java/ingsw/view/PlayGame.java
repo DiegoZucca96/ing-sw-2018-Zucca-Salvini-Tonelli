@@ -2,27 +2,19 @@ package ingsw.view;
 
 
 import ingsw.Client;
-import ingsw.model.Color;
 import ingsw.model.ViewWP;
 import ingsw.model.ViewData;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -36,12 +28,12 @@ public class PlayGame {
     private Timeline timeline;
     private Client client;
     private ViewData init ;
-    private static Button skipBtn;
-    private static Button useToolBtn;
-    private static Button takeDieBtn;
-    private static Button exitBtn;
-    private static Button infoBtn;
-    private static Button cancelBtn;
+    private Button skipBtn;
+    private Button useToolBtn;
+    private Button takeDieBtn;
+    private Button exitBtn;
+    private Button infoBtn;
+    private Button cancelBtn;
     private GridPane toolGrid;
     private GridPane pbGrid;
     private GridPane cellsGrid;
@@ -53,14 +45,14 @@ public class PlayGame {
     private static final String styleSheet = "-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"";
     private ViewData updateView;
     private static int begin=0;
-    private static boolean choosePressed=false;
-    private static boolean usingTool=false;
+    private boolean choosePressed=false;
+    private boolean usingTool=false;
     private Label textLbl;
     private Button buttonDie;
     private ViewWP myWindow;
     private GridPane secondGrid;
     private GridPane gridTks;
-    private static int cardSelected;
+    private int cardSelected;
 
 
     public PlayGame(Client client){
@@ -227,7 +219,7 @@ public class PlayGame {
         divideGrids.getChildren().add(cellsGrid);
 
         //LA MIA WP
-        myWindowGrid = new GridPaneWindow(myWindow, client, draftPoolGrid);
+        myWindowGrid = new GridPaneWindow(myWindow, client, draftPoolGrid, this);
         myWindowGrid.setLayoutX(240);
         myWindowGrid.setLayoutY(330);
 
@@ -273,7 +265,7 @@ public class PlayGame {
                 choosePressed=false;
                 usingTool = false;
                 draftPoolGrid.setDiePressed(false);
-                GridPaneRound.setAccessRound(false);
+                gridRound.setAccessRound(false);
                 client.setActive(true);
                 client.skip();
                 if(client.isFinish()){
@@ -329,7 +321,7 @@ public class PlayGame {
                 choosePressed=false;
                 usingTool = false;
                 draftPoolGrid.setDiePressed(false);
-                GridPaneRound.setAccessRound(false);
+                gridRound.setAccessRound(false);
                 int col = client.getCoordinateSelectedY();
                 if(col==-1){            //se non ha selezionato nulla
                     resetOnButton();
@@ -417,8 +409,12 @@ public class PlayGame {
         String imagePathT = stringCard.get(i);
         Image imageT = new Image(imagePathT, 300, 420, false, true);
         view.setOnMouseClicked(e->{
-            if(imagePathT.substring(1, 2).equals("T"))
+            if(imagePathT.substring(1, 2).equals("T")){
                 cardSelected = Integer.parseInt(imagePathT.substring(imagePathT.indexOf("l")+1, imagePathT.indexOf(".")));
+                skipBtn.setDisable(true);
+                takeDieBtn.setDisable(true);
+                useToolBtn.setDisable(true);
+            }
             if(cardSelected==7){
                 ToolView toolView = new ToolView();
                 for(int j = 0; j <client.getListOfPlayers().size()*2+1; j++ ){
@@ -495,19 +491,19 @@ public class PlayGame {
 
     }
 
-    public static boolean getChoosePressed(){
+    public boolean getChoosePressed(){
         return choosePressed;
     }
 
-    public static boolean getUsingTool() {
+    public boolean getUsingTool() {
         return usingTool;
     }
 
-    public static int getCardSelected(){
+    public int getCardSelected(){
         return cardSelected;
     }
 
-    public static void resetOnButton(){
+    public void resetOnButton(){
         skipBtn.setDisable(false);
         useToolBtn.setDisable(false);
         takeDieBtn.setDisable(false);
@@ -515,7 +511,7 @@ public class PlayGame {
         cancelBtn.setDisable(false);
     }
 
-    public static void resetOffButton(){
+    public void resetOffButton(){
         skipBtn.setDisable(true);
         useToolBtn.setDisable(true);
         takeDieBtn.setDisable(true);
@@ -523,7 +519,7 @@ public class PlayGame {
         cancelBtn.setDisable(true);
     }
 
-    public static void onPositionWPButton() {
+    public void onPositionWPButton() {
         skipBtn.setDisable(false);
         useToolBtn.setDisable(true);
         takeDieBtn.setDisable(true);
@@ -531,7 +527,7 @@ public class PlayGame {
         cancelBtn.setDisable(true);
     }
 
-    public static void setBtnOnTakeDieClicked(){
+    public void setBtnOnTakeDieClicked(){
         skipBtn.setDisable(true);
         cancelBtn.setDisable(false);
         infoBtn.setDisable(true);
@@ -539,7 +535,7 @@ public class PlayGame {
     }
 
 
-    public static void setChoosePressed(boolean b) {
+    public void setChoosePressed(boolean b) {
         choosePressed = b;
     }
 
@@ -552,4 +548,7 @@ public class PlayGame {
         return draftPoolGrid;
     }
 
+    public GridPaneWindow getGridWindow() {
+        return myWindowGrid;
+    }
 }

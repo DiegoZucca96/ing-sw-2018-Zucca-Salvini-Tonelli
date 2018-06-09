@@ -17,13 +17,16 @@ public class GridPaneWindow extends GridPane {
     private ArrayList<CellInfo> cellInfos= new ArrayList<>();
     private Client client;
     private GridPaneDraftPool draftPool;
+    private static boolean accessWindow = false;
+    private PlayGame playGame;
     String number;
     String color;
 
-    public GridPaneWindow( ViewWP myWindow, Client client, GridPaneDraftPool draftPool) {
+    public GridPaneWindow( ViewWP myWindow, Client client, GridPaneDraftPool draftPool, PlayGame playGame) {
 
         this.client=client;
         this.draftPool=draftPool;
+        this.playGame = playGame;
         this.setHgap(3);
         this.setVgap(3);
         int numCols = 5 ;
@@ -76,14 +79,35 @@ public class GridPaneWindow extends GridPane {
 
         button.setOnAction(e -> {
 
-            if(client.positionDie(i, j)){
+            if(accessWindow){
+                if(playGame.getCardSelected()==9) {
+                    ToolView toolView = new ToolView();
+                    toolView.setStartRow1(playGame.getDraftPoolGrid().getDieInfo().getRow());
+                    toolView.setStartCol1(playGame.getDraftPoolGrid().getDieInfo().getColumn());
+                    toolView.setEndRow1(i);
+                    toolView.setEndCol1(j);
+                    button.setBackground(playGame.getDraftPoolGrid().getDieInfo().getBackground());
+                    if (client.useToolCard(9, toolView)) {
+                        client.nullSelection();
+                        if(client.positionDie(toolView.getStartRow1(), toolView.getStartCol1()))
+                            playGame.update(1, 1, 1);
+                        playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(0);
+                        button.setBackground(playGame.getDraftPoolGrid().getButton(toolView.getStartRow1(), toolView.getStartCol1()).getBackground());
+                        playGame.getDraftPoolGrid().getButton(toolView.getStartRow1(), toolView.getStartCol1()).setOpacity(0);
+                        playGame.resetOnButton();
+                    }
+                }
+                accessWindow = false;
+            }else if (client.positionDie(i, j)){
                 addCellInfo(button.getBackground(), i, j);      //salvo il backgruond della cella
                 button.setBackground(draftPool.getButtonDieSelected().getBackground());       //setto il nuovo background col dado
                 draftPool.getButton(draftPool.getDieInfo().getRow(), draftPool.getDieInfo().getColumn()).setOpacity(0);
-                PlayGame.setChoosePressed(false);
-                PlayGame.onPositionWPButton();
+                playGame.setChoosePressed(false);
+                playGame.onPositionWPButton();
                 draftPool.getButtonDieSelected().setOpacity(0);
-            }else{
+                playGame.resetOnButton();
+            }
+            else{
                 Toolkit.getDefaultToolkit().beep();
             }
         });
@@ -109,5 +133,7 @@ public class GridPaneWindow extends GridPane {
         cellInfos.add(cellInfo);
     }
 
-
+    public void setAccessWindow(boolean accessWindow) {
+        this.accessWindow= accessWindow;
+    }
 }

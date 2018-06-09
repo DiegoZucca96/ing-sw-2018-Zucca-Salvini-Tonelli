@@ -258,37 +258,36 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     //Salta volontariamente il turno oppure forzatamente dalla fine del timer de giocatore
     @Override
     public void skip(String clientName) throws RemoteException{
-        /**
-         * if(getPlayerState(clientName).equals("enabled")){
-         if(!active){
-         timeout(clientName);
-         }
-         timer.cancel();
-         disableClient(getCurrentPlayerName());
-         turn++;
-         if (turn == getSizeOfPlayers()*2) {
-         if(match.getRound() == 10)
-         isFinish = true;
-         else{
-         match.endRound();
-         turn=0;
-         }
-         }
-         else{
-         match.nextTurn();
-         }
-         if(!isFinish){
-         while(getPlayerState(getCurrentPlayerName()).equalsIgnoreCase("disconnected") && (turn<getSizeOfPlayers()*2)) {
-         match.nextTurn();
-         }
-         enableClient(getCurrentPlayerName());
-         controllerTimer.setTimeMoveRemaining(playerMoveTime);
-         timer = new Timer();
-         controllerTimer.startPlayerTimer(this,timer);
-         }
-         }
-        / */
+        if(getPlayerState(clientName).equals("enabled")){
+            if(!active){
+                timeout(clientName);
+            }
+            timer.cancel();
+            disableClient(getCurrentPlayerName());
+            turn++;
+            if (turn == getSizeOfPlayers()*2) {
+                if(match.getRound() == 10)
+                    isFinish = true;
+                else{
+                    match.endRound();
+                    turn=0;
+                }
+            }
+            else{
+                match.nextTurn();
+            }
+            if(!isFinish){
+                while(getPlayerState(getCurrentPlayerName()).equalsIgnoreCase("disconnected") && (turn<getSizeOfPlayers()*2)) {
+                    match.nextTurn();
+                }
+                enableClient(getCurrentPlayerName());
+                controllerTimer.setTimeMoveRemaining(playerMoveTime);
+                timer = new Timer();
+                controllerTimer.startPlayerTimer(this,timer);
+            }
+        }
 
+/**
         if(getPlayerState(clientName).equals("enabled")){
             if(!doubleTurn){
                 if(!active){
@@ -330,13 +329,15 @@ public class Controller extends UnicastRemoteObject implements RMIController {
                         skipPlayerDueTo8 = null;
                     }
 
-                }else
+                }else if(skipPlayerDueTo8.equals(match.getCurrentPlayer().getName()))
+                    disableClient(getCurrentPlayerName());
+                else
                     enableClient(getCurrentPlayerName());
                 controllerTimer.setTimeMoveRemaining(playerMoveTime);
                 timer = new Timer();
                 controllerTimer.startPlayerTimer(this,timer);
             }
-        }
+        }*/
     }
 
     @Override
@@ -400,10 +401,10 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             }case 8:{
                 this.doubleTurn = toolView.isDoubleTurn();
                 pt = new PlayerToolParameter(doubleTurn);
-                break;/*
-            }case 9:{
-                pt = new PlayerToolParameter();
                 break;
+            }case 9:{
+                pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()), new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()));
+                break;/*
             }case 10:{
                 pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
                 break;

@@ -23,7 +23,7 @@ public class GridPaneRound extends GridPane {
     private boolean toolUsed=false;
     private GridPane gridOfdDice;
     private int significantRound;
-    private static boolean accessRound = false;
+    private boolean accessRound = false;
     private PlayGame playGame;
     private DieInfo dieInfo = new DieInfo(null,-1,-1);
     private Stage stage;
@@ -128,7 +128,7 @@ public class GridPaneRound extends GridPane {
         button.setOnAction(e -> {
             playGame.update(0,0,1);
             if(!button.getBackground().equals(Color.TRANSPARENT) && accessRound){
-                if(PlayGame.getCardSelected()==5){
+                if(playGame.getCardSelected()==5){
                     ToolView toolView = new ToolView();
                     toolView.setStartRow1(playGame.getDraftPoolGrid().getDieInfo().getRow());
                     toolView.setStartCol1(playGame.getDraftPoolGrid().getDieInfo().getColumn());
@@ -161,8 +161,8 @@ public class GridPaneRound extends GridPane {
         return button;
     }
 
-    public static void setAccessRound(boolean accessRound) {
-        GridPaneRound.accessRound = accessRound;
+    public void setAccessRound(boolean accessRound) {
+        this.accessRound = accessRound;
     }
 
 

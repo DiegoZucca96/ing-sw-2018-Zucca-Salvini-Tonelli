@@ -224,7 +224,7 @@ public class Match {
                 break;
             }
             case 9: {
-                toolParameter = new ObjectiveTool(pTParameter.getDie1(), currentPlayer.getWindowPattern(), pTParameter.getD1());
+                toolParameter = new ObjectiveTool(pTParameter.getC1(), currentPlayer.getWindowPattern(), pTParameter.getD1(), draftPool);
                 break;
             }
             case 10: {

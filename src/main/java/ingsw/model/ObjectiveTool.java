@@ -70,11 +70,12 @@ public class ObjectiveTool {
         this.d1 = d1;
         this.dp = dp;
     }
-
-    public ObjectiveTool(Die die1, WindowPattern window, Coordinate d1){
-        this.die1 = die1;
+    //Tool 9
+    public ObjectiveTool(Coordinate c1, WindowPattern window, Coordinate d1, DraftPool dp){
+        this.c1 = c1;
         this.window = window;
         this.d1 = d1;
+        this.dp = dp;
     }
 
     //Tool10

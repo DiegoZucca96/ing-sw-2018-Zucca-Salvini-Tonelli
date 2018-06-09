@@ -63,6 +63,11 @@ public class PlayerToolParameter {
     public PlayerToolParameter (boolean doubleTurn){
         this.doubleTurn = doubleTurn;
     }
+    //Tool9
+    public PlayerToolParameter(Coordinate c1, Coordinate d1){
+        this.c1 = c1;
+        this.d1 = d1;
+    }
 
 
     public Die getDie1() {

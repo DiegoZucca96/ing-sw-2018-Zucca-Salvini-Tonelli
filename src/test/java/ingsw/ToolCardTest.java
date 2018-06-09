@@ -221,7 +221,7 @@ class ToolCardTest extends TestCase{
         //Visto che è inseribile guardo se non è cambiato nulla
         assertEquals(6,dp.getDiceListSize());
     }
-
+/*
     @Test
     public void testTool9(){
         Player p = new Player("me",12,Color.YELLOW);

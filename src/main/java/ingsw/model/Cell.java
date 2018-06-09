@@ -40,9 +40,9 @@ public class Cell implements Serializable {
         return empty;
     }
 
-    public void insertDie(Die die){
-
+    public boolean insertDie(Die die){
         this.die=die;
+        return true;
     }
 
 

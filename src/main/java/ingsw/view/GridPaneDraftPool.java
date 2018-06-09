@@ -71,7 +71,7 @@ public class GridPaneDraftPool extends GridPane {
     private void action(Button button, int row, int col){
         button.setOnAction(e->{
             if(button.getOpacity()!=0){
-                if(PlayGame.getChoosePressed()){
+                if(playGame.getChoosePressed()){
                     if(client.takeDie( row, col)){
                         dieInfo.setBackground(button.getBackground());
                         dieInfo.setColumn(col);
@@ -81,8 +81,8 @@ public class GridPaneDraftPool extends GridPane {
                     }else{
                         Toolkit.getDefaultToolkit().beep();
                     }
-                }else if(PlayGame.getUsingTool()){
-                    switch (PlayGame.getCardSelected()){
+                }else if(playGame.getUsingTool()){
+                    switch (playGame.getCardSelected()){
                         case 1 :{
                             client.takeDie(row,col);
                             changeValueDie(button, row, col);
@@ -90,7 +90,7 @@ public class GridPaneDraftPool extends GridPane {
                         }
                         case 5 :{
                             if(client.takeDie(row,col)){
-                                GridPaneRound.setAccessRound(true);
+                                playGame.getGridRound().setAccessRound(true);
                                 dieInfo.setBackground(button.getBackground());
                                 dieInfo.setColumn(col);
                                 dieInfo.setRow(row);
@@ -116,7 +116,14 @@ public class GridPaneDraftPool extends GridPane {
                             break;
                         }
                         case 9 :{
-
+                            if(client.takeDie(row,col)){
+                                playGame.getGridWindow().setAccessWindow(true);
+                                dieInfo.setBackground(button.getBackground());
+                                dieInfo.setColumn(col);
+                                dieInfo.setRow(row);
+                                buttonDieSelected.setBackground(button.getBackground());
+                                buttonDieSelected.setOpacity(1);
+                            }
                             break;
                         }
                         case 10 :{
