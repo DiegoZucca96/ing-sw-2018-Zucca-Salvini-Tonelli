@@ -258,6 +258,37 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     //Salta volontariamente il turno oppure forzatamente dalla fine del timer de giocatore
     @Override
     public void skip(String clientName) throws RemoteException{
+        /**
+         * if(getPlayerState(clientName).equals("enabled")){
+         if(!active){
+         timeout(clientName);
+         }
+         timer.cancel();
+         disableClient(getCurrentPlayerName());
+         turn++;
+         if (turn == getSizeOfPlayers()*2) {
+         if(match.getRound() == 10)
+         isFinish = true;
+         else{
+         match.endRound();
+         turn=0;
+         }
+         }
+         else{
+         match.nextTurn();
+         }
+         if(!isFinish){
+         while(getPlayerState(getCurrentPlayerName()).equalsIgnoreCase("disconnected") && (turn<getSizeOfPlayers()*2)) {
+         match.nextTurn();
+         }
+         enableClient(getCurrentPlayerName());
+         controllerTimer.setTimeMoveRemaining(playerMoveTime);
+         timer = new Timer();
+         controllerTimer.startPlayerTimer(this,timer);
+         }
+         }
+        / */
+
         if(getPlayerState(clientName).equals("enabled")){
             if(!doubleTurn){
                 if(!active){
