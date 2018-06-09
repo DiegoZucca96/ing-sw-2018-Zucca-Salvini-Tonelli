@@ -379,8 +379,8 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         switch(idCard){
             case 1: {
                 pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()), toolView.getDieModified());
-                break;
-            /*}case 2:{
+                break;/*
+            }case 2:{
                 pt = new PlayerToolParameter();
                 break;
             }case 3:{
@@ -388,13 +388,13 @@ public class Controller extends UnicastRemoteObject implements RMIController {
                 break;
             }case 4:{
                 pt = new PlayerToolParameter();
-                break;
+                break;*/
             }case 5:{
                 pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()),new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()),toolView.getRound());
                 break;
             }case 6:{
                 pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
-                break;*/
+                break;
             }case 7:{
                 pt = new PlayerToolParameter(toolView.getListOfCoordinateY());
                 break;

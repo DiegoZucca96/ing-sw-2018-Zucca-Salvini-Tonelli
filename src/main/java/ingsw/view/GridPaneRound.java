@@ -23,7 +23,7 @@ public class GridPaneRound extends GridPane {
     private boolean toolUsed=false;
     private GridPane gridOfdDice;
     private int significantRound;
-    private boolean accessRound = false;
+    private boolean accessRound;
     private PlayGame playGame;
     private DieInfo dieInfo = new DieInfo(null,-1,-1);
     private Stage stage;
@@ -33,6 +33,7 @@ public class GridPaneRound extends GridPane {
         this.roundTrack=roundTrack;
         this.round=round;
         this.playGame=playGame;
+        this.accessRound = false;
         this.setHgap(15);
         this.setVgap(0);
         this.setPadding(new Insets(0, 20, 0, 20));
