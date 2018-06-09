@@ -3,6 +3,7 @@ package ingsw.model.toolcard;
 import ingsw.model.Die;
 import ingsw.model.DraftPool;
 import ingsw.model.ObjectiveTool;
+import ingsw.model.Player;
 import ingsw.model.windowpattern.WindowPattern;
 
 public class Tool8 implements ToolStrategy {
@@ -11,8 +12,7 @@ public class Tool8 implements ToolStrategy {
     private boolean alreadyUsed;
     private int idCard;
     private Die die;
-    private WindowPattern window;
-    private DraftPool dp;
+    private Player player;
 
     public Tool8(int idCard) {
         this.title ="Tenaglia a Rotelle";
@@ -22,12 +22,15 @@ public class Tool8 implements ToolStrategy {
     }
 
     public boolean doOp(ObjectiveTool object){
-       int indexDie = 0;
+       /*int indexDie = 0;
        dp = object.getDp();
        die = dp.takeDie(indexDie); //Stesso problema della ToolCard 5, mi serve una sorta di indice passato dal client
        window = object.getWindow();
        window.addDie(object.getD1(),die,window.getCellMatrix());
-        return false;
+        return false;*/
+        player = object.getUser();
+        player.setMyRound(3);
+        return true;
     }
 
     public int getIdCard() {

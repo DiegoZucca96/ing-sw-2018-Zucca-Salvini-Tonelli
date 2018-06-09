@@ -17,7 +17,7 @@ public class Player {       //Classe che rappresenta un giocatore della partita
     private PVObjectiveCard pvObjectiveCard;
     private Die dieSelected;
     private Coordinate coordinateDieSelected;
-    //private int myRound;
+    private int myRound;
 
     public Player(String name, int wpType, Color pvColor){
         this.name = name;
@@ -31,7 +31,7 @@ public class Player {       //Classe che rappresenta un giocatore della partita
         }
         nFavoriteTokens = windowPattern.getDifficulty();
         pvObjectiveCard = new PVObjectiveCard(pvColor);
-        //this.myRound = 1;
+        this.myRound = 1;
     }
     public Die getDieSelected() {
         return dieSelected;
@@ -88,13 +88,13 @@ public class Player {       //Classe che rappresenta un giocatore della partita
     }
 
 
-    /*public int getMyRound() {
+    public int getMyRound() {
         return myRound;
     }
 
     public void setMyRound(int myRound) {
         this.myRound = myRound;
-    }*/
+    }
 
     //somma additionalScore al punteggio attuale
     public void addScore(int additionalScore){

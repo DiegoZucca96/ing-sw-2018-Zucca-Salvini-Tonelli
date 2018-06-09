@@ -419,6 +419,22 @@ public class PlayGame {
         view.setOnMouseClicked(e->{
             if(imagePathT.substring(1, 2).equals("T"))
                 cardSelected = Integer.parseInt(imagePathT.substring(imagePathT.indexOf("l")+1, imagePathT.indexOf(".")));
+            if(cardSelected==7){
+                ToolView toolView = new ToolView();
+                for(int j = 0; j <client.getListOfPlayers().size()*2+1; j++ ){
+                    if(draftPoolGrid.getButton(0, j).getOpacity()!=0){
+                        toolView.setListOfCoordinateY(Integer.toString(j));
+                    }
+                }
+                if(!toolView.getListOfCoordinateY().isEmpty())
+                    if(client.useToolCard(7, toolView))
+                        draftPoolGrid.updateDP(client.updateView().getDraftPoolDice());
+            }else if(cardSelected == 8){
+                ToolView toolView = new ToolView();
+                toolView.setDoubleTurn(true);
+                if(client.useToolCard(8, toolView))
+                    update(1,1,1);
+            }
         });
         view.setImage(imageT);
         view.scaleXProperty().setValue(0.43);
@@ -509,7 +525,7 @@ public class PlayGame {
 
     public static void onPositionWPButton() {
         skipBtn.setDisable(false);
-        useToolBtn.setDisable(false);
+        useToolBtn.setDisable(true);
         takeDieBtn.setDisable(true);
         infoBtn.setDisable(false);
         cancelBtn.setDisable(true);

@@ -1,6 +1,7 @@
 package ingsw.view;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class ToolView implements Serializable {
     private int startRow1;
@@ -14,6 +15,8 @@ public class ToolView implements Serializable {
     private int dieModified;
     private int round;
     private String color;
+    private ArrayList<String> listOfCoordinateY = new ArrayList<>();
+    private boolean doubleTurn = false;
 
 
     public int getStartRow1() {
@@ -102,5 +105,21 @@ public class ToolView implements Serializable {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public ArrayList<String> getListOfCoordinateY() {
+        return listOfCoordinateY;
+    }
+
+    public void setListOfCoordinateY(String listOfCoordinateY) {
+        this.listOfCoordinateY.add(listOfCoordinateY);
+    }
+
+    public boolean isDoubleTurn() {
+        return doubleTurn;
+    }
+
+    public void setDoubleTurn(boolean doubleTurn) {
+        this.doubleTurn = doubleTurn;
     }
 }

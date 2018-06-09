@@ -1,5 +1,7 @@
 package ingsw.model;
 
+import java.util.ArrayList;
+
 //Classe che immagazzina i parametri (NB --> provenienti dal client) per l'utilizzo delle tool card
 public class PlayerToolParameter {
 
@@ -12,6 +14,8 @@ public class PlayerToolParameter {
     private int dieModified;
     private int round;
     private Color color;
+    private ArrayList<Coordinate> listOfCoordinateY = new ArrayList<>();
+    private boolean doubleTurn;
 
     public PlayerToolParameter( Coordinate c1, int dieModified){
         this.c1 = c1;
@@ -48,6 +52,16 @@ public class PlayerToolParameter {
     public PlayerToolParameter( Die die1, Coordinate d1){
         this.die1 = die1;
         this.d1 = d1;
+    }
+    //Tool 7
+    public PlayerToolParameter ( ArrayList<String> listOfCoordinateY){
+        for(String c : listOfCoordinateY)
+            this.listOfCoordinateY.add(new Coordinate(0, Integer.parseInt(c)));
+    }
+
+    //Tool8
+    public PlayerToolParameter (boolean doubleTurn){
+        this.doubleTurn = doubleTurn;
     }
 
 
@@ -88,4 +102,12 @@ public class PlayerToolParameter {
     }
 
     public Color getColor() { return color;}
+
+    public ArrayList<Coordinate> getListOfCoordinateY() {
+        return listOfCoordinateY;
+    }
+
+    public boolean isDoubleTurn() {
+        return doubleTurn;
+    }
 }

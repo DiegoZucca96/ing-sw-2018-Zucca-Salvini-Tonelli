@@ -96,12 +96,11 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
     }
 
     //Tiro nuovamente tutti i dadi della riserva (ToolCard 7)
-    public void refreshDraftPool(){
-
-       for(Die die: diceList){
+    public void refreshDraftPool(ArrayList<Coordinate> coordinates){
+        for(Coordinate c : coordinates){
             RandomGenerator rg = new RandomGenerator(6);
-            die.setNumber(rg.random());
-       }
+            diceList.get(c.getY()).setNumber(rg.random());
+        }
         notifyViewObserver();
     }
 

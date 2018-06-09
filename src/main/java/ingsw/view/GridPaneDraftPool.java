@@ -115,14 +115,6 @@ public class GridPaneDraftPool extends GridPane {
                             }
                             break;
                         }
-                        case 7 :{
-
-                            break;
-                        }
-                        case 8 :{
-
-                            break;
-                        }
                         case 9 :{
 
                             break;

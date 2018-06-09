@@ -1,6 +1,7 @@
 package ingsw.model;
 
 import ingsw.model.windowpattern.WindowPattern;
+import java.util.ArrayList;
 
 // Oggetto da passare al metodo delle ToolCard, varia in base alla ToolCard usata
 public class ObjectiveTool {
@@ -18,6 +19,9 @@ public class ObjectiveTool {
     private DiceBag diceBag;
     private Color color;
     private int round;
+    private ArrayList<Coordinate> listOfCoordinateY;
+    private boolean doubleTurn;
+    private Player user;
 
     //Tool1
     public ObjectiveTool(Coordinate c1, int dieModified, DraftPool dp){
@@ -55,7 +59,9 @@ public class ObjectiveTool {
         this.dp = dp;
     }
 
-    public ObjectiveTool(DraftPool dp){
+    //Tool 7
+    public ObjectiveTool(ArrayList<Coordinate> listOfCoordinateY, DraftPool dp){
+        this.listOfCoordinateY = listOfCoordinateY;
         this.dp = dp;
     }
 
@@ -93,7 +99,11 @@ public class ObjectiveTool {
         this.color = color;
     }
 
-
+    //Tool 8
+    public ObjectiveTool(boolean doubleTurn, Player player){
+        this.doubleTurn = doubleTurn;
+        this.user = player;
+    }
 
     public Die getDie1() {
         return die1;
@@ -201,5 +211,17 @@ public class ObjectiveTool {
 
     public void setRound(int round) {
         this.round = round;
+    }
+
+    public ArrayList<Coordinate> getListOfCoordinateY() {
+        return listOfCoordinateY;
+    }
+
+    public void setDoubleTurn(boolean notDouble) {
+        this.doubleTurn = notDouble;
+    }
+
+    public Player getUser() {
+        return user;
     }
 }

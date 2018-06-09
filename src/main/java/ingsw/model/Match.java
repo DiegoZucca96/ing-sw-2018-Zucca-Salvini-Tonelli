@@ -206,7 +206,7 @@ public class Match {
             }
             case 7: {
                 if (!clockwiseRound)
-                    toolParameter = new ObjectiveTool(draftPool);
+                    toolParameter = new ObjectiveTool(pTParameter.getListOfCoordinateY(), draftPool);
                 else {
                     allow = false;
                     toolParameter = null;
@@ -217,8 +217,9 @@ public class Match {
                 if (!clockwiseRound){
                     allow = false;
                     toolParameter = null;
-                }else
-                    toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(),pTParameter.getD1(), draftPool);
+                }else{
+                    toolParameter = new ObjectiveTool(pTParameter.isDoubleTurn(), getCurrentPlayer());
+                    }
                 //currentPlayer.setMyRound(2);
                 break;
             }

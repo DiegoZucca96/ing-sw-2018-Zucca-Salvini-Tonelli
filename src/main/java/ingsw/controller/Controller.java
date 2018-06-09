@@ -30,6 +30,9 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     private boolean active;
     private int turn;
     private boolean isFinish;
+    private boolean doubleTurn;
+    private boolean ableNext;
+    private String skipPlayerDueTo8 = null;
 
     //NB -->    tutti i metodi del controller devono essere boolean, per un motivo o per l'altro
     //          non sempre possono fare l'azione richiesta, in quel caso restituiscono false
@@ -53,6 +56,8 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         this.active=false;
         this.turn=0;
         this.isFinish=false;
+        this.doubleTurn=false;
+        this.ableNext = true;
     }
 
     //Lista dei vari metodi invocabili da grafica che vanno a interagire con il model
@@ -254,12 +259,18 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     @Override
     public void skip(String clientName) throws RemoteException{
         if(getPlayerState(clientName).equals("enabled")){
-            if(!active){
-                timeout(clientName);
+            if(!doubleTurn){
+                if(!active){
+                    timeout(clientName);
+                }
+                turn++;
+                disableClient(getCurrentPlayerName());
+            }else{
+                doubleTurn=false;
+                ableNext = false;
+                this.skipPlayerDueTo8 = match.getCurrentPlayer().getName();
             }
             timer.cancel();
-            disableClient(getCurrentPlayerName());
-            turn++;
             if (turn == getSizeOfPlayers()*2) {
                 if(match.getRound() == 10)
                     isFinish = true;
@@ -269,13 +280,27 @@ public class Controller extends UnicastRemoteObject implements RMIController {
                 }
             }
             else{
-                match.nextTurn();
+                if(ableNext)
+                    match.nextTurn();
             }
+            ableNext = true;
             if(!isFinish){
                 while(getPlayerState(getCurrentPlayerName()).equalsIgnoreCase("disconnected") && (turn<getSizeOfPlayers()*2)) {
                     match.nextTurn();
                 }
-                enableClient(getCurrentPlayerName());
+                if(skipPlayerDueTo8!=null){
+                    if(skipPlayerDueTo8.equals(match.getCurrentPlayer().getName())){
+                        enableClient(getCurrentPlayerName());
+                        //skipPlayerDueTo8 = null;
+                    }
+                    else{
+                        enableClient(getCurrentPlayerName());
+                        disableClient(skipPlayerDueTo8);
+                        skipPlayerDueTo8 = null;
+                    }
+
+                }else
+                    enableClient(getCurrentPlayerName());
                 controllerTimer.setTimeMoveRemaining(playerMoveTime);
                 timer = new Timer();
                 controllerTimer.startPlayerTimer(this,timer);
@@ -332,25 +357,26 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             }case 4:{
                 pt = new PlayerToolParameter();
                 break;
-            */}case 5:{
+            }case 5:{
                 pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()),new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()),toolView.getRound());
                 break;
             }case 6:{
                 pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
-                break;/*
+                break;*/
             }case 7:{
-                pt = new PlayerToolParameter();
+                pt = new PlayerToolParameter(toolView.getListOfCoordinateY());
                 break;
             }case 8:{
-                pt = new PlayerToolParameter();
-                break;
+                this.doubleTurn = toolView.isDoubleTurn();
+                pt = new PlayerToolParameter(doubleTurn);
+                break;/*
             }case 9:{
                 pt = new PlayerToolParameter();
                 break;
-            */}case 10:{
+            }case 10:{
                 pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
                 break;
-            /*}case 11:{
+            }case 11:{
                 pt = new PlayerToolParameter();
                 break;
             }case 12:{
