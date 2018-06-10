@@ -1,9 +1,7 @@
 package ingsw.view;
 
 import ingsw.Client;
-import ingsw.model.Color;
 import ingsw.model.ViewWP;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -89,23 +87,25 @@ public class GridPaneWindow extends GridPane {
                     button.setBackground(playGame.getDraftPoolGrid().getDieInfo().getBackground());
                     if (client.useToolCard(9, toolView)) {
                         client.nullSelection();
-                        if(client.positionDie(toolView.getStartRow1(), toolView.getStartCol1()))
-                            playGame.update(1, 1, 1);
+                        client.setInsertedDie(true);
+                        //if(client.positionDie(toolView.getStartRow1(), toolView.getStartCol1()))
+                        playGame.update(1, 1, 1);
                         playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(0);
                         button.setBackground(playGame.getDraftPoolGrid().getButton(toolView.getStartRow1(), toolView.getStartCol1()).getBackground());
                         playGame.getDraftPoolGrid().getButton(toolView.getStartRow1(), toolView.getStartCol1()).setOpacity(0);
-                        playGame.resetOnButton();
+                        playGame.onPositionWPButton();
                     }
                 }
                 accessWindow = false;
-            }else if (client.positionDie(i, j)){
+            }
+            else if (client.positionDie(i, j)){
                 addCellInfo(button.getBackground(), i, j);      //salvo il backgruond della cella
                 button.setBackground(draftPool.getButtonDieSelected().getBackground());       //setto il nuovo background col dado
                 draftPool.getButton(draftPool.getDieInfo().getRow(), draftPool.getDieInfo().getColumn()).setOpacity(0);
                 playGame.setChoosePressed(false);
                 playGame.onPositionWPButton();
                 draftPool.getButtonDieSelected().setOpacity(0);
-                playGame.resetOnButton();
+                //playGame.resetOnButton();
             }
             else{
                 Toolkit.getDefaultToolkit().beep();

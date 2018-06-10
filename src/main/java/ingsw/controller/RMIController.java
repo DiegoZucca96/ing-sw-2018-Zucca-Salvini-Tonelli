@@ -121,4 +121,14 @@ public interface RMIController extends Remote {
     String findWinner() throws RemoteException;
 
     ArrayList<String> getListofMatchPlayers() throws RemoteException;
+
+    boolean getInsertedDie() throws RemoteException;
+
+    void setInsertedDie(boolean b) throws RemoteException;
+
+    boolean getTool8Used() throws RemoteException;
+
+    void setTool8Used(boolean num) throws RemoteException;
+
+    boolean getClockwiseRound()throws RemoteException;
 }

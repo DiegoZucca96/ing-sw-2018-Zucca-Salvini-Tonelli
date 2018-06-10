@@ -20,8 +20,7 @@ public class ObjectiveTool {
     private Color color;
     private int round;
     private ArrayList<Coordinate> listOfCoordinateY;
-    private boolean doubleTurn;
-    private Player user;
+    private Player player;
 
     //Tool1
     public ObjectiveTool(Coordinate c1, int dieModified, DraftPool dp){
@@ -101,10 +100,10 @@ public class ObjectiveTool {
     }
 
     //Tool 8
-    public ObjectiveTool(boolean doubleTurn, Player player){
-        this.doubleTurn = doubleTurn;
-        this.user = player;
+    public ObjectiveTool(Player player){
+        this.player = player;
     }
+
 
     public Die getDie1() {
         return die1;
@@ -218,11 +217,12 @@ public class ObjectiveTool {
         return listOfCoordinateY;
     }
 
-    public void setDoubleTurn(boolean notDouble) {
-        this.doubleTurn = notDouble;
+    public Player getPlayer() {
+        return player;
     }
 
-    public Player getUser() {
-        return user;
+    public void setPlayer(Player player) {
+        this.player = player;
     }
+
 }

@@ -2,6 +2,7 @@ package ingsw.model.toolcard;
 
 import ingsw.model.*;
 import ingsw.model.windowpattern.WindowPattern;
+import ingsw.view.PlayGame;
 
 public class Tool11 implements ToolStrategy {
     private String title;
@@ -32,6 +33,7 @@ public class Tool11 implements ToolStrategy {
         die.setNumber(inputNumber);  //Serve inserire un numero scelto dal player "in diretta", in base al colore che esce ovviamente cambia
         window = object.getWindow();
         window.addDie(inputDest,die,window.getCellMatrix());  //Manca da passare inputDest in qualche modo come inputNumber
+        PlayGame.setUsingTool(false);
         return false;
     }
 

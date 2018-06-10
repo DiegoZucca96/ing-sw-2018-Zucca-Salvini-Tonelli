@@ -2,6 +2,8 @@ package ingsw.model.toolcard;
 
 import ingsw.model.*;
 import ingsw.model.windowpattern.WindowPattern;
+import ingsw.view.PlayGame;
+
 import java.util.Random;
 
 public class Tool6 implements ToolStrategy {
@@ -24,6 +26,7 @@ public class Tool6 implements ToolStrategy {
         die = dp.getDie(object.getC1().getY());
         Random r = new Random();
         die.setNumber(r.nextInt(6)+1);
+        PlayGame.setUsingTool(false);
         return true;
         /*if(!isInsertable(object.getWindow(),die)){  //Metodo che controlla se ci sono possibili inserimenti
             dp = object.getDp();

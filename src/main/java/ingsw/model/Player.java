@@ -1,8 +1,6 @@
 package ingsw.model;
 
 import ingsw.model.windowpattern.WindowPattern;
-import ingsw.model.toolcard.*;
-import ingsw.model.ToolCard;
 
 import java.io.IOException;
 
@@ -17,21 +15,22 @@ public class Player {       //Classe che rappresenta un giocatore della partita
     private PVObjectiveCard pvObjectiveCard;
     private Die dieSelected;
     private Coordinate coordinateDieSelected;
-    private int myRound;
+    private boolean insertedDie;
+    private boolean isTool8Used;
 
     public Player(String name, int wpType, Color pvColor){
         this.name = name;
         score = 0;
         pvScore = 0;
         try {
-
             windowPattern = new WindowPFactory().createWindowPattern(wpType);
         } catch (IOException e) {
             e.printStackTrace();
         }
         nFavoriteTokens = windowPattern.getDifficulty();
         pvObjectiveCard = new PVObjectiveCard(pvColor);
-        this.myRound = 1;
+        this.insertedDie = false;
+        this.isTool8Used = false;
     }
     public Die getDieSelected() {
         return dieSelected;
@@ -88,12 +87,21 @@ public class Player {       //Classe che rappresenta un giocatore della partita
     }
 
 
-    public int getMyRound() {
-        return myRound;
+    //Servono per distinguere se il giocatore ha già inserito il dado o meno
+    public boolean getInsertedDie() {
+        return insertedDie;
     }
 
-    public void setMyRound(int myRound) {
-        this.myRound = myRound;
+    public void setInsertedDie(boolean value) {
+        this.insertedDie = value;
+    }
+
+    public boolean getTool8Used() {
+        return isTool8Used;
+    }
+
+    public void setTool8Used(boolean tool8Used) {
+        this.isTool8Used = tool8Used;
     }
 
     //somma additionalScore al punteggio attuale
@@ -120,63 +128,6 @@ public class Player {       //Classe che rappresenta un giocatore della partita
         return windowPattern.addDie(coordinates, die, windowPattern.getCellMatrix());
     }
 
-    //A partire dall'ID della carta vado a creare l'object con solo i parametri interessati (Problema di come ottenere dati in input)
-    /*public void useToolCard(ToolCard toolCard){
-        int idCard = toolCard.getIdCard();
-        ObjectiveTool object;
-        boolean allow = true;  //Serve a dare il consenso all'uso della ToolCard o meno
-        switch(idCard){
-            case 1:{
-                if(upDie()) //upDie funzione che se true porta ad aumentare il valore, se false abbassare
-                    object = new ObjectiveTool(die1, 1, draftPool);
-                else
-                    object = new ObjectiveTool(die1, -1, draftpool);
-                break;
-            }case 2:{
-                object = new ObjectiveTool(window, coordinateDie, destination);
-                break;
-            }case 3:{
-                object = new ObjectiveTool(window, coordinateDie, destination);
-                break;
-            }case 4:{
-                object = new ObjectiveTool(window, coordinateDie1, coordinateDie2, destination1, destination2);
-                break;
-            }case 5:{
-                object = new ObjectiveTool(die1, die2, roundtrack, draftpool);
-                break;
-            }case 6:{
-                object = new ObjectiveTool(die1, window, draftpool);
-                break;
-            }case 7:{
-                if(getMyRound()==2)
-                    object = new ObjectiveTool(draftpool, dicebag);
-                else
-                    allow = false;
-                break;
-            }case 8:{
-
-                object = new ObjectiveTool(window, destination, draftpool);
-                break;
-            }case 9:{
-                object = new ObjectiveTool(die1, window, destination);
-                break;
-            }case 10:{
-                object = new ObjectiveTool(die1, draftpool, 1);
-                break;
-            }case 11:{
-                object = new ObjectiveTool(die1, window, dicebag);
-                break;
-            }case 12:{
-                object = new ObjectiveTool(window, coordinateDie1, coordinateDie2, destination1, destination2, roundtrack);
-                break;
-            }default: break;
-        }
-        if(allow) {
-            useToken(toolCard);         //Uso i token prima della carta, nel caso non potessi usarla allora l'eccezione che ne uscirà gestirà la
-            toolCard.doToolStrategy(object);//restituzione dei token al giocatore
-        }else
-            System.out.print("Non puoi usare questa carta");
-    }*/
 
     //attribuisce al giocatore il suo punteggio indipendente dalle public objective card in tavola
     public void personalScore(){

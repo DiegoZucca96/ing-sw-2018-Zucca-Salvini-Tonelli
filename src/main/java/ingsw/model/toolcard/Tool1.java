@@ -3,6 +3,7 @@ package ingsw.model.toolcard;
 import ingsw.model.Coordinate;
 import ingsw.model.Die;
 import ingsw.model.ObjectiveTool;
+import ingsw.view.PlayGame;
 
 public class Tool1 implements ToolStrategy {
     private String title;
@@ -23,10 +24,12 @@ public class Tool1 implements ToolStrategy {
         die = object.getDp().getDie(c.getY());
         if(1 <= die.getNumber() && die.getNumber()<=6){
             die.setNumber(object.getDieModified());
+            PlayGame.setUsingTool(false);
             return true;
         }
         else
             System.out.println("Non puoi usare questa carta su questo dado");
+        PlayGame.setUsingTool(false);
         return false;
     }
 

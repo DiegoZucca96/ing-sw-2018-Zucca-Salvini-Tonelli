@@ -15,7 +15,6 @@ public class PlayerToolParameter {
     private int round;
     private Color color;
     private ArrayList<Coordinate> listOfCoordinateY = new ArrayList<>();
-    private boolean doubleTurn;
 
     public PlayerToolParameter( Coordinate c1, int dieModified){
         this.c1 = c1;
@@ -59,14 +58,24 @@ public class PlayerToolParameter {
             this.listOfCoordinateY.add(new Coordinate(0, Integer.parseInt(c)));
     }
 
-    //Tool8
-    public PlayerToolParameter (boolean doubleTurn){
-        this.doubleTurn = doubleTurn;
-    }
     //Tool9
     public PlayerToolParameter(Coordinate c1, Coordinate d1){
         this.c1 = c1;
         this.d1 = d1;
+    }
+
+    //Tool8
+    public PlayerToolParameter() {
+        this.die1 = null;
+        this.die2 = null;
+        this.c1 = null;
+        this.c2 = null;
+        this.d1 = null;
+        this.d2 = null;
+        this.dieModified = -1;
+        this.round = -1;
+        this.color = null;
+        this.listOfCoordinateY = null;
     }
 
 
@@ -112,7 +121,5 @@ public class PlayerToolParameter {
         return listOfCoordinateY;
     }
 
-    public boolean isDoubleTurn() {
-        return doubleTurn;
-    }
+
 }

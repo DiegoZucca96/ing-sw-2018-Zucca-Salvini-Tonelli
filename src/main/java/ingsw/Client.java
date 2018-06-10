@@ -141,6 +141,18 @@ public interface Client {
     //imposta lo stato del client a disconnected
     void disconnectClient();
 
+    //i quattro metodi sotto tengono conto del fatto che il giocatore abbia posizionato un dado o meno e se ha usato la tool8(per saltare il turno)
+    boolean getInsertedDie();
+
+    void setInsertedDie(boolean b);
+
+    boolean getTool8Used();
+
+    void setTool8Used(boolean isTool8Used);
+
+    //Stabilire il turno in cui ci si trova
+    boolean getClockwiseRound();
+
     /*
     "windowpattern(name(ciao),difficulty(4),cell(row(0),column(0),number(0),color(RED),Die(number(5),color(RED)),cell(..."
 

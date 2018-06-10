@@ -115,6 +115,16 @@ public class GridPaneDraftPool extends GridPane {
                             }
                             break;
                         }
+                        case 8 :{
+                            if(client.takeDie(row,col)){
+                                dieInfo.setBackground(button.getBackground());
+                                dieInfo.setColumn(col);
+                                dieInfo.setRow(row);
+                                buttonDieSelected.setBackground(button.getBackground());
+                                buttonDieSelected.setOpacity(1);
+                            }
+                            break;
+                        }
                         case 9 :{
                             if(client.takeDie(row,col)){
                                 playGame.getGridWindow().setAccessWindow(true);

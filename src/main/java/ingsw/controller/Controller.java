@@ -30,9 +30,9 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     private boolean active;
     private int turn;
     private boolean isFinish;
-    private boolean doubleTurn;
-    private boolean ableNext;
-    private String skipPlayerDueTo8 = null;
+    //private boolean doubleTurn;
+    //private boolean ableNext;
+    //private String skipPlayerDueTo8 = null;
 
     //NB -->    tutti i metodi del controller devono essere boolean, per un motivo o per l'altro
     //          non sempre possono fare l'azione richiesta, in quel caso restituiscono false
@@ -56,8 +56,6 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         this.active=false;
         this.turn=0;
         this.isFinish=false;
-        this.doubleTurn=false;
-        this.ableNext = true;
     }
 
     //Lista dei vari metodi invocabili da grafica che vanno a interagire con il model
@@ -116,7 +114,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
 
     @Override
     public boolean takeDie(int row, int column) throws RemoteException{
-        if(match.getCurrentPlayer().getDieSelected()==null ){
+        if(match.getCurrentPlayer().getDieSelected()==null && !match.getCurrentPlayer().getInsertedDie()){
             int index = 3*row + column;
             Coordinate c = new Coordinate(row,column);
             match.getCurrentPlayer().setCoordinateDieSelected(c);
@@ -140,12 +138,13 @@ public class Controller extends UnicastRemoteObject implements RMIController {
 
     @Override
     public boolean positionDie(int row, int column) throws RemoteException{
-        if(match.getCurrentPlayer().getDieSelected()!=null){
+        if(match.getCurrentPlayer().getDieSelected()!=null && !match.getCurrentPlayer().getInsertedDie()){
             Coordinate coordinate = new Coordinate(row,column);
             if(match.positionDie(match.getCurrentPlayer().getDieSelected(),coordinate)){
                 match.draftpoolRemoveDie(match.getCurrentPlayer().getCoordinateDieSelected().getY());
                 match.getCurrentPlayer().setCoordinateDieSelected(null);
                 match.getCurrentPlayer().setDieSelected(null);
+                match.getCurrentPlayer().setInsertedDie(true);
                 return true;
             }
         }
@@ -258,35 +257,47 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     //Salta volontariamente il turno oppure forzatamente dalla fine del timer de giocatore
     @Override
     public void skip(String clientName) throws RemoteException{
-        if(getPlayerState(clientName).equals("enabled")){
-            if(!active){
+        if(getPlayerState(clientName).equals("enabled")) {
+            if (!active) {
                 timeout(clientName);
             }
             timer.cancel();
             disableClient(getCurrentPlayerName());
             turn++;
-            if (turn == getSizeOfPlayers()*2) {
-                if(match.getRound() == 10)
-                    isFinish = true;
-                else{
+            if (turn == getSizeOfPlayers() * 2) {
+                if (match.getRound() == 10) isFinish = true;
+                else {
+                    setInsertedDie(false);
                     match.endRound();
-                    turn=0;
+                    turn = 0;
                 }
-            }
-            else{
+            } else {
+                setInsertedDie(false);
                 match.nextTurn();
             }
-            if(!isFinish){
-                while(getPlayerState(getCurrentPlayerName()).equalsIgnoreCase("disconnected") && (turn<getSizeOfPlayers()*2)) {
-                    match.nextTurn();
+            if (!isFinish) {
+                while ((getPlayerState(getCurrentPlayerName()).equalsIgnoreCase("disconnected") && (turn < getSizeOfPlayers() * 2)) || (getTool8Used() && (turn < getSizeOfPlayers() * 2))) {
+                    turn++;
+                    setTool8Used(false);
+                    if (turn == getSizeOfPlayers() * 2) {
+                        match.endRound();
+                        if (match.getRound() == 10) isFinish = true;
+                    }
+                    else{
+                        match.nextTurn();
+                    }
                 }
-                enableClient(getCurrentPlayerName());
-                controllerTimer.setTimeMoveRemaining(playerMoveTime);
-                timer = new Timer();
-                controllerTimer.startPlayerTimer(this,timer);
+                if (turn == getSizeOfPlayers() * 2) {
+                    turn = 0;
+                }
+                if(!isFinish){
+                    enableClient(getCurrentPlayerName());
+                    controllerTimer.setTimeMoveRemaining(playerMoveTime);
+                    timer = new Timer();
+                    controllerTimer.startPlayerTimer(this, timer);
+                }
             }
         }
-
 /**
         if(getPlayerState(clientName).equals("enabled")){
             if(!doubleTurn){
@@ -399,15 +410,14 @@ public class Controller extends UnicastRemoteObject implements RMIController {
                 pt = new PlayerToolParameter(toolView.getListOfCoordinateY());
                 break;
             }case 8:{
-                this.doubleTurn = toolView.isDoubleTurn();
-                pt = new PlayerToolParameter(doubleTurn);
+                pt = new PlayerToolParameter();
                 break;
             }case 9:{
                 pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()), new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()));
-                break;/*
+                break;
             }case 10:{
                 pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
-                break;
+                break;/*
             }case 11:{
                 pt = new PlayerToolParameter();
                 break;
@@ -554,6 +564,31 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             nameMatchPlayers.add(name);
         }
         return nameMatchPlayers;
+    }
+
+    @Override
+    public boolean getInsertedDie() throws RemoteException {
+        return match.getCurrentPlayer().getInsertedDie();
+    }
+
+    @Override
+    public void setInsertedDie(boolean b) throws RemoteException {
+        match.getCurrentPlayer().setInsertedDie(b);
+    }
+
+    @Override
+    public boolean getTool8Used() throws RemoteException {
+        return match.getCurrentPlayer().getTool8Used();
+    }
+
+    @Override
+    public void setTool8Used(boolean b) throws RemoteException {
+        match.getCurrentPlayer().setTool8Used(b);
+    }
+
+    @Override
+    public boolean getClockwiseRound() throws RemoteException {
+        return match.getClockwiseRound();
     }
 
 

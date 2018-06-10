@@ -1,6 +1,7 @@
 package ingsw.model.toolcard;
 
 import ingsw.model.*;
+import ingsw.view.PlayGame;
 
 public class Tool5 implements ToolStrategy {
     private String title;
@@ -28,6 +29,7 @@ public class Tool5 implements ToolStrategy {
         die1 = dp.takeDie(dpCoordinate.getY());
         die2 = rt.replaceDie(object.getRound(),rtCoordinate.getY(),die1);
         dp.setDie(dpCoordinate.getY(),die2);
+        PlayGame.setUsingTool(false);
         return true;
     }
 

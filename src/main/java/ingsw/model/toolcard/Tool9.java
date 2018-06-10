@@ -2,6 +2,7 @@ package ingsw.model.toolcard;
 
 import ingsw.model.*;
 import ingsw.model.windowpattern.WindowPattern;
+import ingsw.view.PlayGame;
 
 public class Tool9 implements ToolStrategy{
     private String title;
@@ -28,11 +29,17 @@ public class Tool9 implements ToolStrategy{
        c1 = object.getC1();
        Die die = dp.getDie(c1.getY());
        Cell[][] cellMatrix = window.getCellMatrix();
-       if(window.verifyDieNumberConstraint(d1,die,cellMatrix) && window.verifyDieColorConstraint(d1,die,cellMatrix) && window.verifyCellNumberConstraint(d1,die,cellMatrix) && window.verifyCellColorConstraint(d1,die,cellMatrix))
-           return cellMatrix[d1.getX()][d1.getY()].insertDie(die);
-       else
+       if(window.verifyDieNumberConstraint(d1,die,cellMatrix) && window.verifyDieColorConstraint(d1,die,cellMatrix) && window.verifyCellNumberConstraint(d1,die,cellMatrix) && window.verifyCellColorConstraint(d1,die,cellMatrix)){
+           if(window.isWpEmpty())
+               window.setWpEmpty(false);
+           PlayGame.setUsingTool(false);
+           return cellMatrix[d1.getX()][d1.getY()].insertDie(dp.takeDie(c1.getY()));
+       }
+       else{
            System.out.print("Non puoi posizionare qui questo dado");
-        return false;
+           PlayGame.setUsingTool(false);
+           return false;
+        }
     }
 
     public int getIdCard() {

@@ -18,6 +18,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class PlayGame {
@@ -46,7 +47,7 @@ public class PlayGame {
     private ViewData updateView;
     private static int begin=0;
     private boolean choosePressed=false;
-    private boolean usingTool=false;
+    private static boolean usingTool=false;
     private Label textLbl;
     private Button buttonDie;
     private ViewWP myWindow;
@@ -123,6 +124,13 @@ public class PlayGame {
                                     if(updateView!=null)
                                         update(1,1,1);
                                     resetOnButton();
+                                }else{ //Per il problema che a volte scala di due secondi e i bottoni non si attivano
+                                    if (timeseconds == timeBegin-1) {
+                                        this.updateView = client.updateView();
+                                        if(updateView!=null)
+                                            update(1,1,1);
+                                        resetOnButton();
+                                    }
                                 }
 
                                 if(timeseconds==0) {
@@ -263,7 +271,7 @@ public class PlayGame {
         skipBtn.setOnAction(e-> {
             if(client.getPlayerState().equalsIgnoreCase("enabled")){
                 choosePressed=false;
-                usingTool = false;
+                setUsingTool(true);
                 draftPoolGrid.setDiePressed(false);
                 gridRound.setAccessRound(false);
                 client.setActive(true);
@@ -282,10 +290,12 @@ public class PlayGame {
             useToolBtn.setOnAction(e-> {
                 if(client.getPlayerState().equalsIgnoreCase("enabled"))  {
                     choosePressed=false;
-                    usingTool = true;
+                    setUsingTool(true);
                     client.setActive(true);
                     skipBtn.setDisable(true);
-                    useToolBtn.setDisable(false);
+                    useToolBtn.setDisable(true);
+                    takeDieBtn.setDisable(true);
+                    cancelBtn.setDisable(false);
                 }
             });
 
@@ -319,7 +329,7 @@ public class PlayGame {
         cancelBtn.setOnAction(e-> {
             if(client.getPlayerState().equalsIgnoreCase("enabled")){
                 choosePressed=false;
-                usingTool = false;
+                setUsingTool(true);
                 draftPoolGrid.setDiePressed(false);
                 gridRound.setAccessRound(false);
                 int col = client.getCoordinateSelectedY();
@@ -409,27 +419,47 @@ public class PlayGame {
         String imagePathT = stringCard.get(i);
         Image imageT = new Image(imagePathT, 300, 420, false, true);
         view.setOnMouseClicked(e->{
-            if(imagePathT.substring(1, 2).equals("T")){
-                cardSelected = Integer.parseInt(imagePathT.substring(imagePathT.indexOf("l")+1, imagePathT.indexOf(".")));
-                skipBtn.setDisable(true);
-                takeDieBtn.setDisable(true);
-                useToolBtn.setDisable(true);
-            }
-            if(cardSelected==7){
-                ToolView toolView = new ToolView();
-                for(int j = 0; j <client.getListOfPlayers().size()*2+1; j++ ){
-                    if(draftPoolGrid.getButton(0, j).getOpacity()!=0){
-                        toolView.setListOfCoordinateY(Integer.toString(j));
+            if(usingTool){
+                if(imagePathT.substring(1, 2).equals("T")){
+                    cardSelected = Integer.parseInt(imagePathT.substring(imagePathT.indexOf("l")+1, imagePathT.indexOf(".")));
+                    if(client.getInsertedDie()){
+                        if(cardSelected == 1 || cardSelected == 5 || cardSelected == 6 || cardSelected == 7 || cardSelected == 9 || cardSelected == 10 || cardSelected == 11) {
+                            cardSelected = 0;
+                            onPositionWPButton();
+                            setUsingTool(true);
+                            Toolkit.getDefaultToolkit().beep();
+                        }
                     }
                 }
-                if(!toolView.getListOfCoordinateY().isEmpty())
-                    if(client.useToolCard(7, toolView))
-                        draftPoolGrid.updateDP(client.updateView().getDraftPoolDice());
-            }else if(cardSelected == 8){
-                ToolView toolView = new ToolView();
-                toolView.setDoubleTurn(true);
-                if(client.useToolCard(8, toolView))
-                    update(1,1,1);
+            }
+            if(cardSelected==7 && !client.getClockwiseRound()){
+                    ToolView toolView = new ToolView();
+                    for(int j = 0; j <client.getListOfPlayers().size()*2+1; j++ ){
+                        if(draftPoolGrid.getButton(0, j).getOpacity()!=0){
+                            toolView.setListOfCoordinateY(Integer.toString(j));
+                        }
+                    }
+                    if(!toolView.getListOfCoordinateY().isEmpty())
+                        if(client.useToolCard(7, toolView)){
+                            draftPoolGrid.updateDP(client.updateView().getDraftPoolDice());
+                            resetOnButton();
+                            setUsingTool(true);
+
+                        }else{
+                            Toolkit.getDefaultToolkit().beep();
+                        }
+
+            }if(cardSelected == 8 && client.getInsertedDie() && client.getClockwiseRound()){
+                    if(client.useToolCard(8,null)){
+                        takeDieBtn.setDisable(false);
+                        client.setTool8Used(true);
+                    }else{
+                        Toolkit.getDefaultToolkit().beep();
+                    }
+                }
+            else{
+                if(cardSelected==8)
+                    Toolkit.getDefaultToolkit().beep();
             }
         });
         view.setImage(imageT);
@@ -521,7 +551,7 @@ public class PlayGame {
 
     public void onPositionWPButton() {
         skipBtn.setDisable(false);
-        useToolBtn.setDisable(true);
+        useToolBtn.setDisable(false);
         takeDieBtn.setDisable(true);
         infoBtn.setDisable(false);
         cancelBtn.setDisable(true);
@@ -539,6 +569,9 @@ public class PlayGame {
         choosePressed = b;
     }
 
+    public static void setUsingTool(boolean usingTool) {
+        PlayGame.usingTool = usingTool;
+    }
 
     public GridPaneRound getGridRound() {
         return gridRound;

@@ -16,7 +16,7 @@ public class ToolView implements Serializable {
     private int round;
     private String color;
     private ArrayList<String> listOfCoordinateY = new ArrayList<>();
-    private boolean doubleTurn = false;
+    private boolean isInsertedDie = false;
 
 
     public int getStartRow1() {
@@ -115,11 +115,11 @@ public class ToolView implements Serializable {
         this.listOfCoordinateY.add(listOfCoordinateY);
     }
 
-    public boolean isDoubleTurn() {
-        return doubleTurn;
+    public boolean isInsertedDie() {
+        return isInsertedDie;
     }
 
-    public void setDoubleTurn(boolean doubleTurn) {
-        this.doubleTurn = doubleTurn;
+    public void setInsertedDie(boolean insertedDie) {
+        this.isInsertedDie = insertedDie;
     }
 }

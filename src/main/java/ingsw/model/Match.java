@@ -73,6 +73,10 @@ public class Match {
         return id;
     }
 
+    public boolean getClockwiseRound() {
+        return clockwiseRound;
+    }
+
     public int getNumOfPlayers() {
         return nPlayers;
     }
@@ -205,21 +209,11 @@ public class Match {
                 break;
             }
             case 7: {
-                if (!clockwiseRound)
-                    toolParameter = new ObjectiveTool(pTParameter.getListOfCoordinateY(), draftPool);
-                else {
-                    allow = false;
-                    toolParameter = null;
-                }
+                toolParameter = new ObjectiveTool(pTParameter.getListOfCoordinateY(), draftPool);
                 break;
             }
-            case 8: { //Salta il secondo turno, si potrebbe sfruttare il myRound controllando nel cambio turno se il player ha già valore 2
-                if (!clockwiseRound){
-                    allow = false;
-                    toolParameter = null;
-                }else{
-                    toolParameter = new ObjectiveTool(pTParameter.isDoubleTurn(), getCurrentPlayer());
-                    }
+            case 8: {
+                toolParameter = new ObjectiveTool(currentPlayer);
                 //currentPlayer.setMyRound(2);
                 break;
             }

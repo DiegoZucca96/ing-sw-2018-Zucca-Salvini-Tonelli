@@ -342,6 +342,37 @@ public class ClientSocket implements Client {
 
     }
 
+    @Override
+    public boolean getInsertedDie() {
+        //da impl
+
+        return false;
+    }
+
+    @Override
+    public void setInsertedDie(boolean b) {
+        //da impl
+
+    }
+
+    @Override
+    public boolean getTool8Used() {
+        //da impl
+
+        return false;
+    }
+
+    @Override
+    public void setTool8Used(boolean isTool8Used) {
+        //da impl
+    }
+
+    @Override
+    public boolean getClockwiseRound() {
+        //da impl
+
+        return false;
+    }
 
     @Override
     public ArrayList<ViewWP> getPlayerWPs(String name){

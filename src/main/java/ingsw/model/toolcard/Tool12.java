@@ -2,6 +2,7 @@ package ingsw.model.toolcard;
 
 import ingsw.model.*;
 import ingsw.model.windowpattern.WindowPattern;
+import ingsw.view.PlayGame;
 
 public class Tool12 implements ToolStrategy {
     private String title;
@@ -28,6 +29,7 @@ public class Tool12 implements ToolStrategy {
         Cell[][] cellMatrix = window.getCellMatrix();
         c1 = object.getC1();
         c2 = object.getC2();
+        PlayGame.setUsingTool(false);
         if(c1 != null) {
             if (cellMatrix[c1.getX()][c1.getY()].getDie().getColor() == color) {
                 die1 = cellMatrix[c1.getX()][c1.getY()].takeDie();

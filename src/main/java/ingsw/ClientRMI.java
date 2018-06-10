@@ -338,6 +338,51 @@ public class ClientRMI implements Client {
     }
 
     @Override
+    public boolean getInsertedDie() {
+        try {
+            return controller.getInsertedDie();
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public void setInsertedDie(boolean b) {
+        try {
+            controller.setInsertedDie(b);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean getTool8Used() {
+        try {
+            return controller.getTool8Used();
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public void setTool8Used(boolean b) {
+        try {
+            controller.setTool8Used(b);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean getClockwiseRound() {
+        try {
+            return controller.getClockwiseRound();
+        } catch (RemoteException e) {
+            return false;
+        }
+    }
+
+    @Override
     public ArrayList<ViewWP> getPlayerWPs(String name) {
         try {
             return controller.getPlayersWPs(name);
