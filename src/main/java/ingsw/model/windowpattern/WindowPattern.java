@@ -173,9 +173,13 @@ public class WindowPattern implements Serializable {
 
     public Die takeDie(Coordinate diePosition){
         if(getCell(diePosition, cellMatrix).isEmpty()) return null;
-        Die die = getCell(diePosition, cellMatrix).getDie();
+        Die die = getDie(diePosition);
         removeDie(diePosition,cellMatrix);
         return  die;
+    }
+
+    public Die getDie(Coordinate diePosition){
+        return getCell(diePosition, cellMatrix).getDie();
     }
 
 
@@ -218,10 +222,15 @@ public class WindowPattern implements Serializable {
     public boolean verifyDieColorConstraint(Coordinate destination, Die die, Cell[][] cellMatrix){
         int x =destination.getX();
         int y =destination.getY();
-        if((x+1<4 && cellMatrix[x+1][y].getDie()!=null && String.valueOf(cellMatrix[x+1][y].getDie().getColor()).equalsIgnoreCase(String.valueOf(die.getColor()))) || (y+1<4 && cellMatrix[x][y+1].getDie()!=null && String.valueOf(cellMatrix[x][y+1].getDie().getColor()).equalsIgnoreCase(String.valueOf(die.getColor()))) || (x-1>0 && cellMatrix[x-1][y].getDie()!=null && String.valueOf(cellMatrix[x-1][y].getDie().getColor()).equalsIgnoreCase(String.valueOf(die.getColor()))) || (y-1>0 && cellMatrix[x][y-1].getDie()!=null && String.valueOf(cellMatrix[x][y-1].getDie().getColor()).equalsIgnoreCase(String.valueOf(die.getColor()))))
+        if((x+1<4 && cellMatrix[x+1][y].getDie()!=null && String.valueOf(cellMatrix[x+1][y].getDie().getColor()).equalsIgnoreCase(String.valueOf(die.getColor()))))
             return false;
-        else
-            return true;
+        if (y+1<5 && cellMatrix[x][y+1].getDie()!=null && String.valueOf(cellMatrix[x][y+1].getDie().getColor()).equalsIgnoreCase(String.valueOf(die.getColor())))
+            return false;
+        if(x-1>0 && cellMatrix[x-1][y].getDie()!=null && String.valueOf(cellMatrix[x-1][y].getDie().getColor()).equalsIgnoreCase(String.valueOf(die.getColor())))
+            return false;
+        if(y-1>0 && cellMatrix[x][y-1].getDie()!=null && String.valueOf(cellMatrix[x][y-1].getDie().getColor()).equalsIgnoreCase(String.valueOf(die.getColor())))
+            return false;
+        return true;
     }
 
 
@@ -229,7 +238,7 @@ public class WindowPattern implements Serializable {
     public boolean verifyDieNumberConstraint(Coordinate destination, Die die, Cell[][] cellMatrix){
         int x =destination.getX();
         int y =destination.getY();
-        if((x+1<4 && cellMatrix[x+1][y].getDie()!=null && cellMatrix[x+1][y].getDie().getNumber()==die.getNumber()) || (y+1<4 && cellMatrix[x][y+1].getDie()!=null && cellMatrix[x][y+1].getDie().getNumber()==die.getNumber()) || (x-1>0 && cellMatrix[x-1][y].getDie()!=null && cellMatrix[x-1][y].getDie().getNumber()==die.getNumber())|| (y-1>0 && cellMatrix[x][y-1].getDie()!=null && cellMatrix[x][y-1].getDie().getNumber()==die.getNumber()))
+        if((x+1<4 && cellMatrix[x+1][y].getDie()!=null && cellMatrix[x+1][y].getDie().getNumber()==die.getNumber()) || (y+1<5 && cellMatrix[x][y+1].getDie()!=null && cellMatrix[x][y+1].getDie().getNumber()==die.getNumber()) || (x-1>0 && cellMatrix[x-1][y].getDie()!=null && cellMatrix[x-1][y].getDie().getNumber()==die.getNumber())|| (y-1>0 && cellMatrix[x][y-1].getDie()!=null && cellMatrix[x][y-1].getDie().getNumber()==die.getNumber()))
             return false;
         else return true;
     }

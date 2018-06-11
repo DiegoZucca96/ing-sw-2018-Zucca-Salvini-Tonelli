@@ -127,13 +127,12 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     @Override
     public boolean takeWPDie(int row, int column) throws RemoteException {
         if(match.getCurrentPlayer().getCoordinateDieSelected()==null){
-            Coordinate c = new Coordinate(row,column);
-            Cell [][] matrix = match.getCurrentPlayer().getWindowPattern().getCellMatrix();
-            match.getCurrentPlayer().setCoordinateDieSelected(c);
-            match.getCurrentPlayer().setDieSelected(match.getCurrentPlayer().getWindowPattern().getCell(c,matrix).getDie());
-            return match.getCurrentPlayer().getWindowPattern().removeDie(c,matrix);
-        }
-        return false;
+                Coordinate c = new Coordinate(row,column);
+                match.getCurrentPlayer().setCoordinateDieSelected(c);
+                match.getCurrentPlayer().setDieSelected(match.getCurrentPlayer().getWindowPattern().getDie(c));
+                return true;
+            }
+            return false;
     }
 
     @Override
@@ -298,57 +297,6 @@ public class Controller extends UnicastRemoteObject implements RMIController {
                 }
             }
         }
-/**
-        if(getPlayerState(clientName).equals("enabled")){
-            if(!doubleTurn){
-                if(!active){
-                    timeout(clientName);
-                }
-                turn++;
-                disableClient(getCurrentPlayerName());
-            }else{
-                doubleTurn=false;
-                ableNext = false;
-                this.skipPlayerDueTo8 = match.getCurrentPlayer().getName();
-            }
-            timer.cancel();
-            if (turn == getSizeOfPlayers()*2) {
-                if(match.getRound() == 10)
-                    isFinish = true;
-                else{
-                    match.endRound();
-                    turn=0;
-                }
-            }
-            else{
-                if(ableNext)
-                    match.nextTurn();
-            }
-            ableNext = true;
-            if(!isFinish){
-                while(getPlayerState(getCurrentPlayerName()).equalsIgnoreCase("disconnected") && (turn<getSizeOfPlayers()*2)) {
-                    match.nextTurn();
-                }
-                if(skipPlayerDueTo8!=null){
-                    if(skipPlayerDueTo8.equals(match.getCurrentPlayer().getName())){
-                        enableClient(getCurrentPlayerName());
-                        //skipPlayerDueTo8 = null;
-                    }
-                    else{
-                        enableClient(getCurrentPlayerName());
-                        disableClient(skipPlayerDueTo8);
-                        skipPlayerDueTo8 = null;
-                    }
-
-                }else if(skipPlayerDueTo8.equals(match.getCurrentPlayer().getName()))
-                    disableClient(getCurrentPlayerName());
-                else
-                    enableClient(getCurrentPlayerName());
-                controllerTimer.setTimeMoveRemaining(playerMoveTime);
-                timer = new Timer();
-                controllerTimer.startPlayerTimer(this,timer);
-            }
-        }*/
     }
 
     @Override
@@ -390,13 +338,13 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         switch(idCard){
             case 1: {
                 pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()), toolView.getDieModified());
-                break;/*
+                break;
             }case 2:{
-                pt = new PlayerToolParameter();
+                pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()),new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()));
                 break;
             }case 3:{
-                pt = new PlayerToolParameter();
-                break;
+                pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()),new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()));
+                break;/*
             }case 4:{
                 pt = new PlayerToolParameter();
                 break;*/
@@ -619,11 +567,6 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return init;
     }
 
-    private String convertDieToString(Die d) {
-        String num = Integer.toString(d.getNumber());
-        String color = String.valueOf(d.getColor());
-        return "die("+num+","+color+")";
-    }
 
     private Match istanceMatch() throws RemoteException {
         if(match == null)

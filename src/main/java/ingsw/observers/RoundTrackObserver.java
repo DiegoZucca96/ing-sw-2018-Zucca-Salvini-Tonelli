@@ -10,6 +10,6 @@ public class RoundTrackObserver implements Observer {
     @Override
     public void update(Object subject, ViewData viewData) {
         roundTrack = (RoundTrack) subject;
-            viewData.setRoundTrack(roundTrack.toArrayString());
+        viewData.setRoundTrack(roundTrack.toArrayString());
     }
 }

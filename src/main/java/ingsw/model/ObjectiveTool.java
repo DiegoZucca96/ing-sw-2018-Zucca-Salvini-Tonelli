@@ -28,7 +28,7 @@ public class ObjectiveTool {
         this.dieModified = dieModified;
         this.dp = dp;
     }
-
+    //Tool 2 - Tool 3
     public ObjectiveTool(WindowPattern window,Coordinate c1, Coordinate d1){
         this.window = window;
         this.c1 = c1;

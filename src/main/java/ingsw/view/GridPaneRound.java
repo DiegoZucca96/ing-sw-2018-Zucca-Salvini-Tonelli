@@ -45,10 +45,10 @@ public class GridPaneRound extends GridPane {
     }
 
     private Button buttonRound(int currentRound){
-        Button button;
-        button = new Button(Integer.toString(currentRound));
+        Button button = new Button(Integer.toString(currentRound));
         button.setFont(new Font("Tahoma", 20));
-        this.add(button, currentRound-1, 0);
+        add(button, currentRound-1, 0);
+
         return button;
     }
 
@@ -56,8 +56,8 @@ public class GridPaneRound extends GridPane {
         this.roundTrack = roundTrack;
         this.significantRound=round;
         round--;                                           //allineamento con la griglia
-        if(round > 0)
-            updateButton(round -1);         //aggiorno il round precedente
+        for(int i =0 ; i<round ; i++)
+            updateButton(i);
     }
 
     private void updateButton(int currentRound) {
@@ -65,8 +65,9 @@ public class GridPaneRound extends GridPane {
             if(GridPaneRound.getColumnIndex(node) == currentRound){
                 Button button = (Button) node;
                 button.setText("");
+                button.setOpacity(1);
                 String imagePath = "/ok.png";
-                Image image = new Image(imagePath, 25, 25, false, true);
+                Image image = new Image(imagePath, 30, 30, false, true);
                 BackgroundImage back = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                         BackgroundSize.DEFAULT);
                 button.setBackground(new Background(back));
@@ -99,8 +100,8 @@ public class GridPaneRound extends GridPane {
         }
 
         for(int numDice=0; numDice<client.getNumberOfPlayers()*2+1; numDice++){
-            Button button = addDieBtn(numDice,i);
-            button.setPrefSize(58, 58);
+            Button button1 = addDieBtn(numDice,i);
+            button1.setPrefSize(58, 58);
             if(currentDice.size()>numDice){
                 String dieStr = currentDice.get(numDice);
                 String numDie = dieStr.substring(dieStr.indexOf("(")+1,dieStr.indexOf(","));
@@ -110,9 +111,9 @@ public class GridPaneRound extends GridPane {
                 BackgroundImage myBI= new BackgroundImage(myImage,
                         BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                         BackgroundSize.DEFAULT);
-                button.setBackground(new Background(myBI));
+                button1.setBackground(new Background(myBI));
 
-                gridOfdDice.add(button, numDice, 0);
+                gridOfdDice.add(button1, numDice, 0);
             }
             else{
                 numDice=client.getNumberOfPlayers()*2+1;

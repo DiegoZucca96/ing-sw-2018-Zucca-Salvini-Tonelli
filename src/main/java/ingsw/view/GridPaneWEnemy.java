@@ -58,30 +58,7 @@ public class GridPaneWEnemy extends GridPane {
                 }
             }
     }
-                    /*Button b = getButton(i, j);
-                    String dieStr = viewWP.getWp()[i][j].getDie();
-                    if(dieStr==null){
-                        if(b==null){
-                            b= new Button();
-                        }
-                        b.setOpacity(0);
-                    }else{
-                        String numDie = dieStr.substring(dieStr.indexOf("(")+1,dieStr.indexOf(","));
-                        String colorDie = dieStr.substring(dieStr.indexOf(",")+1, dieStr.indexOf(")"));
-                        String pathDie = WPRendering.path(numDie, colorDie);
-                            if(b==null){
-                                b= new Button();
-                            }
-                            b.setOpacity(1);
-                            Image myImage = new Image(pathDie, 40, 40, false, true);
-                            BackgroundImage myBI= new BackgroundImage(myImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                                    BackgroundSize.DEFAULT);
-                            b.setBackground(new Background(myBI));
-                    }
-                }
-            }
-        }
-    }*/
+
 
     private void updateButton(int row, int col, ViewWP viewWP){
         for(Node node : this.getChildren()){

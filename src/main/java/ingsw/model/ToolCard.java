@@ -81,13 +81,13 @@ public class ToolCard {
     public static ArrayList<Integer> generateToolCard(ViewData init) {
         RandomGenerator rg = new RandomGenerator(10);
         ArrayList<Integer> numToolCards = new ArrayList<>();
-        //Righe da decommentare se si vogliono provare le ToolCard, da cambiare anche il numero del for
-        /*init.getToolCard().add("/Tool7.png");
+        //Righe da decommentare se si vogliono provare le ToolCard
+        init.getToolCard().add("/Tool5.png");
+        numToolCards.add(5);
+        init.getToolCard().add("/Tool7.png");
         numToolCards.add(7);
-        init.getToolCard().add("/Tool8.png");
-        numToolCards.add(8);
         init.getToolCard().add("/Tool9.png");
-        numToolCards.add(9);*/
+        numToolCards.add(9);
         for(int i=0;i<3;i++){
             int select = rg.random();
             switch(select){

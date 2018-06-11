@@ -68,11 +68,6 @@ public class Cell implements Serializable {
         return "cell:" + number + "," + color;
     }
 
-    /*
-    public Coordinate getInputCoordinate(){
-
-        return coordinate;
-    }*/
 
     public int getNumber() {
         return number;

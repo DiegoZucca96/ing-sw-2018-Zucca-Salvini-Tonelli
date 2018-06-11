@@ -58,7 +58,7 @@ public class PlayerToolParameter {
             this.listOfCoordinateY.add(new Coordinate(0, Integer.parseInt(c)));
     }
 
-    //Tool9
+    //Tool9 - Tool2 - Tool3
     public PlayerToolParameter(Coordinate c1, Coordinate d1){
         this.c1 = c1;
         this.d1 = d1;

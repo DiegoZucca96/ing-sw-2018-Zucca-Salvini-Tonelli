@@ -125,7 +125,7 @@ public class PlayGame {
                                         update(1,1,1);
                                     resetOnButton();
                                 }else{ //Per il problema che a volte scala di due secondi e i bottoni non si attivano
-                                    if (timeseconds == timeBegin-1) {
+                                    if (timeseconds == timeBegin-2) {
                                         this.updateView = client.updateView();
                                         if(updateView!=null)
                                             update(1,1,1);
@@ -329,9 +329,10 @@ public class PlayGame {
         cancelBtn.setOnAction(e-> {
             if(client.getPlayerState().equalsIgnoreCase("enabled")){
                 choosePressed=false;
-                setUsingTool(true);
+                setUsingTool(false);
                 draftPoolGrid.setDiePressed(false);
                 gridRound.setAccessRound(false);
+                getGridWindow().setAccessWindow(false);
                 int col = client.getCoordinateSelectedY();
                 if(col==-1){            //se non ha selezionato nulla
                     resetOnButton();
@@ -369,15 +370,10 @@ public class PlayGame {
         String color;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
-                Button btnCell = new Button();
-                btnCell.setPrefSize(50, 50);
                 number = Integer.toString(myWindow.getWp()[i][j].getNum());
                 color = String.valueOf(myWindow.getWp()[i][j].getColor());
-                String path = WPRendering.path(number, color);
-                Image myImage = new Image(path, 50, 50, false, true);
-                BackgroundImage myBI = new BackgroundImage(myImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-                btnCell.setBackground(new Background(myBI));
-                gridPane.add(btnCell, j, i);
+                ButtonView buttonView = new ButtonView(number, color, 0);
+                gridPane.add(buttonView, j, i);
             }
         }
         return gridPane;
@@ -450,13 +446,17 @@ public class PlayGame {
                         }
 
             }if(cardSelected == 8 && client.getInsertedDie() && client.getClockwiseRound()){
-                    if(client.useToolCard(8,null)){
-                        takeDieBtn.setDisable(false);
-                        client.setTool8Used(true);
-                    }else{
-                        Toolkit.getDefaultToolkit().beep();
-                    }
+                if(client.useToolCard(8,null)){
+                    takeDieBtn.setDisable(false);
+                    client.setTool8Used(true);
+                }else{
+                    Toolkit.getDefaultToolkit().beep();
                 }
+            }
+            if(cardSelected == 2 || cardSelected == 3) {
+                getGridWindow().setAccessWindow(true);
+                getGridWindow().setFirstChoice(true);
+            }
             else{
                 if(cardSelected==8)
                     Toolkit.getDefaultToolkit().beep();
@@ -479,15 +479,10 @@ public class PlayGame {
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
-                Button btnCell = new Button();
-                btnCell.setPrefSize(40, 40);
                 number = Integer.toString(wp.getWp()[i][j].getNum());
                 color = String.valueOf(wp.getWp()[i][j].getColor());
-                String path = WPRendering.path(number, color);
-                Image myImage = new Image(path, 40, 40, false, true);
-                BackgroundImage myBI = new BackgroundImage(myImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-                btnCell.setBackground(new Background(myBI));
-                grid.add(btnCell, j, i);
+                ButtonView buttonView = new ButtonView(number, color, 1);
+                grid.add(buttonView, j, i);
             }
         }
         return grid;
@@ -520,6 +515,8 @@ public class PlayGame {
         }
 
     }
+
+
 
     public boolean getChoosePressed(){
         return choosePressed;

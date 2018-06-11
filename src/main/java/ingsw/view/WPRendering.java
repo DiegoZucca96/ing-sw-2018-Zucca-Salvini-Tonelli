@@ -51,17 +51,10 @@ public class WPRendering {
         grid1.setHgap(1.5);
         for(int i=0; i<4; i++){
             for( int j=0; j<5; j++){
-                Button btnCell = new Button();
-                btnCell.setPrefSize(50, 50);
                 String numCell = Integer.toString(displayWindow.get(0).getWp()[i][j].getNum());
                 String colorCell = String.valueOf(displayWindow.get(0).getWp()[i][j].getColor());
-                String pathCell = path(numCell, colorCell);
-                Image myImage = new Image(pathCell, 50, 50, false, false);
-                BackgroundImage myBI= new BackgroundImage(myImage,
-                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                        BackgroundSize.DEFAULT);
-                btnCell.setBackground(new Background(myBI));
-                grid1.add(btnCell, j, i);       //ricorda che il primo è colonna, il secondo riga
+                ButtonView buttonView = new ButtonView(numCell, colorCell, 0);
+                grid1.add(buttonView, j, i);       //ricorda che il primo è colonna, il secondo riga
 
             }
         }
@@ -104,17 +97,10 @@ public class WPRendering {
         grid2.setHgap(1.5);
         for(int i=0; i<4; i++){
             for( int j=0; j<5; j++){
-                Button btnCell = new Button();
-                btnCell.setPrefSize(50, 50);
                 String numCell = Integer.toString(displayWindow.get(1).getWp()[i][j].getNum());
                 String colorCell = String.valueOf(displayWindow.get(1).getWp()[i][j].getColor());
-                String pathCell = path(numCell, colorCell);
-                Image myImage = new Image(pathCell, 50, 50, false, false);
-                BackgroundImage myBI= new BackgroundImage(myImage,
-                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                        BackgroundSize.DEFAULT);
-                btnCell.setBackground(new Background(myBI));
-                grid2.add(btnCell, j, i);
+                ButtonView buttonView = new ButtonView(numCell, colorCell, 0);
+                grid2.add(buttonView, j, i);
 
             }
         }
@@ -157,17 +143,10 @@ public class WPRendering {
         grid3.setHgap(1.5);
         for(int i=0; i<4; i++){
             for( int j=0; j<5; j++){
-                Button btnCell = new Button();
-                btnCell.setPrefSize(50, 50);
                 String numCell = Integer.toString(displayWindow.get(2).getWp()[i][j].getNum());
                 String colorCell = String.valueOf(displayWindow.get(2).getWp()[i][j].getColor());
-                String pathCell = path(numCell, colorCell);
-                Image myImage = new Image(pathCell, 50, 50, false, false);
-                BackgroundImage myBI= new BackgroundImage(myImage,
-                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                        BackgroundSize.DEFAULT);
-                btnCell.setBackground(new Background(myBI));
-                grid3.add(btnCell, j, i);
+                ButtonView buttonView = new ButtonView(numCell, colorCell, 0);
+                grid3.add(buttonView, j, i);
 
             }
         }
@@ -209,17 +188,10 @@ public class WPRendering {
         grid4.setHgap(1.5);
         for(int i=0; i<4; i++){
             for( int j=0; j<5; j++){
-                Button btnCell = new Button();
-                btnCell.setPrefSize(50, 50);
                 String numCell = Integer.toString(displayWindow.get(3).getWp()[i][j].getNum());
                 String colorCell = String.valueOf(displayWindow.get(3).getWp()[i][j].getColor());
-                String pathCell = path(numCell, colorCell);
-                Image myImage = new Image(pathCell, 50, 50, false, false);
-                BackgroundImage myBI= new BackgroundImage(myImage,
-                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                        BackgroundSize.DEFAULT);
-                btnCell.setBackground(new Background(myBI));
-                grid4.add(btnCell, j, i);
+                ButtonView buttonView = new ButtonView(numCell, colorCell, 0);
+                grid4.add(buttonView, j, i);
 
             }
         }
@@ -359,7 +331,4 @@ public class WPRendering {
             return "/yellow.png";
         return null;
     }
-
-
-
 }
