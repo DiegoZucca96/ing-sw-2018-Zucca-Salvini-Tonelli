@@ -15,6 +15,7 @@ public class PlayerToolParameter {
     private int round;
     private Color color;
     private ArrayList<Coordinate> listOfCoordinateY = new ArrayList<>();
+    private int phase;
 
     public PlayerToolParameter( Coordinate c1, int dieModified){
         this.c1 = c1;
@@ -122,4 +123,11 @@ public class PlayerToolParameter {
     }
 
 
+    public int getPhase() {
+        return phase;
+    }
+
+    public void setPhase(int phase) {
+        this.phase = phase;
+    }
 }

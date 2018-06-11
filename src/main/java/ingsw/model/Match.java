@@ -193,7 +193,10 @@ public class Match {
                 break;
             }
             case 4:{
-                toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC1(), pTParameter.getC2(), pTParameter.getD1(), pTParameter.getD2());
+                if(pTParameter.getPhase()==0)
+                    toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC1(), pTParameter.getD1(), 0);
+                else
+                    toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC2(), pTParameter.getD2(), 1);
                 break;
             }
             case 5: {

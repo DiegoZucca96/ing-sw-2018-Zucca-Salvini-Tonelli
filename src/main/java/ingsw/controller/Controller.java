@@ -344,10 +344,13 @@ public class Controller extends UnicastRemoteObject implements RMIController {
                 break;
             }case 3:{
                 pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()),new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()));
-                break;/*
+                break;
             }case 4:{
-                pt = new PlayerToolParameter();
-                break;*/
+                if(toolView.getPhase()==0)
+                    pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()),new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()),toolView.getPhase());
+                else
+                    pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow2(), toolView.getStartCol2()),new Coordinate(toolView.getEndRow2(), toolView.getEndCol2()),toolView.getPhase());
+                break;
             }case 5:{
                 pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()),new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()),toolView.getRound());
                 break;

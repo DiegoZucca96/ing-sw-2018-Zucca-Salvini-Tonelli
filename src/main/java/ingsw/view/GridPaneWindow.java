@@ -133,7 +133,6 @@ public class GridPaneWindow extends GridPane {
                         toolView.setEndRow1(i);
                         toolView.setEndCol1(j);
                         if(client.useToolCard(3, toolView)){
-                            //button.setBackground(getDieInfos().get(0).getBackground());
                             //button.setOpacity(1);
                             playGame.update(1,0, 0);
                             updateMyself();
@@ -149,6 +148,68 @@ public class GridPaneWindow extends GridPane {
                                 playGame.resetOnButton();
                         }else{
                             Toolkit.getDefaultToolkit().beep();
+                        }
+                    }
+                }else if(playGame.getCardSelected()==4){
+                    if (toolView == null) {
+                        toolView = new ToolView();
+                        toolView.setPhase(0);
+                    }
+                    if(firstChoice){
+                        if(toolView.getPhase()==0){
+                            toolView.setStartRow1(i);
+                            toolView.setStartCol1(j);
+                            if(client.takeWPDie(i,j)){
+                                playGame.getDraftPoolGrid().getButtonDieSelected().setBackground(button.getBackground());
+                                playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(1);
+                            }
+                            toolView.setPhase(1);
+                        }else{
+                            toolView.setEndRow1(i);
+                            toolView.setEndCol1(j);
+                            firstChoice=false;
+                            toolView.setPhase(0);
+                            if(client.useToolCard(4,toolView)){
+                                updateMyself();
+                                playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(0);
+                                client.nullSelection();
+                            }else{
+                                firstChoice=true;
+                                toolView.setPhase(1);
+                                Toolkit.getDefaultToolkit().beep();
+                            }
+                        }
+                    }else{
+                        if(toolView.getPhase()==0){
+                            toolView.setStartRow2(i);
+                            toolView.setStartCol2(j);
+                            if(client.takeWPDie(i,j)){
+                                playGame.getDraftPoolGrid().getButtonDieSelected().setBackground(button.getBackground());
+                                playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(1);
+                            }
+                            toolView.setPhase(1);
+                        }else{
+                            toolView.setEndRow2(i);
+                            toolView.setEndCol2(j);
+                            if(client.useToolCard(4,toolView)){
+                                updateMyself();
+                                playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(0);
+                                client.nullSelection();
+                                firstChoice = true;
+                                accessWindow = false;
+                                toolView = null;
+                                playGame.onPositionWPButton();
+                                if(!client.getInsertedDie())
+                                    playGame.resetOnButton();
+                            }else{
+                                firstChoice=true;
+                                toolView.setPhase(0);
+                                updateMyself();
+                                playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(0);
+                                client.nullSelection();
+                                Toolkit.getDefaultToolkit().beep();
+                                new Warning("Posizione errata, riprova", "Tool4");
+                            }
                         }
                     }
                 }

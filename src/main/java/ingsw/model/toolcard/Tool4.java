@@ -15,6 +15,7 @@ public class Tool4 implements ToolStrategy {
     private Cell[][] cellMatrix;
     private Die die1;
     private Die die2;
+    private int phase;
 
     public Tool4(int idCard) {
         this.title ="Lathekin";
@@ -26,10 +27,14 @@ public class Tool4 implements ToolStrategy {
     public boolean doOp(ObjectiveTool object){
         window = object.getWindow();
         cellMatrix = window.getCellMatrix();
-        die1 = cellMatrix[object.getC1().getX()][object.getC1().getY()].takeDie();
-        if(!(window.addDie(object.getD1(),die1,cellMatrix))) { //Qui sarebbe da sfruttare le exception per il tipo di violazione
-            cellMatrix[object.getC1().getX()][object.getC1().getY()].insertDie(die1);
-            System.out.print("Hai violato qualche restrizione, non puoi usare questa ToolCard");
+        phase = object.getPhase();
+        if(phase==0){
+            die1 = cellMatrix[object.getC1().getX()][object.getC1().getY()].takeDie();
+            if(!(window.addDie(object.getD1(),die1,cellMatrix))) { //Qui sarebbe da sfruttare le exception per il tipo di violazione
+                cellMatrix[object.getC1().getX()][object.getC1().getY()].insertDie(die1);
+                System.out.print("Hai violato qualche restrizione, non puoi usare questa ToolCard");
+                return false;
+            }
         }else{
             die2 = cellMatrix[object.getC2().getX()][object.getC2().getY()].takeDie();
             if(!(window.addDie(object.getD2(),die2,cellMatrix))){
@@ -37,13 +42,12 @@ public class Tool4 implements ToolStrategy {
                 cellMatrix[object.getC1().getX()][object.getC1().getY()].insertDie(die1);
                 cellMatrix[object.getC2().getX()][object.getC2().getY()].insertDie(die2);
                 System.out.print("Hai violato qualche restrizione, non puoi usare questa ToolCard");
+                return false;
             }else{
                 PlayGame.setUsingTool(false);
-                return true;
             }
         }
-        PlayGame.setUsingTool(false);
-        return false;
+        return true;
     }
 
     public int getIdCard() {

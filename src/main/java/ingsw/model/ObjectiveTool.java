@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 // Oggetto da passare al metodo delle ToolCard, varia in base alla ToolCard usata
 public class ObjectiveTool {
+    private int phase;
     private Die die1;
     private Die die2;
     private WindowPattern window;
@@ -33,6 +34,13 @@ public class ObjectiveTool {
         this.window = window;
         this.c1 = c1;
         this.d1 = d1;
+    }
+
+    public ObjectiveTool(WindowPattern window,Coordinate c1, Coordinate d1, int phase){
+        this.window = window;
+        this.c1 = c1;
+        this.d1 = d1;
+        this.phase = phase;
     }
 
     public ObjectiveTool(WindowPattern window, Coordinate c1, Coordinate c2, Coordinate d1, Coordinate d2){
@@ -225,4 +233,11 @@ public class ObjectiveTool {
         this.player = player;
     }
 
+    public int getPhase() {
+        return phase;
+    }
+
+    public void setPhase(int phase) {
+        this.phase = phase;
+    }
 }
