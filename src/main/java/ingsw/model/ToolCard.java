@@ -74,11 +74,11 @@ public class ToolCard {
         RandomGenerator rg = new RandomGenerator(10);
         ArrayList<Integer> numToolCards = new ArrayList<>();
         //Righe da decommentare se si vogliono provare le ToolCard
-        init.getToolCard().add("/Tool11.png");
+        init.getToolCard().add("/Tool11+0.png");
         numToolCards.add(11);
-        init.getToolCard().add("/Tool12.png");
+        init.getToolCard().add("/Tool12+0.png");
         numToolCards.add(12);
-        init.getToolCard().add("/Tool4.png");
+        init.getToolCard().add("/Tool4+0.png");
         numToolCards.add(4);
         for(int i=3;i<3;i++){
             int select = rg.random();

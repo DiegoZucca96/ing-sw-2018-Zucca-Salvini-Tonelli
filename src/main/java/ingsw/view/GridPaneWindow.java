@@ -133,13 +133,10 @@ public class GridPaneWindow extends GridPane {
                         toolView.setEndRow1(i);
                         toolView.setEndCol1(j);
                         if(client.useToolCard(3, toolView)){
-                            //button.setOpacity(1);
                             playGame.update();
                             updateMyself();
-                            //getButton(getDieInfos().get(0).getRow(), getDieInfos().get(0).getColumn()).setOpacity(0);
                             playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(0);
                             client.nullSelection();
-                            //button.setOpacity(1);
                             firstChoice = true;
                             accessWindow = false;
                             toolView = null;

@@ -331,10 +331,14 @@ public class Controller extends UnicastRemoteObject implements RMIController {
          new DisconnectedClient().setState(clientName);
     }
 
-    //Utilizza la ToolCard, ancora da implementare (forse serve anche quale tool è stata scelta come parametro)
     @Override
     public boolean useToolCard(int idCard, ToolView toolView){
         PlayerToolParameter pt = null;
+        //Serve per consumare i token quando clicco sulla carta, se posso usarla
+        if(toolView==null){
+            match.playerUseTool(idCard,null);
+            return true;
+        }
         switch(idCard){
             case 1: {
                 pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()), toolView.getDieModified());

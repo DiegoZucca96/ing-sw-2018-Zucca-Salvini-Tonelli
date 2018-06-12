@@ -51,11 +51,11 @@ public class Tool12 implements ToolStrategy {
             }
         }
         if(object.getPhase() == 2){
-            c2 = object.getC2();
+            c2 = object.getC1();
             if (window.getCellMatrix()[c2.getX()][c2.getY()].getDie().getColor() == color) {
                 die2 = window.getCellMatrix()[c2.getX()][c2.getY()].takeDie();
-                if(!window.addDie(object.getD2(), die2, window.getCellMatrix())){
-                    window.getCellMatrix()[object.getC2().getX()][object.getC2().getY()].insertDie(die2);
+                if(!window.addDie(object.getD1(), die2, window.getCellMatrix())){
+                    window.getCellMatrix()[c2.getX()][c2.getY()].insertDie(die2);
                     System.out.print("Hai violato una restrizione di posizione");
                     return false;
                 }

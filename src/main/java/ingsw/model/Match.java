@@ -236,7 +236,7 @@ public class Match {
                 else if(pTParameter.getPhase()==1)
                     toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC1(), pTParameter.getD1(), pTParameter.getPhase());
                 else
-                    toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC2(), pTParameter.getD2(), pTParameter.getPhase());
+                    toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC1(), pTParameter.getD1(), pTParameter.getPhase());
                 break;
             }
             default:
@@ -253,18 +253,25 @@ public class Match {
 
     //usa la ingsw.model.toolcard passata come parametro, restituisce false se non può essere usata
     public boolean playerUseTool(int tool, PlayerToolParameter pTParameter) {
+        if(pTParameter==null){
+            for(ToolCard t : tools) {
+                if (t.getIdCard() == tool) {
+                    if (t.isAlreadyUsed()) {
+                        currentPlayer.useToken(t);
+                        t.setNumTokenUsed(t.getNumTokenUsed() + 2);
+                    } else {
+                        currentPlayer.useToken(t);
+                        t.setNumTokenUsed(t.getNumTokenUsed() + 1);
+                    }
+                }
+            }
+            notifyViewObserver();
+            return true;
+        }
         ObjectiveTool toolParameter = createToolParameter(tool,pTParameter);
         if (toolParameter == null) return false;
         for(ToolCard t : tools){
             if(t.getIdCard()==tool){
-                if(t.isAlreadyUsed()) {
-                    currentPlayer.useToken(t);
-                    t.setNumTokenUsed(t.getNumTokenUsed() + 2);
-                }
-                else{
-                    currentPlayer.useToken(t);
-                    t.setNumTokenUsed(t.getNumTokenUsed()+1);
-                }
                 boolean b = t.doToolStrategy(toolParameter);
                 notifyViewObserver();
                 return b;

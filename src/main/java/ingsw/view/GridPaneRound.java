@@ -88,7 +88,7 @@ public class GridPaneRound extends GridPane {
         stage = new Stage();
         Pane root = new Pane();
         Scene scene = new Scene(root);
-        root.setPrefSize((client.getNumberOfPlayers()*2+1)*70, 80);
+        root.setPrefSize((client.getNumberOfPlayers()*2+1)*80, 80);
         gridOfdDice = new GridPane();
         gridOfdDice.setHgap(20);
         //DieInfo client.getDieFromRoundTrack(j);
@@ -100,9 +100,9 @@ public class GridPaneRound extends GridPane {
         }
 
         for(int numDice=0; numDice<client.getNumberOfPlayers()*2+1; numDice++){
-            Button button1 = addDieBtn(numDice,i);
-            button1.setPrefSize(58, 58);
             if(currentDice.size()>numDice){
+                Button button1 = addDieBtn(numDice,i);
+                button1.setPrefSize(58, 58);
                 String dieStr = currentDice.get(numDice);
                 String numDie = dieStr.substring(dieStr.indexOf("(")+1,dieStr.indexOf(","));
                 String colorDie = dieStr.substring(dieStr.indexOf(",")+1,dieStr.indexOf(")"));
