@@ -1,10 +1,7 @@
 package ingsw.model;
 
 import ingsw.model.windowpattern.WindowPattern;
-import ingsw.observers.DraftPoolObserver;
-import ingsw.observers.Observer;
-import ingsw.observers.RoundTrackObserver;
-import ingsw.observers.WindowPatternObserver;
+import ingsw.observers.*;
 
 import java.util.ArrayList;
 
@@ -250,7 +247,14 @@ public class Match {
         if (toolParameter == null) return false;
         for(ToolCard t : tools){
             if(t.getIdCard()==tool){
-                currentPlayer.useToken(t);
+                if(t.isAlreadyUsed()) {
+                    currentPlayer.useToken(t);
+                    t.setNumTokenUsed(t.getNumTokenUsed() + 2);
+                }
+                else{
+                    currentPlayer.useToken(t);
+                    t.setNumTokenUsed(t.getNumTokenUsed()+1);
+                }
                 boolean b = t.doToolStrategy(toolParameter);
                 notifyViewObserver();
                 return b;
@@ -266,6 +270,9 @@ public class Match {
         viewObserver.update(currentPlayer.getWindowPattern(), ViewData.instance());
         viewObserver = new RoundTrackObserver();
         viewObserver.update(roundTrack, ViewData.instance());
+        viewObserver = new ToolCardsObserver();
+        for(ToolCard tool : tools)
+            viewObserver.update(tool,ViewData.instance());
         viewObserver = null;
     }
 

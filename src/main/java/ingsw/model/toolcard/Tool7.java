@@ -13,6 +13,7 @@ public class Tool7 implements ToolStrategy {
     private boolean alreadyUsed;
     private int idCard;
     private DraftPool dp;
+    private int numTokenUsed;
 
     public Tool7(int idCard) {
         this.title ="Martelletto";
@@ -23,7 +24,7 @@ public class Tool7 implements ToolStrategy {
 
     //La carta specifica prima di prendere il secondo dado, questo è ancora da gestire in qualche modo
     public boolean doOp(ObjectiveTool object){
-       if(!(object.equals(null))){
+       if((object!=null)){
            ArrayList<Coordinate> coordinates = object.getListOfCoordinateY();
            dp = object.getDp();
            dp.refreshDraftPool(coordinates); //Metodo che ritira i dadi
@@ -45,4 +46,13 @@ public class Tool7 implements ToolStrategy {
     public void setAlreadyUsed(boolean alreadyUsed) {
         this.alreadyUsed = alreadyUsed;
     }
+
+    public void setNumTokenUsed(int token) {
+        this.numTokenUsed=token;
+    }
+
+    public int getNumTokenUsed() {
+        return numTokenUsed;
+    }
+
 }

@@ -13,6 +13,7 @@ public class Tool11 implements ToolStrategy {
     private DraftPool dp;
     private WindowPattern window;
     private DiceBag diceBag;
+    private int numTokenUsed;
 
     public Tool11(int idCard) {
         this.title ="Diluente per Pasta Salda";
@@ -47,6 +48,14 @@ public class Tool11 implements ToolStrategy {
 
     public void setAlreadyUsed(boolean alreadyUsed) {
         this.alreadyUsed = alreadyUsed;
+    }
+
+    public void setNumTokenUsed(int token) {
+        this.numTokenUsed=token;
+    }
+
+    public int getNumTokenUsed() {
+        return numTokenUsed;
     }
 
 }

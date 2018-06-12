@@ -542,6 +542,12 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return match.getClockwiseRound();
     }
 
+    @Override
+    public int getTokenRemaining(String name) throws RemoteException {
+        int index = getListofMatchPlayers().indexOf(name);
+        return match.getPlayers().get(index).getTokens();
+    }
+
 
     @Override
     public String getPVCard(String name) throws RemoteException {

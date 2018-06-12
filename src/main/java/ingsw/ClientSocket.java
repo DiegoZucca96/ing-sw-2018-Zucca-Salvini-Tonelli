@@ -403,6 +403,13 @@ public class ClientSocket implements Client {
     }
 
     @Override
+    public int getTokenRemaining(String name) {
+        //da impl
+
+        return 0;
+    }
+
+    @Override
     public ArrayList<ViewWP> getPlayerWPs(String name){
         setupConnection();
         out.println("getPlayersWPs:"+name);

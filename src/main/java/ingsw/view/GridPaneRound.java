@@ -128,7 +128,7 @@ public class GridPaneRound extends GridPane {
     private Button addDieBtn(int numDice,int i) {
         Button button = new Button();
         button.setOnAction(e -> {
-            playGame.update(0,0,1);
+            playGame.update();
             if(!button.getBackground().equals(Color.TRANSPARENT) && accessRound){
                 if(playGame.getCardSelected()==5){
                     ToolView toolView = new ToolView();
@@ -143,7 +143,7 @@ public class GridPaneRound extends GridPane {
                     if(client.useToolCard(5,toolView)){
                         client.nullSelection();
                         client.takeDie(toolView.getStartRow1(),toolView.getStartCol1());
-                        playGame.update(0,1,1);
+                        playGame.update();
                         playGame.getDraftPoolGrid().getButtonDieSelected().setBackground(button.getBackground());
                         playGame.getDraftPoolGrid().getButton(toolView.getStartRow1(),toolView.getStartCol1()).setBackground(button.getBackground());
                         playGame.getDraftPoolGrid().getButton(toolView.getStartRow1(),toolView.getStartCol1()).setOpacity(1);

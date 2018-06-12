@@ -8,6 +8,7 @@ public class Tool9 implements ToolStrategy{
     private String title;
     private String comment;
     private boolean alreadyUsed;
+    private int numTokenUsed;
     private int idCard;
     private DraftPool dp;
     private WindowPattern window;
@@ -52,5 +53,13 @@ public class Tool9 implements ToolStrategy{
 
     public void setAlreadyUsed(boolean alreadyUsed) {
         this.alreadyUsed = alreadyUsed;
+    }
+
+    public void setNumTokenUsed(int token) {
+        this.numTokenUsed=token;
+    }
+
+    public int getNumTokenUsed() {
+        return numTokenUsed;
     }
 }

@@ -16,6 +16,7 @@ public class Tool2 implements ToolStrategy {
     private String comment;
     private boolean alreadyUsed;
     private int idCard;
+    private int numTokenUsed;
 
     public Tool2(int idCard){
         this.title ="Pennello per Eglomise";
@@ -52,5 +53,13 @@ public class Tool2 implements ToolStrategy {
 
     public void setAlreadyUsed(boolean alreadyUsed) {
         this.alreadyUsed = alreadyUsed;
+    }
+
+    public void setNumTokenUsed(int token) {
+        this.numTokenUsed=token;
+    }
+
+    public int getNumTokenUsed() {
+        return numTokenUsed;
     }
 }

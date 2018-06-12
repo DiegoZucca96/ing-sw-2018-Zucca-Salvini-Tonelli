@@ -11,6 +11,7 @@ public class Tool1 implements ToolStrategy {
     private boolean alreadyUsed;
     private int idCard;
     private Die die;
+    private int numTokenUsed;
 
     public Tool1(int idCard){
         this.title ="Pinza Sgrossatrice";
@@ -43,5 +44,13 @@ public class Tool1 implements ToolStrategy {
 
     public void setAlreadyUsed(boolean alreadyUsed) {
         this.alreadyUsed = alreadyUsed;
+    }
+
+    public void setNumTokenUsed(int token) {
+        this.numTokenUsed=token;
+    }
+
+    public int getNumTokenUsed() {
+        return numTokenUsed;
     }
 }

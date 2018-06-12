@@ -15,6 +15,7 @@ public class Tool3 implements ToolStrategy {
     private String comment;
     private boolean alreadyUsed;
     private int idCard;
+    private int numTokenUsed;
 
     public Tool3(int idCard) {
         this.title ="Alesatore per lamina di rame";
@@ -50,5 +51,13 @@ public class Tool3 implements ToolStrategy {
 
     public void setAlreadyUsed(boolean alreadyUsed) {
         this.alreadyUsed = alreadyUsed;
+    }
+
+    public void setNumTokenUsed(int token) {
+        this.numTokenUsed=token;
+    }
+
+    public int getNumTokenUsed() {
+        return numTokenUsed;
     }
 }

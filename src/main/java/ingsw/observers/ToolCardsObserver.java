@@ -10,6 +10,6 @@ public class ToolCardsObserver implements Observer {
     @Override
     public void update(Object subject, ViewData viewData) {
         toolCard = (ToolCard) subject;
-        viewData.addToolCard(toolCard.toString());
+        viewData.setToolCard(toolCard.toString());
     }
 }
