@@ -208,19 +208,90 @@ public class GridPaneWindow extends GridPane {
                                 playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(0);
                                 client.nullSelection();
                                 Toolkit.getDefaultToolkit().beep();
-                                new Warning("Posizione errata, riprova", "Tool4");
+                                new Warning("Posizione errata, riprova", "Tool 4");
+                            }
+                        }
+                    }
+                }else if(playGame.getCardSelected() == 11){
+                    toolView = new ToolView();
+                    toolView.setStartRow1(i);
+                    toolView.setStartCol1(j);
+                    toolView.setPhase(2);
+                    if(client.useToolCard(11, toolView)){
+                        playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(0);
+                        updateMyself();
+                        client.nullSelection();
+                        playGame.update();
+                        DieInfo dieInfo = playGame.getDraftPoolGrid().getDieInfo();
+                        Button button1 =  playGame.getDraftPoolGrid().getButton(dieInfo.getRow(), dieInfo.getColumn());
+                        button1.setOpacity(0);
+                        playGame.onPositionWPButton();
+                    }else{
+                        Toolkit.getDefaultToolkit().beep();
+                        client.nullSelection();
+                        new Warning("Posizione errata, riprova", "Tool 11");
+                    }
+                }else if(playGame.getCardSelected()==12){
+                    if (toolView == null) {
+                        toolView = new ToolView();
+                        toolView.setPhase(1);
+                    }
+                    if(toolView.getPhase()==1){
+                        if(firstChoice){
+                            toolView.setStartRow1(i);
+                            toolView.setStartCol1(j);
+                            if(client.takeWPDie(i,j)){
+                                playGame.getDraftPoolGrid().getButtonDieSelected().setBackground(button.getBackground());
+                                playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(1);
+                                firstChoice=false;
+                            }
+                        }else{
+                            toolView.setEndRow1(i);
+                            toolView.setEndCol1(j);
+                            if(client.useToolCard(12,toolView)){
+                                updateMyself();
+                                playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(0);
+                                client.nullSelection();
+                                toolView.setPhase(2);
+                                firstChoice = true;
+                            }else{
+                                Toolkit.getDefaultToolkit().beep();
+                            }
+                        }
+                    }else{
+                        if(firstChoice){
+                            toolView.setStartRow2(i);
+                            toolView.setStartCol2(j);
+                            if(client.takeWPDie(i,j)){
+                                playGame.getDraftPoolGrid().getButtonDieSelected().setBackground(button.getBackground());
+                                playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(1);
+                                firstChoice = false;
+                            }
+                        }else{
+                            toolView.setEndRow2(i);
+                            toolView.setEndCol2(j);
+                            if(client.useToolCard(12,toolView)){
+                                updateMyself();
+                                playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(0);
+                                client.nullSelection();
+                                firstChoice = true;
+                                accessWindow = false;
+                                toolView = null;
+                                playGame.onPositionWPButton();
+                                if(!client.getInsertedDie())
+                                    playGame.resetOnButton();
+                            }else{
+                                Toolkit.getDefaultToolkit().beep();
                             }
                         }
                     }
                 }
             }else if (client.positionDie(i, j)){
-                //button.setBackground(draftPool.getButtonDieSelected().getBackground());       //setto il nuovo background col dado
                 draftPool.getButton(draftPool.getDieInfo().getRow(), draftPool.getDieInfo().getColumn()).setOpacity(0);
                 playGame.setChoosePressed(false);
                 playGame.onPositionWPButton();
                 draftPool.getButtonDieSelected().setOpacity(0);
                 updateMyself();
-                //button.setOpacity(1);
             }
             else{
                 Toolkit.getDefaultToolkit().beep();
@@ -295,5 +366,9 @@ public class GridPaneWindow extends GridPane {
             }
         }
         return null;
+    }
+
+    public void abortToolView() {
+        this.toolView = null;
     }
 }

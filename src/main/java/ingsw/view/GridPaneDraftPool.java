@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class GridPaneDraftPool extends GridPane {
 
 
-    private DieInfo dieInfo = new DieInfo(null,-1,-1);
+    private DieInfo dieInfo;
     private Client client;
     private Button b;
     private Button buttonDieSelected;
@@ -73,9 +73,7 @@ public class GridPaneDraftPool extends GridPane {
             if(button.getOpacity()!=0){
                 if(playGame.getChoosePressed()){
                     if(client.takeDie( row, col)){
-                        dieInfo.setBackground(button.getBackground());
-                        dieInfo.setColumn(col);
-                        dieInfo.setRow(row);
+                        dieInfo = new DieInfo(button.getBackground(), row, col);
                         buttonDieSelected.setBackground(button.getBackground());
                         buttonDieSelected.setOpacity(1);
                     }else{
@@ -85,15 +83,13 @@ public class GridPaneDraftPool extends GridPane {
                     switch (playGame.getCardSelected()){
                         case 1 :{
                             client.takeDie(row,col);
-                            changeValueDie(button, row, col);
+                            changeValueDie(button, row, col, 1);
                             break;
                         }
                         case 5 :{
                             if(client.takeDie(row,col)){
                                 playGame.getGridRound().setAccessRound(true);
-                                dieInfo.setBackground(button.getBackground());
-                                dieInfo.setColumn(col);
-                                dieInfo.setRow(row);
+                                dieInfo = new DieInfo(button.getBackground(), row, col);
                                 buttonDieSelected.setBackground(button.getBackground());
                                 buttonDieSelected.setOpacity(1);
                             }
@@ -106,9 +102,7 @@ public class GridPaneDraftPool extends GridPane {
                                 toolView.setStartCol1(col);
                                 if(client.useToolCard(6,toolView)){
                                     updateDP(client.updateView().getDraftPoolDice());
-                                    getDieInfo().setBackground(button.getBackground());
-                                    getDieInfo().setColumn(col);
-                                    getDieInfo().setRow(row);
+                                    dieInfo = new DieInfo(button.getBackground(), row, col);
                                     buttonDieSelected.setBackground(button.getBackground());
                                     buttonDieSelected.setOpacity(1);
                                 }
@@ -117,9 +111,7 @@ public class GridPaneDraftPool extends GridPane {
                         }
                         case 8 :{
                             if(client.takeDie(row,col)){
-                                dieInfo.setBackground(button.getBackground());
-                                dieInfo.setColumn(col);
-                                dieInfo.setRow(row);
+                                dieInfo = new DieInfo(button.getBackground(), row, col);
                                 buttonDieSelected.setBackground(button.getBackground());
                                 buttonDieSelected.setOpacity(1);
                             }
@@ -128,33 +120,40 @@ public class GridPaneDraftPool extends GridPane {
                         case 9 :{
                             if(client.takeDie(row,col)){
                                 playGame.getGridWindow().setAccessWindow(true);
-                                dieInfo.setBackground(button.getBackground());
-                                dieInfo.setColumn(col);
-                                dieInfo.setRow(row);
+                                dieInfo = new DieInfo(button.getBackground(), row, col);
                                 buttonDieSelected.setBackground(button.getBackground());
                                 buttonDieSelected.setOpacity(1);
                             }
                             break;
                         }
                         case 10 :{
-                            if(client.takeDie(row,col)){
+                            if(client.takeDie(row,col)) {
                                 ToolView toolView = new ToolView();
                                 toolView.setStartRow1(row);
                                 toolView.setStartCol1(col);
-                                if(client.useToolCard(10,toolView)){
+                                if (client.useToolCard(10, toolView)) {
                                     updateDP(client.updateView().getDraftPoolDice());
-                                    getDieInfo().setBackground(button.getBackground());
-                                    getDieInfo().setColumn(col);
-                                    getDieInfo().setRow(row);
+                                    dieInfo = new DieInfo(button.getBackground(), row, col);
                                     buttonDieSelected.setBackground(button.getBackground());
                                     buttonDieSelected.setOpacity(1);
                                 }
                             }
-
                             break;
                         }
                         case 11 :{
-
+                            if(client.takeDie(row,col)) {
+                                dieInfo = new DieInfo(null, row, col);
+                                ToolView toolView = new ToolView();
+                                toolView.setStartRow1(row);
+                                toolView.setStartCol1(col);
+                                toolView.setPhase(0);
+                                if (client.useToolCard(11, toolView)) {
+                                    updateDP(client.updateView().getDraftPoolDice());
+                                    buttonDieSelected.setBackground(button.getBackground());
+                                    buttonDieSelected.setOpacity(1);
+                                    changeValueDie(button, row, col, 11);
+                                }
+                            }
                             break;
                         }
                         default:
@@ -167,7 +166,7 @@ public class GridPaneDraftPool extends GridPane {
         });
     }
 
-    private void changeValueDie(Button b, int row, int col) {
+    private void changeValueDie(Button b, int row, int col, int card) {
         Stage stage = new Stage();
         GridPane root = new GridPane();
         root.setPadding(new Insets(20, 10, 20, 10));
@@ -179,45 +178,69 @@ public class GridPaneDraftPool extends GridPane {
         final Spinner<Integer> spinner = new Spinner<>();
         final String path = b.getBackground().getImages().get(0).getImage().impl_getUrl();
         final int value = Integer.parseInt(path.substring(path.lastIndexOf("/")+1, path.lastIndexOf("/")+2));
-        if(value<=6 && value >=1){
-            if(value ==6){
-                SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(value-1, value, value);
-                spinner.setValueFactory(valueFactory);
-            }
-            else if(value==1){
-                SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(value, value+1, value);
-                spinner.setValueFactory(valueFactory);
-            }
-            else {
-                SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(value-1, value+1, value);
-                spinner.setValueFactory(valueFactory);
-            }
+        if (card == 1) {
+            if(value<=6 && value >=1){
+                if(value ==6){
+                    SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(value-1, value, value);
+                    spinner.setValueFactory(valueFactory);
+                }
+                else if(value==1){
+                    SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(value, value+1, value);
+                    spinner.setValueFactory(valueFactory);
+                }
+                else {
+                    SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(value-1, value+1, value);
+                    spinner.setValueFactory(valueFactory);
+                }
 
-        }
+            }
+        }else if(card == 11){
+            SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 6, value);
+            spinner.setValueFactory(valueFactory);
+        }else
+            Toolkit.getDefaultToolkit().beep();
+
         root.add(spinner, 1, 0);
         Button button = new Button("Ok");
         root.add(button, 1, 1);
         ToolView toolView = new ToolView();
         button.setOnAction(event -> {
-            if(value!=spinner.getValue()){
+            if(card == 1){
+                if(value!=spinner.getValue()){
+                    toolView.setDieModified(spinner.getValue());
+                    toolView.setStartRow1(row);
+                    toolView.setStartCol1(col);
+                    if(client.useToolCard(1,toolView)){
+                        updateDP(client.updateView().getDraftPoolDice());
+                        getDieInfo().setBackground(b.getBackground());
+                        getDieInfo().setColumn(col);
+                        getDieInfo().setRow(row);
+                        buttonDieSelected.setBackground(b.getBackground());
+                        buttonDieSelected.setOpacity(1);
+                    }
+                    stage.close();
+                }
+                else {
+                    Toolkit.getDefaultToolkit().beep();
+                }
+            }else if(card == 11){
                 toolView.setDieModified(spinner.getValue());
-                toolView.setStartRow1(row);
-                toolView.setStartCol1(col);
-                if(client.useToolCard(1,toolView)){
+                toolView.setPhase(1);
+                if(client.useToolCard(11, toolView)){
                     updateDP(client.updateView().getDraftPoolDice());
-                    getDieInfo().setBackground(b.getBackground());
-                    getDieInfo().setColumn(col);
-                    getDieInfo().setRow(row);
-                    buttonDieSelected.setBackground(b.getBackground());
+                    buttonDieSelected.setBackground(getButton(row, col).getBackground());
                     buttonDieSelected.setOpacity(1);
+                    playGame.getGridWindow().setAccessWindow(true);
+                    client.takeDie(row, col);
                 }
                 stage.close();
-            }
-            else {
+            }else
                 Toolkit.getDefaultToolkit().beep();
-            }
         });
-        stage.setTitle("Use tool 1");
+        if(card == 1)
+            stage.setTitle("Use tool 1");
+        else
+            stage.setTitle("Use tool 11");
         stage.setScene(scene);
         stage.show();
     }

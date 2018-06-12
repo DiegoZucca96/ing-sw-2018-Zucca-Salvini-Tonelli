@@ -32,6 +32,12 @@ public class PlayerToolParameter {
         this.round=round;
     }
 
+    public PlayerToolParameter( int phase, Coordinate c1, Coordinate d1){
+        this.c1 = c1;
+        this.d1 = d1;
+        this.phase=phase;
+    }
+
     public PlayerToolParameter( Coordinate c1, Coordinate c2, Coordinate d1, Coordinate d2, Color color){
         this.c1 = c1;
         this.c2 = c2;
@@ -77,6 +83,16 @@ public class PlayerToolParameter {
         this.round = -1;
         this.color = null;
         this.listOfCoordinateY = null;
+    }
+
+    public PlayerToolParameter(int dieModified, int phase) {
+        this.dieModified = dieModified;
+        this.phase = phase;
+    }
+
+    public PlayerToolParameter(int phase, Coordinate c1) {
+        this.phase=phase;
+        this.c1=c1;
     }
 
 

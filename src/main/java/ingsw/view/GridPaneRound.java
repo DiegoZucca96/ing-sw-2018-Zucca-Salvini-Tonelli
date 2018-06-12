@@ -25,7 +25,7 @@ public class GridPaneRound extends GridPane {
     private int significantRound;
     private boolean accessRound;
     private PlayGame playGame;
-    private DieInfo dieInfo = new DieInfo(null,-1,-1);
+    private DieInfo dieInfo;
     private Stage stage;
 
     public GridPaneRound(Client client, ArrayList<String> roundTrack, int round, PlayGame playGame){
@@ -137,9 +137,7 @@ public class GridPaneRound extends GridPane {
                     toolView.setEndRow1(0);
                     toolView.setRound(i);
                     toolView.setEndCol1(numDice);
-                    dieInfo.setBackground(button.getBackground());
-                    dieInfo.setRow(0);
-                    dieInfo.setColumn(numDice);
+                    dieInfo = new DieInfo(button.getBackground(), 0, numDice);
                     if(client.useToolCard(5,toolView)){
                         client.nullSelection();
                         client.takeDie(toolView.getStartRow1(),toolView.getStartCol1());
@@ -150,8 +148,16 @@ public class GridPaneRound extends GridPane {
                         playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(1);
                     }
                 }
-                else{
-                    //da impl
+                else if(playGame.getCardSelected()==12){
+                    ToolView toolView = new ToolView();
+                    toolView.setStartRow1(0);
+                    toolView.setStartCol1(numDice);
+                    toolView.setRound(i);
+                    toolView.setPhase(0);
+                    if(client.useToolCard(12,toolView)){
+                        client.nullSelection();
+                        playGame.getGridWindow().setAccessWindow(true);
+                    }
                 }
                 accessRound = false;
                 stage.close();

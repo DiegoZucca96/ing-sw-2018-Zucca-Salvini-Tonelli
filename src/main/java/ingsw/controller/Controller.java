@@ -347,9 +347,9 @@ public class Controller extends UnicastRemoteObject implements RMIController {
                 break;
             }case 4:{
                 if(toolView.getPhase()==0)
-                    pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()),new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()),toolView.getPhase());
+                    pt = new PlayerToolParameter(toolView.getPhase(), new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()),new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()));
                 else
-                    pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow2(), toolView.getStartCol2()),new Coordinate(toolView.getEndRow2(), toolView.getEndCol2()),toolView.getPhase());
+                    pt = new PlayerToolParameter(toolView.getPhase(), new Coordinate(toolView.getStartRow2(), toolView.getStartCol2()),new Coordinate(toolView.getEndRow2(), toolView.getEndCol2()));
                 break;
             }case 5:{
                 pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()),new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()),toolView.getRound());
@@ -368,14 +368,25 @@ public class Controller extends UnicastRemoteObject implements RMIController {
                 break;
             }case 10:{
                 pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
-                break;/*
+                break;
             }case 11:{
-                pt = new PlayerToolParameter();
+                if(toolView.getPhase()==0)
+                    pt = new PlayerToolParameter(toolView.getPhase(), new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
+                if(toolView.getPhase()==1)
+                    pt = new PlayerToolParameter(toolView.getDieModified(), toolView.getPhase());
+                if(toolView.getPhase()==2)
+                    pt = new PlayerToolParameter(toolView.getPhase(), new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
                 break;
             }case 12:{
-                pt = new PlayerToolParameter();
+                if(toolView.getPhase() == 0){
+                    pt = new PlayerToolParameter(toolView.getPhase(), new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
+                    pt.setRound(toolView.getRound());
+                }else if(toolView.getPhase()==1)
+                    pt = new PlayerToolParameter(toolView.getPhase(), new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()), new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()));
+                else if(toolView.getPhase()==2)
+                    pt = new PlayerToolParameter(toolView.getPhase(), new Coordinate(toolView.getStartRow2(), toolView.getStartCol2()), new Coordinate(toolView.getEndRow2(), toolView.getEndCol2()));
                 break;
-            */}default:{
+            }default:{
                 break;
             }
         }

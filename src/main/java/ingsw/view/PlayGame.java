@@ -361,6 +361,7 @@ public class PlayGame {
                     client.nullSelection();
                     resetOnButton();
                     draftPoolGrid.deselectBtn();
+                    myWindowGrid.abortToolView();
                 }
             }
         });
@@ -474,9 +475,13 @@ public class PlayGame {
                     Toolkit.getDefaultToolkit().beep();
                 }
             }
-            if(cardSelected == 2 || cardSelected == 3 || cardSelected==4) {
+            if(cardSelected == 2 || cardSelected == 3 || cardSelected == 4) {
                 getGridWindow().setAccessWindow(true);
                 getGridWindow().setFirstChoice(true);
+            }
+            if(cardSelected == 12){
+                getGridWindow().setFirstChoice(true);
+                getGridRound().setAccessRound(true);
             }
             else{
                 if(cardSelected==8)

@@ -293,7 +293,7 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public Integer getScore(String name) {
+    public int getScore(String name) {
         try {
             return controller.getScore(name);
         } catch (RemoteException e) {

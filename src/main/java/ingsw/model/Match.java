@@ -191,9 +191,9 @@ public class Match {
             }
             case 4:{
                 if(pTParameter.getPhase()==0)
-                    toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC1(), pTParameter.getD1(), 0);
+                    toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC1(), pTParameter.getD1(), pTParameter.getPhase());
                 else
-                    toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC2(), pTParameter.getD2(), 1);
+                    toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC2(), pTParameter.getD2(), pTParameter.getPhase());
                 break;
             }
             case 5: {
@@ -222,11 +222,21 @@ public class Match {
                 break;
             }
             case 11: {
-                toolParameter = new ObjectiveTool(pTParameter.getDie1(), currentPlayer.getWindowPattern(),draftPool, draftPool.getDiceBag());
+                if(pTParameter.getPhase()==0)
+                    toolParameter = new ObjectiveTool(pTParameter.getC1(), currentPlayer.getWindowPattern(),draftPool, draftPool.getDiceBag(), pTParameter.getPhase());
+                else if(pTParameter.getPhase() == 1)
+                    toolParameter = new ObjectiveTool(pTParameter.getPhase(), pTParameter.getDieModified(),draftPool);
+                else
+                    toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC1(),draftPool, pTParameter.getPhase());
                 break;
             }
             case 12: {
-                toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC1(), pTParameter.getC2(), pTParameter.getD1(), pTParameter.getD2(), pTParameter.getColor());
+                if(pTParameter.getPhase() == 0)
+                    toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getRound(), pTParameter.getC1(), roundTrack);
+                else if(pTParameter.getPhase()==1)
+                    toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC1(), pTParameter.getD1(), pTParameter.getPhase());
+                else
+                    toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC2(), pTParameter.getD2(), pTParameter.getPhase());
                 break;
             }
             default:

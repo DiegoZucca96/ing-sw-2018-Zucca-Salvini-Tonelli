@@ -72,10 +72,11 @@ public class ObjectiveTool {
         this.dp = dp;
     }
 
-    public ObjectiveTool(WindowPattern window, Coordinate d1, DraftPool dp){
+    public ObjectiveTool(WindowPattern window, Coordinate d1, DraftPool dp, int phase){
         this.window = window;
         this.d1 = d1;
         this.dp = dp;
+        this.phase=phase;
     }
     //Tool 9
     public ObjectiveTool(Coordinate c1, WindowPattern window, Coordinate d1, DraftPool dp){
@@ -90,12 +91,13 @@ public class ObjectiveTool {
         this.c1 = c1;
         this.dp = dp;
     }
-
-    public ObjectiveTool(Die die1, WindowPattern window, DraftPool dp ,DiceBag diceBag){
-        this.die1 = die1;
+    //Tool 11
+    public ObjectiveTool(Coordinate c1, WindowPattern window, DraftPool dp ,DiceBag diceBag, int phase){
+        this.c1 = c1;
         this.window = window;
         this.diceBag = diceBag;
         this.dp = dp;
+        this.phase = phase;
     }
 
     public ObjectiveTool(WindowPattern window, Coordinate c1, Coordinate c2, Coordinate d1, Coordinate d2, Color color){
@@ -106,10 +108,23 @@ public class ObjectiveTool {
         this.d2 = d2;
         this.color = color;
     }
+    //Tool 12
+    public ObjectiveTool(WindowPattern window, int round, Coordinate c1, RoundTrack roundTrack){
+        this.window = window;
+        this.round = round;
+        this.c1 = c1;
+        this.rt = roundTrack;
+    }
 
     //Tool 8
     public ObjectiveTool(Player player){
         this.player = player;
+    }
+
+    public ObjectiveTool(int phase, int dieModified, DraftPool draftPool) {
+        this.phase = phase;
+        this.dieModified=dieModified;
+        this.dp = draftPool;
     }
 
 
