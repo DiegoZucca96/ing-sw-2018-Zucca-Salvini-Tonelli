@@ -7,12 +7,14 @@ import ingsw.model.ViewData;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -54,6 +56,8 @@ public class PlayGame {
     private GridPane secondGrid;
     private GridPane gridTks;
     private int cardSelected;
+    private GridPane tokenUsed;
+    private Label numTokenUsed;
 
 
     public PlayGame(Client client){
@@ -122,13 +126,13 @@ public class PlayGame {
                                 if (timeseconds == timeBegin-1) {
                                     this.updateView = client.updateView();
                                     if(updateView!=null)
-                                        update(1,1,1);
+                                        update();
                                     resetOnButton();
                                 }else{ //Per il problema che a volte scala di due secondi e i bottoni non si attivano
-                                    if (timeseconds == timeBegin-2) {
+                                    if (timeseconds == timeBegin-2 && !choosePressed && !getUsingTool()) {
                                         this.updateView = client.updateView();
                                         if(updateView!=null)
-                                            update(1,1,1);
+                                            update();
                                         resetOnButton();
                                     }
                                 }
@@ -154,7 +158,7 @@ public class PlayGame {
                                 if(timeseconds%5==0){
                                     this.updateView = client.updateView();
                                     if(updateView!=null)
-                                        update(1,1,1);
+                                        update();
                                 }
                             }
                         }));
@@ -167,7 +171,7 @@ public class PlayGame {
         gridTks.setLayoutX(720);
         gridTks.setVgap(20);
         for(int j = 0; j<numberOfTokens; j++){
-            Circle token = new Circle(10, Paint.valueOf(javafx.scene.paint.Color.GOLD.toString()));
+            Circle token = new Circle(10, Paint.valueOf(Color.WHITESMOKE.toString()));
             gridTks.add(token, 0, j);
         }
 
@@ -196,6 +200,23 @@ public class PlayGame {
         toolGrid.add(toolPane1, 0, 0);
         toolGrid.add(toolPane2, 0, 1);
         toolGrid.add(toolPane3, 0, 2);
+
+        //TOKEN TOOLCARD
+        tokenUsed = new GridPane();
+        tokenUsed.setLayoutX(185);
+        tokenUsed.setLayoutY(80);
+        tokenUsed.setVgap(220);
+        tokenUsed.setHgap(10);
+        for(int i=0; i<3; i++){
+            Circle tokenTool = new Circle(10, Color.WHITESMOKE);
+            tokenTool.setOpacity(1);
+            numTokenUsed = new Label();
+            numTokenUsed.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 10 \"serif\"");
+            numTokenUsed.setText("0");
+            numTokenUsed.setOpacity(1);
+            tokenUsed.add(tokenTool,0,i);
+            tokenUsed.add(numTokenUsed,1,i);
+        }
 
         //PBCARD
         ImageView pbPane1 = Images(init.getPbCard(), 0);
@@ -355,7 +376,7 @@ public class PlayGame {
 
 
         //ATTACH DI TUTTO
-        root.getChildren().addAll(backGround, toolGrid, pbGrid, gridRound, divideGrids, myWindowGrid, title, btnGrid, eachGrid, secondGrid, pvPane, draftPoolGrid, gridTks,currentInfo,currentInfo2, currentInfo3);
+        root.getChildren().addAll(backGround, toolGrid, pbGrid, gridRound, divideGrids, myWindowGrid, title, btnGrid, eachGrid, secondGrid, pvPane, draftPoolGrid, gridTks,currentInfo,currentInfo2, currentInfo3,tokenUsed);
         stage.setScene(scene);
         stage.setTitle("Sagrada - " +client.getName());
         stage.resizableProperty().setValue(Boolean.FALSE);
@@ -417,12 +438,12 @@ public class PlayGame {
         view.setOnMouseClicked(e->{
             if(usingTool){
                 if(imagePathT.substring(1, 2).equals("T")){
-                    cardSelected = Integer.parseInt(imagePathT.substring(imagePathT.indexOf("l")+1, imagePathT.indexOf(".")));
+                    cardSelected = Integer.parseInt(imagePathT.substring(imagePathT.indexOf("l")+1, imagePathT.indexOf("+")));
                     if(client.getInsertedDie()){
                         if(cardSelected == 1 || cardSelected == 5 || cardSelected == 6 || cardSelected == 7 || cardSelected == 9 || cardSelected == 10 || cardSelected == 11) {
                             cardSelected = 0;
                             onPositionWPButton();
-                            setUsingTool(true);
+                            setUsingTool(false);
                             Toolkit.getDefaultToolkit().beep();
                         }
                     }
@@ -439,7 +460,7 @@ public class PlayGame {
                         if(client.useToolCard(7, toolView)){
                             draftPoolGrid.updateDP(client.updateView().getDraftPoolDice());
                             resetOnButton();
-                            setUsingTool(true);
+                            setUsingTool(false);
 
                         }else{
                             Toolkit.getDefaultToolkit().beep();
@@ -453,7 +474,7 @@ public class PlayGame {
                     Toolkit.getDefaultToolkit().beep();
                 }
             }
-            if(cardSelected == 2 || cardSelected == 3) {
+            if(cardSelected == 2 || cardSelected == 3 || cardSelected==4) {
                 getGridWindow().setAccessWindow(true);
                 getGridWindow().setFirstChoice(true);
             }
@@ -488,35 +509,54 @@ public class PlayGame {
         return grid;
     }
 
-    public void update(int wp, int dp, int rt) {
-        if(wp==1){
-            for(int i = 0; i<client.getNumberOfPlayers()-1; i++){
-                if(updateView.getWps()!=null){
-                    if(updateView.getWps().get(i)!=null){
-                        mutableGridEn = (GridPaneWEnemy) secondGrid.getChildren().get(i);
-                        if(mutableGridEn.getNumberWP() == updateView.getWps().get(i).getNumberWP())
-                            mutableGridEn.updateWindow(updateView.getWps().get(i));
-                        else
-                            mutableGridEn.updateWindow(updateView.getWps().get(i+1));
-                    }
+    public void update() {
+        updateView = client.updateView();
+        for(int i = 0; i<client.getNumberOfPlayers()-1; i++){
+            if(updateView.getWps()!=null){
+                if(updateView.getWps().get(i)!=null){
+                    mutableGridEn = (GridPaneWEnemy) secondGrid.getChildren().get(i);
+                    if(mutableGridEn.getNumberWP() == updateView.getWps().get(i).getNumberWP())
+                        mutableGridEn.updateWindow(updateView.getWps().get(i));
+                    else
+                        mutableGridEn.updateWindow(updateView.getWps().get(i+1));
                 }
             }
         }
 
-        if(dp==1){
-            if(updateView.getDraftPoolDice()!=null){
-                draftPoolGrid.updateDP(updateView.getDraftPoolDice());
-            }
+        if(updateView.getDraftPoolDice()!=null){
+            draftPoolGrid.updateDP(updateView.getDraftPoolDice());
         }
 
-        if(rt==1){
-            if(updateView.getRoundTrack()!=null)
-                gridRound.updateRound(updateView.getRoundTrack(), client.getRound());
-        }
+        if(updateView.getRoundTrack()!=null)
+            gridRound.updateRound(updateView.getRoundTrack(), client.getRound());
+
+        if(updateView.getToolCard()!=null)
+            updateTool(updateView.getToolCard(),gridTks, tokenUsed, client.getName());
 
     }
 
-
+    private void updateTool(ArrayList<String> toolCards, GridPane gridTks, GridPane tokenUsed, String name){
+        for(int i=0; i<toolCards.size();i++){
+            String tool = toolCards.get(i);
+            String numTokenUsed = tool.substring(tool.indexOf("+")+1,tool.indexOf("."));
+            for(Node node : tokenUsed.getChildren()){
+                if(GridPane.getColumnIndex(node)==1 && GridPane.getRowIndex(node)==i){
+                    Label numToken = (Label) node;
+                    numToken.setText(numTokenUsed);
+                }
+            }
+        }
+        int myTokenRemaining = client.getTokenRemaining(name);
+        for(Node node : gridTks.getChildren()){
+            if(GridPane.getRowIndex(node)<myTokenRemaining){
+                Circle token = (Circle) node;
+                token.setOpacity(1);
+            }else{
+                Circle token = (Circle) node;
+                token.setOpacity(0);
+            }
+        }
+    }
 
     public boolean getChoosePressed(){
         return choosePressed;

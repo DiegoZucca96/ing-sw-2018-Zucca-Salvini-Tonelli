@@ -16,6 +16,7 @@ public class Tool4 implements ToolStrategy {
     private Die die1;
     private Die die2;
     private int phase;
+    private int numTokenUsed;
 
     public Tool4(int idCard) {
         this.title ="Lathekin";
@@ -60,5 +61,13 @@ public class Tool4 implements ToolStrategy {
 
     public void setAlreadyUsed(boolean alreadyUsed) {
         this.alreadyUsed = alreadyUsed;
+    }
+
+    public void setNumTokenUsed(int token) {
+        this.numTokenUsed=token;
+    }
+
+    public int getNumTokenUsed() {
+        return numTokenUsed;
     }
 }

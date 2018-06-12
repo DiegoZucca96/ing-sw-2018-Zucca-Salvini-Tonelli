@@ -13,6 +13,7 @@ public class Tool6 implements ToolStrategy {
     private int idCard;
     private Die die;
     private DraftPool dp;
+    private int numTokenUsed;
 
     public Tool6(int idCard) {
         this.title ="Pennello per Pasta Salda";
@@ -58,5 +59,13 @@ public class Tool6 implements ToolStrategy {
 
     public void setAlreadyUsed(boolean alreadyUsed) {
         this.alreadyUsed = alreadyUsed;
+    }
+
+    public void setNumTokenUsed(int token) {
+        this.numTokenUsed=token;
+    }
+
+    public int getNumTokenUsed() {
+        return numTokenUsed;
     }
 }

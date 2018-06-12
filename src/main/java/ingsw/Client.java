@@ -153,6 +153,9 @@ public interface Client {
     //Stabilire il turno in cui ci si trova
     boolean getClockwiseRound();
 
+    //Indica quanti token rimangono al giocatore
+    int getTokenRemaining(String name);
+
     /*
     "windowpattern(name(ciao),difficulty(4),cell(row(0),column(0),number(0),color(RED),Die(number(5),color(RED)),cell(..."
 

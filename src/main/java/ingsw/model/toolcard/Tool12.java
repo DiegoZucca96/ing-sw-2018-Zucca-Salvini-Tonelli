@@ -15,6 +15,7 @@ public class Tool12 implements ToolStrategy {
     private Coordinate c1;
     private Coordinate c2;
     private Color color;
+    private int numTokenUsed;
 
     public Tool12(int idCard) {
         this.title ="Taglierina Manuale";
@@ -65,5 +66,13 @@ public class Tool12 implements ToolStrategy {
 
     public void setAlreadyUsed(boolean alreadyUsed) {
         this.alreadyUsed = alreadyUsed;
+    }
+
+    public void setNumTokenUsed(int token) {
+        this.numTokenUsed=token;
+    }
+
+    public int getNumTokenUsed() {
+        return numTokenUsed;
     }
 }

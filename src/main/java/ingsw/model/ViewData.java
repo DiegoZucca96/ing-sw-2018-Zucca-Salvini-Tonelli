@@ -80,8 +80,15 @@ public class ViewData implements Serializable {
         pbCards.add(pvCard);
     }
 
-    public void addToolCard(String toolCard){
-        toolCards.add(toolCard);
+    public void setToolCard(String toolCard){
+        String substring = toolCard.substring(0, toolCard.indexOf("+"));
+        for(String tool : toolCards){
+            String substringTool = tool.substring(0, tool.indexOf("+"));
+            if(substring.equalsIgnoreCase(substringTool)){
+                int index = toolCards.indexOf(tool);
+                toolCards.set(index,toolCard);
+            }
+        }
     }
 
     public void addDPDie(int i, String die){

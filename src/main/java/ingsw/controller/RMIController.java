@@ -130,5 +130,7 @@ public interface RMIController extends Remote {
 
     void setTool8Used(boolean num) throws RemoteException;
 
-    boolean getClockwiseRound()throws RemoteException;
+    boolean getClockwiseRound() throws RemoteException;
+
+    int getTokenRemaining(String name) throws RemoteException;
 }

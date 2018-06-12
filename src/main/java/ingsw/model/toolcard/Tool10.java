@@ -12,6 +12,7 @@ public class Tool10 implements ToolStrategy {
     private int idCard;
     private Die die;
     private DraftPool dp;
+    private int numTokenUsed;
 
     public Tool10(int idCard) {
         this.title ="Tampone Diamantato";
@@ -67,5 +68,13 @@ public class Tool10 implements ToolStrategy {
 
     public void setAlreadyUsed(boolean alreadyUsed) {
         this.alreadyUsed = alreadyUsed;
+    }
+
+    public void setNumTokenUsed(int token) {
+        this.numTokenUsed=token;
+    }
+
+    public int getNumTokenUsed() {
+        return numTokenUsed;
     }
 }

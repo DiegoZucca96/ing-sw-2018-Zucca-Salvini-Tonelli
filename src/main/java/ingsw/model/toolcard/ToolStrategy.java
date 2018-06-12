@@ -8,4 +8,6 @@ public interface ToolStrategy {
     boolean isAlreadyUsed();
     int getIdCard();
     void setAlreadyUsed(boolean alreadyUsed);
+    void setNumTokenUsed(int token);
+    int getNumTokenUsed();
 }

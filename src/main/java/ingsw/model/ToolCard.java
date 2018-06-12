@@ -12,10 +12,11 @@ public class ToolCard {
     private ToolStrategy toolStrategy;
     private boolean alreadyUsed;
     private Observer viewObserver;
-    private int numToken;
+    private int numTokenUsed;
 
     public ToolCard(int idCard){
         viewObserver = new ToolCardsObserver();
+        numTokenUsed=0;
         switch(idCard){
             case 1 : {
                 toolStrategy = new Tool1(idCard);
@@ -63,15 +64,6 @@ public class ToolCard {
         return toolStrategy.getIdCard();
     }
 
-    public void setAlreadyUsed(boolean alreadyUsed) {
-        toolStrategy.setAlreadyUsed(alreadyUsed);
-        notifyViewObserver();
-    }
-
-    public boolean isAlreadyUsed(){
-        return toolStrategy.isAlreadyUsed();
-    }
-
     public boolean doToolStrategy(ObjectiveTool objective){
         boolean b = toolStrategy.doOp(objective);
         notifyViewObserver();
@@ -82,72 +74,72 @@ public class ToolCard {
         RandomGenerator rg = new RandomGenerator(10);
         ArrayList<Integer> numToolCards = new ArrayList<>();
         //Righe da decommentare se si vogliono provare le ToolCard
-        init.getToolCard().add("/Tool5.png");
+        init.getToolCard().add("/Tool4+0.png");
+        numToolCards.add(4);
+        init.getToolCard().add("/Tool5+0.png");
         numToolCards.add(5);
-        init.getToolCard().add("/Tool7.png");
-        numToolCards.add(7);
-        init.getToolCard().add("/Tool9.png");
+        init.getToolCard().add("/Tool9+0.png");
         numToolCards.add(9);
-        for(int i=0;i<3;i++){
+        for(int i=3;i<3;i++){
             int select = rg.random();
             switch(select){
                 case 1:{
-                    init.getToolCard().add("/Tool1.png");
+                    init.getToolCard().add("/Tool1+0.png");
                     numToolCards.add(select);
                     break;
                 }
                 case 2:{
-                    init.getToolCard().add("/Tool2.png");
+                    init.getToolCard().add("/Tool2+0.png");
                     numToolCards.add(select);
                     break;
                 }
                 case 3:{
-                    init.getToolCard().add("/Tool3.png");
+                    init.getToolCard().add("/Tool3+0.png");
                     numToolCards.add(select);
                     break;
                 }
                 case 4:{
-                    init.getToolCard().add("/Tool4.png");
+                    init.getToolCard().add("/Tool4+0.png");
                     numToolCards.add(select);
                     break;
                 }
                 case 5:{
-                    init.getToolCard().add("/Tool5.png");
+                    init.getToolCard().add("/Tool5+0.png");
                     numToolCards.add(select);
                     break;
                 }
                 case 6:{
-                    init.getToolCard().add("/Tool6.png");
+                    init.getToolCard().add("/Tool6+0.png");
                     numToolCards.add(select);
                     break;
                 }
                 case 7:{
-                    init.getToolCard().add("/Tool7.png");
+                    init.getToolCard().add("/Tool7+0.png");
                     numToolCards.add(select);
                     break;
                 }
                 case 8:{
-                    init.getToolCard().add("/Tool8.png");
+                    init.getToolCard().add("/Tool8+0.png");
                     numToolCards.add(select);
                     break;
                 }
                 case 9:{
-                    init.getToolCard().add("/Tool9.png");
+                    init.getToolCard().add("/Tool9+0.png");
                     numToolCards.add(select);
                     break;
                 }
                 case 10:{
-                    init.getToolCard().add("/Tool10.png");
+                    init.getToolCard().add("/Tool10+0.png");
                     numToolCards.add(select);
                     break;
                 }
                 case 11:{
-                    init.getToolCard().add("/Tool11.png");
+                    init.getToolCard().add("/Tool11+0.png");
                     numToolCards.add(select);
                     break;
                 }
                 case 12:{
-                    init.getToolCard().add("/Tool12.png");
+                    init.getToolCard().add("/Tool12+0.png");
                     numToolCards.add(select);
                     break;
                 }
@@ -161,7 +153,24 @@ public class ToolCard {
 
     @Override
     public String toString() {
-        return "Tool"+Integer.toString(getIdCard());
+        return "/Tool"+getIdCard()+"+"+getNumTokenUsed()+".png";
+    }
+
+    public void setAlreadyUsed(boolean alreadyUsed) {
+        toolStrategy.setAlreadyUsed(alreadyUsed);
+    }
+
+    public boolean isAlreadyUsed(){
+        return toolStrategy.isAlreadyUsed();
+    }
+
+    public int getNumTokenUsed() {
+        return toolStrategy.getNumTokenUsed();
+    }
+
+    public void setNumTokenUsed(int numTokenUsed) {
+       toolStrategy.setNumTokenUsed(numTokenUsed);
+       notifyViewObserver();
     }
 
     public void notifyViewObserver(){

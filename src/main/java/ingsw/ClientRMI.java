@@ -383,6 +383,15 @@ public class ClientRMI implements Client {
     }
 
     @Override
+    public int getTokenRemaining(String name) {
+        try {
+            return controller.getTokenRemaining(name);
+        } catch (RemoteException e) {
+            return -1;
+        }
+    }
+
+    @Override
     public ArrayList<ViewWP> getPlayerWPs(String name) {
         try {
             return controller.getPlayersWPs(name);
