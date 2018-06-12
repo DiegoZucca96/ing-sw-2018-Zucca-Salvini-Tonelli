@@ -81,6 +81,17 @@ public class ServerHandler implements Runnable {
             else if (command.equals("iAmLegend")) iAmBanned(parameter);
             else if (command.equals("orderWPChoise")) orderWPChoise();
             else if (command.equals("matchFound")) matchFound();
+            else if (command.equals("isFinish")) isFinish();
+            else if (command.equals("getScore")) getScore(parameter);
+            else if (command.equals("calculateScore")) calculateScore();
+            else if (command.equals("findWinner")) findWinner();
+            else if (command.equals("getListOfMatchPlayers")) getListOfMatchPlayers();
+            else if (command.equals("disconnectClient")) disconnectClient(parameter);
+            else if (command.equals("getInsertedDie")) getInsertedDie();
+            else if (command.equals("setInsertedDie")) setInsertedDie(parameter);
+            else if (command.equals("getTool8Used")) getTool8Used();
+            else if (command.equals("setTool8Used")) setTool8Used(parameter);
+            else if (command.equals("getClockwiseRound")) getClockwiseRound();
             closeConnection();
         }
          catch (IOException e) {
@@ -274,5 +285,51 @@ public class ServerHandler implements Runnable {
 
     private void orderWPChoise() throws RemoteException {
         controller.orderWPChoise();
+    }
+
+    private void isFinish() throws RemoteException {
+        out.println(controller.isFinish());
+    }
+
+    private void getScore(String parameter) throws RemoteException {
+        out.println(controller.getScore(parameter));
+    }
+
+    private void calculateScore() throws RemoteException {
+        controller.calculateScore();
+    }
+
+    private void findWinner() throws RemoteException {
+        out.println(controller.findWinner());
+    }
+
+    private void getListOfMatchPlayers() throws IOException {
+        os.writeObject(controller.getListofMatchPlayers());
+        os.flush();
+        os.reset();
+    }
+
+    private void disconnectClient(String parameter) throws RemoteException {
+        controller.disconnectClient(parameter);
+    }
+
+    private void getInsertedDie() throws RemoteException {
+        out.println(controller.getInsertedDie());
+    }
+
+    private void setInsertedDie(String parameter) throws RemoteException {
+        controller.setInsertedDie(Boolean.parseBoolean(parameter));
+    }
+
+    private void getTool8Used() throws RemoteException {
+        out.println(controller.getTool8Used());
+    }
+
+    private void setTool8Used(String parameter) throws RemoteException {
+        controller.setTool8Used(Boolean.parseBoolean(parameter));
+    }
+
+    private void getClockwiseRound() throws RemoteException {
+        out.println(controller.getClockwiseRound());
     }
 }

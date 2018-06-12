@@ -41,7 +41,7 @@ public class ClientSocket implements Client {
         //...
     }
 
-    private void setup(){
+    private void setupConnection(){
         try {
             socket = new Socket(ip, port);
             in = new Scanner(socket.getInputStream());
@@ -55,7 +55,7 @@ public class ClientSocket implements Client {
 
     @Override
     public boolean login(String nickname) {
-        setup();
+        setupConnection();
         name = nickname;
         out.println("login:" + nickname);
         boolean response = Boolean.parseBoolean(in.nextLine());
@@ -65,7 +65,7 @@ public class ClientSocket implements Client {
 
     @Override
     public boolean register(String nickname) {
-        setup();
+        setupConnection();
         out.println("register:" + nickname);
         boolean response = Boolean.parseBoolean(in.nextLine());
         closeConnection();
@@ -74,7 +74,7 @@ public class ClientSocket implements Client {
 
     @Override
     public String getPlayerState() {
-        setup();
+        setupConnection();
         out.println("getPlayerState:" + name);
         String response = in.nextLine();
         closeConnection();
@@ -83,21 +83,21 @@ public class ClientSocket implements Client {
 
     @Override
     public void skip() {
-        setup();
+        setupConnection();
         out.println("skip:" + name);
         closeConnection();
     }
 
     @Override
     public boolean useToolCard(int i, ToolView parameter) {
-        setup();
+        setupConnection();
         closeConnection();
         return false;
     }
 
     @Override
     public boolean takeDie(int row, int column) {
-        setup();
+        setupConnection();
         out.println("takeDie:" + row + "," + column);
         boolean response = Boolean.parseBoolean(in.nextLine());
         closeConnection();
@@ -106,7 +106,7 @@ public class ClientSocket implements Client {
 
     @Override
     public boolean positionDie(int row, int column) {
-        setup();
+        setupConnection();
         out.println("positionDie:" + row + "," + column);
         boolean response = Boolean.parseBoolean(in.nextLine());
         closeConnection();
@@ -115,7 +115,7 @@ public class ClientSocket implements Client {
 
     @Override
     public boolean waitForPlayers() {
-        setup();
+        setupConnection();
         out.println("waitForPlayers:");
         boolean response = Boolean.parseBoolean(in.nextLine());
         closeConnection();
@@ -124,7 +124,7 @@ public class ClientSocket implements Client {
 
     @Override
     public ViewData initializeView() {
-        setup();
+        setupConnection();
         out.println("initializeView:");
         try {
             ViewData response =  (ViewData) is.readObject();
@@ -141,7 +141,7 @@ public class ClientSocket implements Client {
 
     @Override
     public ViewData updateView() {
-        setup();
+        setupConnection();
         out.println("updateView:");
         try {
             ViewData response = (ViewData) is.readObject();
@@ -158,7 +158,7 @@ public class ClientSocket implements Client {
 
     @Override
     public boolean readyToPlay() {
-        setup();
+        setupConnection();
         out.println("readyToPlay:");
         boolean response = Boolean.parseBoolean(in.nextLine());
         closeConnection();
@@ -172,14 +172,14 @@ public class ClientSocket implements Client {
 
     @Override
     public void createHash(int nameWindow, String nameClient) {
-        setup();
+        setupConnection();
         out.println("createHash:"+Integer.toString(nameWindow)+','+nameClient);
         closeConnection();
     }
 
     @Override
     public HashMap<String,Integer> getHashPlayers() {
-        setup();
+        setupConnection();
         out.println("getHashPlayers:");
         try {
             HashMap response = (HashMap<String, Integer>) is.readObject();
@@ -196,7 +196,7 @@ public class ClientSocket implements Client {
 
     @Override
     public String getPVCard(String name) {
-        setup();
+        setupConnection();
         out.println("getPVCard:"+name);
         String response = in.nextLine();
         closeConnection();
@@ -205,14 +205,14 @@ public class ClientSocket implements Client {
 
     @Override
     public void setActive(Boolean active) {
-        setup();
+        setupConnection();
         out.println("setActive:"+Boolean.toString(active));
         closeConnection();
     }
 
     @Override
     public boolean getActive() {
-        setup();
+        setupConnection();
         out.println("getActive:");
         boolean response = Boolean.parseBoolean(in.nextLine());
         closeConnection();
@@ -221,14 +221,14 @@ public class ClientSocket implements Client {
 
     @Override
     public void rejoinedPlayer(String name) {
-        setup();
+        setupConnection();
         out.println("rejoinedPlayer:"+name);
         closeConnection();
     }
 
     @Override
     public int getTimeMove() {
-        setup();
+        setupConnection();
         out.println("getTimeMove:");
         int response = Integer.parseInt(in.nextLine());
         closeConnection();
@@ -237,7 +237,7 @@ public class ClientSocket implements Client {
 
     @Override
     public String getCurrentPlayer() {
-        setup();
+        setupConnection();
         out.println("getCurrentPlayer:");
         String response = in.nextLine();
         closeConnection();
@@ -246,14 +246,14 @@ public class ClientSocket implements Client {
 
     @Override
     public void nullSelection() {
-        setup();
+        setupConnection();
         out.println("nullSelection:");
         closeConnection();
     }
 
     @Override
     public int getRound() {
-        setup();
+        setupConnection();
         out.println("getRound");
         int response = Integer.parseInt(in.nextLine());
         closeConnection();
@@ -262,7 +262,7 @@ public class ClientSocket implements Client {
 
     @Override
     public boolean matchFound() {
-        setup();
+        setupConnection();
         out.println("matchFound:");
         boolean response = Boolean.parseBoolean(in.nextLine());
         closeConnection();
@@ -271,7 +271,7 @@ public class ClientSocket implements Client {
 
     @Override
     public boolean iAmBanned(String userName) {
-        setup();
+        setupConnection();
         out.println("iAmLegend:"+ userName);
         boolean response = Boolean.parseBoolean(in.nextLine());
         closeConnection();
@@ -280,7 +280,7 @@ public class ClientSocket implements Client {
 
     @Override
     public ViewWP getWP(String userName) {
-        setup();
+        setupConnection();
         out.println("getWP:" + userName);
         try {
             ViewWP response = (ViewWP) is.readObject();
@@ -297,86 +297,114 @@ public class ClientSocket implements Client {
 
     @Override
     public void orderWPChoise(){
-        setup();
+        setupConnection();
         out.println("orderWPChoise:");
         closeConnection();
     }
 
     @Override
     public boolean isFinish() {
-        //da impl
-
-        return false;
+        setupConnection();
+        out.println("isFinish:");
+        boolean response = Boolean.parseBoolean(in.nextLine());
+        closeConnection();
+        return response;
     }
 
     @Override
-    public Integer getScore(String name) {
-        //da impl
-
-        return null;
+    public int getScore(String name) {
+        setupConnection();
+        out.println("getScore:" + name);
+        int response = Integer.parseInt(in.nextLine());
+        closeConnection();
+        return response;
     }
 
     @Override
     public void calculateScore() {
-        //da impl
-
+        setupConnection();
+        out.println("calculateScore:");
+        closeConnection();
     }
 
     @Override
     public String findWinner() {
-        //da impl
-
-        return null;
+        setupConnection();
+        out.println("findWinner:");
+        String response = in.nextLine();
+        closeConnection();
+        return response;
     }
 
     @Override
     public ArrayList<String> getListOfMatchPlayers() {
-        //da impl
-
-        return null;
+        setupConnection();
+        out.println("getListOfMatchPlayers:");
+        ArrayList<String> response = null;
+        try {
+            response = (ArrayList<String>) is.readObject();
+        } catch (IOException e) {
+            closeConnection();
+            return null;
+        } catch (ClassNotFoundException e) {
+            closeConnection();
+            return null;
+        }
+        closeConnection();
+        return response;
     }
 
     @Override
     public void disconnectClient() {
-        //da impl
-
+        setupConnection();
+        out.println("disconnectClient:" + name);
+        closeConnection();
     }
 
     @Override
     public boolean getInsertedDie() {
-        //da impl
-
-        return false;
+        setupConnection();
+        out.println("getInsertedDie:");
+        boolean response = Boolean.parseBoolean(in.nextLine());
+        closeConnection();
+        return response;
     }
 
     @Override
     public void setInsertedDie(boolean b) {
-        //da impl
-
+        setupConnection();
+        out.println("setInsertedDie" + b);
+        closeConnection();
     }
 
     @Override
     public boolean getTool8Used() {
-        //da impl
-
-        return false;
+        setupConnection();
+        out.println("getTool8Used:");
+        boolean response = Boolean.parseBoolean(in.nextLine());
+        closeConnection();
+        return response;
     }
 
     @Override
     public void setTool8Used(boolean isTool8Used) {
-        //da impl
+        setupConnection();
+        out.println("setTool8Used:" + isTool8Used);
+        closeConnection();
     }
 
     @Override
     public boolean getClockwiseRound() {
-        //da impl
-
-        return false;
+        setupConnection();
+        out.println("getClockwiseRound:");
+        boolean response = Boolean.parseBoolean(in.nextLine());
+        closeConnection();
+        return response;
     }
 
     @Override
     public ArrayList<ViewWP> getPlayerWPs(String name){
-        setup();
+        setupConnection();
         out.println("getPlayersWPs:"+name);
         try {
             ArrayList<ViewWP> response = (ArrayList<ViewWP>) is.readObject();
@@ -393,7 +421,7 @@ public class ClientSocket implements Client {
 
     @Override
     public int getNumberOfPlayers() {
-        setup();
+        setupConnection();
         out.println("getNumberOfPlayers:");
         int response = Integer.parseInt(in.nextLine());
         closeConnection();
@@ -402,7 +430,7 @@ public class ClientSocket implements Client {
 
     @Override
     public int getTimeSearch() {
-        setup();
+        setupConnection();
         out.println("getTimeSearch:");
         int response = Integer.parseInt(in.nextLine());
         closeConnection();
@@ -411,7 +439,7 @@ public class ClientSocket implements Client {
 
     @Override
     public boolean takeWPDie(int row, int column) {
-        setup();
+        setupConnection();
         out.println("takeWPDie:" + row + "," + column);
         boolean response = Boolean.parseBoolean(in.nextLine());
         closeConnection();
@@ -420,7 +448,7 @@ public class ClientSocket implements Client {
 
     @Override
     public ArrayList<ViewWP> getRandomWps() {
-        setup();
+        setupConnection();
         out.println("getRandomWPs:");
         try {
             ArrayList<ViewWP> response = (ArrayList<ViewWP>) is.readObject();
@@ -437,14 +465,14 @@ public class ClientSocket implements Client {
 
     @Override
     public void addWPName(String wp) {
-        setup();
+        setupConnection();
         out.println("addWPName:" + wp);
         closeConnection();
     }
 
     @Override
     public void addWP(ViewWP wp) {
-        setup();
+        setupConnection();
         out.println("addWP:");
         try {
             in.nextLine();
@@ -459,7 +487,7 @@ public class ClientSocket implements Client {
 
     @Override
     public ArrayList<String> getListOfPlayers() {
-        setup();
+        setupConnection();
         out.println("getListOfPlayers:");
         try {
             ArrayList<String> response = (ArrayList<String>) is.readObject();
@@ -476,7 +504,7 @@ public class ClientSocket implements Client {
 
     @Override
     public int getCoordinateSelectedX() {
-        setup();
+        setupConnection();
         out.println("getCoordinateSelectedX:");
         int response = Integer.parseInt(in.nextLine());
         closeConnection();
@@ -485,7 +513,7 @@ public class ClientSocket implements Client {
 
     @Override
     public int getCoordinateSelectedY() {
-        setup();
+        setupConnection();
         out.println("getCoordinateSelectedY:");
         int response = Integer.parseInt(in.nextLine());
         closeConnection();

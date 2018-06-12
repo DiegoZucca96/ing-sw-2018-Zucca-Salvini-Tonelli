@@ -127,7 +127,7 @@ public interface Client {
     boolean isFinish();
 
     //Restituisce il punteggio del giocatore
-    Integer getScore(String name);
+    int getScore(String name);
 
     //Avvia il calcolo dei punteggi giocatore
     void calculateScore();
