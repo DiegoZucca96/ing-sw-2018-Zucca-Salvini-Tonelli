@@ -336,8 +336,10 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         PlayerToolParameter pt = null;
         //Serve per consumare i token quando clicco sulla carta, se posso usarla
         if(toolView==null){
-            match.playerUseTool(idCard,null);
-            return true;
+            if(match.playerUseTool(idCard,null))
+                return true;
+            else
+                return false;
         }
         switch(idCard){
             case 1: {
@@ -353,7 +355,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
                 if(toolView.getPhase()==0)
                     pt = new PlayerToolParameter(toolView.getPhase(), new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()),new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()));
                 else
-                    pt = new PlayerToolParameter(toolView.getPhase(), new Coordinate(toolView.getStartRow2(), toolView.getStartCol2()),new Coordinate(toolView.getEndRow2(), toolView.getEndCol2()));
+                    pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow2(), toolView.getStartCol2()), toolView.getPhase(), new Coordinate(toolView.getEndRow2(), toolView.getEndCol2()));
                 break;
             }case 5:{
                 pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()),new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()),toolView.getRound());

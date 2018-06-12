@@ -43,6 +43,13 @@ public class ObjectiveTool {
         this.phase = phase;
     }
 
+    public ObjectiveTool(int phase, WindowPattern window, Coordinate c2, Coordinate d2) {
+        this.window = window;
+        this.c2 = c2;
+        this.d2 = d2;
+        this.phase = phase;
+    }
+
     public ObjectiveTool(WindowPattern window, Coordinate c1, Coordinate c2, Coordinate d1, Coordinate d2){
         this.window = window;
         this.c1 = c1;

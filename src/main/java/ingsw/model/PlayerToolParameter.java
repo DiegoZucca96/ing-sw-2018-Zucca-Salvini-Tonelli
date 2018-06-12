@@ -38,6 +38,12 @@ public class PlayerToolParameter {
         this.phase=phase;
     }
 
+    public PlayerToolParameter(Coordinate c2, int phase, Coordinate d2){
+        this.c2 = c2;
+        this.d2 = d2;
+        this.phase=phase;
+    }
+
     public PlayerToolParameter( Coordinate c1, Coordinate c2, Coordinate d1, Coordinate d2, Color color){
         this.c1 = c1;
         this.c2 = c2;

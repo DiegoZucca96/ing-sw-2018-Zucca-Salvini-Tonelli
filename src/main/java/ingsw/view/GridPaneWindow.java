@@ -202,6 +202,7 @@ public class GridPaneWindow extends GridPane {
                                 firstChoice=true;
                                 toolView.setPhase(0);
                                 updateMyself();
+                                playGame.update();
                                 playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(0);
                                 client.nullSelection();
                                 Toolkit.getDefaultToolkit().beep();
@@ -222,6 +223,7 @@ public class GridPaneWindow extends GridPane {
                         DieInfo dieInfo = playGame.getDraftPoolGrid().getDieInfo();
                         Button button1 =  playGame.getDraftPoolGrid().getButton(dieInfo.getRow(), dieInfo.getColumn());
                         button1.setOpacity(0);
+                        client.setInsertedDie(true);
                         playGame.onPositionWPButton();
                     }else{
                         Toolkit.getDefaultToolkit().beep();
@@ -274,6 +276,7 @@ public class GridPaneWindow extends GridPane {
                                 firstChoice = true;
                                 accessWindow = false;
                                 toolView = null;
+                                playGame.update();
                                 playGame.onPositionWPButton();
                                 if(!client.getInsertedDie())
                                     playGame.resetOnButton();

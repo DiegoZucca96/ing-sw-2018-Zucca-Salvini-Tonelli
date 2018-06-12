@@ -193,7 +193,7 @@ public class Match {
                 if(pTParameter.getPhase()==0)
                     toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC1(), pTParameter.getD1(), pTParameter.getPhase());
                 else
-                    toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC2(), pTParameter.getD2(), pTParameter.getPhase());
+                    toolParameter = new ObjectiveTool(pTParameter.getPhase(),currentPlayer.getWindowPattern(), pTParameter.getC2(), pTParameter.getD2());
                 break;
             }
             case 5: {
@@ -257,9 +257,13 @@ public class Match {
             for(ToolCard t : tools) {
                 if (t.getIdCard() == tool) {
                     if (t.isAlreadyUsed()) {
-                        currentPlayer.useToken(t);
-                        t.setNumTokenUsed(t.getNumTokenUsed() + 2);
-                    } else {
+                        if(currentPlayer.getTokens()>1) {
+                            currentPlayer.useToken(t);
+                            t.setNumTokenUsed(t.getNumTokenUsed() + 2);
+                        }
+                        else
+                            return false;
+                    }else{
                         currentPlayer.useToken(t);
                         t.setNumTokenUsed(t.getNumTokenUsed() + 1);
                     }

@@ -446,7 +446,7 @@ public class PlayGame {
         }
         view.setOnMouseClicked(e->{
             if(usingTool){
-                if(imagePathT.substring(1, 2).equals("T")){
+                if(imagePathT.substring(1, 2).equals("T") && client.getTokenRemaining(client.getName())>0){
                     viewUsed = view;
                     view.setEffect(new Glow(0.3));
                     cardSelected = Integer.parseInt(imagePathT.substring(imagePathT.indexOf("l")+1, imagePathT.indexOf("+")));
@@ -457,10 +457,16 @@ public class PlayGame {
                             setUsingTool(false);
                             Toolkit.getDefaultToolkit().beep();
                         }else{
-                            client.useToolCard(cardSelected,null);
+                            if(!client.useToolCard(cardSelected,null)){
+                                view.setEffect(sepiaTone);
+                                viewUsed=null;
+                            }
                         }
                     }else{
-                       client.useToolCard(cardSelected,null);
+                        if(!client.useToolCard(cardSelected,null)){
+                            view.setEffect(sepiaTone);
+                            viewUsed=null;
+                        }
                     }
                 }
             }
