@@ -25,7 +25,7 @@ public class GridPaneRound extends GridPane {
     private int significantRound;
     private boolean accessRound;
     private PlayGame playGame;
-    private DieInfo dieInfo = new DieInfo(null,-1,-1);
+    private DieInfo dieInfo;
     private Stage stage;
 
     public GridPaneRound(Client client, ArrayList<String> roundTrack, int round, PlayGame playGame){
@@ -88,7 +88,7 @@ public class GridPaneRound extends GridPane {
         stage = new Stage();
         Pane root = new Pane();
         Scene scene = new Scene(root);
-        root.setPrefSize((client.getNumberOfPlayers()*2+1)*70, 80);
+        root.setPrefSize((client.getNumberOfPlayers()*2+1)*80, 80);
         gridOfdDice = new GridPane();
         gridOfdDice.setHgap(20);
         //DieInfo client.getDieFromRoundTrack(j);
@@ -100,9 +100,9 @@ public class GridPaneRound extends GridPane {
         }
 
         for(int numDice=0; numDice<client.getNumberOfPlayers()*2+1; numDice++){
-            Button button1 = addDieBtn(numDice,i);
-            button1.setPrefSize(58, 58);
             if(currentDice.size()>numDice){
+                Button button1 = addDieBtn(numDice,i);
+                button1.setPrefSize(58, 58);
                 String dieStr = currentDice.get(numDice);
                 String numDie = dieStr.substring(dieStr.indexOf("(")+1,dieStr.indexOf(","));
                 String colorDie = dieStr.substring(dieStr.indexOf(",")+1,dieStr.indexOf(")"));
@@ -137,9 +137,7 @@ public class GridPaneRound extends GridPane {
                     toolView.setEndRow1(0);
                     toolView.setRound(i);
                     toolView.setEndCol1(numDice);
-                    dieInfo.setBackground(button.getBackground());
-                    dieInfo.setRow(0);
-                    dieInfo.setColumn(numDice);
+                    dieInfo = new DieInfo(button.getBackground(), 0, numDice);
                     if(client.useToolCard(5,toolView)){
                         client.nullSelection();
                         client.takeDie(toolView.getStartRow1(),toolView.getStartCol1());
@@ -150,8 +148,16 @@ public class GridPaneRound extends GridPane {
                         playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(1);
                     }
                 }
-                else{
-                    //da impl
+                else if(playGame.getCardSelected()==12){
+                    ToolView toolView = new ToolView();
+                    toolView.setStartRow1(0);
+                    toolView.setStartCol1(numDice);
+                    toolView.setRound(i);
+                    toolView.setPhase(0);
+                    if(client.useToolCard(12,toolView)){
+                        client.nullSelection();
+                        playGame.getGridWindow().setAccessWindow(true);
+                    }
                 }
                 accessRound = false;
                 stage.close();

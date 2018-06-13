@@ -11,6 +11,8 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.Glow;
+import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -58,6 +60,7 @@ public class PlayGame {
     private int cardSelected;
     private GridPane tokenUsed;
     private Label numTokenUsed;
+    private ImageView viewUsed;
 
 
     public PlayGame(Client client){
@@ -361,6 +364,7 @@ public class PlayGame {
                     client.nullSelection();
                     resetOnButton();
                     draftPoolGrid.deselectBtn();
+                    myWindowGrid.abortToolView();
                 }
             }
         });
@@ -434,10 +438,17 @@ public class PlayGame {
     private ImageView Images(ArrayList<String> stringCard, int i){
         final ImageView view = new ImageView();
         String imagePathT = stringCard.get(i);
+        SepiaTone sepiaTone = new SepiaTone();
         Image imageT = new Image(imagePathT, 300, 420, false, true);
+        if(imagePathT.substring(1, 2).equals("T")){
+            sepiaTone.setLevel(0.7);
+            view.setEffect(sepiaTone);
+        }
         view.setOnMouseClicked(e->{
             if(usingTool){
-                if(imagePathT.substring(1, 2).equals("T")){
+                if(imagePathT.substring(1, 2).equals("T") && client.getTokenRemaining(client.getName())>0){
+                    viewUsed = view;
+                    view.setEffect(new Glow(0.3));
                     cardSelected = Integer.parseInt(imagePathT.substring(imagePathT.indexOf("l")+1, imagePathT.indexOf("+")));
                     if(client.getInsertedDie()){
                         if(cardSelected == 1 || cardSelected == 5 || cardSelected == 6 || cardSelected == 7 || cardSelected == 9 || cardSelected == 10 || cardSelected == 11) {
@@ -445,6 +456,16 @@ public class PlayGame {
                             onPositionWPButton();
                             setUsingTool(false);
                             Toolkit.getDefaultToolkit().beep();
+                        }else{
+                            if(!client.useToolCard(cardSelected,null)){
+                                view.setEffect(sepiaTone);
+                                viewUsed=null;
+                            }
+                        }
+                    }else{
+                        if(!client.useToolCard(cardSelected,null)){
+                            view.setEffect(sepiaTone);
+                            viewUsed=null;
                         }
                     }
                 }
@@ -461,7 +482,8 @@ public class PlayGame {
                             draftPoolGrid.updateDP(client.updateView().getDraftPoolDice());
                             resetOnButton();
                             setUsingTool(false);
-
+                            view.setEffect(sepiaTone);
+                            viewUsed=null;
                         }else{
                             Toolkit.getDefaultToolkit().beep();
                         }
@@ -470,13 +492,19 @@ public class PlayGame {
                 if(client.useToolCard(8,null)){
                     takeDieBtn.setDisable(false);
                     client.setTool8Used(true);
+                    view.setEffect(sepiaTone);
+                    viewUsed=null;
                 }else{
                     Toolkit.getDefaultToolkit().beep();
                 }
             }
-            if(cardSelected == 2 || cardSelected == 3 || cardSelected==4) {
+            if(cardSelected == 2 || cardSelected == 3 || cardSelected == 4) {
                 getGridWindow().setAccessWindow(true);
                 getGridWindow().setFirstChoice(true);
+            }
+            if(cardSelected == 12){
+                getGridWindow().setFirstChoice(true);
+                getGridRound().setAccessRound(true);
             }
             else{
                 if(cardSelected==8)
@@ -592,6 +620,12 @@ public class PlayGame {
         takeDieBtn.setDisable(true);
         infoBtn.setDisable(false);
         cancelBtn.setDisable(true);
+        SepiaTone sepiaTone = new SepiaTone();
+        sepiaTone.setLevel(0.7);
+        if(viewUsed!=null){
+            viewUsed.setEffect(sepiaTone);
+            viewUsed = null;
+        }
     }
 
     public void setBtnOnTakeDieClicked(){

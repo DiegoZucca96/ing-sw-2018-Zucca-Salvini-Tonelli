@@ -44,6 +44,13 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
         return diceList;
     }
 
+    public Die reThrowsDie(int index){
+        Die die = diceBag.randomDice();
+        diceList.set(index, die);
+        notifyViewObserver();
+        return die;
+    }
+
     //restituisce il riferimento al dado in posizione index
     public Die getDie(int index){
         try{

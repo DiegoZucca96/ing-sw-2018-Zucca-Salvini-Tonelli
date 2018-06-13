@@ -13,6 +13,7 @@ public class Tool11 implements ToolStrategy {
     private DraftPool dp;
     private WindowPattern window;
     private DiceBag diceBag;
+    private Coordinate c1;
     private int numTokenUsed;
 
     public Tool11(int idCard) {
@@ -23,18 +24,26 @@ public class Tool11 implements ToolStrategy {
     }
 
     public boolean doOp(ObjectiveTool object){
-        int inputNumber = 0;
-        Coordinate inputDest = null;
-        die = object.getDie1();
-        dp = object.getDp();
-        diceBag = object.getDiceBag();
-        diceBag.insertDie(die);  //Metodo che sistema la randomicità con cui escono i dadi, reinserisco il dado nella borsa
-        dp.throwsDice(1);
-        die = dp.takeDie(dp.getDiceListSize() -1);
-        die.setNumber(inputNumber);  //Serve inserire un numero scelto dal player "in diretta", in base al colore che esce ovviamente cambia
-        window = object.getWindow();
-        window.addDie(inputDest,die,window.getCellMatrix());  //Manca da passare inputDest in qualche modo come inputNumber
-        PlayGame.setUsingTool(false);
+        if(object.getPhase() == 0){
+            c1 = object.getC1();
+            dp = object.getDp();
+            diceBag = object.getDiceBag();
+            die = dp.getDie(c1.getY());
+            diceBag.insertDie(die);  //Metodo che sistema la randomicità con cui escono i dadi, reinserisco il dado nella borsa
+            dp.takeDie(c1.getY());
+            die = dp.reThrowsDie(c1.getY());
+            return true;
+        }else if(object.getPhase() == 1){
+            die.setNumber(object.getDieModified());  //Serve inserire un numero scelto dal player "in diretta", in base al colore che esce ovviamente cambia
+            return true;
+        }else if(object.getPhase() == 2){
+            window = object.getWindow();
+            window.addDie(object.getD1(),die,window.getCellMatrix());  //Manca da passare inputDest in qualche modo come inputNumber
+            die = dp.takeDie(c1.getY());
+            return true;
+
+        }else
+            PlayGame.setUsingTool(false);
         return false;
     }
 

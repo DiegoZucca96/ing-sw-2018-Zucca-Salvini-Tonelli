@@ -9,12 +9,15 @@ public class Tool12 implements ToolStrategy {
     private String comment;
     private boolean alreadyUsed;
     private int idCard;
+    private RoundTrack roundTrack;
     private WindowPattern window;
     private Die die1;
     private Die die2;
     private Coordinate c1;
     private Coordinate c2;
     private Color color;
+    private int round;
+    private Die die;
     private int numTokenUsed;
 
     public Tool12(int idCard) {
@@ -25,35 +28,44 @@ public class Tool12 implements ToolStrategy {
     }
 
     public boolean doOp(ObjectiveTool object){
-        color = object.getColor();
-        window = object.getWindow();
-        Cell[][] cellMatrix = window.getCellMatrix();
-        c1 = object.getC1();
-        c2 = object.getC2();
-        PlayGame.setUsingTool(false);
-        if(c1 != null) {
-            if (cellMatrix[c1.getX()][c1.getY()].getDie().getColor() == color) {
-                die1 = cellMatrix[c1.getX()][c1.getY()].takeDie();
-                if(!window.addDie(object.getD1(),die1,cellMatrix)){
+
+        if(object.getPhase() == 0) {
+            window = object.getWindow();
+            round = object.getRound();
+            roundTrack = object.getRt();
+            die = roundTrack.getDie(round, object.getC1().getY());
+            color = die.getColor();
+        }
+        if(object.getPhase() == 1) {
+            c1 = object.getC1();
+            if (window.getCellMatrix()[c1.getX()][c1.getY()].getDie().getColor() == color) {
+                die1 = window.getCellMatrix()[c1.getX()][c1.getY()].takeDie();
+                if(!window.addDie(object.getD1(),die1,window.getCellMatrix())){
+                    window.getCellMatrix()[object.getC1().getX()][object.getC1().getY()].insertDie(die1);
                     System.out.print("Hai violato una restrizione di posizione");
-                    window.addDie(c1,die1,cellMatrix);
+                    return false;
                 }
             }
-            else
+            else{
                 System.out.print("Il dado selezionato non è dello stesso colore del RoundTrack");
+            }
         }
-        if(c2 != null) {
-            if (cellMatrix[c2.getX()][c2.getY()].getDie().getColor() == color) {
-                die2 = cellMatrix[c2.getX()][c2.getY()].takeDie();
-                if(!window.addDie(object.getD2(), die2, cellMatrix)){
+        if(object.getPhase() == 2){
+            c2 = object.getC1();
+            if (window.getCellMatrix()[c2.getX()][c2.getY()].getDie().getColor() == color) {
+                die2 = window.getCellMatrix()[c2.getX()][c2.getY()].takeDie();
+                if(!window.addDie(object.getD1(), die2, window.getCellMatrix())){
+                    window.getCellMatrix()[c2.getX()][c2.getY()].insertDie(die2);
                     System.out.print("Hai violato una restrizione di posizione");
-                    window.addDie(c2,die2,cellMatrix);
+                    return false;
                 }
             }
-            else
+            else{
                 System.out.print("Il dado selezionato non è dello stesso colore del RoundTrack");
+                PlayGame.setUsingTool(false);
+            }
         }
-        return false;
+        return true;
     }
 
     public int getIdCard() {
