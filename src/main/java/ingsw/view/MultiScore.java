@@ -57,7 +57,7 @@ class MultiScore implements Runnable {
                     // update timerLabel
                     label.setText(namePlayer+"                      "+numberRandom.toString());
                     if (timeSeconds >= 5) {
-                        label.setText(namePlayer+"                       "+client.getScore(namePlayer).toString());
+                        label.setText(namePlayer+"                       "+((Integer) client.getScore(namePlayer)).toString());
                         Label lab = new Label("The winner is"+"     "+client.findWinner());
                         lab.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 90 \"serif\"; -fx-padding: 0 0 20 0");
                         grid.add(lab,0,client.getNumberOfPlayers());

@@ -42,9 +42,9 @@ public class ClientRMI implements Client {
         try {
             return controller.login(nickname);
         } catch (RemoteException e) {
-            e.printStackTrace();
+            handleConnectionError();
+            return  false;
         }
-        return false;
     }
 
     @Override
@@ -53,6 +53,7 @@ public class ClientRMI implements Client {
         try {
             return controller.register(nickname);
         } catch (RemoteException e) {
+            handleConnectionError();
             return false;
         }
     }
@@ -62,6 +63,7 @@ public class ClientRMI implements Client {
         try {
             return controller.getPlayerState(name);
         } catch (RemoteException e) {
+            handleConnectionError();
             return null;
         }
     }
@@ -71,7 +73,7 @@ public class ClientRMI implements Client {
         try {
             controller.skip(name);
         } catch (RemoteException e) {
-            e.printStackTrace();
+            handleConnectionError();
         }
     }
 
@@ -80,6 +82,7 @@ public class ClientRMI implements Client {
         try {
             return controller.useToolCard(i,toolView);
         } catch (RemoteException e) {
+            handleConnectionError();
             return false;
         }
     }
@@ -89,6 +92,7 @@ public class ClientRMI implements Client {
         try {
             return controller.takeDie(row, column);
         } catch (RemoteException e) {
+            handleConnectionError();
             return false;
         }
     }
@@ -98,6 +102,7 @@ public class ClientRMI implements Client {
         try {
             return controller.positionDie(row,column);
         } catch (RemoteException e) {
+            handleConnectionError();
             return  false;
         }
     }
@@ -107,6 +112,7 @@ public class ClientRMI implements Client {
         try {
             return controller.waitForPlayers();
         } catch (RemoteException e) {
+            handleConnectionError();
             return false;
         }
     }
@@ -116,6 +122,7 @@ public class ClientRMI implements Client {
         try {
             return controller.initializeView();
         } catch (RemoteException e) {
+            handleConnectionError();
             return null;
         }
     }
@@ -125,6 +132,7 @@ public class ClientRMI implements Client {
         try {
             return controller.updateView();
         } catch (RemoteException e) {
+            handleConnectionError();
             return null;
         }
     }
@@ -134,6 +142,7 @@ public class ClientRMI implements Client {
         try {
             return controller.readyToPlay();
         }catch (RemoteException e){
+            handleConnectionError();
             return false;
         }
     }
@@ -148,7 +157,7 @@ public class ClientRMI implements Client {
         try {
             controller.createHash(numberWP,nameClient);
         } catch (RemoteException e) {
-            e.printStackTrace();
+            handleConnectionError();
         }
     }
 
@@ -157,9 +166,10 @@ public class ClientRMI implements Client {
         try {
             return controller.getHashPlayers();
         } catch (RemoteException e) {
-            e.printStackTrace();
+            handleConnectionError();
+            return null;
         }
-        return null;
+
     }
 
     @Override
@@ -167,7 +177,7 @@ public class ClientRMI implements Client {
         try {
             return controller.getPVCard(name);
         } catch (RemoteException e) {
-            e.printStackTrace();
+            handleConnectionError();
         }
         return null;
     }
@@ -177,7 +187,7 @@ public class ClientRMI implements Client {
         try {
             controller.setActive(active);
         } catch (RemoteException e) {
-            e.printStackTrace();
+            handleConnectionError();
         }
     }
 
@@ -186,7 +196,7 @@ public class ClientRMI implements Client {
         try {
             return controller.getActive();
         } catch (RemoteException e) {
-            e.printStackTrace();
+            handleConnectionError();
         }
         return false;
     }
@@ -196,7 +206,7 @@ public class ClientRMI implements Client {
         try {
             controller.rejoinedPlayer(name);
         } catch (RemoteException e) {
-            e.printStackTrace();
+            handleConnectionError();
         }
     }
 
@@ -205,7 +215,7 @@ public class ClientRMI implements Client {
         try {
             return controller.getTimeMove();
         } catch (RemoteException e) {
-            e.printStackTrace();
+            handleConnectionError();
         }
         return -1;
     }
@@ -215,7 +225,7 @@ public class ClientRMI implements Client {
         try {
             return controller.getCurrentPlayerName();
         } catch (RemoteException e) {
-            e.printStackTrace();
+            handleConnectionError();
         }
         return null;
     }
@@ -225,7 +235,7 @@ public class ClientRMI implements Client {
         try {
             controller.setNullPlayer();
         } catch (RemoteException e) {
-            e.printStackTrace();
+            handleConnectionError();
         }
     }
 
@@ -234,7 +244,7 @@ public class ClientRMI implements Client {
         try {
             return controller.getRound();
         } catch (RemoteException e) {
-            e.printStackTrace();
+            handleConnectionError();
         }
         return -1;
     }
@@ -247,6 +257,7 @@ public class ClientRMI implements Client {
             else
                 return true;
         } catch (RemoteException e) {
+            handleConnectionError();
             return true;
         }
     }
@@ -259,6 +270,7 @@ public class ClientRMI implements Client {
             else
                 return false;
         } catch (RemoteException e) {
+            handleConnectionError();
             return false;
         }
     }
@@ -269,7 +281,7 @@ public class ClientRMI implements Client {
         try {
             return controller.getWP(userName);
         } catch (RemoteException e1) {
-            e1.printStackTrace();
+            handleConnectionError();
         }
         return null;
     }
@@ -279,7 +291,7 @@ public class ClientRMI implements Client {
         try {
             controller.orderWPChoise();
         } catch (RemoteException e) {
-            e.printStackTrace();
+            handleConnectionError();
         }
     }
 
@@ -288,15 +300,17 @@ public class ClientRMI implements Client {
         try {
             return controller.isFinish();
         } catch (RemoteException e) {
+            handleConnectionError();
             return false;
         }
     }
 
     @Override
-    public Integer getScore(String name) {
+    public int getScore(String name) {
         try {
             return controller.getScore(name);
         } catch (RemoteException e) {
+            handleConnectionError();
             return 0;
         }
     }
@@ -306,7 +320,7 @@ public class ClientRMI implements Client {
         try {
             controller.calculateScore();
         } catch (RemoteException e) {
-            e.printStackTrace();
+            handleConnectionError();
         }
     }
 
@@ -315,6 +329,7 @@ public class ClientRMI implements Client {
         try {
             return controller.findWinner();
         } catch (RemoteException e) {
+            handleConnectionError();
             return null;
         }
     }
@@ -324,6 +339,7 @@ public class ClientRMI implements Client {
         try {
             return controller.getListofMatchPlayers();
         } catch (RemoteException e) {
+            handleConnectionError();
             return null;
         }
     }
@@ -333,7 +349,7 @@ public class ClientRMI implements Client {
         try {
             controller.disconnectClient(name);
         } catch (RemoteException e) {
-            e.printStackTrace();
+            handleConnectionError();
         }
     }
 
@@ -342,6 +358,7 @@ public class ClientRMI implements Client {
         try {
             return controller.getInsertedDie();
         } catch (RemoteException e) {
+            handleConnectionError();
             return false;
         }
     }
@@ -351,7 +368,7 @@ public class ClientRMI implements Client {
         try {
             controller.setInsertedDie(b);
         } catch (RemoteException e) {
-            e.printStackTrace();
+            handleConnectionError();
         }
     }
 
@@ -360,6 +377,7 @@ public class ClientRMI implements Client {
         try {
             return controller.getTool8Used();
         } catch (RemoteException e) {
+            handleConnectionError();
             return false;
         }
     }
@@ -369,7 +387,7 @@ public class ClientRMI implements Client {
         try {
             controller.setTool8Used(b);
         } catch (RemoteException e) {
-            e.printStackTrace();
+            handleConnectionError();
         }
     }
 
@@ -378,6 +396,7 @@ public class ClientRMI implements Client {
         try {
             return controller.getClockwiseRound();
         } catch (RemoteException e) {
+            handleConnectionError();
             return false;
         }
     }
@@ -387,6 +406,7 @@ public class ClientRMI implements Client {
         try {
             return controller.getTokenRemaining(name);
         } catch (RemoteException e) {
+            handleConnectionError();
             return -1;
         }
     }
@@ -396,6 +416,7 @@ public class ClientRMI implements Client {
         try {
             return controller.getPlayersWPs(name);
         } catch (RemoteException e) {
+            handleConnectionError();
             return null;
         }
     }
@@ -405,6 +426,7 @@ public class ClientRMI implements Client {
         try {
             return controller.getSizeOfPlayers();
         } catch (RemoteException e) {
+            handleConnectionError();
             return -1;
         }
     }
@@ -414,6 +436,7 @@ public class ClientRMI implements Client {
         try {
             return controller.getTimeSearch();
         } catch (RemoteException e) {
+            handleConnectionError();
             return -1;
         }
     }
@@ -423,6 +446,7 @@ public class ClientRMI implements Client {
         try {
             return controller.takeWPDie(row,column);
         } catch (RemoteException e) {
+            handleConnectionError();
             return false;
         }
     }
@@ -432,6 +456,7 @@ public class ClientRMI implements Client {
         try {
             return controller.getRandomWPs();
         } catch (RemoteException e) {
+            handleConnectionError();
             return null;
         }
     }
@@ -441,7 +466,7 @@ public class ClientRMI implements Client {
         try {
             controller.addWindow(wp);
         } catch (RemoteException e) {
-            e.printStackTrace();
+            handleConnectionError();
         }
     }
 
@@ -450,7 +475,7 @@ public class ClientRMI implements Client {
         try {
             controller.addWindowName(wp);
         } catch (RemoteException e) {
-            e.printStackTrace();
+            handleConnectionError();
         }
     }
 
@@ -459,6 +484,7 @@ public class ClientRMI implements Client {
         try {
             return controller.getListOfPlayers();
         } catch (RemoteException e) {
+            handleConnectionError();
             return null;
         }
     }
@@ -468,7 +494,7 @@ public class ClientRMI implements Client {
         try {
             return controller.getCoordinateSelectedX();
         } catch (RemoteException e) {
-            e.printStackTrace();
+            handleConnectionError();
         }
         return -1;
     }
@@ -478,8 +504,12 @@ public class ClientRMI implements Client {
         try {
             return controller.getCoordinateSelectedY();
         } catch (RemoteException e) {
-            e.printStackTrace();
+            handleConnectionError();
         }
         return -1;
+    }
+
+    private void handleConnectionError(){
+
     }
 }

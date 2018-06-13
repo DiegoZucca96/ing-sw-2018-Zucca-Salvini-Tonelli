@@ -34,6 +34,11 @@ public class ServerHandler implements Runnable {
             is = new ObjectInputStream(socket.getInputStream());
         }catch(IOException e){
             System.err.println(e.getMessage());
+            try {
+                server.setClientState(clientName, new DisconnectedClient());
+            } catch (RemoteException e1) {
+                e1.printStackTrace();
+            }
         }
     }
 
@@ -41,12 +46,14 @@ public class ServerHandler implements Runnable {
         String request;
         String command;
         String parameter;
-        try {
-            setup();
-            request = in.nextLine();
-            command = request.substring(0,request.indexOf(':'));
-            if(request.indexOf(':') != request.length()-1) parameter = request.substring(request.indexOf(':')+1, request.length());
-            else parameter = null;
+
+        setup();
+        request = in.nextLine();
+        command = request.substring(0,request.indexOf(':'));
+        if(request.indexOf(':') != request.length()-1) parameter = request.substring(request.indexOf(':')+1, request.length());
+        else parameter = null;
+
+        try{
             if (command.equals("login")) login(parameter);
             else if (command.equals("register")) register(parameter);
             else if (command.equals("getPlayerState")) getPlayerState(parameter);
@@ -92,21 +99,21 @@ public class ServerHandler implements Runnable {
             else if (command.equals("getTool8Used")) getTool8Used();
             else if (command.equals("setTool8Used")) setTool8Used(parameter);
             else if (command.equals("getClockwiseRound")) getClockwiseRound();
+            else if (command.equals("getTokenRemaining")) getTokenRemaining(parameter);
             closeConnection();
         }
          catch (IOException e) {
             System.err.println(e.getMessage());
              try {
                  server.setClientState(clientName, new DisconnectedClient());
-                 closeConnection();
-             } catch (IOException e1) {
+             } catch (RemoteException e1) {
                  e1.printStackTrace();
              }
          }
     }
 
-    private void setup() throws IOException {
-        //...
+    private void setup(){
+        clientName = in.nextLine();
     }
 
     private void closeConnection() throws IOException {
@@ -116,9 +123,6 @@ public class ServerHandler implements Runnable {
         os.close();
         is.close();
     }
-    /*public void setClientState(ClientState state){
-        out.println("Set state:" + state.toString());
-    }*/
 
     private void login(String parameter) throws RemoteException {
         out.println(controller.login(parameter));
@@ -331,5 +335,9 @@ public class ServerHandler implements Runnable {
 
     private void getClockwiseRound() throws RemoteException {
         out.println(controller.getClockwiseRound());
+    }
+
+    private void getTokenRemaining(String parameter) throws RemoteException {
+        out.println(controller.getTokenRemaining(parameter));
     }
 }

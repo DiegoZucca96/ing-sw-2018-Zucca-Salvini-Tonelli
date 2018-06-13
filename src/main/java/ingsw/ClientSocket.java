@@ -2,6 +2,7 @@ package ingsw;
 
 import ingsw.model.ViewWP;
 import ingsw.model.ViewData;
+import ingsw.view.GUI;
 import ingsw.view.ToolView;
 
 import java.io.IOException;
@@ -49,7 +50,30 @@ public class ClientSocket implements Client {
             os = new ObjectOutputStream(socket.getOutputStream());
             is = new ObjectInputStream(socket.getInputStream());
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            //notify lost connection to player
+            new GUI().display(new ClientSocket("127.0.0.1", 1080));
+        }
+        out.println(name);
+    }
+
+    private void handleSetupConnectionError(){
+        boolean setupError = true;
+        while(setupError){
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            setupError = false;
+            try{
+                socket = new Socket(ip, port);
+                in = new Scanner(socket.getInputStream());
+                out = new PrintWriter(socket.getOutputStream(), true);
+                os = new ObjectOutputStream(socket.getOutputStream());
+                is = new ObjectInputStream(socket.getInputStream());
+            } catch (IOException e){
+                setupError = true;
+            }
         }
     }
 
@@ -254,7 +278,7 @@ public class ClientSocket implements Client {
     @Override
     public int getRound() {
         setupConnection();
-        out.println("getRound");
+        out.println("getRound:");
         int response = Integer.parseInt(in.nextLine());
         closeConnection();
         return response;
@@ -404,9 +428,11 @@ public class ClientSocket implements Client {
 
     @Override
     public int getTokenRemaining(String name) {
-        //da impl
-
-        return 0;
+        setupConnection();
+        out.println("getTokenRemaining:" + name);
+        int response = Integer.parseInt(in.nextLine());
+        closeConnection();
+        return response;
     }
 
     @Override
@@ -535,7 +561,8 @@ public class ClientSocket implements Client {
             is.close();
             socket.close();
         } catch (IOException e) {
-            //gestione errore di connessione..
+            //notify lost connection to player
+            new GUI().display(new ClientSocket("127.0.0.1", 1080));
         }
     }
 
