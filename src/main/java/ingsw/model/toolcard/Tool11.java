@@ -2,7 +2,6 @@ package ingsw.model.toolcard;
 
 import ingsw.model.*;
 import ingsw.model.windowpattern.WindowPattern;
-import ingsw.view.PlayGame;
 
 public class Tool11 implements ToolStrategy {
     private String title;
@@ -41,9 +40,7 @@ public class Tool11 implements ToolStrategy {
             window.addDie(object.getD1(),die,window.getCellMatrix());  //Manca da passare inputDest in qualche modo come inputNumber
             die = dp.takeDie(c1.getY());
             return true;
-
-        }else
-            PlayGame.setUsingTool(false);
+        }
         return false;
     }
 

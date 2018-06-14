@@ -1,7 +1,6 @@
 package ingsw.model.toolcard;
 
 import ingsw.model.*;
-import ingsw.view.PlayGame;
 
 public class Tool8 implements ToolStrategy {
     private String title;
@@ -20,7 +19,6 @@ public class Tool8 implements ToolStrategy {
 
     public boolean doOp(ObjectiveTool object){
         object.getPlayer().setInsertedDie(false);
-        PlayGame.setUsingTool(false);
         return true;
     }
 

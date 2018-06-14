@@ -2,11 +2,15 @@ package ingsw.view;
 
 import ingsw.Client;
 import ingsw.model.ViewWP;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
+import javafx.stage.Stage;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -63,7 +67,6 @@ public class GridPaneWindow extends GridPane {
         Button button = new Button();
 
         button.setOnAction(e -> {
-
             if(accessWindow){
                 if(playGame.getCardSelected()==9) {
                     toolView = new ToolView();
@@ -75,15 +78,18 @@ public class GridPaneWindow extends GridPane {
                     if (client.useToolCard(9, toolView)) {
                         client.nullSelection();
                         client.setInsertedDie(true);
-                        //if(client.positionDie(toolView.getStartRow1(), toolView.getStartCol1()))
                         playGame.update();
                         playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(0);
                         button.setBackground(playGame.getDraftPoolGrid().getButton(toolView.getStartRow1(), toolView.getStartCol1()).getBackground());
                         playGame.getDraftPoolGrid().getButton(toolView.getStartRow1(), toolView.getStartCol1()).setOpacity(0);
                         playGame.onPositionWPButton();
+                        playGame.setUsingTool(false);
+                        playGame.setCardSelected(0);
+                    }else{
+                        Toolkit.getDefaultToolkit().beep();
                     }
                     toolView = null;
-                    accessWindow = false;
+                    setAccessWindow(false);
                     button.setOpacity(1);
                 }else if(playGame.getCardSelected()==2){
                     if(toolView==null)
@@ -100,18 +106,17 @@ public class GridPaneWindow extends GridPane {
                         toolView.setEndRow1(i);
                         toolView.setEndCol1(j);
                         if(client.useToolCard(2, toolView)){
-                            //button.setBackground(getDieInfos().get(0).getBackground());
-                            //button.setOpacity(1);
                             playGame.update();
                             updateMyself();
                             getButton(getDieInfos().get(0).getRow(), getDieInfos().get(0).getColumn()).setOpacity(0);
                             playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(0);
                             client.nullSelection();
-                            //button.setOpacity(1);
                             firstChoice = true;
-                            accessWindow = false;
+                            setAccessWindow(false);
                             toolView = null;
                             playGame.onPositionWPButton();
+                            playGame.setUsingTool(false);
+                            playGame.setCardSelected(0);
                             if(!client.getInsertedDie())
                                 playGame.resetOnButton();
                         }else{
@@ -138,9 +143,11 @@ public class GridPaneWindow extends GridPane {
                             playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(0);
                             client.nullSelection();
                             firstChoice = true;
-                            accessWindow = false;
+                            setAccessWindow(false);
                             toolView = null;
                             playGame.onPositionWPButton();
+                            playGame.setUsingTool(false);
+                            playGame.setCardSelected(0);
                             if(!client.getInsertedDie())
                                 playGame.resetOnButton();
                         }else{
@@ -190,12 +197,15 @@ public class GridPaneWindow extends GridPane {
                             toolView.setEndCol2(j);
                             if(client.useToolCard(4,toolView)){
                                 updateMyself();
+                                playGame.update();
                                 playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(0);
                                 client.nullSelection();
                                 firstChoice = true;
-                                accessWindow = false;
+                                setAccessWindow(false);
                                 toolView = null;
                                 playGame.onPositionWPButton();
+                                playGame.setUsingTool(false);
+                                playGame.setCardSelected(0);
                                 if(!client.getInsertedDie())
                                     playGame.resetOnButton();
                             }else{
@@ -225,6 +235,8 @@ public class GridPaneWindow extends GridPane {
                         button1.setOpacity(0);
                         client.setInsertedDie(true);
                         playGame.onPositionWPButton();
+                        playGame.setUsingTool(false);
+                        playGame.setCardSelected(0);
                     }else{
                         Toolkit.getDefaultToolkit().beep();
                         client.nullSelection();
@@ -251,10 +263,14 @@ public class GridPaneWindow extends GridPane {
                                 updateMyself();
                                 playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(0);
                                 client.nullSelection();
-                                toolView.setPhase(2);
                                 firstChoice = true;
+                                makeAnotherMove();
                             }else{
+                                playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(0);
+                                client.nullSelection();
+                                firstChoice = true;
                                 Toolkit.getDefaultToolkit().beep();
+                                new Warning("Colore del dado scelto sbagliato oppure\n\n posizione di destinazione invalida, riprova","Use tool 12");
                             }
                         }
                     }else{
@@ -274,14 +290,20 @@ public class GridPaneWindow extends GridPane {
                                 playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(0);
                                 client.nullSelection();
                                 firstChoice = true;
-                                accessWindow = false;
+                                setAccessWindow(false);
                                 toolView = null;
                                 playGame.update();
                                 playGame.onPositionWPButton();
+                                playGame.setUsingTool(false);
+                                playGame.setCardSelected(0);
                                 if(!client.getInsertedDie())
                                     playGame.resetOnButton();
                             }else{
+                                playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(0);
+                                client.nullSelection();
+                                firstChoice = true;
                                 Toolkit.getDefaultToolkit().beep();
+                                new Warning("Colore del dado scelto sbagliato oppure\n\n posizione di destinazione invalida, riprova","Use tool 12");
                             }
                         }
                     }
@@ -299,6 +321,39 @@ public class GridPaneWindow extends GridPane {
         });
         this.add(button, j, i);
         return button;
+    }
+
+    private void makeAnotherMove() {
+        Stage stage = new Stage();
+        GridPane root = new GridPane();
+        root.setPadding(new Insets(20, 10, 20, 10));
+        Scene scene = new Scene(root, 400, 100);
+        root.setHgap(20);
+        root.setVgap(20);
+        Label label = new Label("Vuoi spostare anche il secondo dado?");
+        root.add(label, 1, 0);
+        Button buttonYes = new Button("Yes");
+        Button buttonNo = new Button("No");
+        root.add(buttonYes, 1, 1);
+        root.add(buttonNo, 2, 1);
+        buttonYes.setOnAction(event -> {
+            toolView.setPhase(2);
+            stage.close();
+        });
+        buttonNo.setOnAction(event -> {
+            setAccessWindow(false);
+            toolView = null;
+            playGame.update();
+            playGame.onPositionWPButton();
+            playGame.setUsingTool(false);
+            playGame.setCardSelected(0);
+            if(!client.getInsertedDie())
+                playGame.resetOnButton();
+            stage.close();
+        });
+        stage.setTitle("Use tool 12");
+        stage.setScene(scene);
+        stage.show();
     }
 
     private void updateMyself() {

@@ -2,7 +2,6 @@ package ingsw.model.toolcard;
 
 import ingsw.model.*;
 import ingsw.model.windowpattern.WindowPattern;
-import ingsw.view.PlayGame;
 
 public class Tool12 implements ToolStrategy {
     private String title;
@@ -48,6 +47,7 @@ public class Tool12 implements ToolStrategy {
             }
             else{
                 System.out.print("Il dado selezionato non è dello stesso colore del RoundTrack");
+                return false;
             }
         }
         if(object.getPhase() == 2){
@@ -62,7 +62,7 @@ public class Tool12 implements ToolStrategy {
             }
             else{
                 System.out.print("Il dado selezionato non è dello stesso colore del RoundTrack");
-                PlayGame.setUsingTool(false);
+                return false;
             }
         }
         return true;

@@ -2,7 +2,6 @@ package ingsw.model.toolcard;
 
 import ingsw.model.*;
 import ingsw.model.windowpattern.WindowPattern;
-import ingsw.view.PlayGame;
 
 public class Tool9 implements ToolStrategy{
     private String title;
@@ -33,12 +32,10 @@ public class Tool9 implements ToolStrategy{
        if(window.verifyDieNumberConstraint(d1,die,cellMatrix) && window.verifyDieColorConstraint(d1,die,cellMatrix) && window.verifyCellNumberConstraint(d1,die,cellMatrix) && window.verifyCellColorConstraint(d1,die,cellMatrix)){
            if(window.isWpEmpty())
                window.setWpEmpty(false);
-           PlayGame.setUsingTool(false);
            return cellMatrix[d1.getX()][d1.getY()].insertDie(dp.takeDie(c1.getY()));
        }
        else{
            System.out.print("Non puoi posizionare qui questo dado");
-           PlayGame.setUsingTool(false);
            return false;
         }
     }

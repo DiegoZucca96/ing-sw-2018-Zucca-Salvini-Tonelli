@@ -108,7 +108,7 @@ public interface RMIController extends Remote {
 
     int getRound() throws RemoteException;
 
-    ArrayList<String> getBannedList() throws RemoteException;
+    ArrayList<String> getInactiveList() throws RemoteException;
 
     ViewWP getWP(String userName) throws RemoteException;
 
@@ -133,4 +133,6 @@ public interface RMIController extends Remote {
     boolean getClockwiseRound() throws RemoteException;
 
     int getTokenRemaining(String name) throws RemoteException;
+
+    boolean iAmAlone() throws RemoteException;
 }

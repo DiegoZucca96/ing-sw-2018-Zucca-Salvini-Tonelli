@@ -5,7 +5,6 @@ import ingsw.model.Coordinate;
 import ingsw.model.Die;
 import ingsw.model.ObjectiveTool;
 import ingsw.model.windowpattern.WindowPattern;
-import ingsw.view.PlayGame;
 
 public class Tool4 implements ToolStrategy {
     private String title;
@@ -49,8 +48,6 @@ public class Tool4 implements ToolStrategy {
                 cellMatrix[object.getC2().getX()][object.getC2().getY()].insertDie(die2);
                 System.out.print("Hai violato qualche restrizione, non puoi usare questa ToolCard");
                 return false;
-            }else{
-                PlayGame.setUsingTool(false);
             }
         }
         return true;

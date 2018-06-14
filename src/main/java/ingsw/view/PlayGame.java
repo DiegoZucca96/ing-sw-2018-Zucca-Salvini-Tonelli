@@ -112,9 +112,6 @@ public class PlayGame {
 
         //INIZIALIZZAZIONE
         init = client.initializeView();
-        /*this.updateView = client.updateView();
-        if(updateView!=null)
-            update();*/
         timeBegin = client.getTimeMove();
 
         timeline = new Timeline();
@@ -124,6 +121,7 @@ public class PlayGame {
                         event -> {
                             timeseconds = client.getTimeMove();
                             if(client.getPlayerState().equals("enabled")){
+                                timeseconds = client.getTimeMove();
                                 clockLbl.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 22 \"serif\"");
                                 clockLbl.setText("Tocca a te    "+Integer.toString(timeseconds));
                                 if (timeseconds == timeBegin-1) {
@@ -139,17 +137,15 @@ public class PlayGame {
                                         resetOnButton();
                                     }
                                 }
-
                                 if(timeseconds==0) {
                                     if(!client.getActive()){
                                         Platform.runLater(() -> {
-                                            Boolean answer= ConfirmExit.display("Disconnected", "Do you still want to play?");
-                                            if(answer)
-                                                client.rejoinedPlayer(client.getName());
-                                            else{
-                                                Platform.exit();
-                                            }
+                                            new GUI().display(client);
+                                            //timeline.stop();
+                                            //stage.close();
                                         });
+                                        timeline.stop();
+                                        stage.close();
                                     }
                                 }
                             }else {
@@ -168,7 +164,7 @@ public class PlayGame {
         timeline.playFromStart();
 
         //TOKENS
-        int numberOfTokens = Integer.parseInt(client.getWP(client.getName()).getDifficulty());
+        int numberOfTokens = Integer.parseInt(myWindow.getDifficulty());
         gridTks = new GridPane();
         gridTks.setLayoutY(345);
         gridTks.setLayoutX(720);
@@ -206,15 +202,15 @@ public class PlayGame {
 
         //TOKEN TOOLCARD
         tokenUsed = new GridPane();
-        tokenUsed.setLayoutX(185);
+        tokenUsed.setLayoutX(180);
         tokenUsed.setLayoutY(80);
-        tokenUsed.setVgap(220);
+        tokenUsed.setVgap(210);
         tokenUsed.setHgap(10);
         for(int i=0; i<3; i++){
             Circle tokenTool = new Circle(10, Color.WHITESMOKE);
             tokenTool.setOpacity(1);
             numTokenUsed = new Label();
-            numTokenUsed.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 10 \"serif\"");
+            numTokenUsed.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 18 \"serif\"");
             numTokenUsed.setText("0");
             numTokenUsed.setOpacity(1);
             tokenUsed.add(tokenTool,0,i);
@@ -295,17 +291,23 @@ public class PlayGame {
         skipBtn.setOnAction(e-> {
             if(client.getPlayerState().equalsIgnoreCase("enabled")){
                 choosePressed=false;
-                setUsingTool(true);
+                setUsingTool(false);
                 draftPoolGrid.setDiePressed(false);
                 gridRound.setAccessRound(false);
+                myWindowGrid.setDisable(true);
+                getGridWindow().setAccessWindow(false);
                 client.setActive(true);
+                if(client.iAmAlone()){
+                    new VictoryAlone().start(client.getName());
+                    timeline.stop();
+                    stage.close();
+                }
                 client.skip();
                 if(client.isFinish()){
                     client.calculateScore();
                     new Victory().start(client);
                     stage.close();
                 }
-
             }
         });
         btnGrid.add(skipBtn, 0, 0);
@@ -320,6 +322,7 @@ public class PlayGame {
                     useToolBtn.setDisable(true);
                     takeDieBtn.setDisable(true);
                     cancelBtn.setDisable(false);
+                    myWindowGrid.setDisable(false);
                 }
             });
 
@@ -332,6 +335,7 @@ public class PlayGame {
                     client.setActive(true);
                     draftPoolGrid.setDisable(false);
                     setBtnOnTakeDieClicked();
+                    myWindowGrid.setDisable(false);
                 }
             });
 
@@ -343,7 +347,6 @@ public class PlayGame {
             if(answer){
                 client.setActive(false);
                 client.skip();
-                client.disconnectClient();
                 Platform.exit();
             }
         });
@@ -357,6 +360,12 @@ public class PlayGame {
                 draftPoolGrid.setDiePressed(false);
                 gridRound.setAccessRound(false);
                 getGridWindow().setAccessWindow(false);
+                cardSelected=0;
+                SepiaTone sepiaTone = new SepiaTone();
+                sepiaTone.setLevel(0.7);
+                for(int i=0; i<toolGrid.getChildren().size();i++){
+                    toolGrid.getChildren().get(i).setEffect(sepiaTone);
+                }
                 int col = client.getCoordinateSelectedY();
                 if(col==-1){            //se non ha selezionato nulla
                     resetOnButton();
@@ -457,46 +466,79 @@ public class PlayGame {
                             setUsingTool(false);
                             Toolkit.getDefaultToolkit().beep();
                         }else{
-                            if(!client.useToolCard(cardSelected,null)){
-                                view.setEffect(sepiaTone);
-                                viewUsed=null;
+                            if(cardSelected!=8){
+                                if(!client.useToolCard(cardSelected,null)){
+                                    view.setEffect(sepiaTone);
+                                    viewUsed=null;
+                                    cardSelected=0;
+                                    Toolkit.getDefaultToolkit().beep();
+                                }
                             }
                         }
                     }else{
-                        if(!client.useToolCard(cardSelected,null)){
-                            view.setEffect(sepiaTone);
-                            viewUsed=null;
+                        if(cardSelected!=8){
+                            if(!client.useToolCard(cardSelected,null)){
+                                view.setEffect(sepiaTone);
+                                viewUsed=null;
+                                cardSelected=0;
+                                Toolkit.getDefaultToolkit().beep();
+                            }
                         }
                     }
                 }
+                update();
             }
-            if(cardSelected==7 && !client.getClockwiseRound()){
-                    ToolView toolView = new ToolView();
-                    for(int j = 0; j <client.getListOfPlayers().size()*2+1; j++ ){
-                        if(draftPoolGrid.getButton(0, j).getOpacity()!=0){
-                            toolView.setListOfCoordinateY(Integer.toString(j));
-                        }
-                    }
-                    if(!toolView.getListOfCoordinateY().isEmpty())
-                        if(client.useToolCard(7, toolView)){
-                            draftPoolGrid.updateDP(client.updateView().getDraftPoolDice());
-                            resetOnButton();
-                            setUsingTool(false);
-                            view.setEffect(sepiaTone);
-                            viewUsed=null;
-                        }else{
-                            Toolkit.getDefaultToolkit().beep();
-                        }
-
-            }if(cardSelected == 8 && client.getInsertedDie() && client.getClockwiseRound()){
-                if(client.useToolCard(8,null)){
-                    takeDieBtn.setDisable(false);
-                    client.setTool8Used(true);
-                    view.setEffect(sepiaTone);
-                    viewUsed=null;
-                }else{
-                    Toolkit.getDefaultToolkit().beep();
-                }
+            if(cardSelected==7){
+               if(!client.getClockwiseRound()) {
+                   ToolView toolView = new ToolView();
+                   for(int j = 0; j <client.getListOfPlayers().size()*2+1; j++ ){
+                       if(draftPoolGrid.getButton(0, j).getOpacity()!=0){
+                           toolView.setListOfCoordinateY(Integer.toString(j));
+                       }
+                   }
+                   if(!toolView.getListOfCoordinateY().isEmpty())
+                       if(client.useToolCard(7, toolView)){
+                           draftPoolGrid.updateDP(client.updateView().getDraftPoolDice());
+                           resetOnButton();
+                           setUsingTool(false);
+                           view.setEffect(sepiaTone);
+                           viewUsed=null;
+                       }else{
+                           view.setEffect(sepiaTone);
+                           viewUsed=null;
+                           setUsingTool(false);
+                           Toolkit.getDefaultToolkit().beep();
+                       }
+               }else{
+                   view.setEffect(sepiaTone);
+                   viewUsed=null;
+                   cardSelected=0;
+                   Toolkit.getDefaultToolkit().beep();
+                   setUsingTool(false);
+               }
+            }
+            if(cardSelected == 8){
+               if(client.getInsertedDie() && client.getClockwiseRound()){
+                   if(client.useToolCard(8,null)){
+                       takeDieBtn.setDisable(false);
+                       client.setTool8Used(true);
+                       view.setEffect(sepiaTone);
+                       viewUsed=null;
+                       setUsingTool(false);
+                   }else{
+                       setUsingTool(false);
+                       view.setEffect(sepiaTone);
+                       viewUsed=null;
+                       Toolkit.getDefaultToolkit().beep();
+                   }
+               }
+               else{
+                   setUsingTool(false);
+                   view.setEffect(sepiaTone);
+                   viewUsed=null;
+                   cardSelected=0;
+                   Toolkit.getDefaultToolkit().beep();
+               }
             }
             if(cardSelected == 2 || cardSelected == 3 || cardSelected == 4) {
                 getGridWindow().setAccessWindow(true);
@@ -505,10 +547,6 @@ public class PlayGame {
             if(cardSelected == 12){
                 getGridWindow().setFirstChoice(true);
                 getGridRound().setAccessRound(true);
-            }
-            else{
-                if(cardSelected==8)
-                    Toolkit.getDefaultToolkit().beep();
             }
         });
         view.setImage(imageT);
@@ -598,6 +636,11 @@ public class PlayGame {
         return cardSelected;
     }
 
+    public void setCardSelected(int cardSelected) {
+        this.cardSelected = cardSelected;
+    }
+
+
     public void resetOnButton(){
         skipBtn.setDisable(false);
         useToolBtn.setDisable(false);
@@ -640,8 +683,8 @@ public class PlayGame {
         choosePressed = b;
     }
 
-    public static void setUsingTool(boolean usingTool) {
-        PlayGame.usingTool = usingTool;
+    public  void setUsingTool(boolean usingTool) {
+        this.usingTool = usingTool;
     }
 
     public GridPaneRound getGridRound() {

@@ -51,12 +51,12 @@ class MultiScore implements Runnable {
         timeline.setCycleCount(Timeline.INDEFINITE);
         // KeyFrame event handler
         timeline.getKeyFrames().add(
-                new KeyFrame(Duration.seconds(0.005), event1 -> {
+                new KeyFrame(Duration.seconds(0.01), event1 -> {
                     timeSeconds++;
                     numberRandom = new Random().nextInt(999);
                     // update timerLabel
                     label.setText(namePlayer+"                      "+numberRandom.toString());
-                    if (timeSeconds >= 5) {
+                    if (timeSeconds >= 600) {
                         label.setText(namePlayer+"                       "+client.getScore(namePlayer));
                         Label lab = new Label("The winner is"+"     "+client.findWinner());
                         lab.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 90 \"serif\"; -fx-padding: 0 0 20 0");
@@ -64,7 +64,6 @@ class MultiScore implements Runnable {
                         timeline.stop();
                     }
                 }));
-        label.setText(namePlayer+"                      "+numberRandom.toString());
         timeline.playFromStart();
     }
 

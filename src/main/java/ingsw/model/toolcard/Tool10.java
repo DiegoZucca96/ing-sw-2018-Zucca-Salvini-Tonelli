@@ -3,7 +3,6 @@ package ingsw.model.toolcard;
 import ingsw.model.Die;
 import ingsw.model.DraftPool;
 import ingsw.model.ObjectiveTool;
-import ingsw.view.PlayGame;
 
 public class Tool10 implements ToolStrategy {
     private String title;
@@ -24,7 +23,6 @@ public class Tool10 implements ToolStrategy {
     public boolean doOp(ObjectiveTool object){
         dp = object.getDp();
         die = dp.getDie(object.getC1().getY());
-        PlayGame.setUsingTool(false);
         switch(die.getNumber()){
             case 1:{
                 die.setNumber(6);

@@ -263,15 +263,12 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public boolean iAmBanned(String userName) {
+    public ArrayList<String> getInactiveList() {
         try {
-            if(controller.getBannedList().contains(userName))
-                return true;
-            else
-                return false;
+            return controller.getInactiveList();
         } catch (RemoteException e) {
             handleConnectionError();
-            return false;
+            return null;
         }
     }
 
@@ -408,6 +405,15 @@ public class ClientRMI implements Client {
         } catch (RemoteException e) {
             handleConnectionError();
             return -1;
+        }
+    }
+
+    @Override
+    public boolean iAmAlone() {
+        try {
+            return controller.iAmAlone();
+        } catch (RemoteException e) {
+            return false;
         }
     }
 

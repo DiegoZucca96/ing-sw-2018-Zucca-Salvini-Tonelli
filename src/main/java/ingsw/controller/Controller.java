@@ -4,6 +4,7 @@ import ingsw.*;
 import ingsw.model.*;
 import ingsw.model.windowpattern.WindowPattern;
 import ingsw.view.ToolView;
+import ingsw.view.Victory;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -191,8 +192,9 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             }
             else{
                 try {
-                    if(getPlayerState(account).equalsIgnoreCase("disconnected") && server.getListOfPlayers().size()<=4){
+                    if(getPlayerState(account).equalsIgnoreCase("disconnected") && server.getInactivePlayer().contains(account)){
                         windowChosen = updateView().getWps();
+                        rejoinedPlayer(account);
                         return true;
                     }
                 } catch (RemoteException e) {
@@ -258,11 +260,15 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     public void skip(String clientName) throws RemoteException{
         if(getPlayerState(clientName).equals("enabled")) {
             if (!active) {
-                timeout(clientName);
+                if(!getInactiveList().contains(clientName))
+                    timeout(clientName);
+                disconnectClient(clientName);
             }
             timer.cancel();
-            disableClient(getCurrentPlayerName());
+            if(getPlayerState(clientName).equalsIgnoreCase("enabled"))
+                disableClient(getCurrentPlayerName());
             turn++;
+            active=false;
             if (turn == getSizeOfPlayers() * 2) {
                 if (match.getRound() == 10) isFinish = true;
                 else {
@@ -297,6 +303,14 @@ public class Controller extends UnicastRemoteObject implements RMIController {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean iAmAlone() throws RemoteException{
+        if(getSizeOfPlayers()-1 == getInactiveList().size())
+            return true;
+        else
+            return false;
     }
 
     @Override
@@ -335,11 +349,13 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     public boolean useToolCard(int idCard, ToolView toolView){
         PlayerToolParameter pt = null;
         //Serve per consumare i token quando clicco sulla carta, se posso usarla
-        if(toolView==null){
-            if(match.playerUseTool(idCard,null))
-                return true;
-            else
-                return false;
+        if(idCard!=8){
+            if(toolView==null){
+                if(match.playerUseTool(idCard,null))
+                    return true;
+                else
+                    return false;
+            }
         }
         switch(idCard){
             case 1: {
@@ -448,8 +464,8 @@ public class Controller extends UnicastRemoteObject implements RMIController {
 
     @Override
     public void rejoinedPlayer(String name) throws RemoteException {
-        if(server.getBannedPlayer().contains(name)){
-            server.getBannedPlayer().remove(name);
+        if(server.getInactivePlayer().contains(name)){
+            server.getInactivePlayer().remove(name);
         }
     }
 
@@ -470,8 +486,8 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
 
     @Override
-    public ArrayList<String> getBannedList() {
-        return server.getBannedPlayer();
+    public ArrayList<String> getInactiveList() {
+        return server.getInactivePlayer();
     }
 
     @Override

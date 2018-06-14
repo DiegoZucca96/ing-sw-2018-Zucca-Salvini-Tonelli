@@ -85,7 +85,7 @@ public class ServerHandler implements Runnable {
             else if (command.equals("getCoordinateSelectedX")) getCoordinateSelectedX();
             else if (command.equals("getCoordinateSelectedY")) getCoordinateSelectedY();
             else if (command.equals("getWP")) getWP(parameter);
-            else if (command.equals("iAmLegend")) iAmBanned(parameter);
+            else if (command.equals("iAmLegend")) getInactiveList();
             else if (command.equals("orderWPChoise")) orderWPChoise();
             else if (command.equals("matchFound")) matchFound();
             else if (command.equals("isFinish")) isFinish();
@@ -283,7 +283,7 @@ public class ServerHandler implements Runnable {
         out.println(false);
     }
 
-    private void iAmBanned(String parameter){
+    private void getInactiveList(){
         out.println(false);
     }
 

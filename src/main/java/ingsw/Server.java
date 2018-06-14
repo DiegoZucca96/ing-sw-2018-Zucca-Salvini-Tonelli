@@ -167,7 +167,7 @@ public class Server {
         inactivePlayers.add(clientName);
     }
 
-    public ArrayList<String> getBannedPlayer() {
+    public ArrayList<String> getInactivePlayer() {
         return inactivePlayers;
     }
 }

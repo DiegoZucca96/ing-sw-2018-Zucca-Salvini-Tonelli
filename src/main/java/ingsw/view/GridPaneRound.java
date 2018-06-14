@@ -146,6 +146,8 @@ public class GridPaneRound extends GridPane {
                         playGame.getDraftPoolGrid().getButton(toolView.getStartRow1(),toolView.getStartCol1()).setBackground(button.getBackground());
                         playGame.getDraftPoolGrid().getButton(toolView.getStartRow1(),toolView.getStartCol1()).setOpacity(1);
                         playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(1);
+                        playGame.setUsingTool(false);
+                        playGame.setCardSelected(0);
                     }
                 }
                 else if(playGame.getCardSelected()==12){

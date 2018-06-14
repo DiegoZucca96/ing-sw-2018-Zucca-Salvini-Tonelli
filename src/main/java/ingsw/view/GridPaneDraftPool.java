@@ -105,18 +105,20 @@ public class GridPaneDraftPool extends GridPane {
                                     dieInfo = new DieInfo(button.getBackground(), row, col);
                                     buttonDieSelected.setBackground(button.getBackground());
                                     buttonDieSelected.setOpacity(1);
+                                    playGame.setUsingTool(false);
+                                    playGame.setCardSelected(0);
                                 }
                             }
                             break;
                         }
-                        case 8 :{
+                        /*case 8 :{
                             if(client.takeDie(row,col)){
                                 dieInfo = new DieInfo(button.getBackground(), row, col);
                                 buttonDieSelected.setBackground(button.getBackground());
                                 buttonDieSelected.setOpacity(1);
                             }
                             break;
-                        }
+                        }*/
                         case 9 :{
                             if(client.takeDie(row,col)){
                                 playGame.getGridWindow().setAccessWindow(true);
@@ -136,6 +138,8 @@ public class GridPaneDraftPool extends GridPane {
                                     dieInfo = new DieInfo(button.getBackground(), row, col);
                                     buttonDieSelected.setBackground(button.getBackground());
                                     buttonDieSelected.setOpacity(1);
+                                    playGame.setUsingTool(false);
+                                    playGame.setCardSelected(0);
                                 }
                             }
                             break;
@@ -217,6 +221,8 @@ public class GridPaneDraftPool extends GridPane {
                         getDieInfo().setRow(row);
                         buttonDieSelected.setBackground(b.getBackground());
                         buttonDieSelected.setOpacity(1);
+                        playGame.setUsingTool(false);
+                        playGame.setCardSelected(0);
                     }
                     stage.close();
                 }

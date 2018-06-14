@@ -4,9 +4,7 @@ import ingsw.model.Cell;
 import ingsw.model.Die;
 import ingsw.model.ObjectiveTool;
 import ingsw.model.windowpattern.WindowPattern;
-import ingsw.view.PlayGame;
 
-//In UML
 public class Tool2 implements ToolStrategy {
     private Die possibledie;
     private Die die;
@@ -32,13 +30,11 @@ public class Tool2 implements ToolStrategy {
         possibledie = cellMatrix[object.getC1().getX()][object.getC1().getY()].takeDie();
         if(window.verifyDieColorConstraint(object.getD1(),possibledie,cellMatrix) && window.verifyDieNumberConstraint(object.getD1(),possibledie,cellMatrix) && window.verifyPosition(object.getD1(),cellMatrix)){
             cellMatrix[object.getD1().getX()][object.getD1().getY()].insertDie(possibledie);
-            PlayGame.setUsingTool(false);
             return true;
         }
         else{
             cellMatrix[object.getC1().getX()][object.getC1().getY()].insertDie(possibledie);
             System.out.println("Posizione di destinazione non corretta");
-            PlayGame.setUsingTool(false);
         }
         return false;
     }

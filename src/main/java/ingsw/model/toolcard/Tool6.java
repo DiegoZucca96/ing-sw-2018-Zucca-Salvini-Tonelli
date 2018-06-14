@@ -2,7 +2,6 @@ package ingsw.model.toolcard;
 
 import ingsw.model.*;
 import ingsw.model.windowpattern.WindowPattern;
-import ingsw.view.PlayGame;
 
 import java.util.Random;
 
@@ -27,27 +26,9 @@ public class Tool6 implements ToolStrategy {
         die = dp.getDie(object.getC1().getY());
         Random r = new Random();
         die.setNumber(r.nextInt(6)+1);
-        PlayGame.setUsingTool(false);
         return true;
-        /*if(!isInsertable(object.getWindow(),die)){  //Metodo che controlla se ci sono possibili inserimenti
-            dp = object.getDp();
-            //dp.addDie(die);
-        }
-        //Manca un pezzo in cui si chiede al player dove vuole inserire il dado se può inserirlo
-        return false;*/
     }
 
-    public boolean isInsertable(WindowPattern window, Die die){
-        for(int i=0; i<4;i++){
-            for(int j=0; j<5; j++){
-                Coordinate coordinate = new Coordinate(i,j);
-                if( window.getCellMatrix()[i][j].isEmpty() && window.verifyDieColorConstraint(coordinate,die,window.getCellMatrix()) && window.verifyDieNumberConstraint(coordinate,die,window.getCellMatrix()) &&window.verifyCellColorConstraint(coordinate,die,window.getCellMatrix()) && window.verifyCellNumberConstraint(coordinate,die,window.getCellMatrix()) && window.verifyPosition(coordinate,window.getCellMatrix())){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
     public int getIdCard() {
         return idCard;

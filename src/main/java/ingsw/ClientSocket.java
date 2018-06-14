@@ -294,10 +294,17 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public boolean iAmBanned(String userName) {
+    public ArrayList<String> getInactiveList() {
         setupConnection();
-        out.println("iAmLegend:"+ userName);
-        boolean response = Boolean.parseBoolean(in.nextLine());
+        out.println("iAmLegend:");
+        ArrayList<String> response = null;
+        try {
+            response = ((ArrayList<String>) is.readObject());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         closeConnection();
         return response;
     }
@@ -433,6 +440,13 @@ public class ClientSocket implements Client {
         int response = Integer.parseInt(in.nextLine());
         closeConnection();
         return response;
+    }
+
+    @Override
+    public boolean iAmAlone() {
+        //da impl
+
+        return false;
     }
 
     @Override

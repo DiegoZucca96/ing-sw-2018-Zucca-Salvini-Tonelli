@@ -17,7 +17,7 @@ public class Warning {
         Pane root = new Pane();
         root.setPrefSize(300, 100);
         final Scene scene = new Scene(root);
-        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        PauseTransition delay = new PauseTransition(Duration.seconds(3));
         delay.setOnFinished( event -> stage.close() );
         delay.play();
         Text text = new Text(alert);

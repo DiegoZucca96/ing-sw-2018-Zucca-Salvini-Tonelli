@@ -3,7 +3,6 @@ package ingsw.model.toolcard;
 import ingsw.model.Coordinate;
 import ingsw.model.DraftPool;
 import ingsw.model.ObjectiveTool;
-import ingsw.view.PlayGame;
 
 import java.util.ArrayList;
 
@@ -28,10 +27,8 @@ public class Tool7 implements ToolStrategy {
            ArrayList<Coordinate> coordinates = object.getListOfCoordinateY();
            dp = object.getDp();
            dp.refreshDraftPool(coordinates); //Metodo che ritira i dadi
-           PlayGame.setUsingTool(false);
            return true;
        }
-        PlayGame.setUsingTool(false);
         return false;
     }
 
