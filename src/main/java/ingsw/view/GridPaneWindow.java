@@ -18,13 +18,10 @@ import java.util.ArrayList;
 public class GridPaneWindow extends GridPane {
 
     private ArrayList<DieInfo> dieInfos = new ArrayList<>();
-    private ArrayList<CellInfo> cellInfos= new ArrayList<>();
     private Client client;
     private GridPaneDraftPool draftPool;
     private static boolean accessWindow = false;
     private PlayGame playGame;
-    String number;
-    String color;
     private boolean firstChoice = true;
     private ToolView toolView ;
     private ViewWP myWindow;
@@ -395,15 +392,6 @@ public class GridPaneWindow extends GridPane {
     public void addDieInfo(Background image, int i, int j) {
         DieInfo dieInfo = new DieInfo(image, i, j);
         dieInfos.add(dieInfo);
-    }
-
-    public ArrayList<CellInfo> getCellInfo(){
-        return cellInfos;
-    }
-
-    public void addCellInfo(Background image, int i, int j) {
-        CellInfo cellInfo= new CellInfo(image, i, j);
-        cellInfos.add(cellInfo);
     }
 
     public void setAccessWindow(boolean accessWindow) {

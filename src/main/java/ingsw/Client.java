@@ -159,6 +159,12 @@ public interface Client {
     //Restituisce un valore true se sono l'unico giocatore attivo al momento dello skip
     boolean iAmAlone();
 
+    int getStartTimeMove();
+
+    void setName(String userName);
+
+    void handleConnectionError();
+
     /*
     "windowpattern(name(ciao),difficulty(4),cell(row(0),column(0),number(0),color(RED),Die(number(5),color(RED)),cell(..."
 

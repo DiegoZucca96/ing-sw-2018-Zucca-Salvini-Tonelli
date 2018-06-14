@@ -134,37 +134,43 @@ public class GUI  {
         Image image2 = new Image(imagePath, 20, 20, false, false);
         imageOk.setImage(image2);
         Button btnLogin = new Button( "Log in", imageOk);
+        warning1.setText("Register now to play");
+        warning1.setTextFill(Color.RED);
         btnLogin.setOnAction(e->{
             // SERVER VERIFICA LE CREDENZIALI
             userName = tfName.getText();
-
-                if (!userName.isEmpty()) {
-                    try{
-                        if(!client.matchFound() && client.login(userName)){
+            if (!userName.isEmpty()) {
+                try{
+                    if(!client.matchFound() && client.login(userName)){
+                        stage.close();
+                        window.close();
+                        client.setName(userName);
+                        new Loading(client).display(new Stage(), "LOADING MATCH", null);
+                    }else{
+                        if(client.matchFound() && client.login(userName)){
+                            //NB! Viene ricreata la schermata iniziale del gioco, ma non è sincronizzato con tutto il resto
                             stage.close();
                             window.close();
-                            new Loading(client).display(new Stage(), "LOADING MATCH", null);
-                        }else{
-                            if(client.matchFound() && client.login(userName)){
-                                //NB! Viene ricreata la schermata iniziale del gioco, ma non è sincronizzato con tutto il resto
-                                stage.close();
-                                window.close();
-                                new PlayGame(client).display(client.getWP(userName));
-                            }
-                            else{
+                            client.setName(userName);
+                            new PlayGame(client).display(client.getWP(userName));
+                        }
+                        else{
+                            if(!client.login(userName) && client.isFinish()){
+                                warning1.setText("Match is finished");
+                                warning1.setTextFill(Color.RED);
+                            }else{
                                 warning1.setText("Match is full or started, sorry");
                                 warning1.setTextFill(Color.RED);
                             }
-                            warning1.setText("Register now to play");
-                            warning1.setTextFill(Color.RED);
                         }
-                    }catch (NoSuchElementException e2){
-                        System.err.println(e2.getMessage());
                     }
-                }else{
-                    warning1.setText("Insert at least one letter");
-                    warning1.setTextFill(Color.RED);
+                }catch (NoSuchElementException e2){
+                    System.err.println(e2.getMessage());
                 }
+            }else{
+                warning1.setText("Insert at least one letter");
+                warning1.setTextFill(Color.RED);
+            }
         });
 
 

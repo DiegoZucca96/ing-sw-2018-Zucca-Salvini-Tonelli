@@ -70,4 +70,8 @@ public class ControllerTimer {
     public void setTimeMoveRemaining(int timeMoveRemaining) {
         this.timeMoveRemaining = timeMoveRemaining;
     }
+
+    public void setTimeSearch(int timeSearch) {
+        this.timeRemaining=timeSearch;
+    }
 }

@@ -186,13 +186,15 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     private boolean access(String account){
         //se esiste già il nome salvato nel server non puoi accedere
         if(server.getListOfClient().contains(account)){
-            if(!server.getListOfPlayers().contains(account) && server.getListOfPlayers().size()<4){
+            if(!server.getListOfPlayers().contains(account) && server.getListOfPlayers().size()<4 && getTimeRemaining()>0){
                 server.addPlayers(account);
                 return true;
             }
             else{
                 try {
-                    if(getPlayerState(account).equalsIgnoreCase("disconnected") && server.getInactivePlayer().contains(account)){
+                    if(server.getClientState(account)==null)
+                        return false;
+                    if(getPlayerState(account).equalsIgnoreCase("disconnected") && server.getInactivePlayer().contains(account) && !isFinish){
                         windowChosen = updateView().getWps();
                         rejoinedPlayer(account);
                         return true;
@@ -258,6 +260,10 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     //Salta volontariamente il turno oppure forzatamente dalla fine del timer de giocatore
     @Override
     public void skip(String clientName) throws RemoteException{
+        if(iAmAlone()){
+            isFinish=true;
+            controllerTimer.setTimeSearch(timeSearch);
+        }
         if(getPlayerState(clientName).equals("enabled")) {
             if (!active) {
                 if(!getInactiveList().contains(clientName))
@@ -302,6 +308,12 @@ public class Controller extends UnicastRemoteObject implements RMIController {
                     controllerTimer.startPlayerTimer(this, timer);
                 }
             }
+        }else{
+            if (!active) {
+                if(!getInactiveList().contains(clientName))
+                    timeout(clientName);
+                disconnectClient(clientName);
+            }
         }
     }
 
@@ -311,6 +323,11 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             return true;
         else
             return false;
+    }
+
+    @Override
+    public int getStartTimeMove() throws RemoteException {
+        return playerMoveTime;
     }
 
     @Override

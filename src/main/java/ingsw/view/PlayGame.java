@@ -112,7 +112,7 @@ public class PlayGame {
 
         //INIZIALIZZAZIONE
         init = client.initializeView();
-        timeBegin = client.getTimeMove();
+        timeBegin = client.getStartTimeMove();
 
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -120,44 +120,50 @@ public class PlayGame {
                 new KeyFrame(Duration.millis(1000),
                         event -> {
                             timeseconds = client.getTimeMove();
-                            if(client.getPlayerState().equals("enabled")){
-                                timeseconds = client.getTimeMove();
-                                clockLbl.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 22 \"serif\"");
-                                clockLbl.setText("Tocca a te    "+Integer.toString(timeseconds));
-                                if (timeseconds == timeBegin-1) {
-                                    this.updateView = client.updateView();
-                                    if(updateView!=null)
-                                        update();
-                                    resetOnButton();
-                                }else{ //Per il problema che a volte scala di due secondi e i bottoni non si attivano
-                                    if (timeseconds == timeBegin-2 && !choosePressed && !getUsingTool()) {
+                            if(timeseconds==-1000){
+                                Platform.runLater(() -> {
+                                    new Warning(stage,client);
+                                });
+                                timeline.stop();
+                            }
+                            else{
+                                if(client.getPlayerState().equals("enabled")){
+                                        timeseconds = client.getTimeMove();
+                                        clockLbl.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 22 \"serif\"");
+                                        clockLbl.setText("Tocca a te    "+Integer.toString(timeseconds));
+                                        if (timeseconds == timeBegin-1) {
+                                            this.updateView = client.updateView();
+                                            if(updateView!=null)
+                                            update();
+                                        resetOnButton();
+                                    }else{ //Per il problema che a volte scala di due secondi e i bottoni non si attivano
+                                        if (timeseconds == timeBegin-2 && !choosePressed && !getUsingTool()) {
+                                            this.updateView = client.updateView();
+                                            if(updateView!=null)
+                                                update();
+                                            resetOnButton();
+                                        }
+                                    }
+                                    if(timeseconds==0) {
+                                        if(!client.getActive()){
+                                            Platform.runLater(() -> {
+                                                new GUI().display(client);
+                                            });
+                                            timeline.stop();
+                                            stage.close();
+                                        }
+                                    }
+                                }else {
+                                    clockLbl.setStyle(styleSheet);
+                                    clockLbl.setText("Tocca a "+client.getCurrentPlayer()+"      "+Integer.toString(timeseconds));
+                                    if (timeseconds == timeBegin-1) {
+                                        resetOffButton();
+                                    }
+                                    if(timeseconds%5==0){
                                         this.updateView = client.updateView();
                                         if(updateView!=null)
                                             update();
-                                        resetOnButton();
                                     }
-                                }
-                                if(timeseconds==0) {
-                                    if(!client.getActive()){
-                                        Platform.runLater(() -> {
-                                            new GUI().display(client);
-                                            //timeline.stop();
-                                            //stage.close();
-                                        });
-                                        timeline.stop();
-                                        stage.close();
-                                    }
-                                }
-                            }else {
-                                clockLbl.setStyle(styleSheet);
-                                clockLbl.setText("Tocca a "+client.getCurrentPlayer()+"      "+Integer.toString(timeseconds));
-                                if (timeseconds == timeBegin-1) {
-                                    resetOffButton();
-                                }
-                                if(timeseconds%5==0){
-                                    this.updateView = client.updateView();
-                                    if(updateView!=null)
-                                        update();
                                 }
                             }
                         }));
@@ -292,21 +298,22 @@ public class PlayGame {
             if(client.getPlayerState().equalsIgnoreCase("enabled")){
                 choosePressed=false;
                 setUsingTool(false);
-                draftPoolGrid.setDiePressed(false);
                 gridRound.setAccessRound(false);
                 myWindowGrid.setDisable(true);
                 getGridWindow().setAccessWindow(false);
                 client.setActive(true);
                 if(client.iAmAlone()){
                     new VictoryAlone().start(client.getName());
+                    client.skip();
                     timeline.stop();
                     stage.close();
-                }
-                client.skip();
-                if(client.isFinish()){
-                    client.calculateScore();
-                    new Victory().start(client);
-                    stage.close();
+                }else{
+                    client.skip();
+                    if(client.isFinish()){
+                        client.calculateScore();
+                        new Victory().start(client);
+                        stage.close();
+                    }
                 }
             }
         });
@@ -343,7 +350,8 @@ public class PlayGame {
 
         exitBtn = new Button("Exit game");
         exitBtn.setOnAction(e-> {
-            Boolean answer= ConfirmExit.display("Quit", "Are you sure to exit without saving?");
+            Warning warning = new Warning("Sei sicuro di voler uscire?");
+            Boolean answer= warning.display();
             if(answer){
                 client.setActive(false);
                 client.skip();
@@ -357,7 +365,6 @@ public class PlayGame {
             if(client.getPlayerState().equalsIgnoreCase("enabled")){
                 choosePressed=false;
                 setUsingTool(false);
-                draftPoolGrid.setDiePressed(false);
                 gridRound.setAccessRound(false);
                 getGridWindow().setAccessWindow(false);
                 cardSelected=0;
@@ -406,8 +413,8 @@ public class PlayGame {
             for (int j = 0; j < 5; j++) {
                 number = Integer.toString(myWindow.getWp()[i][j].getNum());
                 color = String.valueOf(myWindow.getWp()[i][j].getColor());
-                ButtonView buttonView = new ButtonView(number, color, 0);
-                gridPane.add(buttonView, j, i);
+                PaneView paneView = new PaneView(number, color, 0);
+                gridPane.add(paneView, j, i);
             }
         }
         return gridPane;
@@ -568,8 +575,8 @@ public class PlayGame {
             for (int j = 0; j < 5; j++) {
                 number = Integer.toString(wp.getWp()[i][j].getNum());
                 color = String.valueOf(wp.getWp()[i][j].getColor());
-                ButtonView buttonView = new ButtonView(number, color, 1);
-                grid.add(buttonView, j, i);
+                PaneView paneView = new PaneView(number, color, 1);
+                grid.add(paneView, j, i);
             }
         }
         return grid;
@@ -683,7 +690,7 @@ public class PlayGame {
         choosePressed = b;
     }
 
-    public  void setUsingTool(boolean usingTool) {
+    public void setUsingTool(boolean usingTool) {
         this.usingTool = usingTool;
     }
 

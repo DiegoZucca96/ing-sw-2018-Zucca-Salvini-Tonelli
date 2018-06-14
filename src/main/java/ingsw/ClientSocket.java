@@ -450,6 +450,23 @@ public class ClientSocket implements Client {
     }
 
     @Override
+    public int getStartTimeMove() {
+        //da impl
+
+        return -1;
+    }
+
+    @Override
+    public void setName(String userName) {
+        //da impl
+    }
+
+    @Override
+    public void handleConnectionError() {
+        //Da non usare
+    }
+
+    @Override
     public ArrayList<ViewWP> getPlayerWPs(String name){
         setupConnection();
         out.println("getPlayersWPs:"+name);

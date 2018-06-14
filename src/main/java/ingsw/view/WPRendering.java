@@ -7,9 +7,7 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -53,8 +51,8 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 String numCell = Integer.toString(displayWindow.get(0).getWp()[i][j].getNum());
                 String colorCell = String.valueOf(displayWindow.get(0).getWp()[i][j].getColor());
-                ButtonView buttonView = new ButtonView(numCell, colorCell, 0);
-                grid1.add(buttonView, j, i);       //ricorda che il primo è colonna, il secondo riga
+                PaneView paneView = new PaneView(numCell, colorCell, 0);
+                grid1.add(paneView, j, i);       //ricorda che il primo è colonna, il secondo riga
 
             }
         }
@@ -99,8 +97,8 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 String numCell = Integer.toString(displayWindow.get(1).getWp()[i][j].getNum());
                 String colorCell = String.valueOf(displayWindow.get(1).getWp()[i][j].getColor());
-                ButtonView buttonView = new ButtonView(numCell, colorCell, 0);
-                grid2.add(buttonView, j, i);
+                PaneView paneView = new PaneView(numCell, colorCell, 0);
+                grid2.add(paneView, j, i);
 
             }
         }
@@ -145,8 +143,8 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 String numCell = Integer.toString(displayWindow.get(2).getWp()[i][j].getNum());
                 String colorCell = String.valueOf(displayWindow.get(2).getWp()[i][j].getColor());
-                ButtonView buttonView = new ButtonView(numCell, colorCell, 0);
-                grid3.add(buttonView, j, i);
+                PaneView paneView = new PaneView(numCell, colorCell, 0);
+                grid3.add(paneView, j, i);
 
             }
         }
@@ -190,8 +188,8 @@ public class WPRendering {
             for( int j=0; j<5; j++){
                 String numCell = Integer.toString(displayWindow.get(3).getWp()[i][j].getNum());
                 String colorCell = String.valueOf(displayWindow.get(3).getWp()[i][j].getColor());
-                ButtonView buttonView = new ButtonView(numCell, colorCell, 0);
-                grid4.add(buttonView, j, i);
+                PaneView paneView = new PaneView(numCell, colorCell, 0);
+                grid4.add(paneView, j, i);
 
             }
         }

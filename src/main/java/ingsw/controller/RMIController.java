@@ -135,4 +135,6 @@ public interface RMIController extends Remote {
     int getTokenRemaining(String name) throws RemoteException;
 
     boolean iAmAlone() throws RemoteException;
+
+    int getStartTimeMove() throws RemoteException;
 }

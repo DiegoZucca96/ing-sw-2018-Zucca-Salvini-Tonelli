@@ -23,7 +23,6 @@ public class GridPaneDraftPool extends GridPane {
     private Client client;
     private Button b;
     private Button buttonDieSelected;
-    private boolean diePressed;
     private PlayGame playGame;
 
 
@@ -31,7 +30,6 @@ public class GridPaneDraftPool extends GridPane {
         this.client = client;
         int diceThrows = client.getNumberOfPlayers()*2+1;
         this.buttonDieSelected = buttonDieSelected;
-        this.diePressed = false;
         this.playGame=playGame;
         this.setHgap(10);
         this.setVgap(10);
@@ -216,9 +214,7 @@ public class GridPaneDraftPool extends GridPane {
                     toolView.setStartCol1(col);
                     if(client.useToolCard(1,toolView)){
                         updateDP(client.updateView().getDraftPoolDice());
-                        getDieInfo().setBackground(b.getBackground());
-                        getDieInfo().setColumn(col);
-                        getDieInfo().setRow(row);
+                        dieInfo = new DieInfo(b.getBackground(), row, col);
                         buttonDieSelected.setBackground(b.getBackground());
                         buttonDieSelected.setOpacity(1);
                         playGame.setUsingTool(false);
@@ -249,10 +245,6 @@ public class GridPaneDraftPool extends GridPane {
             stage.setTitle("Use tool 11");
         stage.setScene(scene);
         stage.show();
-    }
-
-    public void setDiePressed(boolean diePressed) {
-        this.diePressed = diePressed;
     }
 
     public void deselectBtn(){

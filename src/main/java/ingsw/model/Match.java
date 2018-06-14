@@ -22,12 +22,6 @@ public class Match {
     public Match(int id, ArrayList<String> playersNames, ArrayList<Integer> playersWP) {    //viene passato l'id dal Server per identificare il match
         this.id = id;
 
-        /*for(int i=0; i < server.listOfClient.size(); i++){
-            if(server.listOfClient[i].client.playingAt() = id){
-                players.add(server.listOfClient[i].client);
-            }
-        }*/
-
         //Inizializzazione dei giocatori sulla base dei dati ricevuti dal costruttore
         players = new ArrayList<Player>();
         RandomGenerator rg = new RandomGenerator(4);

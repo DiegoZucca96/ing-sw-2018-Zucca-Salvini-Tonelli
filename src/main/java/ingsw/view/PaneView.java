@@ -4,9 +4,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-public class ButtonView extends Pane {
+public class PaneView extends Pane {
 
-    ButtonView(String number, String color, int me){
+    PaneView(String number, String color, int me){
         if(me==0)
             this.setPrefSize(50, 50);
         else

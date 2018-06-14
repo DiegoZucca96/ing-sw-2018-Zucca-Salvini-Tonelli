@@ -5,7 +5,7 @@ import ingsw.model.ViewWP;
 import ingsw.model.ViewData;
 import ingsw.view.GUI;
 import ingsw.view.ToolView;
-
+import ingsw.view.Warning;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -13,11 +13,13 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class ClientRMI implements Client {
 
     private String name;
     private RMIController controller;
+    private ScheduledExecutorService executorService = null;
 
     public void startClient() throws IOException{
         Registry registry = LocateRegistry.getRegistry("localhost",1081);
@@ -33,6 +35,7 @@ public class ClientRMI implements Client {
         this.controller = controller;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
@@ -42,7 +45,7 @@ public class ClientRMI implements Client {
         try {
             return controller.login(nickname);
         } catch (RemoteException e) {
-            handleConnectionError();
+            new Warning(this);
             return  false;
         }
     }
@@ -215,9 +218,8 @@ public class ClientRMI implements Client {
         try {
             return controller.getTimeMove();
         } catch (RemoteException e) {
-            handleConnectionError();
+            return -1000;
         }
-        return -1;
     }
 
     @Override
@@ -413,7 +415,18 @@ public class ClientRMI implements Client {
         try {
             return controller.iAmAlone();
         } catch (RemoteException e) {
+            handleConnectionError();
             return false;
+        }
+    }
+
+    @Override
+    public int getStartTimeMove() {
+        try {
+            return controller.getStartTimeMove();
+        } catch (RemoteException e) {
+            handleConnectionError();
+            return -1;
         }
     }
 
@@ -515,8 +528,16 @@ public class ClientRMI implements Client {
         return -1;
     }
 
-    private void handleConnectionError(){
-        //notify lost connection to player
-        new GUI().display(new ClientSocket("127.0.0.1", 1080));
+    @Override
+    public void handleConnectionError(){
+        Registry registry = null;
+        try {
+            registry = LocateRegistry.getRegistry("localhost", 1081);
+            if(registry!=null)
+                controller = (RMIController) registry.lookup("controller");
+            Warning.setStop(true);
+        } catch (Exception e) {
+            registry=null;
+        }
     }
 }

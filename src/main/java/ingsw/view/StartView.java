@@ -26,11 +26,6 @@ public class StartView extends Application {
     public void setupConnection(String connectionType){
         if(connectionType.equals("socket")){
             client = new ClientSocket("127.0.0.1",1080);
-            /*try{
-                client.startClient();
-            }catch (IOException e){
-                System.err.println(e.getMessage());
-            }*/
             new GUI().display(client);
         } else if(connectionType.equals("RMI")){
             client = new ClientRMI();
