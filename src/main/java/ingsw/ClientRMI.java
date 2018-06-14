@@ -516,6 +516,7 @@ public class ClientRMI implements Client {
     }
 
     private void handleConnectionError(){
-
+        //notify lost connection to player
+        new GUI().display(new ClientSocket("127.0.0.1", 1080));
     }
 }
