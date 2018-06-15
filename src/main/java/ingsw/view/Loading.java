@@ -109,7 +109,19 @@ public class Loading {
         rightPane.setLayoutX(200);
         rightPane.setLayoutY(100);
         rightPane.getChildren().addAll(lblProgress);
-
+        if(myWindow==null){
+            Button stopBtn = new Button("Annulla");
+            stopBtn.setStyle("-fx-border-color: black");
+            stopBtn.setOpacity(0.5);
+            stopBtn.setLayoutX(400);
+            stopBtn.setLayoutY(200);
+            stopBtn.setOnAction(e->{
+                //da impl
+                primaryStage.close();
+                new GUI().display(client);
+            });
+            root.getChildren().add(stopBtn);
+        }
         root.getChildren().addAll(leftPane, rightPane);
         root.setStyle("-fx-background-color:black;");
 
