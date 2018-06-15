@@ -36,7 +36,7 @@ two interface ToolStartegy and PublicStrategy. Public Cards are simplier than th
 Each tool needs a particular input in order to be executed. So we are supported by a class called ObjectiveTool which is enriched 
 by an other class PlayerToolParameter. Now, this is complicated but we will explain in the controller why all this has been done.
 
-So when a tool card is used by a user the objective tool will be fill in the gap every time the user will pressed a buttom or an image.
+So when a tool card is used by a user the objective tool will be fill in the gap every time the user will pressed a button or an image.
 By using this trick we ensure the parameter which is passed to the method ToolCard.doOP(parameter) is enough in order
 to execute the entire card.
 
@@ -78,8 +78,7 @@ of the one in ControllerTimer when the server started after the time has been se
 But this is not the only thing it does.Timeline is also responsible of the update of my view during the match. Each 5 seconds it 
 calls update() in order to update, by getting new infos from ViewData.
 
-GridPaneRound, GridPaneDraftPool, GridPaneWindow and GridPaneWEnemy, whose names are quite explicit, have their own method update useful to get an update when 
-a modification in model is performed.
+GridPaneRound, GridPaneDraftPool, GridPaneWindow and GridPaneWEnemy, whose names are quite explicit, have their own method update useful to get an update when a modification in model is performed.
 
 ToolView is class which allows the use of tool cards. It encapsulates infos like button's coordinates, toolclicked. It will 
 be passed throws client.useTool(toolView) to controller and it will be elaborated (see Controller paragraph).
