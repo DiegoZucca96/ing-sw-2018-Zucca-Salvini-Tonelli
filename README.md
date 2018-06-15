@@ -21,16 +21,16 @@ Design Pattern : Strategy , Factory
 There are two main classes: Match and Player. They have the responsability to contain all data of the game.
 
 Match is the one which initializes the real match, namely Objects (RoundTrack, DiceBag, DraftPool, ToolCard, PublicCard, Player)
-which are part of the match itself. In order to generate random number for the production of Cards and Maps we implemented 
+which are part of the match itself. In order to generate random number for the production of Cards and Maps, we implemented 
 RandomGenerator which imports java.util.Random.
 
 Player, instead, is the one that contains WindowPattern, which contains 20 Cells, and PrivateCard.
 
 Moving to the design:
 
-### Startegy
+### Strategy
 
-Strategy has been adopted due to the choice of the card. As the tool and public cards as the same structure respectively, we create 
+Strategy has been adopted due to the choice of the card. As the tool and public cards has the same structure respectively, we create 
 two interface ToolStartegy and PublicStrategy. Public Cards are simplier than the Tool Cards, so we are going to describe the last one.
 
 Each tool needs a particular input in order to be executed. So we are supported by a class called ObjectiveTool which is enriched 
