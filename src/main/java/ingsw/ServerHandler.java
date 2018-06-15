@@ -2,6 +2,7 @@ package ingsw;
 
 import ingsw.controller.RMIController;
 import ingsw.model.ViewWP;
+import ingsw.view.ToolView;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -92,6 +93,7 @@ public class ServerHandler implements Runnable {
             else if (command.equals("setTool8Used")) setTool8Used(parameter);
             else if (command.equals("getClockwiseRound")) getClockwiseRound();
             else if (command.equals("getTokenRemaining")) getTokenRemaining(parameter);
+            else if (command.equals("useToolCard")) useToolCard(parameter);
             closeConnection();
         }
          catch (IOException e) {
@@ -299,5 +301,14 @@ public class ServerHandler implements Runnable {
 
     private void getTokenRemaining(String parameter) throws RemoteException {
         out.println(controller.getTokenRemaining(parameter));
+    }
+
+    private void useToolCard(String parameter) throws IOException{
+        out.println("ok");
+        try {
+            out.println(controller.useToolCard(Integer.parseInt(parameter),(ToolView)is.readObject()));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

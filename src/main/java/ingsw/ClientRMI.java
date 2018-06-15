@@ -74,13 +74,15 @@ public class ClientRMI implements Client {
 
     @Override
     public boolean skip() {
+        boolean response;
         try {
             controller.skip(name);
-            return true;
+            response = true;
         } catch (RemoteException e) {
             handleConnectionError();
-            return false;
+            response = false;
         }
+        return response;
     }
 
     @Override
@@ -160,13 +162,15 @@ public class ClientRMI implements Client {
 
     @Override
     public boolean createHash(int numberWP, String nameClient) {
+        boolean response;
         try {
             controller.createHash(numberWP,nameClient);
-            return true;
+            response = true;
         } catch (RemoteException e) {
             handleConnectionError();
-            return false;
+            response = false;
         }
+        return response;
     }
 
     @Override
@@ -181,13 +185,15 @@ public class ClientRMI implements Client {
 
     @Override
     public boolean setActive(Boolean active) {
+        boolean response;
         try {
             controller.setActive(active);
-            return true;
+            response = true;
         } catch (RemoteException e) {
             handleConnectionError();
-            return false;
+            response = false;
         }
+        return response;
     }
 
     @Override
@@ -221,13 +227,15 @@ public class ClientRMI implements Client {
 
     @Override
     public boolean nullSelection() {
+        boolean response;
         try {
             controller.setNullPlayer();
-            return true;
+            response = true;
         } catch (RemoteException e) {
             handleConnectionError();
-            return false;
+            response = false;
         }
+        return response;
     }
 
     @Override
@@ -266,13 +274,15 @@ public class ClientRMI implements Client {
 
     @Override
     public boolean orderWPChoise() {
+        boolean response;
         try {
             controller.orderWPChoise();
-            return true;
+            response = true;
         } catch (RemoteException e) {
             handleConnectionError();
-            return false;
+            response = false;
         }
+        return response;
     }
 
     @Override
@@ -296,13 +306,15 @@ public class ClientRMI implements Client {
 
     @Override
     public boolean calculateScore() {
+        boolean response;
         try {
             controller.calculateScore();
-            return true;
+            response = true;
         } catch (RemoteException e) {
             handleConnectionError();
-            return false;
+            response = false;
         }
+        return response;
     }
 
     @Override
@@ -337,24 +349,28 @@ public class ClientRMI implements Client {
 
     @Override
     public boolean setInsertedDie(boolean b) {
+        boolean response;
         try {
             controller.setInsertedDie(b);
-            return true;
+            response = true;
         } catch (RemoteException e) {
             handleConnectionError();
-            return false;
+            response = false;
         }
+        return response;
     }
 
     @Override
     public boolean setTool8Used(boolean b) {
+        boolean response;
         try {
             controller.setTool8Used(b);
-            return true;
+            response = true;
         } catch (RemoteException e) {
             handleConnectionError();
-            return false;
+            response = false;
         }
+        return response;
     }
 
     @Override
@@ -439,13 +455,15 @@ public class ClientRMI implements Client {
 
     @Override
     public boolean addWP(ViewWP wp){
+        boolean response;
         try {
             controller.addWindow(wp);
-            return true;
+            response = true;
         } catch (RemoteException e) {
             handleConnectionError();
-            return false;
+            response = false;
         }
+        return response;
     }
 
     @Override

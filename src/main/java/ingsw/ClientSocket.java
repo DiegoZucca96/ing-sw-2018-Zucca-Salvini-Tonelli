@@ -11,7 +11,6 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class ClientSocket implements Client {
@@ -110,15 +109,24 @@ public class ClientSocket implements Client {
         setupConnection();
         out.println("skip:" + name);
         closeConnection();
-        //TODO
         return false;
     }
 
     @Override
     public boolean useToolCard(int i, ToolView parameter) {
         setupConnection();
+        out.println("uesToolCard:" + i);
+        in.nextLine();
+        try {
+            os.writeObject(parameter);
+            os.flush();
+            os.reset();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        boolean response = Boolean.parseBoolean(in.nextLine());
         closeConnection();
-        return false;
+        return response;
     }
 
     @Override
