@@ -1,15 +1,11 @@
 package ingsw.model;
 
-import ingsw.model.windowpattern.InfoWindow;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
 //Oggetto che porta le informazioni grafiche da model a view
 public class ViewData implements Serializable {
 
-    private InfoWindow info;
-    private ArrayList<Cell> images;
     private ArrayList<ViewWP> wps;
     private ArrayList<String> pbCards;
     private ArrayList<String> toolCards;
@@ -19,8 +15,6 @@ public class ViewData implements Serializable {
 
 
     private ViewData() {
-        info = new InfoWindow();
-        images = new ArrayList<>();
         wps = new ArrayList<>();
         pbCards = new ArrayList<>();
         toolCards = new ArrayList<>();
@@ -31,14 +25,6 @@ public class ViewData implements Serializable {
     public static ViewData instance() {
         if (instance == null) instance = new ViewData();
         return instance;
-    }
-
-    public InfoWindow getInfo() {
-        return info;
-    }
-
-    public ArrayList<Cell> getImages() {
-        return images;
     }
 
     public ArrayList<ViewWP> getWps() {
@@ -57,10 +43,6 @@ public class ViewData implements Serializable {
         return toolCards;
     }
 
-    public void setDraftPoolDice(ArrayList<String> draftPoolDice) {
-        this.draftPoolDice = draftPoolDice;
-    }
-
     public ArrayList<String>  getDraftPoolDice() {
         return draftPoolDice;
     }
@@ -70,14 +52,6 @@ public class ViewData implements Serializable {
             if(x.getNumberWP() == wp.getNumberWP())
                 wps.set(wps.indexOf(x),wp);
         }
-    }
-
-    public void addPBCard(String pbCard){
-        pbCards.add(pbCard);
-    }
-
-    public void addPVCard(String pvCard){
-        pbCards.add(pvCard);
     }
 
     public void setToolCard(String toolCard){

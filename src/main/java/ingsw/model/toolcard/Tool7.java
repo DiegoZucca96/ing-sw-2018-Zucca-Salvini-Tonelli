@@ -3,7 +3,6 @@ package ingsw.model.toolcard;
 import ingsw.model.Coordinate;
 import ingsw.model.DraftPool;
 import ingsw.model.ObjectiveTool;
-
 import java.util.ArrayList;
 
 public class Tool7 implements ToolStrategy {
@@ -11,7 +10,6 @@ public class Tool7 implements ToolStrategy {
     private String comment;
     private boolean alreadyUsed;
     private int idCard;
-    private DraftPool dp;
     private int numTokenUsed;
 
     public Tool7(int idCard) {
@@ -25,7 +23,7 @@ public class Tool7 implements ToolStrategy {
     public boolean doOp(ObjectiveTool object){
        if((object!=null)){
            ArrayList<Coordinate> coordinates = object.getListOfCoordinateY();
-           dp = object.getDp();
+           DraftPool dp = object.getDp();
            dp.refreshDraftPool(coordinates); //Metodo che ritira i dadi
            return true;
        }

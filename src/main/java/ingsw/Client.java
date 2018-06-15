@@ -3,7 +3,6 @@ package ingsw;
 import ingsw.model.ViewWP;
 import ingsw.model.ViewData;
 import ingsw.view.ToolView;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,17 +24,13 @@ public interface Client {
     //Metodo che crea le 4 WP da scegliere ritornando le informazioni per creare il background dei bottoni
     ArrayList<ViewWP> getRandomWps() throws IOException;
 
-    void addWPName(String wp);
-
-    void addWP(ViewWP wp);
+    boolean addWP(ViewWP wp);
 
     //Restituisce la lista dei nomi dei giocatori
     ArrayList<String> getListOfPlayers();
 
     //Ritornano le coordinate cliccate dal giocatore
-    int getCoordinateSelectedX();
     int getCoordinateSelectedY();
-
 
     //prende dalla draftpool il dado in posizione (row, column)
     boolean takeDie(int row, int col);
@@ -49,7 +44,7 @@ public interface Client {
     boolean positionDie(int row, int column);
 
     //passa il turno
-    void skip();
+    boolean skip();
 
     //utilizza la tool card, parameter è una stringa che serve per creare l'oggetto di tipo PlayerUseTool
     //restituisce false se la carta non può essere usata
@@ -60,9 +55,6 @@ public interface Client {
 
     //Restituisce il numero dei giocatori della partita
     int getNumberOfPlayers();
-
-    //Restituisce il timer rimanente del server durante la ricerca
-    int getTimeSearch();
 
     //restituisce arraylist della scelta di tutti i giocatori
     ArrayList<ViewWP> getPlayerWPs(String name);
@@ -83,21 +75,15 @@ public interface Client {
     String getName();
 
     //crea un hash di valori player-WP scelta (credo aggiunga la wp scelta all'hashmap del controller)
-    void createHash(int nameWindow, String nameClient);
-
-    //Restituisce l'hashmap per la view
-    HashMap<String, Integer> getHashPlayers();
+    boolean createHash(int nameWindow, String nameClient);
 
     String getPVCard(String name);
 
     //serve per controllare che il client sia attivo
-    void setActive(Boolean active);
+    boolean setActive(Boolean active);
 
     //attivo o no?
     boolean getActive();
-
-    //rejoin client to list of Player
-    void rejoinedPlayer(String name);
 
     //tempo per fare una mossa
     int getTimeMove();
@@ -106,7 +92,7 @@ public interface Client {
     String getCurrentPlayer();
 
     //Setta i valori di selection player a null in caso di annullamento della mossa
-    void nullSelection();
+    boolean nullSelection();
 
     //Restituisce il round
     int getRound();
@@ -114,14 +100,11 @@ public interface Client {
     //Dice se il match è già stato trovato o meno
     boolean matchFound();
 
-    //Restituisce la lista di giocatori inattivi/disconnessi
-    ArrayList<String> getInactiveList();
-
     //Restituisce la WP che era scelta dal player
     ViewWP getWP(String userName);
 
     //Ordina le windowChosen
-    void orderWPChoise();
+    boolean orderWPChoise();
 
     //Va a controllare se la partita è giunta al termine
     boolean isFinish();
@@ -130,7 +113,7 @@ public interface Client {
     int getScore(String name);
 
     //Avvia il calcolo dei punteggi giocatore
-    void calculateScore();
+    boolean calculateScore();
 
     //Trova il vincitore
     String findWinner();
@@ -138,17 +121,12 @@ public interface Client {
     //Restituisce i nomi dei players (serve nella schermata finale di vittoria)
     ArrayList<String> getListOfMatchPlayers();
 
-    //imposta lo stato del client a disconnected
-    void disconnectClient();
-
-    //i quattro metodi sotto tengono conto del fatto che il giocatore abbia posizionato un dado o meno e se ha usato la tool8(per saltare il turno)
+    //i tre metodi sotto tengono conto del fatto che il giocatore abbia posizionato un dado o meno e se ha usato la tool8(per saltare il turno)
     boolean getInsertedDie();
 
-    void setInsertedDie(boolean b);
+    boolean setInsertedDie(boolean b);
 
-    boolean getTool8Used();
-
-    void setTool8Used(boolean isTool8Used);
+    boolean setTool8Used(boolean isTool8Used);
 
     //Stabilire il turno in cui ci si trova
     boolean getClockwiseRound();
@@ -161,14 +139,8 @@ public interface Client {
 
     int getStartTimeMove();
 
-    void setName(String userName);
+    boolean setName(String userName);
 
     void handleConnectionError();
 
-    /*
-    "windowpattern(name(ciao),difficulty(4),cell(row(0),column(0),number(0),color(RED),Die(number(5),color(RED)),cell(..."
-
-    vecchio modo --> "oggetto:attributo,attributo,..."
-    nuovo modo --> "oggetto(attributo,attributo,...)"
-    */
 }

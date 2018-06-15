@@ -3,7 +3,6 @@ package ingsw.controller;
 import ingsw.model.Color;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class InfoCell  implements Serializable {
 
@@ -16,9 +15,6 @@ public class InfoCell  implements Serializable {
         this.color=color;
         this.die=die;
     }
-
-
-
 
     public int getNum() {
         return num;

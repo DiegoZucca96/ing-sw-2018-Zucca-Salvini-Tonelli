@@ -7,10 +7,6 @@ public class Tool5 implements ToolStrategy {
     private String comment;
     private boolean alreadyUsed;
     private int idCard;
-    private Die die1;
-    private Die die2;
-    private RoundTrack rt;
-    private DraftPool dp;
     private int numTokenUsed;
 
     public Tool5(int idCard) {
@@ -24,10 +20,10 @@ public class Tool5 implements ToolStrategy {
     public boolean doOp(ObjectiveTool object){
         Coordinate dpCoordinate = object.getC1();
         Coordinate rtCoordinate = object.getD1();
-        rt = object.getRt();
-        dp = object.getDp();
-        die1 = dp.takeDie(dpCoordinate.getY());
-        die2 = rt.replaceDie(object.getRound(),rtCoordinate.getY(),die1);
+        RoundTrack rt = object.getRt();
+        DraftPool dp = object.getDp();
+        Die die1 = dp.takeDie(dpCoordinate.getY());
+        Die die2 = rt.replaceDie(object.getRound(),rtCoordinate.getY(),die1);
         dp.setDie(dpCoordinate.getY(),die2);
         return true;
     }

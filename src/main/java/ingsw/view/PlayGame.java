@@ -49,7 +49,6 @@ public class PlayGame {
     private GridPaneDraftPool draftPoolGrid;
     private static final String styleSheet = "-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"";
     private ViewData updateView;
-    private static int begin=0;
     private boolean choosePressed=false;
     private static boolean usingTool=false;
     private Label textLbl;
@@ -62,12 +61,10 @@ public class PlayGame {
     private Label numTokenUsed;
     private ImageView viewUsed;
 
-
     public PlayGame(Client client){
         this.client=client;
         init= null;
     }
-
 
     public void display(ViewWP myWindow){
         this.myWindow=myWindow;
@@ -109,13 +106,12 @@ public class PlayGame {
         buttonDie.setOnAction(event -> event.consume());
         currentInfo3.getChildren().add(buttonDie);
 
-
         //INIZIALIZZAZIONE
         init = client.initializeView();
         timeBegin = client.getStartTimeMove();
-
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
+
         timeline.getKeyFrames().add(
                 new KeyFrame(Duration.millis(1000),
                         event -> {
@@ -180,15 +176,13 @@ public class PlayGame {
             gridTks.add(token, 0, j);
         }
 
-
         //ROUNDTRACK
         gridRound= new GridPaneRound(client, init.getRoundTrack(), 1,this);
         gridRound.setLayoutY(10);
         gridRound.setLayoutX(336);
 
-
         //PRIVATE
-        Pane pvPane = pvPane(client.getPVCard(client.getName()));          //come associo a quella giusta
+        Pane pvPane = pvPane(client.getPVCard(client.getName()));
         pvPane.setLayoutX(760);
         pvPane.setLayoutY(225);
 
@@ -241,7 +235,6 @@ public class PlayGame {
         draftPoolGrid = new GridPaneDraftPool(client,init.getDraftPoolDice(),buttonDie,this);
         draftPoolGrid.setLayoutX(200);
         draftPoolGrid.setLayoutY(600);
-
 
         //IMMUTABLE WINDOW MADE OF ONLY CELLS
         cellsGrid = addGridPane();
@@ -394,7 +387,6 @@ public class PlayGame {
         btnGrid.setLayoutX(600);
         btnGrid.setLayoutY(330);
 
-
         //ATTACH DI TUTTO
         root.getChildren().addAll(backGround, toolGrid, pbGrid, gridRound, divideGrids, myWindowGrid, title, btnGrid, eachGrid, secondGrid, pvPane, draftPoolGrid, gridTks,currentInfo,currentInfo2, currentInfo3,tokenUsed);
         stage.setScene(scene);
@@ -420,33 +412,16 @@ public class PlayGame {
         return gridPane;
     }
 
-
     private Pane pvPane(String stringPvCard){
         Pane pane = new Pane();
         pane.setLayoutY(200);
         pane.setLayoutX(130);
-
         final ImageView view = new ImageView();
         String imagePathT = stringPvCard;
         Image imageT = new Image(imagePathT, 300, 420, false, true);
         view.setImage(imageT);
         view.scaleXProperty().setValue(0.43);
         view.scaleYProperty().setValue(0.476);
-        /*view.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override public void handle(MouseEvent e) {
-                view.scaleXProperty().setValue(0.7);
-                view.scaleYProperty().setValue(0.7);
-                //view.setScaleY(1.3);
-            }
-        });
-
-        view.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override public void handle(MouseEvent e) {
-                view.scaleXProperty().setValue(0.43);
-                view.scaleYProperty().setValue(0.476);
-                //view.setScaleY(1);
-            }
-        });*/
         pane.getChildren().add(view);
         return pane;
     }
@@ -570,7 +545,6 @@ public class PlayGame {
         String number;
         String color;
         ViewWP wp = client.getPlayerWPs(client.getName()).get(player);
-
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
                 number = Integer.toString(wp.getWp()[i][j].getNum());

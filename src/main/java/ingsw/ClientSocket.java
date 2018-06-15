@@ -106,10 +106,12 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public void skip() {
+    public boolean skip() {
         setupConnection();
         out.println("skip:" + name);
         closeConnection();
+        //TODO
+        return false;
     }
 
     @Override
@@ -195,27 +197,12 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public void createHash(int nameWindow, String nameClient) {
+    public boolean createHash(int nameWindow, String nameClient) {
         setupConnection();
         out.println("createHash:"+Integer.toString(nameWindow)+','+nameClient);
         closeConnection();
-    }
-
-    @Override
-    public HashMap<String,Integer> getHashPlayers() {
-        setupConnection();
-        out.println("getHashPlayers:");
-        try {
-            HashMap response = (HashMap<String, Integer>) is.readObject();
-            closeConnection();
-            return response;
-        } catch (IOException e) {
-            closeConnection();
-            return null;
-        } catch (ClassNotFoundException e) {
-            closeConnection();
-            return  null;
-        }
+        //TODO
+        return false;
     }
 
     @Override
@@ -228,10 +215,12 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public void setActive(Boolean active) {
+    public boolean setActive(Boolean active) {
         setupConnection();
         out.println("setActive:"+Boolean.toString(active));
         closeConnection();
+        //TODO
+        return false;
     }
 
     @Override
@@ -241,13 +230,6 @@ public class ClientSocket implements Client {
         boolean response = Boolean.parseBoolean(in.nextLine());
         closeConnection();
         return response;
-    }
-
-    @Override
-    public void rejoinedPlayer(String name) {
-        setupConnection();
-        out.println("rejoinedPlayer:"+name);
-        closeConnection();
     }
 
     @Override
@@ -269,10 +251,12 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public void nullSelection() {
+    public boolean nullSelection() {
         setupConnection();
         out.println("nullSelection:");
         closeConnection();
+        //TODO
+        return false;
     }
 
     @Override
@@ -289,22 +273,6 @@ public class ClientSocket implements Client {
         setupConnection();
         out.println("matchFound:");
         boolean response = Boolean.parseBoolean(in.nextLine());
-        closeConnection();
-        return response;
-    }
-
-    @Override
-    public ArrayList<String> getInactiveList() {
-        setupConnection();
-        out.println("iAmLegend:");
-        ArrayList<String> response = null;
-        try {
-            response = ((ArrayList<String>) is.readObject());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
         closeConnection();
         return response;
     }
@@ -327,10 +295,12 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public void orderWPChoise(){
+    public boolean orderWPChoise(){
         setupConnection();
         out.println("orderWPChoise:");
         closeConnection();
+        //TODO
+        return false;
     }
 
     @Override
@@ -352,10 +322,12 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public void calculateScore() {
+    public boolean calculateScore() {
         setupConnection();
         out.println("calculateScore:");
         closeConnection();
+        //TODO
+        return false;
     }
 
     @Override
@@ -386,13 +358,6 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public void disconnectClient() {
-        setupConnection();
-        out.println("disconnectClient:" + name);
-        closeConnection();
-    }
-
-    @Override
     public boolean getInsertedDie() {
         setupConnection();
         out.println("getInsertedDie:");
@@ -402,26 +367,21 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public void setInsertedDie(boolean b) {
+    public boolean setInsertedDie(boolean b) {
         setupConnection();
         out.println("setInsertedDie" + b);
         closeConnection();
+        //TODO
+        return false;
     }
 
     @Override
-    public boolean getTool8Used() {
-        setupConnection();
-        out.println("getTool8Used:");
-        boolean response = Boolean.parseBoolean(in.nextLine());
-        closeConnection();
-        return response;
-    }
-
-    @Override
-    public void setTool8Used(boolean isTool8Used) {
+    public boolean setTool8Used(boolean isTool8Used) {
         setupConnection();
         out.println("setTool8Used:" + isTool8Used);
         closeConnection();
+        //TODO
+        return false;
     }
 
     @Override
@@ -444,21 +404,20 @@ public class ClientSocket implements Client {
 
     @Override
     public boolean iAmAlone() {
-        //da impl
-
+        //TODO
         return false;
     }
 
     @Override
     public int getStartTimeMove() {
-        //da impl
-
+        //TODO
         return -1;
     }
 
     @Override
-    public void setName(String userName) {
-        //da impl
+    public boolean setName(String userName) {
+        //TODO
+        return false;
     }
 
     @Override
@@ -493,15 +452,6 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public int getTimeSearch() {
-        setupConnection();
-        out.println("getTimeSearch:");
-        int response = Integer.parseInt(in.nextLine());
-        closeConnection();
-        return response;
-    }
-
-    @Override
     public boolean takeWPDie(int row, int column) {
         setupConnection();
         out.println("takeWPDie:" + row + "," + column);
@@ -528,14 +478,7 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public void addWPName(String wp) {
-        setupConnection();
-        out.println("addWPName:" + wp);
-        closeConnection();
-    }
-
-    @Override
-    public void addWP(ViewWP wp) {
+    public boolean addWP(ViewWP wp) {
         setupConnection();
         out.println("addWP:");
         try {
@@ -547,6 +490,8 @@ public class ClientSocket implements Client {
             e.printStackTrace();
         }
         closeConnection();
+        //TODO
+        return false;
     }
 
     @Override
@@ -564,15 +509,6 @@ public class ClientSocket implements Client {
             closeConnection();
             return null;
         }
-    }
-
-    @Override
-    public int getCoordinateSelectedX() {
-        setupConnection();
-        out.println("getCoordinateSelectedX:");
-        int response = Integer.parseInt(in.nextLine());
-        closeConnection();
-        return response;
     }
 
     @Override

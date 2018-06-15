@@ -16,7 +16,6 @@ public class ToolView implements Serializable {
     private int round;
     private String color;
     private ArrayList<String> listOfCoordinateY = new ArrayList<>();
-    private boolean isInsertedDie = false;
     private int phase = 0;
 
 
@@ -114,14 +113,6 @@ public class ToolView implements Serializable {
 
     public void setListOfCoordinateY(String listOfCoordinateY) {
         this.listOfCoordinateY.add(listOfCoordinateY);
-    }
-
-    public boolean isInsertedDie() {
-        return isInsertedDie;
-    }
-
-    public void setInsertedDie(boolean insertedDie) {
-        this.isInsertedDie = insertedDie;
     }
 
     public int getPhase() {

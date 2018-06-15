@@ -1,11 +1,6 @@
 package ingsw.view;
 
-
-
-
 import ingsw.Client;
-import ingsw.controller.RMIController;
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -13,9 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
-import java.rmi.RemoteException;
-
 
 /**Author : Alessio Tonelli
  *
@@ -30,7 +22,6 @@ public class Victory {
 
     private Label timerLabel ;
     private static int event =1;
-    private Label nameLabel;
     private final String styleSheet ="-fx-text-fill: goldenrod; -fx-font: italic 70 \"serif\"; -fx-padding: 0 0 20 0";
     private Client client;
 
@@ -44,7 +35,6 @@ public class Victory {
         Pane root= new Pane();
         Scene scene = new Scene(root, 1200, 700);
 
-
         GridPane grid = new GridPane();
         grid.setLayoutX(100);
         grid.setLayoutY(10);
@@ -55,38 +45,21 @@ public class Victory {
         Image image = new Image(imagePath, 1200, 700, false, false);
         final ImageView background= new ImageView();
         background.setImage(image);
-
-
-
         scene.setOnMouseEntered( e-> {
             if(event==1){
                 event++;
                 for (int i=0; i<client.getNumberOfPlayers(); i++) {
-
-                    //nameLabel= new Label();
                     timerLabel=new Label();
-                    //nameLabel.setText(client.getListOfPlayers().get(i));
-                    //nameLabel.setStyle(styleSheet);
                     timerLabel.setStyle(styleSheet);
-
-                    //grid.add(nameLabel, 0, i);
                     grid.add(timerLabel, 0, i);
-
                     MultiScore threadScore = new MultiScore(client.getListOfMatchPlayers().get(i),timerLabel, client,grid);
                     threadScore.start();
-
                 }
             }
         });
-
-
-
         root.getChildren().addAll(background, grid);
-
-
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
 
 }

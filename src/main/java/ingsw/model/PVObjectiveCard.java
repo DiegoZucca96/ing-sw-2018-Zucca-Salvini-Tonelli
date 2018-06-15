@@ -7,19 +7,6 @@ public class PVObjectiveCard {
     private String title;
     private Color color;
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-
     public PVObjectiveCard (Color color){
         switch(color){
             case RED:{
@@ -68,5 +55,17 @@ public class PVObjectiveCard {
                 return null;
             }
         }
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }

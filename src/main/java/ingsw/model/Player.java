@@ -1,9 +1,7 @@
 package ingsw.model;
 
 import ingsw.model.windowpattern.WindowPattern;
-
 import java.io.IOException;
-
 
 public class Player {       //Classe che rappresenta un giocatore della partita
 
@@ -72,10 +70,6 @@ public class Player {       //Classe che rappresenta un giocatore della partita
         return windowPattern;
     }
 
-    public void setScore(int newScore){
-        score = newScore;
-    }
-
     //NB --> metodo ad uso esclusivo dei test
     public void setWindowPattern(WindowPattern windowPattern) {
         this.windowPattern = windowPattern;
@@ -85,7 +79,6 @@ public class Player {       //Classe che rappresenta un giocatore della partita
     public void setPvObjectiveCard(PVObjectiveCard pvObjectiveCard) {
         this.pvObjectiveCard = pvObjectiveCard;
     }
-
 
     //Servono per distinguere se il giocatore ha già inserito il dado o meno
     public boolean getInsertedDie() {

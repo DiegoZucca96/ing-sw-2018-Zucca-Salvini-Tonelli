@@ -20,7 +20,7 @@ public class PB1 implements PBStrategy {
         Cell [][] cellMatrix = p.getWindowPattern().getCellMatrix();
         for(int i=0;i<4;i++){
             int j;
-            ArrayList<Color> list = new ArrayList<Color>();
+            ArrayList<Color> list = new ArrayList<>();
             for(j=0;j<5;j++){
                 if(cellMatrix[i][j].getDie()==null)
                     j=6;

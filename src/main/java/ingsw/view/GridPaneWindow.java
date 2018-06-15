@@ -9,9 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -59,10 +57,8 @@ public class GridPaneWindow extends GridPane {
         }
     }
 
-
     private Button addButtonWp(int i, int j) {
         Button button = new Button();
-
         button.setOnAction(e -> {
             if(accessWindow){
                 if(playGame.getCardSelected()==9) {
@@ -383,7 +379,6 @@ public class GridPaneWindow extends GridPane {
             }
         }
     }
-
 
     public ArrayList<DieInfo> getDieInfos(){
         return dieInfos;

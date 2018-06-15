@@ -2,7 +2,6 @@ package ingsw;
 
 import ingsw.controller.Controller;
 import ingsw.controller.RMIController;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -20,8 +19,6 @@ public class Server {
     private static Server instance = null;
     private RMIController controller;
     private int port;
-    private ClientState enableClient;
-    private ClientState disableClient;
     private final int timeSearch;
     private final int playerTimeMove;
     private ArrayList<String> inactivePlayers;
@@ -50,10 +47,8 @@ public class Server {
         Scanner in = new Scanner(System.in);
         System.out.println("Inserisci tempo di ricerca massimo: ");
         timeSearch = in.nextInt();
-        //timeSearch = 120;
         System.out.println("Inserisci tempo massimo per fare una mossa: ");
         playerTimeMove = in.nextInt();
-        //playerTimeMove = 120;
         inactivePlayers = new ArrayList<>();
         try {
             controller = new Controller(this);
@@ -86,14 +81,6 @@ public class Server {
         return listOfPlayers;
     }
 
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
-
     public int getTimeSearch() {
         return timeSearch;
     }
@@ -115,7 +102,6 @@ public class Server {
         controller.disableClient(account);
     }
 
-
     public void setClientState(String clientName, ClientState state) {
         for (ClientData client : listOfClients) {
             if (client.getName().equals(clientName)) client.setState(state);
@@ -128,7 +114,6 @@ public class Server {
         }
         return null;
     }
-    
 
     public void startServerSocket() {
         ExecutorService executor = Executors.newCachedThreadPool();
@@ -161,7 +146,6 @@ public class Server {
             }
         }
     }
-
 
     public void addInactivePlayers(String clientName) {
         inactivePlayers.add(clientName);

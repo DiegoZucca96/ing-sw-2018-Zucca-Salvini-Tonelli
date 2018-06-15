@@ -3,7 +3,6 @@ package ingsw.model.windowpattern;
 import ingsw.model.Cell;
 import ingsw.model.Color;
 import ingsw.model.Coordinate;
-
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -42,7 +41,7 @@ public class SAXParser {
     /**THIS METHOD EXTRACTS ELEMENT FROM EACH CELL OF THE WINDOW*/
     @SuppressWarnings({ "unchecked", "null" })
     public List<Cell> readConfig(String configFile){
-        List<Cell> cells = new ArrayList<Cell>();
+        List<Cell> cells = new ArrayList<>();
 
         try {
             // First, create a new XMLInputFactory
@@ -56,18 +55,14 @@ public class SAXParser {
             int row=0;
             int number=0;
             Color color =null;
-
             while (eventReader.hasNext()) {
                 XMLEvent event = eventReader.nextEvent();
-
                 // create first cell when cell is read from XML file
                 if (event.isStartElement()) {
                     StartElement startElement = event.asStartElement();
                     if (startElement.getName().getLocalPart().equals(CELL)) {
-
+                        //nothing
                     }
-
-
                     // row is the first element of each node
                     if (event.isStartElement()) {
                         if (event.asStartElement().getName().getLocalPart().equals(ROW)) {
@@ -76,20 +71,17 @@ public class SAXParser {
                             continue;
                         }
                     }
-
                     if (event.asStartElement().getName().getLocalPart().equals(COLUMN)) {
                         event = eventReader.nextEvent();
                         column = Integer.parseInt(event.asCharacters().getData());
                         continue;
                     }
-
                     if (event.asStartElement().getName().getLocalPart()
                             .equals(NUMBER)) {
                         event = eventReader.nextEvent();
                         number=Integer.parseInt(event.asCharacters().getData());
                         continue;
                     }
-
                     if (event.asStartElement().getName().getLocalPart()
                             .equals(COLOR)) {
                         event = eventReader.nextEvent();
@@ -105,7 +97,6 @@ public class SAXParser {
                         cells.add(cell);
                     }
                 }
-
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -127,7 +118,6 @@ public class SAXParser {
 
             while (eventReader.hasNext()) {
                 XMLEvent event = eventReader.nextEvent();
-
                 if (event.isStartElement()) {
                     StartElement startElement = event.asStartElement();
                     if (startElement.getName().getLocalPart().equals(NAME)) {
@@ -135,15 +125,11 @@ public class SAXParser {
                         infoWindow.setName(event.asCharacters().getData());
                         continue;
                     }
-
-
                     if (event.asStartElement().getName().getLocalPart().equals(DIFF)) {
                         event = eventReader.nextEvent();
                         infoWindow.setDifficulty(event.asCharacters().getData());
                         continue;
                     }
-
-
                 }
                 // If we reach the end of an item element, we add it to the list
                 if (event.isEndElement()) {
@@ -152,7 +138,6 @@ public class SAXParser {
                         //nothing
                     }
                 }
-
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -160,6 +145,5 @@ public class SAXParser {
             e.printStackTrace();
         }
         return infoWindow;
-
     }
 }

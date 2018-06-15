@@ -36,8 +36,9 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public void setName(String name) {
+    public boolean setName(String name) {
         this.name = name;
+        return true;
     }
 
     @Override
@@ -56,7 +57,7 @@ public class ClientRMI implements Client {
         try {
             return controller.register(nickname);
         } catch (RemoteException e) {
-            handleConnectionError();
+            new Warning(this);
             return false;
         }
     }
@@ -72,11 +73,13 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public void skip() {
+    public boolean skip() {
         try {
             controller.skip(name);
+            return true;
         } catch (RemoteException e) {
             handleConnectionError();
+            return false;
         }
     }
 
@@ -156,23 +159,14 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public void createHash(int numberWP, String nameClient) {
+    public boolean createHash(int numberWP, String nameClient) {
         try {
             controller.createHash(numberWP,nameClient);
+            return true;
         } catch (RemoteException e) {
             handleConnectionError();
+            return false;
         }
-    }
-
-    @Override
-    public HashMap<String, Integer> getHashPlayers() {
-        try {
-            return controller.getHashPlayers();
-        } catch (RemoteException e) {
-            handleConnectionError();
-            return null;
-        }
-
     }
 
     @Override
@@ -186,11 +180,13 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public void setActive(Boolean active) {
+    public boolean setActive(Boolean active) {
         try {
             controller.setActive(active);
+            return true;
         } catch (RemoteException e) {
             handleConnectionError();
+            return false;
         }
     }
 
@@ -202,15 +198,6 @@ public class ClientRMI implements Client {
             handleConnectionError();
         }
         return false;
-    }
-
-    @Override
-    public void rejoinedPlayer(String name) {
-        try {
-            controller.rejoinedPlayer(name);
-        } catch (RemoteException e) {
-            handleConnectionError();
-        }
     }
 
     @Override
@@ -233,11 +220,13 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public void nullSelection() {
+    public boolean nullSelection() {
         try {
             controller.setNullPlayer();
+            return true;
         } catch (RemoteException e) {
             handleConnectionError();
+            return false;
         }
     }
 
@@ -264,16 +253,6 @@ public class ClientRMI implements Client {
         }
     }
 
-    @Override
-    public ArrayList<String> getInactiveList() {
-        try {
-            return controller.getInactiveList();
-        } catch (RemoteException e) {
-            handleConnectionError();
-            return null;
-        }
-    }
-
     //Da implementare la equals di questo metodo
     @Override
     public ViewWP getWP(String userName) {
@@ -286,11 +265,13 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public void orderWPChoise() {
+    public boolean orderWPChoise() {
         try {
             controller.orderWPChoise();
+            return true;
         } catch (RemoteException e) {
             handleConnectionError();
+            return false;
         }
     }
 
@@ -299,7 +280,6 @@ public class ClientRMI implements Client {
         try {
             return controller.isFinish();
         } catch (RemoteException e) {
-            handleConnectionError();
             return false;
         }
     }
@@ -315,11 +295,13 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public void calculateScore() {
+    public boolean calculateScore() {
         try {
             controller.calculateScore();
+            return true;
         } catch (RemoteException e) {
             handleConnectionError();
+            return false;
         }
     }
 
@@ -344,15 +326,6 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public void disconnectClient() {
-        try {
-            controller.disconnectClient(name);
-        } catch (RemoteException e) {
-            handleConnectionError();
-        }
-    }
-
-    @Override
     public boolean getInsertedDie() {
         try {
             return controller.getInsertedDie();
@@ -363,18 +336,10 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public void setInsertedDie(boolean b) {
+    public boolean setInsertedDie(boolean b) {
         try {
             controller.setInsertedDie(b);
-        } catch (RemoteException e) {
-            handleConnectionError();
-        }
-    }
-
-    @Override
-    public boolean getTool8Used() {
-        try {
-            return controller.getTool8Used();
+            return true;
         } catch (RemoteException e) {
             handleConnectionError();
             return false;
@@ -382,11 +347,13 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public void setTool8Used(boolean b) {
+    public boolean setTool8Used(boolean b) {
         try {
             controller.setTool8Used(b);
+            return true;
         } catch (RemoteException e) {
             handleConnectionError();
+            return false;
         }
     }
 
@@ -451,16 +418,6 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public int getTimeSearch() {
-        try {
-            return controller.getTimeSearch();
-        } catch (RemoteException e) {
-            handleConnectionError();
-            return -1;
-        }
-    }
-
-    @Override
     public boolean takeWPDie(int row, int column) {
         try {
             return controller.takeWPDie(row,column);
@@ -481,20 +438,13 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public void addWP(ViewWP wp){
+    public boolean addWP(ViewWP wp){
         try {
             controller.addWindow(wp);
+            return true;
         } catch (RemoteException e) {
             handleConnectionError();
-        }
-    }
-
-    @Override
-    public void addWPName(String wp){
-        try {
-            controller.addWindowName(wp);
-        } catch (RemoteException e) {
-            handleConnectionError();
+            return false;
         }
     }
 
@@ -509,16 +459,6 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public int getCoordinateSelectedX() {
-        try {
-            return controller.getCoordinateSelectedX();
-        } catch (RemoteException e) {
-            handleConnectionError();
-        }
-        return -1;
-    }
-
-    @Override
     public int getCoordinateSelectedY() {
         try {
             return controller.getCoordinateSelectedY();
@@ -530,7 +470,7 @@ public class ClientRMI implements Client {
 
     @Override
     public void handleConnectionError(){
-        Registry registry = null;
+        Registry registry;
         try {
             registry = LocateRegistry.getRegistry("localhost", 1081);
             if(registry!=null)

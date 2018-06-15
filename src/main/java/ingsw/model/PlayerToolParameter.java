@@ -17,67 +17,7 @@ public class PlayerToolParameter {
     private ArrayList<Coordinate> listOfCoordinateY = new ArrayList<>();
     private int phase;
 
-    public PlayerToolParameter( Coordinate c1, int dieModified){
-        this.c1 = c1;
-        this.dieModified = dieModified;
-    }
 
-    public PlayerToolParameter( Die die1){
-        this.die1 = die1;
-    }
-
-    public PlayerToolParameter( Coordinate c1, Coordinate d1, int round){
-        this.c1 = c1;
-        this.d1 = d1;
-        this.round=round;
-    }
-
-    public PlayerToolParameter( int phase, Coordinate c1, Coordinate d1){
-        this.c1 = c1;
-        this.d1 = d1;
-        this.phase=phase;
-    }
-
-    public PlayerToolParameter(Coordinate c2, int phase, Coordinate d2){
-        this.c2 = c2;
-        this.d2 = d2;
-        this.phase=phase;
-    }
-
-    public PlayerToolParameter( Coordinate c1, Coordinate c2, Coordinate d1, Coordinate d2, Color color){
-        this.c1 = c1;
-        this.c2 = c2;
-        this.d1 = d1;
-        this.d2 = d2;
-        this.color = color;
-    }
-
-    public PlayerToolParameter( Die die1, Die die2){
-        this.die1 = die1;
-        this.die2 = die2;
-    }
-
-    public PlayerToolParameter( Coordinate c1){
-        this.c1 = c1;
-    }
-
-    public PlayerToolParameter( Die die1, Coordinate d1){
-        this.die1 = die1;
-        this.d1 = d1;
-    }
-    //Tool 7
-    public PlayerToolParameter ( ArrayList<String> listOfCoordinateY){
-        for(String c : listOfCoordinateY)
-            this.listOfCoordinateY.add(new Coordinate(0, Integer.parseInt(c)));
-    }
-
-    //Tool9 - Tool2 - Tool3
-    public PlayerToolParameter(Coordinate c1, Coordinate d1){
-        this.c1 = c1;
-        this.d1 = d1;
-    }
-
-    //Tool8
     public PlayerToolParameter() {
         this.die1 = null;
         this.die2 = null;
@@ -89,16 +29,6 @@ public class PlayerToolParameter {
         this.round = -1;
         this.color = null;
         this.listOfCoordinateY = null;
-    }
-
-    public PlayerToolParameter(int dieModified, int phase) {
-        this.dieModified = dieModified;
-        this.phase = phase;
-    }
-
-    public PlayerToolParameter(int phase, Coordinate c1) {
-        this.phase=phase;
-        this.c1=c1;
     }
 
 
@@ -144,12 +74,48 @@ public class PlayerToolParameter {
         return listOfCoordinateY;
     }
 
-
     public int getPhase() {
         return phase;
     }
 
     public void setPhase(int phase) {
         this.phase = phase;
+    }
+
+    public void setDie1(Die die1) {
+        this.die1 = die1;
+    }
+
+    public void setDie2(Die die2) {
+        this.die2 = die2;
+    }
+
+    public void setC1(Coordinate c1) {
+        this.c1 = c1;
+    }
+
+    public void setC2(Coordinate c2) {
+        this.c2 = c2;
+    }
+
+    public void setD1(Coordinate d1) {
+        this.d1 = d1;
+    }
+
+    public void setD2(Coordinate d2) {
+        this.d2 = d2;
+    }
+
+    public void setDieModified(int dieModified) {
+        this.dieModified = dieModified;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public void setListOfCoordinateY(ArrayList<String> listOfCoordinateY) {
+        for(String c : listOfCoordinateY)
+            this.listOfCoordinateY.add(new Coordinate(0, Integer.parseInt(c)));
     }
 }

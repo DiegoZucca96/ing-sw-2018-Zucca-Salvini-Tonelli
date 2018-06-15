@@ -1,15 +1,12 @@
 package ingsw.view;
 
-
 import ingsw.Client;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
-
 import java.util.Random;
-
 
 /**Author : Alessio Tonelli
  *
@@ -17,11 +14,9 @@ import java.util.Random;
  *
  * */
 
-
 class MultiScore implements Runnable {
     private final GridPane grid;
     private Thread myThread;
-    //private static final Integer STARTTIME = 999;
     private Timeline timeline;
     private Label label;
     private Integer timeSeconds =0;
@@ -37,14 +32,10 @@ class MultiScore implements Runnable {
         this.grid = grid;
     }
 
-
     public synchronized void run() {
-
-
         if (timeline != null) {
             timeline.stop();
         }
-
         timeSeconds = 0;
         // update timerLabel
         timeline = new Timeline();
@@ -66,7 +57,6 @@ class MultiScore implements Runnable {
                 }));
         timeline.playFromStart();
     }
-
 
     public void start() {
         if (myThread == null) {

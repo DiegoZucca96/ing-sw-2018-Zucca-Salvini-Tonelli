@@ -9,7 +9,6 @@ public class Tool1 implements ToolStrategy {
     private String comment;
     private boolean alreadyUsed;
     private int idCard;
-    private Die die;
     private int numTokenUsed;
 
     public Tool1(int idCard){
@@ -21,7 +20,7 @@ public class Tool1 implements ToolStrategy {
     //Modifica il numero del dado scelto di 1 aumentandolo o diminuendolo in base al valore di getUp()
     public boolean doOp(ObjectiveTool object){
         Coordinate c = object.getC1();
-        die = object.getDp().getDie(c.getY());
+        Die die = object.getDp().getDie(c.getY());
         if(1 <= die.getNumber() && die.getNumber()<=6){
             die.setNumber(object.getDieModified());
             return true;

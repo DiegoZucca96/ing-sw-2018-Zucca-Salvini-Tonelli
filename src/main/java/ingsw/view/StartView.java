@@ -9,14 +9,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class StartView extends Application {
 
-
     private Client client;
-
 
     public static void main() {
         Application.launch();
@@ -39,14 +36,11 @@ public class StartView extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
-
         GridPane chooser = new GridPane();
         Scene scene = new Scene(chooser);
         chooser.setPrefSize(250, 100);
         chooser.setPadding(new Insets(50));
         chooser.setHgap(20);
-
         Button rmiBtn = new Button("RMI");
         Button socketBtn = new Button ("Socket");
 
@@ -59,13 +53,10 @@ public class StartView extends Application {
             primaryStage.close();
         });
 
-
         chooser.add(rmiBtn, 0, 0);
         chooser.add(socketBtn, 1, 0);
-
         primaryStage.setTitle("Choose connection");
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
 }

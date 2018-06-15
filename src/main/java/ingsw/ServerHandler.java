@@ -61,31 +61,25 @@ public class ServerHandler implements Runnable {
             else if (command.equals("takeDie")) takeDie(parameter);
             else if (command.equals("positionDie")) positionDie(parameter);
             else if (command.equals("getNumberOfPlayers")) getNumberOfPlayers();
-            else if (command.equals("getTimeSearch")) getTimeSearch();
             else if (command.equals("takeWPDie")) takeWPDie(parameter);
             else if (command.equals("getRandomWPs")) getRandomWPs();
             else if (command.equals("createHash")) createHash(parameter);
             else if (command.equals("addWP")) addWP();
-            else if (command.equals("addWPName")) addWPName(parameter);
             else if (command.equals("getListOfPlayers")) getListOfPlayers();
             else if (command.equals("getPlayersWPs")) getPlayersWPs(parameter);
             else if (command.equals("waitForPlayers")) waitForPlayers();
             else if (command.equals("initializeView")) initializeView();
             else if (command.equals("readyToPlay")) readyToPlay();
             else if (command.equals("updateView")) updateView();
-            else if (command.equals("getHashPlayers")) getHashPlayers();
             else if (command.equals("getPVCard")) getPVCard(parameter);
             else if (command.equals("getActive")) getActive();
             else if (command.equals("setActive")) setActive(parameter);
-            else if (command.equals("rejoinedPlayer")) rejoinedPlayer(parameter);
             else if (command.equals("getTimeMove")) getTimeMove();
             else if (command.equals("getCurrentPlayer")) getCurrentPlayer();
             else if (command.equals("nullSelection")) nullSelection();
             else if (command.equals("getRound")) getRound();
-            else if (command.equals("getCoordinateSelectedX")) getCoordinateSelectedX();
             else if (command.equals("getCoordinateSelectedY")) getCoordinateSelectedY();
             else if (command.equals("getWP")) getWP(parameter);
-            else if (command.equals("iAmLegend")) getInactiveList();
             else if (command.equals("orderWPChoise")) orderWPChoise();
             else if (command.equals("matchFound")) matchFound();
             else if (command.equals("isFinish")) isFinish();
@@ -93,10 +87,8 @@ public class ServerHandler implements Runnable {
             else if (command.equals("calculateScore")) calculateScore();
             else if (command.equals("findWinner")) findWinner();
             else if (command.equals("getListOfMatchPlayers")) getListOfMatchPlayers();
-            else if (command.equals("disconnectClient")) disconnectClient(parameter);
             else if (command.equals("getInsertedDie")) getInsertedDie();
             else if (command.equals("setInsertedDie")) setInsertedDie(parameter);
-            else if (command.equals("getTool8Used")) getTool8Used();
             else if (command.equals("setTool8Used")) setTool8Used(parameter);
             else if (command.equals("getClockwiseRound")) getClockwiseRound();
             else if (command.equals("getTokenRemaining")) getTokenRemaining(parameter);
@@ -157,10 +149,6 @@ public class ServerHandler implements Runnable {
         out.println(controller.getSizeOfPlayers());
     }
 
-    private void getTimeSearch() throws RemoteException {
-        out.println(controller.getTimeSearch());
-    }
-
     private void takeWPDie(String parameter) throws RemoteException {
         out.println(controller.takeWPDie(Integer.parseInt(firstParameter(parameter)), Integer.parseInt(secondParameter(parameter))));
     }
@@ -187,10 +175,6 @@ public class ServerHandler implements Runnable {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    private void addWPName(String parameter) throws RemoteException {
-        controller.addWindowName(parameter);
     }
 
     private void getListOfPlayers() throws IOException {
@@ -229,10 +213,6 @@ public class ServerHandler implements Runnable {
         os.reset();
     }
 
-    private void getHashPlayers() throws RemoteException {
-        controller.getHashPlayers();
-    }
-
     private void getPVCard(String parameter) throws RemoteException {
         out.println(controller.getPVCard(parameter));
     }
@@ -257,16 +237,8 @@ public class ServerHandler implements Runnable {
         out.println(controller.getRound());
     }
 
-    private void rejoinedPlayer(String parameter) throws RemoteException {
-        controller.rejoinedPlayer(parameter);
-    }
-
     private void nullSelection() throws RemoteException {
         controller.setNullPlayer();
-    }
-
-    private void getCoordinateSelectedX() throws RemoteException {
-        out.println(controller.getCoordinateSelectedX());
     }
 
     private void getCoordinateSelectedY() throws RemoteException {
@@ -280,10 +252,6 @@ public class ServerHandler implements Runnable {
     }
 
     private void matchFound(){
-        out.println(false);
-    }
-
-    private void getInactiveList(){
         out.println(false);
     }
 
@@ -313,20 +281,12 @@ public class ServerHandler implements Runnable {
         os.reset();
     }
 
-    private void disconnectClient(String parameter) throws RemoteException {
-        controller.disconnectClient(parameter);
-    }
-
     private void getInsertedDie() throws RemoteException {
         out.println(controller.getInsertedDie());
     }
 
     private void setInsertedDie(String parameter) throws RemoteException {
         controller.setInsertedDie(Boolean.parseBoolean(parameter));
-    }
-
-    private void getTool8Used() throws RemoteException {
-        out.println(controller.getTool8Used());
     }
 
     private void setTool8Used(String parameter) throws RemoteException {

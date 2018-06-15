@@ -2,7 +2,6 @@ package ingsw.model.publiccard;
 
 import ingsw.model.Cell;
 import ingsw.model.Coordinate;
-import ingsw.model.Die;
 import ingsw.model.Player;
 import java.util.ArrayList;
 

@@ -9,129 +9,36 @@ public class ObjectiveTool {
     private Die die1;
     private Die die2;
     private WindowPattern window;
-    private int dieModified;//Per la ToolCard 1, serve a dire se si vuole alzare (1) o abbassare (-1) il valore (default 0)
+    private int dieModified;
     private Coordinate c1;
     private Coordinate c2;
     private Coordinate d1;
     private Coordinate d2;
     private RoundTrack rt;
     private DraftPool dp;
-    private int turnDie;        // Se 1 bisogna ruotare, altrimenti è zero di base
     private DiceBag diceBag;
     private Color color;
     private int round;
     private ArrayList<Coordinate> listOfCoordinateY;
     private Player player;
 
-    //Tool1
-    public ObjectiveTool(Coordinate c1, int dieModified, DraftPool dp){
-        this.c1 = c1;
-        this.dieModified = dieModified;
-        this.dp = dp;
-    }
-    //Tool 2 - Tool 3
-    public ObjectiveTool(WindowPattern window,Coordinate c1, Coordinate d1){
-        this.window = window;
-        this.c1 = c1;
-        this.d1 = d1;
-    }
-
-    public ObjectiveTool(WindowPattern window,Coordinate c1, Coordinate d1, int phase){
-        this.window = window;
-        this.c1 = c1;
-        this.d1 = d1;
-        this.phase = phase;
-    }
-
-    public ObjectiveTool(int phase, WindowPattern window, Coordinate c2, Coordinate d2) {
-        this.window = window;
-        this.c2 = c2;
-        this.d2 = d2;
-        this.phase = phase;
-    }
-
-    public ObjectiveTool(WindowPattern window, Coordinate c1, Coordinate c2, Coordinate d1, Coordinate d2){
-        this.window = window;
-        this.c1 = c1;
-        this.c2 = c2;
-        this.d1 = d1;
-        this.d2 = d2;
-    }
-
-    //Tool5
-    public ObjectiveTool(Coordinate c1, Coordinate d1, RoundTrack rt, DraftPool dp, int round){
-        this.c1 = c1;
-        this.d1 = d1;
-        this.rt = rt;
-        this.dp = dp;
-        this.round = round;
-    }
-
-    public ObjectiveTool(Die die1, WindowPattern window, DraftPool dp){
-        this.die1 = die1;
-        this.window = window;
-        this.dp = dp;
-    }
-
-    //Tool 7
-    public ObjectiveTool(ArrayList<Coordinate> listOfCoordinateY, DraftPool dp){
-        this.listOfCoordinateY = listOfCoordinateY;
-        this.dp = dp;
-    }
-
-    public ObjectiveTool(WindowPattern window, Coordinate d1, DraftPool dp, int phase){
-        this.window = window;
-        this.d1 = d1;
-        this.dp = dp;
-        this.phase=phase;
-    }
-    //Tool 9
-    public ObjectiveTool(Coordinate c1, WindowPattern window, Coordinate d1, DraftPool dp){
-        this.c1 = c1;
-        this.window = window;
-        this.d1 = d1;
-        this.dp = dp;
-    }
-
-    //Tool10
-    public ObjectiveTool(Coordinate c1, DraftPool dp){
-        this.c1 = c1;
-        this.dp = dp;
-    }
-    //Tool 11
-    public ObjectiveTool(Coordinate c1, WindowPattern window, DraftPool dp ,DiceBag diceBag, int phase){
-        this.c1 = c1;
-        this.window = window;
-        this.diceBag = diceBag;
-        this.dp = dp;
-        this.phase = phase;
-    }
-
-    public ObjectiveTool(WindowPattern window, Coordinate c1, Coordinate c2, Coordinate d1, Coordinate d2, Color color){
-        this.window = window;
-        this.c1 = c1;
-        this.c2 = c2;
-        this.d1 = d1;
-        this.d2 = d2;
-        this.color = color;
-    }
-    //Tool 12
-    public ObjectiveTool(WindowPattern window, int round, Coordinate c1, RoundTrack roundTrack){
-        this.window = window;
-        this.round = round;
-        this.c1 = c1;
-        this.rt = roundTrack;
-    }
-
-    //Tool 8
-    public ObjectiveTool(Player player){
-        this.player = player;
-    }
-
-    public ObjectiveTool(int phase, int dieModified, DraftPool draftPool) {
-        this.phase = phase;
-        this.dieModified=dieModified;
-        this.dp = draftPool;
+    public ObjectiveTool() {
+        this.phase = -1;
+        this.die1 = null;
+        this.die2 = null;
+        this.window = null;
+        this.dieModified = -1;
+        this.c1 = null;
+        this.c2 = null;
+        this.d1 = null;
+        this.d2 = null;
+        this.rt = null;
+        this.dp = null;
+        this.diceBag = null;
+        this.color = null;
+        this.round = -1;
+        this.listOfCoordinateY = null;
+        this.player = null;
     }
 
 
@@ -215,14 +122,6 @@ public class ObjectiveTool {
         this.dp = dp;
     }
 
-    public int getTurnDie() {
-        return turnDie;
-    }
-
-    public void setTurnDie(int turnDie) {
-        this.turnDie = turnDie;
-    }
-
     public DiceBag getDiceBag() {
         return diceBag;
     }
@@ -261,5 +160,9 @@ public class ObjectiveTool {
 
     public void setPhase(int phase) {
         this.phase = phase;
+    }
+
+    public void setListOfCoordinateY(ArrayList<Coordinate> listOfCoordinateY) {
+        this.listOfCoordinateY = listOfCoordinateY;
     }
 }

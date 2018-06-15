@@ -2,12 +2,10 @@ package ingsw.model;
 
 import ingsw.model.publiccard.*;
 import ingsw.model.publiccard.PB9;
-
 import java.util.ArrayList;
 
 public class PBObjectiveCard {
     private PBStrategy pbStrategy;
-    private int points;
 
     public PBObjectiveCard(int idCard){
         switch(idCard){
@@ -114,5 +112,4 @@ public class PBObjectiveCard {
         }
         return numPBcards;
     }
-
 }

@@ -1,6 +1,5 @@
 package ingsw.view;
 
-
 import ingsw.Client;
 import ingsw.model.ViewWP;
 import javafx.animation.KeyFrame;
@@ -17,9 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-
 import java.io.IOException;
-
 
 /**Author : Alessio Tonelli
  *
@@ -37,7 +34,6 @@ public class Loading {
     private static int numFiles = 20;
     private Client client;
 
-
     public Loading(Client c){
         this.client=c;
     }
@@ -47,27 +43,22 @@ public class Loading {
             @Override
             protected Object call() throws Exception {
                 for (int i = 0; i < numFiles; i++) {
-
                     Thread.sleep(1000);
-
                 }
                 return true;
             }
         };
     }
 
-
     public void display(Stage primaryStage, String comment, ViewWP myWindow) {
 
         //MANAGE CYCLE PROGRESS
         final ProgressIndicator progressIndicator = new ProgressIndicator(0);
-
         progressIndicator.progressProperty().unbind();
         progressIndicator.setProgress(0);
         progressIndicator.progressProperty().unbind();
         copyWorker = createWorker(numFiles);
         progressIndicator.progressProperty().bind(copyWorker.progressProperty());
-
 
         //MANAGE THE LABEL "LOADING"
         final Label lblProgress = new Label(comment);
@@ -83,71 +74,41 @@ public class Loading {
         timeline.getKeyFrames().add(kf);
         timeline.play();
 
-
         timeline.getKeyFrames().add(
                 new KeyFrame(Duration.millis(500),
                         event -> {
                             if(myWindow==null){
-
                                 if(client.waitForPlayers()){
                                     timeline.stop();
-
                                     try {
                                         new WPRendering().display(client.getRandomWps(), client);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
-
                                     primaryStage.close();
                                 }
                             }
                             if (myWindow!=null) {
-
                                 if (client.readyToPlay()){
                                     timeline.stop();
                                     client.orderWPChoise();
                                     new PlayGame(client).display(myWindow);
-
                                     primaryStage.close();
                                 }
                             }
                         }));
         timeline.playFromStart();
 
-
         Pane root = new Pane();
         Scene scene = new Scene(root, 500, 250);
-
         Pane leftPane = new Pane();
         leftPane.setLayoutX(100);
         leftPane.setLayoutY(100);
         leftPane.getChildren().add(progressIndicator);
-
-
         Pane rightPane = new Pane();
         rightPane.setLayoutX(200);
         rightPane.setLayoutY(100);
         rightPane.getChildren().addAll(lblProgress);
-
- /*       final Label lbl2 = new Label("");
-        lbl2.setFont(Font.font("GB18030 Bitmap", FontWeight.BOLD, 10));
-        lbl2.setTextFill(Color.WHITE);
-
-        try {
-            if(controller.getListOfPlayers().size()==2){
-                lbl2.setText("Found one!");
-            }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        try {
-            if(controller.getListOfPlayers().size()==3){
-                lbl2.setText("Found two! Only one remaining...");
-            }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-*/
 
         root.getChildren().addAll(leftPane, rightPane);
         root.setStyle("-fx-background-color:black;");

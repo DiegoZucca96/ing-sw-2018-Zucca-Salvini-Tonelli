@@ -2,12 +2,10 @@ package ingsw.view;
 
 import ingsw.Client;
 import javafx.animation.PauseTransition;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -17,13 +15,13 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
-
 public class Warning {
 
     static boolean answer;
     static boolean stop;
     private String textMessage;
     Stage stage;
+    static int i = 0;
 
     public Warning(String alert, String title){
         Stage stage= new Stage();
@@ -69,7 +67,7 @@ public class Warning {
         stage = new Stage();
         Pane root = new Pane();
         Scene scene = new Scene(root, 600, 100);
-        Label label = new Label("Connessione fallita, riconnessione in corso...");
+        Label label = new Label("Connessione fallita, tentativo di riconnessione ...");
         label.setLayoutX(130);
         label.setLayoutY(50);
         Button b = new Button("Annulla");
@@ -79,19 +77,28 @@ public class Warning {
             stop=true;
             stage.close();
         });
-        PauseTransition delay = new PauseTransition(Duration.seconds(2));
-        delay.setOnFinished( event -> {
-            c.handleConnectionError();
-            if(stop){
-                stop=false;
-                stage.close();
-            }
-        } );
-        delay.play();
         root.getChildren().addAll(label,b);
         stage.setTitle("Connection failed");
         stage.setScene(scene);
         stage.show();
+        PauseTransition delay = new PauseTransition(Duration.seconds(4));
+        delay.setOnFinished( event -> {
+            c.handleConnectionError();
+            if (stop) {
+                stop = false;
+                stage.close();
+            } else {
+                i++;
+                if(i<5)
+                    label.setText("Connessione fallita, tentativo di riconnessione "+i+" su 5");
+                if(i==5)
+                    label.setText("Impossibile raggiungere il server, riprova più tardi");
+                if(i>5)
+                    stage.close();
+                delay.play();
+            }
+        });
+        delay.play();
     }
 
     public Warning(String message){
@@ -131,10 +138,6 @@ public class Warning {
 
     public Stage getStage(){
         return stage;
-    }
-
-    public static boolean isStop() {
-        return stop;
     }
 
     public static void setStop(boolean stop) {

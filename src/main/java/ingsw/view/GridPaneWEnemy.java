@@ -46,19 +46,13 @@ public class GridPaneWEnemy extends GridPane {
 
     }
 
-    public int getNumberWP() {
-        return numberWP;
-    }
-
-
     public void updateWindow(ViewWP viewWP) {
-            for (int i = 0; i < 4; i++) {
-                for (int j = 0; j < 5; j++) {
-                    updateButton(i, j,viewWP);
-                }
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 5; j++) {
+                updateButton(i, j,viewWP);
             }
+        }
     }
-
 
     private void updateButton(int row, int col, ViewWP viewWP){
         for(Node node : this.getChildren()){
@@ -79,6 +73,10 @@ public class GridPaneWEnemy extends GridPane {
                 }
             }
         }
+    }
+
+    public int getNumberWP() {
+        return numberWP;
     }
 
 }

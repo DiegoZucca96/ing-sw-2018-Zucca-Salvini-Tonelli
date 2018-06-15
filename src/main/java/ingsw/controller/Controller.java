@@ -4,8 +4,6 @@ import ingsw.*;
 import ingsw.model.*;
 import ingsw.model.windowpattern.WindowPattern;
 import ingsw.view.ToolView;
-import ingsw.view.Victory;
-
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -31,12 +29,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     private boolean active;
     private int turn;
     private boolean isFinish;
-    //private boolean doubleTurn;
-    //private boolean ableNext;
-    //private String skipPlayerDueTo8 = null;
 
-    //NB -->    tutti i metodi del controller devono essere boolean, per un motivo o per l'altro
-    //          non sempre possono fare l'azione richiesta, in quel caso restituiscono false
 
     public Controller(Server server) throws RemoteException {
         super();
@@ -60,7 +53,6 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
 
     //Lista dei vari metodi invocabili da grafica che vanno a interagire con il model
-
     @Override
     public ArrayList<String> getListOfPlayers() throws RemoteException{
         return server.getListOfPlayers();    }
@@ -374,56 +366,80 @@ public class Controller extends UnicastRemoteObject implements RMIController {
                     return false;
             }
         }
+        pt = new PlayerToolParameter();
         switch(idCard){
             case 1: {
-                pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()), toolView.getDieModified());
+                pt.setC1(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
+                pt.setDieModified(toolView.getDieModified());
                 break;
             }case 2:{
-                pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()),new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()));
+                pt.setC1(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
+                pt.setD1(new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()));
                 break;
             }case 3:{
-                pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()),new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()));
+                pt.setC1(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
+                pt.setD1(new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()));
                 break;
             }case 4:{
-                if(toolView.getPhase()==0)
-                    pt = new PlayerToolParameter(toolView.getPhase(), new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()),new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()));
-                else
-                    pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow2(), toolView.getStartCol2()), toolView.getPhase(), new Coordinate(toolView.getEndRow2(), toolView.getEndCol2()));
-                break;
+                if(toolView.getPhase()==0) {
+                    pt.setC1(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
+                    pt.setD1(new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()));
+                    pt.setPhase(toolView.getPhase());
+                }else {
+                    pt.setC2(new Coordinate(toolView.getStartRow2(), toolView.getStartCol2()));
+                    pt.setD2(new Coordinate(toolView.getEndRow2(), toolView.getEndCol2()));
+                    pt.setPhase(toolView.getPhase());
+                }break;
             }case 5:{
-                pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()),new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()),toolView.getRound());
+                pt.setC1(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
+                pt.setD1(new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()));
+                pt.setRound(toolView.getRound());
                 break;
             }case 6:{
-                pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
+                pt.setC1(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
                 break;
             }case 7:{
-                pt = new PlayerToolParameter(toolView.getListOfCoordinateY());
+                pt.setListOfCoordinateY(toolView.getListOfCoordinateY());
                 break;
             }case 8:{
-                pt = new PlayerToolParameter();
                 break;
             }case 9:{
-                pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()), new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()));
+                pt.setC1(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
+                pt.setD1(new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()));
                 break;
             }case 10:{
-                pt = new PlayerToolParameter(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
+                pt.setC1(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
                 break;
             }case 11:{
-                if(toolView.getPhase()==0)
-                    pt = new PlayerToolParameter(toolView.getPhase(), new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
-                if(toolView.getPhase()==1)
-                    pt = new PlayerToolParameter(toolView.getDieModified(), toolView.getPhase());
-                if(toolView.getPhase()==2)
-                    pt = new PlayerToolParameter(toolView.getPhase(), new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
+                if(toolView.getPhase()==0){
+                    pt.setC1(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
+                    pt.setPhase(toolView.getPhase());
+                }
+                if(toolView.getPhase()==1){
+                    pt.setDieModified(toolView.getDieModified());
+                    pt.setPhase(toolView.getPhase());
+                }
+                if(toolView.getPhase()==2){
+                    pt.setC1(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
+                    pt.setPhase(toolView.getPhase());
+                }
                 break;
             }case 12:{
                 if(toolView.getPhase() == 0){
-                    pt = new PlayerToolParameter(toolView.getPhase(), new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
+                    pt.setC1(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
+                    pt.setPhase(toolView.getPhase());
                     pt.setRound(toolView.getRound());
-                }else if(toolView.getPhase()==1)
-                    pt = new PlayerToolParameter(toolView.getPhase(), new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()), new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()));
-                else if(toolView.getPhase()==2)
-                    pt = new PlayerToolParameter(toolView.getPhase(), new Coordinate(toolView.getStartRow2(), toolView.getStartCol2()), new Coordinate(toolView.getEndRow2(), toolView.getEndCol2()));
+                }
+                if(toolView.getPhase()==1){
+                    pt.setC1(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
+                    pt.setD1(new Coordinate(toolView.getEndRow1(), toolView.getEndCol1()));
+                    pt.setPhase(toolView.getPhase());
+                }
+                if(toolView.getPhase()==2){
+                    pt.setC1(new Coordinate(toolView.getStartRow2(), toolView.getStartCol2()));
+                    pt.setD1(new Coordinate(toolView.getEndRow2(), toolView.getEndCol2()));
+                    pt.setPhase(toolView.getPhase());
+                }
                 break;
             }default:{
                 break;
@@ -437,7 +453,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
 
     @Override
     public synchronized boolean waitForPlayers() throws RemoteException{
-        if(getSizeOfPlayers()==1 && access == 0){ //Fa qualcosa mentre aspetta
+        if(getSizeOfPlayers()==1 && access == 0){
             access++;
         }
         if(getSizeOfPlayers()==2 && access == 1){

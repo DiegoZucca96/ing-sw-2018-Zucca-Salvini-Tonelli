@@ -1,10 +1,8 @@
 package ingsw.model;
 
-
 import ingsw.model.toolcard.*;
 import ingsw.observers.Observer;
 import ingsw.observers.ToolCardsObserver;
-
 import java.util.ArrayList;
 
 public class ToolCard {

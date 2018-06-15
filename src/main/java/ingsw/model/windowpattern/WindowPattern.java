@@ -1,16 +1,11 @@
 package ingsw.model.windowpattern;
 
-
-
 import ingsw.controller.InfoCell;
 import ingsw.model.*;
 import ingsw.observers.Observer;
 import ingsw.observers.WindowPatternObserver;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-
 
 /**Author : Alessio Tonelli _ Diego Zucca
  *
@@ -20,40 +15,27 @@ import java.util.List;
 
 public class WindowPattern implements Serializable {
 
-
     private String title ;
-
     private Integer difficulty;
-
     private int id;
-
     private final Cell[][] cellMatrix;
-
     private boolean wpEmpty;
-
     private Observer viewObserver;
 
     public WindowPattern(SAXParser parser, int select ){
 
         this.id=select;
-
         List<Cell> readConfig = parser.readConfig("src/main/java/ingsw/model/windowpattern/wpxml/wp"+select+".xml");
-
         InfoWindow readInfo = parser.readInfo("src/main/java/ingsw/model/windowpattern/wpxml/wp"+select+".xml");
-
         cellMatrix= new Cell[4][5];
 
         int count=0;
         for(int row = 0; row < 4; row++){
             for ( int column = 0; column < 5; column ++ ){
-
                 cellMatrix[row][column]= readConfig.get(count);
                 count++;
             }
         }
-
-
-
         this.title=readInfo.getName();
         this.difficulty=Integer.parseInt(readInfo.getDifficulty());
         this.wpEmpty=true;
@@ -72,20 +54,15 @@ public class WindowPattern implements Serializable {
         return this.difficulty;
     }
 
-
     public boolean isWpEmpty() {
         return this.wpEmpty;
     }
-
 
     public Cell[][] getCellMatrix() {
         return this.cellMatrix;
     }
 
-
     public void setWpEmpty (boolean wpEmpty) { this.wpEmpty = wpEmpty;}
-
-
 
     public int countEmptyCells(Cell[][] cellMatrix){
         int count=0;
@@ -108,12 +85,9 @@ public class WindowPattern implements Serializable {
             }
         }
         return count;
-
     }
 
-
     public boolean addDie(Coordinate destination, Die die, Cell[][] cellMatrix) {
-
         if(isWpEmpty()){
             if(verifyOnBoard(destination)){
                 if (cellMatrix[destination.getX()][destination.getY()].isEmpty()){
@@ -136,7 +110,6 @@ public class WindowPattern implements Serializable {
                 System.out.println("Non puoi inserire il dado in questa posizione perchè non sei sul bordo");
                 return false;
             }
-
         }else if (cellMatrix[destination.getX()][destination.getY()].isEmpty()){
             if(verifyPosition(destination, cellMatrix)) {
                 if(verifyCellColorConstraint(destination, die, cellMatrix) && verifyCellNumberConstraint(destination, die, cellMatrix) &&verifyDieColorConstraint(destination, die, cellMatrix) && verifyDieNumberConstraint(destination, die, cellMatrix)){
@@ -158,7 +131,6 @@ public class WindowPattern implements Serializable {
             return false;
         }
     }
-
 
     public boolean removeDie(Coordinate destination, Cell[][] cellMatrix) {
         if (getCell(destination, cellMatrix).isEmpty()) {
@@ -182,12 +154,9 @@ public class WindowPattern implements Serializable {
         return getCell(diePosition, cellMatrix).getDie();
     }
 
-
-
     public Cell getCell(Coordinate coordinate, Cell[][] cellMatrix) {
         return cellMatrix[coordinate.getX()][coordinate.getY()];
     }
-
 
     //VERIFICA CHE LA CELLA DI DESTINAZIONE ABBIA COLORE UGUALE AL DADO
     public boolean verifyCellColorConstraint(Coordinate destination, Die die, Cell[][] cellMatrix){
@@ -214,10 +183,6 @@ public class WindowPattern implements Serializable {
             return false;
     }
 
-
-
-
-
     //VERIFICA CHE LE CELLE ORTOGONALMENTE ADIACENTI AL DADO CHE SI VUOLE POSIZIONARE NON ABBIANO DADI CON LO STESSO COLORE
     public boolean verifyDieColorConstraint(Coordinate destination, Die die, Cell[][] cellMatrix){
         int x =destination.getX();
@@ -233,7 +198,6 @@ public class WindowPattern implements Serializable {
         return true;
     }
 
-
     //VERIFICA CHE LE CELLE ORTOGONALMENTE ADIACENTI AL DADO CHE SI VUOLE POSIZIONARE NON ABBIANO DADI CON LO STESSO NUMERO
     public boolean verifyDieNumberConstraint(Coordinate destination, Die die, Cell[][] cellMatrix){
         int x =destination.getX();
@@ -242,7 +206,6 @@ public class WindowPattern implements Serializable {
             return false;
         else return true;
     }
-
 
     //VERIFICA CHE IL DADO CHE STAI INSERENDO TOCCA ALMENO UN DADO ATTORNO; caso base i vertici della finestra
     public boolean verifyPosition(Coordinate destination, Cell[][] cellMatrix) {
@@ -281,34 +244,6 @@ public class WindowPattern implements Serializable {
     public boolean verifyOnBoard(Coordinate destination) {
         if(destination.getX()==0 || destination.getX()==3 || destination.getY()==0 || destination.getY()==4) return true;
         else return false;
-    }
-
-
-    public static void generateWindowPattern(ViewData init){
-        RandomGenerator rg = new RandomGenerator(24);
-
-        //INITIALIZE THE PARSER
-        SAXParser read = new SAXParser();
-
-        for(int i=0;i<4;i++){
-            int select = rg.random();
-
-            //READ FROM FILE
-            List<Cell> readConfig = read.readConfig("src/main/java/ingsw/model/windowpattern/wpxml/wp"+select+".xml");
-
-            InfoWindow readInfo = read.readInfo("src/main/java/ingsw/model/windowpattern/wpxml/wp"+select+".xml");
-
-            for (Cell cell : readConfig) {
-
-                //CREAT CELL IN THE VIEW
-                init.getImages().add(cell);
-
-            }
-            //SEND INFO (NAME AND DIFFICULTY) TO VIEW
-            init.getInfo().setName(readInfo.getName());
-            init.getInfo().setDifficulty(readInfo.getDifficulty());
-
-        }
     }
 
 

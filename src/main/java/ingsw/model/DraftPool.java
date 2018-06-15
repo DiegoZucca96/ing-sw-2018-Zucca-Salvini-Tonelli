@@ -2,13 +2,10 @@ package ingsw.model;
 
 import ingsw.observers.DraftPoolObserver;
 import ingsw.observers.Observer;
-
 import java.util.ArrayList;
-import java.util.Random;
 
 public class DraftPool {        //Classe che rappresenta la draft pool del gioco, tramite diceBag lancia i dadi e mette
                                 //quelli in eccesso nella RoundTrack.
-
     private ArrayList<Die> diceList;
     private DiceBag diceBag;
     private RoundTrack roundTrack;
@@ -16,7 +13,7 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
     private int begin;
 
     public  DraftPool(RoundTrack roundTrack){
-        diceList = new ArrayList<Die>();
+        diceList = new ArrayList<>();
         diceBag = new DiceBag();
         this.roundTrack = roundTrack;
         viewObserver = new DraftPoolObserver();
@@ -69,7 +66,6 @@ public class DraftPool {        //Classe che rappresenta la draft pool del gioco
         } catch(IndexOutOfBoundsException e){
             return null;
         }
-        
         return result;
     }
 

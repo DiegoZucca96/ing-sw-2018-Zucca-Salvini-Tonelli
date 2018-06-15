@@ -2,7 +2,6 @@ package ingsw.model;
 
 import ingsw.observers.Observer;
 import ingsw.observers.RoundTrackObserver;
-
 import java.util.ArrayList;
 
 //Classe che rappresenta la round track del gioco, contiene tutti i dadi che avanzano nella draft pool alla fine di ogni round,
@@ -10,15 +9,13 @@ import java.util.ArrayList;
 
 public class RoundTrack {
 
-    private int currentRound;                           //round corrente
+    private int currentRound;
     private ArrayList<ArrayList<Die>> extraDice;
-    private Observer viewObserver;                      /*lista di liste di tipo Die che contiene i dadi della round track.
-                                                          All'iesima posizione della prima lista troviamo la lista di dadi
-                                                          avanzati all'iesimo round.*/
+    private Observer viewObserver;
 
     public RoundTrack() {
         currentRound = 1;
-        extraDice = new ArrayList<ArrayList<Die>>();
+        extraDice = new ArrayList<>();
         viewObserver = new RoundTrackObserver();
     }
 
@@ -71,34 +68,6 @@ public class RoundTrack {
     public void notifyViewObserver(){
         viewObserver.update(this, ViewData.instance());
     }
-
-    /*Es.  "RoundTrack:
-            1:Die(2,RED),Die(3,YELLOW)
-            2:Die(1,BLUE)
-            3:
-            4:Die(5,GREEN)
-            5:
-            ...
-            10:Die(6,YELLOW)"
-    */
-  /*  @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("RoundTrack:");
-        for(int i=0; i<10; i++){
-            stringBuilder.append("\n");
-            stringBuilder.append(Integer.toString(i+1));
-            stringBuilder.append(":");
-            for(int j=0; j<9; j++){
-                Die die = getDie(i+1,j);
-                if(die==null) break;
-                if(j!=0) stringBuilder.append(",");
-                stringBuilder.append(die.toString());
-            }
-        }
-        return stringBuilder.toString();
-    }*/
-
 
     public ArrayList<String> toArrayString() {
         ArrayList<String> newRoundTrack = new ArrayList<>();

@@ -1,6 +1,5 @@
 package ingsw.view;
 
-
 import ingsw.Client;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -12,12 +11,10 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
 import java.awt.*;
 import java.util.ArrayList;
 
 public class GridPaneDraftPool extends GridPane {
-
 
     private DieInfo dieInfo;
     private Client client;
@@ -40,8 +37,6 @@ public class GridPaneDraftPool extends GridPane {
             this.getColumnConstraints().add(colConstraints);
         }
 
-
-
         for(int col = 0; col < diceThrows; col++){
             b = addButtonDP(col);
             b.setPrefSize(58, 58);
@@ -62,9 +57,7 @@ public class GridPaneDraftPool extends GridPane {
         action(button, 0, col);
         this.add(button, col, 0);
         return button;
-
     }
-
 
     private void action(Button button, int row, int col){
         button.setOnAction(e->{
@@ -109,14 +102,6 @@ public class GridPaneDraftPool extends GridPane {
                             }
                             break;
                         }
-                        /*case 8 :{
-                            if(client.takeDie(row,col)){
-                                dieInfo = new DieInfo(button.getBackground(), row, col);
-                                buttonDieSelected.setBackground(button.getBackground());
-                                buttonDieSelected.setOpacity(1);
-                            }
-                            break;
-                        }*/
                         case 9 :{
                             if(client.takeDie(row,col)){
                                 playGame.getGridWindow().setAccessWindow(true);
@@ -247,10 +232,6 @@ public class GridPaneDraftPool extends GridPane {
         stage.show();
     }
 
-    public void deselectBtn(){
-        buttonDieSelected.setOpacity(0);
-    }
-
     public Button getButton(int row, int col){
         for(Node node : this.getChildren()){
             if(GridPaneDraftPool.getRowIndex(node)==row && GridPaneDraftPool.getColumnIndex(node)== col){
@@ -258,14 +239,6 @@ public class GridPaneDraftPool extends GridPane {
             }
         }
         return null;
-    }
-
-    public DieInfo getDieInfo(){
-        return dieInfo;
-    }
-
-    public Button getButtonDieSelected() {
-        return buttonDieSelected;
     }
 
     public void updateDP(ArrayList<String> draftPoolDice) {
@@ -285,5 +258,17 @@ public class GridPaneDraftPool extends GridPane {
                 b.setBackground(new Background(myBI));
             }
         }
+    }
+
+    public DieInfo getDieInfo(){
+        return dieInfo;
+    }
+
+    public Button getButtonDieSelected() {
+        return buttonDieSelected;
+    }
+
+    public void deselectBtn(){
+        buttonDieSelected.setOpacity(0);
     }
 }

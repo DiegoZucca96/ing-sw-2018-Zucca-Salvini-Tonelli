@@ -1,6 +1,5 @@
 package ingsw.model;
 
-
 /**Author : Alessio Tonelli
  *
  *
@@ -8,25 +7,18 @@ package ingsw.model;
  *
  * built wp depending by incoming parameter*/
 
-
 import ingsw.model.windowpattern.*;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Stream;
 
 public class WindowPFactory {
 
     private int numOfWPs;
     private ArrayList<String> wpList;
-
-    public int getNumOfWPs() {
-        return numOfWPs;
-    }
 
     public WindowPFactory() throws IOException {
         try (Stream<Path> files = Files.list(Paths.get("src/main/java/ingsw/model/windowpattern/wpxml"))) {
@@ -51,14 +43,7 @@ public class WindowPFactory {
         }
     }
 
-    //inutile poichè i file vengono aggiunti manualmente nella cartella e non dal programma
-    //file vengono solo acceduti
-    /*public void addNewWP(String pathname){
-
-        int firstFreeIndex = this.getNumOfWPs();
-
-        wpList.add(firstFreeIndex, pathname);
-
-        this.numOfWPs = wpList.size();
-    }*/
+    public int getNumOfWPs() {
+        return numOfWPs;
+    }
 }

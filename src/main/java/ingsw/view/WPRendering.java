@@ -1,6 +1,5 @@
 package ingsw.view;
 
-
 import ingsw.Client;
 import ingsw.model.ViewWP;
 import javafx.application.Platform;
@@ -30,7 +29,6 @@ public class WPRendering {
 
     public void display(ArrayList<ViewWP> displayWindow, Client c) {
 
-
         this.client=c;
         GridPane root = new GridPane();
         root.setPadding(new Insets(20, 0, 0, 40));
@@ -40,8 +38,6 @@ public class WPRendering {
         Stage windowPattern = new Stage();
         windowPattern.setWidth(1260);
         windowPattern.setHeight(300);
-
-
 
         //WP 1
         GridPane grid1 = new GridPane();
@@ -53,10 +49,8 @@ public class WPRendering {
                 String colorCell = String.valueOf(displayWindow.get(0).getWp()[i][j].getColor());
                 PaneView paneView = new PaneView(numCell, colorCell, 0);
                 grid1.add(paneView, j, i);       //ricorda che il primo è colonna, il secondo riga
-
             }
         }
-
         root.add(grid1, 0, 0);
 
         String namePath1 = displayWindow.get(0).getName();
@@ -88,7 +82,6 @@ public class WPRendering {
             }
         });
 
-
         //WP 2
         GridPane grid2 = new GridPane();
         grid2.setVgap(1.5);
@@ -99,10 +92,8 @@ public class WPRendering {
                 String colorCell = String.valueOf(displayWindow.get(1).getWp()[i][j].getColor());
                 PaneView paneView = new PaneView(numCell, colorCell, 0);
                 grid2.add(paneView, j, i);
-
             }
         }
-
         root.add(grid2, 1, 0);
 
         String namePath2 = displayWindow.get(1).getName();
@@ -119,7 +110,6 @@ public class WPRendering {
             windowPattern.close();
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
         });
-
 
         label2.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent e) {
@@ -145,7 +135,6 @@ public class WPRendering {
                 String colorCell = String.valueOf(displayWindow.get(2).getWp()[i][j].getColor());
                 PaneView paneView = new PaneView(numCell, colorCell, 0);
                 grid3.add(paneView, j, i);
-
             }
         }
         root.add(grid3, 2, 0);
@@ -164,7 +153,6 @@ public class WPRendering {
             windowPattern.close();
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
         });
-
 
         label3.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent e) {
@@ -190,10 +178,8 @@ public class WPRendering {
                 String colorCell = String.valueOf(displayWindow.get(3).getWp()[i][j].getColor());
                 PaneView paneView = new PaneView(numCell, colorCell, 0);
                 grid4.add(paneView, j, i);
-
             }
         }
-
         root.add(grid4, 3, 0);
 
         String namePath4 = displayWindow.get(3).getName();
@@ -211,8 +197,6 @@ public class WPRendering {
             new Loading(client).display(new Stage(), "WAITING FOR PLAYERS", myWindow);
         });
 
-
-
         label4.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent e) {
                 label4.setScaleX(1.5);
@@ -228,19 +212,15 @@ public class WPRendering {
         });
 
         windowPattern.setOnCloseRequest(event -> event.consume());
-
         windowPattern.setTitle("Choose window pattern - "+client.getName());
         windowPattern.setScene(s2);
-
         Platform.setImplicitExit(false);
-
         windowPattern.setOnCloseRequest(event -> event.consume());
         windowPattern.resizableProperty().setValue(Boolean.FALSE);
         windowPattern.show();
     }
 
     public static String path(String number, String color) {
-
         if (number == null || color == null)
             return null;
         else if (number.equalsIgnoreCase("1") && color.equalsIgnoreCase("RED"))

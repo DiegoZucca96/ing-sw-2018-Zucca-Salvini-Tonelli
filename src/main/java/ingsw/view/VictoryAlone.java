@@ -1,6 +1,5 @@
 package ingsw.view;
 
-import ingsw.Client;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -21,8 +20,6 @@ public class VictoryAlone {
         primaryStage.setTitle("Victory");
         Pane root= new Pane();
         Scene scene = new Scene(root, 1200, 700);
-
-
         GridPane grid = new GridPane();
         grid.setLayoutX(100);
         grid.setLayoutY(10);
@@ -33,13 +30,11 @@ public class VictoryAlone {
         Image image = new Image(imagePath, 1200, 700, false, false);
         final ImageView background= new ImageView();
         background.setImage(image);
-
         Label victoryLabel = new Label();
         victoryLabel.setText("\n\nIl vincitore a tavolino è :\n\n            "+winner);
         victoryLabel.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 100 \"serif\"; -fx-padding: 0 0 20 0");
         victoryLabel.setMaxWidth(Double.MAX_VALUE);
         victoryLabel.setAlignment(Pos.CENTER);
-
         grid.add(victoryLabel,0,0);
         GridPane.setFillWidth(victoryLabel, true);
 

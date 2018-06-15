@@ -3,7 +3,6 @@ package ingsw.model.publiccard;
 import ingsw.model.Cell;
 import ingsw.model.Color;
 import ingsw.model.Player;
-
 import java.util.ArrayList;
 
 public class PB2 implements PBStrategy {
@@ -21,7 +20,7 @@ public class PB2 implements PBStrategy {
         Cell [][] cellMatrix = p.getWindowPattern().getCellMatrix();
         for(int i=0;i<5;i++){
             int j;
-            ArrayList<Color> list = new ArrayList<Color>();
+            ArrayList<Color> list = new ArrayList<>();
             for(j=0;j<4;j++){
                 if(cellMatrix[j][i].getDie()==null)
                     j=6;

@@ -14,7 +14,6 @@ public class PaneView extends Pane {
         createCell(number, color,me);
     }
 
-
     private void createCell(String number, String color, int me) {
         if(number.equalsIgnoreCase("0") && color.equalsIgnoreCase("WHITE"))
             this.setStyle("-fx-background-color: white");

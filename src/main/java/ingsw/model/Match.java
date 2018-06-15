@@ -1,10 +1,7 @@
 package ingsw.model;
 
-import ingsw.model.windowpattern.WindowPattern;
 import ingsw.observers.*;
-
 import java.util.ArrayList;
-
 
 public class Match {
     private int id;
@@ -23,7 +20,7 @@ public class Match {
         this.id = id;
 
         //Inizializzazione dei giocatori sulla base dei dati ricevuti dal costruttore
-        players = new ArrayList<Player>();
+        players = new ArrayList<>();
         RandomGenerator rg = new RandomGenerator(4);
         for (int i = 0; i < playersNames.size(); i++) {
             Player player = new Player(playersNames.get(i), playersWP.get(i), Color.values()[rg.random()]);
@@ -34,8 +31,8 @@ public class Match {
         currentPlayer = players.get(0);
 
         //Inizializzazione delle componenti del gioco lato model e grafico
-        tools = new ArrayList<ToolCard>();
-        pbCards = new ArrayList<PBObjectiveCard>();
+        tools = new ArrayList<>();
+        pbCards = new ArrayList<>();
         roundTrack = new RoundTrack();
         draftPool = new DraftPool(roundTrack);
         init = ViewData.instance();
@@ -58,10 +55,6 @@ public class Match {
     //Metodo che istanzia il gioco lato model e restituisce a lato view
     public ViewData getInit(){
         return init;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public boolean getClockwiseRound() {
@@ -128,19 +121,15 @@ public class Match {
     }
 
     //NB nextTurn va chiamata 7 volte con 4 giocatori, al termine si chiama endRound (tengo conto se è il primo o secondo turno tramite clockwiseRound)
-
     //il turno va al prossimo giocatore
     public void nextTurn() {
         if (currentPlayer == players.get(players.size()-1) && clockwiseRound) {
-            //currentPlayer.setMyRound(2);
             clockwiseRound = false;
         } else {
             try {
                 if (clockwiseRound) {
-                    //currentPlayer.setMyRound(2);
                     currentPlayer = players.get(players.indexOf(currentPlayer) + 1);
                 } else {
-                    //currentPlayer.setMyRound(2);
                     currentPlayer = players.get(players.indexOf(currentPlayer) - 1);
                 }
             } catch (IndexOutOfBoundsException e) {
@@ -159,7 +148,6 @@ public class Match {
         return draftPool.takeDie(dieIndex);
     }
 
-
     //posiziona un dado nella wp del current player
     public boolean positionDie(Die die, Coordinate destination){
         return currentPlayer.positionDie(die, destination);
@@ -168,82 +156,122 @@ public class Match {
     //raccoglie i dati necessari per l'utilizzo di una tool card in un oggetto di tipo ObjectiveTool
     //se non è possibile utilizzare la carta indicata in pTParameter restituisce null
     private ObjectiveTool createToolParameter(int idCard, PlayerToolParameter pTParameter) {
-        ObjectiveTool toolParameter;
-        boolean allow = true;  //Serve a dare il consenso all'uso della ToolCard o meno
+        ObjectiveTool toolParameter = new ObjectiveTool();
         switch (idCard) {
             case 1: {
-                toolParameter = new ObjectiveTool(pTParameter.getC1(), pTParameter.getDieModified(),draftPool);
+                toolParameter.setC1(pTParameter.getC1());
+                toolParameter.setDieModified(pTParameter.getDieModified());
+                toolParameter.setDp(draftPool);
                 break;
             }
             case 2: {
-                toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC1(), pTParameter.getD1());
+                toolParameter.setWindow(currentPlayer.getWindowPattern());
+                toolParameter.setC1(pTParameter.getC1());
+                toolParameter.setD1(pTParameter.getD1());
                 break;
             }
             case 3: {
-                toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC1(), pTParameter.getD1());
+                toolParameter.setWindow(currentPlayer.getWindowPattern());
+                toolParameter.setC1(pTParameter.getC1());
+                toolParameter.setD1(pTParameter.getD1());
                 break;
             }
             case 4:{
-                if(pTParameter.getPhase()==0)
-                    toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC1(), pTParameter.getD1(), pTParameter.getPhase());
-                else
-                    toolParameter = new ObjectiveTool(pTParameter.getPhase(),currentPlayer.getWindowPattern(), pTParameter.getC2(), pTParameter.getD2());
+                if(pTParameter.getPhase()==0){
+                    toolParameter.setWindow(currentPlayer.getWindowPattern());
+                    toolParameter.setC1(pTParameter.getC1());
+                    toolParameter.setD1(pTParameter.getD1());
+                    toolParameter.setPhase(pTParameter.getPhase());
+                }
+                else{
+                    toolParameter.setWindow(currentPlayer.getWindowPattern());
+                    toolParameter.setC2(pTParameter.getC2());
+                    toolParameter.setD2(pTParameter.getD2());
+                    toolParameter.setPhase(pTParameter.getPhase());
+                }
                 break;
             }
             case 5: {
-                toolParameter = new ObjectiveTool(pTParameter.getC1(), pTParameter.getD1(), roundTrack, draftPool, pTParameter.getRound());
+                toolParameter.setC1(pTParameter.getC1());
+                toolParameter.setD1(pTParameter.getD1());
+                toolParameter.setRt(roundTrack);
+                toolParameter.setDp(draftPool);
+                toolParameter.setRound(pTParameter.getRound());
                 break;
             }
             case 6: {
-                toolParameter = new ObjectiveTool(pTParameter.getC1(),draftPool);
+                toolParameter.setC1(pTParameter.getC1());
+                toolParameter.setDp(draftPool);
                 break;
             }
             case 7: {
-                toolParameter = new ObjectiveTool(pTParameter.getListOfCoordinateY(), draftPool);
+                toolParameter.setListOfCoordinateY(pTParameter.getListOfCoordinateY());
+                toolParameter.setDp(draftPool);
                 break;
             }
             case 8: {
-                toolParameter = new ObjectiveTool(currentPlayer);
-                //currentPlayer.setMyRound(2);
+                toolParameter.setPlayer(currentPlayer);
                 break;
             }
             case 9: {
-                toolParameter = new ObjectiveTool(pTParameter.getC1(), currentPlayer.getWindowPattern(), pTParameter.getD1(), draftPool);
+                toolParameter.setWindow(currentPlayer.getWindowPattern());
+                toolParameter.setC1(pTParameter.getC1());
+                toolParameter.setD1(pTParameter.getD1());
+                toolParameter.setDp(draftPool);
                 break;
             }
             case 10: {
-                toolParameter = new ObjectiveTool(pTParameter.getC1(),draftPool);
+                toolParameter.setC1(pTParameter.getC1());
+                toolParameter.setDp(draftPool);
                 break;
             }
             case 11: {
-                if(pTParameter.getPhase()==0)
-                    toolParameter = new ObjectiveTool(pTParameter.getC1(), currentPlayer.getWindowPattern(),draftPool, draftPool.getDiceBag(), pTParameter.getPhase());
-                else if(pTParameter.getPhase() == 1)
-                    toolParameter = new ObjectiveTool(pTParameter.getPhase(), pTParameter.getDieModified(),draftPool);
-                else
-                    toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC1(),draftPool, pTParameter.getPhase());
+                if(pTParameter.getPhase()==0){
+                    toolParameter.setC1(pTParameter.getC1());
+                    toolParameter.setWindow(currentPlayer.getWindowPattern());
+                    toolParameter.setDp(draftPool);
+                    toolParameter.setDiceBag(draftPool.getDiceBag());
+                    toolParameter.setPhase(pTParameter.getPhase());
+                }
+                else if(pTParameter.getPhase() == 1){
+                    toolParameter.setPhase(pTParameter.getPhase());
+                    toolParameter.setDieModified(pTParameter.getDieModified());
+                    toolParameter.setDp(draftPool);
+                }
+                else{
+                    toolParameter.setC1(pTParameter.getC1());
+                    toolParameter.setWindow(currentPlayer.getWindowPattern());
+                    toolParameter.setDp(draftPool);
+                    toolParameter.setPhase(pTParameter.getPhase());
+                }
                 break;
             }
             case 12: {
-                if(pTParameter.getPhase() == 0)
-                    toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getRound(), pTParameter.getC1(), roundTrack);
-                else if(pTParameter.getPhase()==1)
-                    toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC1(), pTParameter.getD1(), pTParameter.getPhase());
-                else
-                    toolParameter = new ObjectiveTool(currentPlayer.getWindowPattern(), pTParameter.getC1(), pTParameter.getD1(), pTParameter.getPhase());
+                if(pTParameter.getPhase() == 0){
+                    toolParameter.setWindow(currentPlayer.getWindowPattern());
+                    toolParameter.setRound(pTParameter.getRound());
+                    toolParameter.setC1(pTParameter.getC1());
+                    toolParameter.setRt(roundTrack);
+                }
+                else if(pTParameter.getPhase()==1){
+                    toolParameter.setWindow(currentPlayer.getWindowPattern());
+                    toolParameter.setC1(pTParameter.getC1());
+                    toolParameter.setD1(pTParameter.getD1());
+                    toolParameter.setPhase(pTParameter.getPhase());
+                }
+                else{
+                    toolParameter.setC1(pTParameter.getC1());
+                    toolParameter.setD1(pTParameter.getD1());
+                    toolParameter.setPhase(pTParameter.getPhase());
+                    toolParameter.setWindow(currentPlayer.getWindowPattern());
+                }
                 break;
             }
             default:
                 return null;
         }
-        if (allow) {
-            return toolParameter;
-        } else {
-            //System.out.print("Non puoi usare questa carta");
-            return null;
-        }
+        return toolParameter;
     }
-
 
     //usa la ingsw.model.toolcard passata come parametro, restituisce false se non può essere usata
     public boolean playerUseTool(int tool, PlayerToolParameter pTParameter) {
@@ -329,7 +357,7 @@ public class Match {
         for (Player p: tiesTmp){
             if (p.getTokens() > winner.getTokens()) winner = p;
         }
-        ties = new ArrayList<Player>();
+        ties = new ArrayList<>();
         for (Player p : tiesTmp) {
             if (p.getTokens() == winner.getTokens()) ties.add(p);
         }

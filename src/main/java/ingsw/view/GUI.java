@@ -22,7 +22,6 @@ import javafx.scene.text.Font;
 import javafx.scene.transform.Shear;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.util.NoSuchElementException;
 
 /**Author : Alessio Tonelli _ Diego Zucca _ Elio Salvini
@@ -40,8 +39,6 @@ public class GUI  {
     private String userName;
 
     public void display(Client c) {
-
-
         this.client=c;
         window = new Stage();
         window.setWidth(1200);
@@ -49,15 +46,11 @@ public class GUI  {
         VBox root = new VBox();
         scene = new Scene(root);
 
-
-
         //CREO IMMAGINE
         final ImageView selectedImage = new ImageView();
         String imagePath = "/SagradaMenu.png";
         Image image1 = new Image(imagePath, 1200, 700, false, false);
         selectedImage.setImage(image1);
-
-
 
         //CREO BOTTONE PLAY
         Button btnPlay= new Button();
@@ -70,7 +63,6 @@ public class GUI  {
         btnPlay.setLayoutX(900.0);
         btnPlay.setLayoutY(300.0);
 
-
         //TEMPO LAMPEGGIO
         final Timeline timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -79,9 +71,6 @@ public class GUI  {
         final KeyFrame kf = new KeyFrame(Duration.millis(2000), kv);
         timeline.getKeyFrames().add(kf);
         timeline.play();
-
-
-
 
         //ATTACH DI TUTTO: Pane e no StackPane
         Pane begin = new Pane();
@@ -95,18 +84,13 @@ public class GUI  {
         window.show();
     }
 
-
-
-
     //NUOVO STAGE PER EFFETTUARE IL LOGIN, SE è LA PRIMA VOLTA PUò REGISTRARSI
     private Stage loginStage (Client client) {
-
         Stage stage = new Stage();
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(12);
-
         HBox hbButtons = new HBox();
         hbButtons.setSpacing(10.0);
 
@@ -124,8 +108,6 @@ public class GUI  {
             }
         });
 
-
-
         //IMMAGINE DI OK PER LOG IN
         final ImageView imageOk = new ImageView();
         Label warning1 = new Label("");
@@ -141,39 +123,37 @@ public class GUI  {
             userName = tfName.getText();
             if (!userName.isEmpty()) {
                 try{
-                    if(!client.matchFound() && client.login(userName)){
-                        stage.close();
-                        window.close();
-                        client.setName(userName);
-                        new Loading(client).display(new Stage(), "LOADING MATCH", null);
-                    }else{
-                        if(client.matchFound() && client.login(userName)){
+                    if(client.login(userName)) {
+                        if (!client.matchFound()) {
+                            stage.close();
+                            window.close();
+                            client.setName(userName);
+                            new Loading(client).display(new Stage(), "LOADING MATCH", null);
+                        } else {
                             //NB! Viene ricreata la schermata iniziale del gioco, ma non è sincronizzato con tutto il resto
                             stage.close();
                             window.close();
                             client.setName(userName);
                             new PlayGame(client).display(client.getWP(userName));
                         }
-                        else{
-                            if(!client.login(userName) && client.isFinish()){
-                                warning1.setText("Match is finished");
-                                warning1.setTextFill(Color.RED);
-                            }else{
-                                warning1.setText("Match is full or started, sorry");
-                                warning1.setTextFill(Color.RED);
-                            }
+                    } else {
+                        if(client.isFinish()){
+                            warning1.setText("Match is finished");
+                            warning1.setTextFill(Color.RED);
+                        }else{
+                            warning1.setText("Match is full or started, sorry");
+                            warning1.setTextFill(Color.RED);
                         }
                     }
-                }catch (NoSuchElementException e2){
-                    System.err.println(e2.getMessage());
+                }catch (Exception e2){
+                    warning1.setText("Found some problems");
+                    warning1.setTextFill(Color.RED);
                 }
             }else{
                 warning1.setText("Insert at least one letter");
                 warning1.setTextFill(Color.RED);
             }
         });
-
-
 
         hbButtons.getChildren().add(btnLogin);
         grid.add(lblName, 0, 0);
@@ -182,12 +162,9 @@ public class GUI  {
         grid.add(link, 1, 2);
         grid.add(hbButtons, 0, 3, 2, 3);
 
-
-
         ColumnConstraints column1 = new ColumnConstraints();
         column1.setHalignment(HPos.RIGHT);
         grid.getColumnConstraints().add(column1);
-
         ColumnConstraints column2 = new ColumnConstraints();
         column2.setHalignment(HPos.LEFT);
         grid.getColumnConstraints().add(column2);
@@ -197,13 +174,11 @@ public class GUI  {
         stage.setTitle("Nickname");
         stage.resizableProperty().setValue(Boolean.FALSE);
         stage.show();
-
         return stage;
     }
 
     //REGISTRAZIONE AL SERVER
     private Stage signUp (Stage oldStage, Client client) {
-
         Stage stage = new Stage();
         Pane root = new Pane();
         GridPane grid = new GridPane();
@@ -211,19 +186,12 @@ public class GUI  {
         grid.setLayoutY(50);
         grid.setHgap(10);
         grid.setVgap(12);
-
         HBox hbButtons = new HBox();
         hbButtons.setSpacing(10.0);
-
-
         Button btnSubmit = new Button("Submit");
         Button btnExit = new Button("Exit");
-
-
         Label lblName = new Label("User name:");
         TextField tfName = new TextField();
-
-
 
         //IMMAGINE DI BACKGROUND
         final ImageView backgrundImage = new ImageView();
@@ -232,7 +200,6 @@ public class GUI  {
         String imagePath = "/Tool0.png";
         Image image = new Image(imagePath, 450, 600, false, false);
         backgrundImage.setImage(image);
-
 
         //Verifca che non ci sia nessun altro utente con lo stesso nickname
         btnSubmit.setOnAction(e-> {
@@ -249,7 +216,6 @@ public class GUI  {
                 }catch (NoSuchElementException e1){
                     System.err.println(e1.getMessage());
                 }
-
             }
         });
         btnExit.setOnAction(e-> stage.close());
@@ -259,11 +225,9 @@ public class GUI  {
         grid.add(tfName, 1, 0);
         grid.add(hbButtons, 2, 3, 2, 1);
 
-
         ColumnConstraints column1 = new ColumnConstraints();
         column1.setHalignment(HPos.RIGHT);
         grid.getColumnConstraints().add(column1);
-
         ColumnConstraints column2 = new ColumnConstraints();
         column2.setHalignment(HPos.LEFT);
         grid.getColumnConstraints().add(column2);
@@ -274,11 +238,7 @@ public class GUI  {
         stage.setTitle("Nickname");
         stage.resizableProperty().setValue(Boolean.FALSE);
         stage.show();
-
         return stage;
     }
 
-    public String getUserName() {
-        return userName;
-    }
 }

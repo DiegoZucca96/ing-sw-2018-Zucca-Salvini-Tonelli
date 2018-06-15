@@ -29,18 +29,6 @@ public class ClientData {
         return name;
     }
 
-    public ServerHandler getHandler() {
-        return handler;
-    }
-
-    public String getConnection() {
-        return connection;
-    }
-
-    public void setHandler(ServerHandler handler) {
-        this.handler = handler;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
