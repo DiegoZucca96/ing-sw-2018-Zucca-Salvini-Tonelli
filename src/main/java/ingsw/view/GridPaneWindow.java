@@ -67,13 +67,12 @@ public class GridPaneWindow extends GridPane {
                     toolView.setStartCol1(playGame.getDraftPoolGrid().getDieInfo().getColumn());
                     toolView.setEndRow1(i);
                     toolView.setEndCol1(j);
-                    button.setBackground(playGame.getDraftPoolGrid().getDieInfo().getBackground());
                     if (client.useToolCard(9, toolView)) {
                         client.nullSelection();
                         client.setInsertedDie(true);
                         playGame.update();
+                        updateMyself();
                         playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(0);
-                        button.setBackground(playGame.getDraftPoolGrid().getButton(toolView.getStartRow1(), toolView.getStartCol1()).getBackground());
                         playGame.getDraftPoolGrid().getButton(toolView.getStartRow1(), toolView.getStartCol1()).setOpacity(0);
                         playGame.onPositionWPButton();
                         playGame.setUsingTool(false);
@@ -83,7 +82,6 @@ public class GridPaneWindow extends GridPane {
                     }
                     toolView = null;
                     setAccessWindow(false);
-                    button.setOpacity(1);
                 }else if(playGame.getCardSelected()==2){
                     if(toolView==null)
                         toolView = new ToolView();

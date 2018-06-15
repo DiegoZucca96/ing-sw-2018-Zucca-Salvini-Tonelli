@@ -510,7 +510,7 @@ public class PlayGame {
                             }
                         }
                     }else{
-                        if(cardSelected!=8){
+                        if(cardSelected!=8 && cardSelected!=7){
                             if(!client.useToolCard(cardSelected,null)){
                                 view.setEffect(sepiaTone);
                                 viewUsed=null;
@@ -532,7 +532,9 @@ public class PlayGame {
                    }
                    if(!toolView.getListOfCoordinateY().isEmpty())
                        if(client.useToolCard(7, toolView)){
+                           client.useToolCard(7, null);
                            draftPoolGrid.updateDP(client.updateView().getDraftPoolDice());
+                           update();
                            resetOnButton();
                            setUsingTool(false);
                            view.setEffect(sepiaTone);
@@ -540,6 +542,7 @@ public class PlayGame {
                        }else{
                            view.setEffect(sepiaTone);
                            viewUsed=null;
+                           resetOnButton();
                            setUsingTool(false);
                            Toolkit.getDefaultToolkit().beep();
                        }
@@ -547,6 +550,7 @@ public class PlayGame {
                    view.setEffect(sepiaTone);
                    viewUsed=null;
                    cardSelected=0;
+                   resetOnButton();
                    Toolkit.getDefaultToolkit().beep();
                    setUsingTool(false);
                }
@@ -559,6 +563,7 @@ public class PlayGame {
                        view.setEffect(sepiaTone);
                        viewUsed=null;
                        setUsingTool(false);
+                       update();
                    }else{
                        setUsingTool(false);
                        view.setEffect(sepiaTone);

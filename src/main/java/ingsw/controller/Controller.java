@@ -470,6 +470,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
                 pt.setListOfCoordinateY(toolView.getListOfCoordinateY());
                 break;
             }case 8:{
+                pt=null;
                 break;
             }case 9:{
                 pt.setC1(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
@@ -612,7 +613,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
 
     @Override
     public synchronized void orderWPChoise() throws RemoteException {
-        if(access==2){
+        if(access==1){
             ArrayList<ViewWP> windowOrdered = new ArrayList<>();
             ArrayList<String> players = server.getListOfPlayers();
             for(String p : players){

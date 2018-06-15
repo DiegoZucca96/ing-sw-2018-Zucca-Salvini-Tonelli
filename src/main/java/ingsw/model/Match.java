@@ -281,12 +281,22 @@ public class Match {
                 if (t.getIdCard() == tool) {
                     if (t.isAlreadyUsed()) {
                         if(currentPlayer.getTokens()>1) {
+                            if(t.getIdCard()==8){
+                                pTParameter = new PlayerToolParameter();
+                                ObjectiveTool toolParameter = createToolParameter(tool,pTParameter);
+                                t.doToolStrategy(toolParameter);
+                            }
                             currentPlayer.useToken(t);
                             t.setNumTokenUsed(t.getNumTokenUsed() + 2);
                         }
                         else
                             return false;
                     }else{
+                        if(t.getIdCard()==8){
+                            pTParameter = new PlayerToolParameter();
+                            ObjectiveTool toolParameter = createToolParameter(tool,pTParameter);
+                            t.doToolStrategy(toolParameter);
+                        }
                         currentPlayer.useToken(t);
                         t.setNumTokenUsed(t.getNumTokenUsed() + 1);
                     }

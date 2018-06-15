@@ -37,7 +37,7 @@ public class Tool11 implements ToolStrategy {
             return true;
         }else if(object.getPhase() == 2){
             window = object.getWindow();
-            window.addDie(object.getD1(),die,window.getCellMatrix());  //Manca da passare inputDest in qualche modo come inputNumber
+            window.addDie(object.getC1(),die,window.getCellMatrix());  //Manca da passare inputDest in qualche modo come inputNumber
             die = dp.takeDie(c1.getY());
             return true;
         }

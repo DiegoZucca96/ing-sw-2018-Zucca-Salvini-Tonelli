@@ -28,7 +28,7 @@ public class PlayerToolParameter {
         this.dieModified = -1;
         this.round = -1;
         this.color = null;
-        this.listOfCoordinateY = null;
+        this.listOfCoordinateY = new ArrayList<>();
     }
 
 
