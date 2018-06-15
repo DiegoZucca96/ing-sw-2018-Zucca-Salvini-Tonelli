@@ -21,22 +21,22 @@ Design Pattern : Strategy , Factory
 There are two main classes: Match and Player. They have the responsability to contain all data of the game.
 
 Match is the one which initializes the real match, namely Objects (RoundTrack, DiceBag, DraftPool, ToolCard, PublicCard, Player)
-which are part of the match itself. In order to generate random number for the production of Cards and Maps we implemented 
+which are part of the match itself. In order to generate random number for the production of Cards and Maps, we implemented 
 RandomGenerator which imports java.util.Random.
 
 Player, instead, is the one that contains WindowPattern, which contains 20 Cells, and PrivateCard.
 
 Moving to the design:
 
-### Startegy
+### Strategy
 
-Strategy has been adopted due to the choice of the card. As the tool and public cards as the same structure respectively, we create 
+Strategy has been adopted due to the choice of the card. As the tool and public cards has the same structure respectively, we create 
 two interface ToolStartegy and PublicStrategy. Public Cards are simplier than the Tool Cards, so we are going to describe the last one.
 
 Each tool needs a particular input in order to be executed. So we are supported by a class called ObjectiveTool which is enriched 
 by an other class PlayerToolParameter. Now, this is complicated but we will explain in the controller why all this has been done.
 
-So when a tool card is used by a user the objective tool will be fill in the gap every time the user will pressed a buttom or an image.
+So when a tool card is used by a user the objective tool will be fill in the gap every time the user will pressed a button or an image.
 By using this trick we ensure the parameter which is passed to the method ToolCard.doOP(parameter) is enough in order
 to execute the entire card.
 
@@ -78,8 +78,7 @@ of the one in ControllerTimer when the server started after the time has been se
 But this is not the only thing it does.Timeline is also responsible of the update of my view during the match. Each 5 seconds it 
 calls update() in order to update, by getting new infos from ViewData.
 
-GridPaneRound, GridPaneDraftPool, GridPaneWindow and GridPaneWEnemy, whose names are quite explicit, have their own method update useful to get an update when 
-a modification in model is performed.
+GridPaneRound, GridPaneDraftPool, GridPaneWindow and GridPaneWEnemy, whose names are quite explicit, have their own method update useful to get an update when a modification in model is performed.
 
 ToolView is class which allows the use of tool cards. It encapsulates infos like button's coordinates, toolclicked. It will 
 be passed throws client.useTool(toolView) to controller and it will be elaborated (see Controller paragraph).
