@@ -252,6 +252,7 @@ public class Match {
                     toolParameter.setRound(pTParameter.getRound());
                     toolParameter.setC1(pTParameter.getC1());
                     toolParameter.setRt(roundTrack);
+                    toolParameter.setPhase(pTParameter.getPhase());
                 }
                 else if(pTParameter.getPhase()==1){
                     toolParameter.setWindow(currentPlayer.getWindowPattern());

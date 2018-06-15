@@ -487,6 +487,34 @@ public class ClientRMI implements Client {
     }
 
     @Override
+    public boolean removePlayer(String name) {
+        try {
+            return controller.removerPlayer(name);
+        } catch (RemoteException e) {
+            handleConnectionError();
+            return false;
+        }
+    }
+
+    @Override
+    public ArrayList<String> someoneLeftGame() {
+        try {
+            return controller.someoneLeftGame();
+        } catch (RemoteException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public ArrayList<String> someoneRejoinedGame() {
+        try {
+            return controller.someoneRejoinedGame();
+        } catch (RemoteException e) {
+            return null;
+        }
+    }
+
+    @Override
     public void handleConnectionError(){
         Registry registry;
         try {
@@ -498,4 +526,5 @@ public class ClientRMI implements Client {
             registry=null;
         }
     }
+
 }

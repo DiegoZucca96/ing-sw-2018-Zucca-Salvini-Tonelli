@@ -154,4 +154,9 @@ public class Server {
     public ArrayList<String> getInactivePlayer() {
         return inactivePlayers;
     }
+
+    public boolean removePlayer(String name) {
+        listOfPlayers.remove(listOfPlayers.indexOf(name));
+        return true;
+    }
 }

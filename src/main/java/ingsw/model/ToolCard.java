@@ -76,8 +76,8 @@ public class ToolCard {
         numToolCards.add(11);
         init.getToolCard().add("/Tool12+0.png");
         numToolCards.add(12);
-        init.getToolCard().add("/Tool4+0.png");
-        numToolCards.add(4);
+        init.getToolCard().add("/Tool1+0.png");
+        numToolCards.add(1);
         for(int i=3;i<3;i++){
             int select = rg.random();
             switch(select){

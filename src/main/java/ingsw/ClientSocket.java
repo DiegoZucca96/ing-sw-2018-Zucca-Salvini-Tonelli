@@ -434,6 +434,24 @@ public class ClientSocket implements Client {
     }
 
     @Override
+    public boolean removePlayer(String name) {
+        //TODO
+        return false;
+    }
+
+    @Override
+    public ArrayList<String> someoneLeftGame() {
+        //TODO
+        return null;
+    }
+
+    @Override
+    public ArrayList<String> someoneRejoinedGame() {
+        //TODO
+        return null;
+    }
+
+    @Override
     public ArrayList<ViewWP> getPlayerWPs(String name){
         setupConnection();
         out.println("getPlayersWPs:"+name);
