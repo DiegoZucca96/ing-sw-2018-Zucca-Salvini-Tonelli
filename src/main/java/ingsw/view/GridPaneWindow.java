@@ -67,13 +67,12 @@ public class GridPaneWindow extends GridPane {
                     toolView.setStartCol1(playGame.getDraftPoolGrid().getDieInfo().getColumn());
                     toolView.setEndRow1(i);
                     toolView.setEndCol1(j);
-                    button.setBackground(playGame.getDraftPoolGrid().getDieInfo().getBackground());
                     if (client.useToolCard(9, toolView)) {
                         client.nullSelection();
                         client.setInsertedDie(true);
                         playGame.update();
+                        updateMyself();
                         playGame.getDraftPoolGrid().getButtonDieSelected().setOpacity(0);
-                        button.setBackground(playGame.getDraftPoolGrid().getButton(toolView.getStartRow1(), toolView.getStartCol1()).getBackground());
                         playGame.getDraftPoolGrid().getButton(toolView.getStartRow1(), toolView.getStartCol1()).setOpacity(0);
                         playGame.onPositionWPButton();
                         playGame.setUsingTool(false);
@@ -83,7 +82,6 @@ public class GridPaneWindow extends GridPane {
                     }
                     toolView = null;
                     setAccessWindow(false);
-                    button.setOpacity(1);
                 }else if(playGame.getCardSelected()==2){
                     if(toolView==null)
                         toolView = new ToolView();
@@ -329,20 +327,29 @@ public class GridPaneWindow extends GridPane {
         Button buttonNo = new Button("No");
         root.add(buttonYes, 1, 1);
         root.add(buttonNo, 2, 1);
+        boolean clockwise = client.getClockwiseRound();
         buttonYes.setOnAction(event -> {
-            toolView.setPhase(2);
-            stage.close();
+            if(client.getPlayerState().equalsIgnoreCase("enabled") && client.getClockwiseRound()==clockwise){
+                toolView.setPhase(2);
+                stage.close();
+            }
+            else
+                stage.close();
         });
         buttonNo.setOnAction(event -> {
-            setAccessWindow(false);
-            toolView = null;
-            playGame.update();
-            playGame.onPositionWPButton();
-            playGame.setUsingTool(false);
-            playGame.setCardSelected(0);
-            if(!client.getInsertedDie())
-                playGame.resetOnButton();
-            stage.close();
+            if(client.getPlayerState().equalsIgnoreCase("enabled")){
+                setAccessWindow(false);
+                toolView = null;
+                playGame.update();
+                playGame.onPositionWPButton();
+                playGame.setUsingTool(false);
+                playGame.setCardSelected(0);
+                if(!client.getInsertedDie())
+                    playGame.resetOnButton();
+                stage.close();
+            }
+            else
+                stage.close();
         });
         stage.setTitle("Use tool 12");
         stage.setScene(scene);

@@ -138,4 +138,10 @@ public interface RMIController extends Remote {
     int getStartTimeMove() throws RemoteException;
 
     ViewData initializeViewCLI() throws RemoteException;
+
+    boolean removerPlayer(String name) throws RemoteException;
+
+    ArrayList<String> someoneLeftGame()throws RemoteException;
+
+    ArrayList<String> someoneRejoinedGame()throws RemoteException;
 }

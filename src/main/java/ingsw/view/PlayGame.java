@@ -5,6 +5,7 @@ import ingsw.Client;
 import ingsw.model.ViewWP;
 import ingsw.model.ViewData;
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -24,6 +25,7 @@ import javafx.util.Duration;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PlayGame {
 
@@ -60,6 +62,7 @@ public class PlayGame {
     private GridPane tokenUsed;
     private Label numTokenUsed;
     private ImageView viewUsed;
+    private int playersLeft = 0;
 
     public PlayGame(Client client){
         this.client=client;
@@ -73,6 +76,7 @@ public class PlayGame {
         stage.setHeight(700);
         Pane root = new Pane();
         Scene scene = new Scene(root);
+        stage.setOnCloseRequest(event -> event.consume());
 
         //IMMAGINE BACKGROUND
         final ImageView backGround = new ImageView();
@@ -124,12 +128,26 @@ public class PlayGame {
                             }
                             else{
                                 if(client.getPlayerState().equals("enabled")){
-                                        timeseconds = client.getTimeMove();
-                                        clockLbl.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 22 \"serif\"");
-                                        clockLbl.setText("Tocca a te    "+Integer.toString(timeseconds));
-                                        if (timeseconds == timeBegin-1) {
-                                            this.updateView = client.updateView();
-                                            if(updateView!=null)
+                                    timeseconds = client.getTimeMove();
+                                    clockLbl.setStyle("-fx-text-fill: goldenrod; -fx-font: italic 22 \"serif\"");
+                                    clockLbl.setText("Tocca a te    "+Integer.toString(timeseconds));
+                                    if (timeseconds == timeBegin-1) {
+                                        choosePressed=false;
+                                        setUsingTool(false);
+                                        gridRound.setAccessRound(false);
+                                        getGridWindow().setAccessWindow(false);
+                                        cardSelected=0;
+                                        SepiaTone sepiaTone = new SepiaTone();
+                                        sepiaTone.setLevel(0.7);
+                                        for(int i=0; i<toolGrid.getChildren().size();i++){
+                                            toolGrid.getChildren().get(i).setEffect(sepiaTone);
+                                        }
+                                        draftPoolGrid.deselectBtn();
+                                        myWindowGrid.abortToolView();
+                                    }
+                                    if (timeseconds == timeBegin-1) {
+                                        this.updateView = client.updateView();
+                                        if(updateView!=null)
                                             update();
                                         resetOnButton();
                                     }else{ //Per il problema che a volte scala di due secondi e i bottoni non si attivano
@@ -140,6 +158,16 @@ public class PlayGame {
                                             resetOnButton();
                                         }
                                     }
+                                    if(timeseconds%2==0){
+                                        String exitPlayer = someoneLeftGame();
+                                        String entryPlayer = someoneRejoinedGame();
+                                        if(!exitPlayer.equalsIgnoreCase("nessuno")){
+                                            new Warning("I giocatori " + exitPlayer + "sono usciti dal gioco", client.getRound());
+                                        }
+                                        if(!entryPlayer.equalsIgnoreCase("nessuno")){
+                                            new Warning("I giocatori " + entryPlayer + "sono entrati nel gioco", client.getRound());
+                                        }
+                                    }
                                     if(timeseconds==0) {
                                         if(!client.getActive()){
                                             Platform.runLater(() -> {
@@ -147,13 +175,37 @@ public class PlayGame {
                                             });
                                             timeline.stop();
                                             stage.close();
+                                        }else{
+                                            new Warning("Timeout scaduto!","Fine turno");
                                         }
                                     }
                                 }else {
                                     clockLbl.setStyle(styleSheet);
                                     clockLbl.setText("Tocca a "+client.getCurrentPlayer()+"      "+Integer.toString(timeseconds));
                                     if (timeseconds == timeBegin-1) {
+                                        choosePressed=false;
+                                        setUsingTool(false);
+                                        gridRound.setAccessRound(false);
+                                        getGridWindow().setAccessWindow(false);
+                                        cardSelected=0;
+                                        SepiaTone sepiaTone = new SepiaTone();
+                                        sepiaTone.setLevel(0.7);
+                                        for(int i=0; i<toolGrid.getChildren().size();i++){
+                                            toolGrid.getChildren().get(i).setEffect(sepiaTone);
+                                        }
                                         resetOffButton();
+                                        draftPoolGrid.deselectBtn();
+                                        myWindowGrid.abortToolView();
+                                    }
+                                    if(timeseconds%2==0){
+                                        String exitPlayer = someoneLeftGame();
+                                        String entryPlayer = someoneRejoinedGame();
+                                        if(!exitPlayer.equalsIgnoreCase("nessuno")){
+                                            new Warning("I giocatori " + exitPlayer + "sono usciti dal gioco", client.getRound());
+                                        }
+                                        if(!entryPlayer.equalsIgnoreCase("nessuno")){
+                                            new Warning("I giocatori " + entryPlayer + "sono entrati nel gioco", client.getRound());
+                                        }
                                     }
                                     if(timeseconds%5==0){
                                         this.updateView = client.updateView();
@@ -458,7 +510,7 @@ public class PlayGame {
                             }
                         }
                     }else{
-                        if(cardSelected!=8){
+                        if(cardSelected!=8 && cardSelected!=7){
                             if(!client.useToolCard(cardSelected,null)){
                                 view.setEffect(sepiaTone);
                                 viewUsed=null;
@@ -480,7 +532,9 @@ public class PlayGame {
                    }
                    if(!toolView.getListOfCoordinateY().isEmpty())
                        if(client.useToolCard(7, toolView)){
+                           client.useToolCard(7, null);
                            draftPoolGrid.updateDP(client.updateView().getDraftPoolDice());
+                           update();
                            resetOnButton();
                            setUsingTool(false);
                            view.setEffect(sepiaTone);
@@ -488,6 +542,7 @@ public class PlayGame {
                        }else{
                            view.setEffect(sepiaTone);
                            viewUsed=null;
+                           resetOnButton();
                            setUsingTool(false);
                            Toolkit.getDefaultToolkit().beep();
                        }
@@ -495,6 +550,7 @@ public class PlayGame {
                    view.setEffect(sepiaTone);
                    viewUsed=null;
                    cardSelected=0;
+                   resetOnButton();
                    Toolkit.getDefaultToolkit().beep();
                    setUsingTool(false);
                }
@@ -507,6 +563,7 @@ public class PlayGame {
                        view.setEffect(sepiaTone);
                        viewUsed=null;
                        setUsingTool(false);
+                       update();
                    }else{
                        setUsingTool(false);
                        view.setEffect(sepiaTone);
@@ -580,6 +637,32 @@ public class PlayGame {
         if(updateView.getToolCard()!=null)
             updateTool(updateView.getToolCard(),gridTks, tokenUsed, client.getName());
 
+    }
+
+    public String someoneLeftGame() {
+        ArrayList<String> leftGame = client.someoneLeftGame();
+        String namePlayersLeft = "";
+        if (!leftGame.isEmpty()) {
+            for (String s : leftGame) {
+                namePlayersLeft = namePlayersLeft.concat(s);
+                namePlayersLeft = namePlayersLeft.concat("  ");
+            }
+            return namePlayersLeft;
+        }else
+            return "nessuno";
+    }
+
+    public String someoneRejoinedGame(){
+        ArrayList<String> rejoinGame = client.someoneRejoinedGame();
+        String namePlayersRejoined = "";
+        if(!rejoinGame.isEmpty()){
+            for(String s : rejoinGame){
+                namePlayersRejoined = namePlayersRejoined.concat(s);
+                namePlayersRejoined = namePlayersRejoined.concat("  ");
+            }
+            return namePlayersRejoined;
+        }else
+            return "nessuno";
     }
 
     private void updateTool(ArrayList<String> toolCards, GridPane gridTks, GridPane tokenUsed, String name){

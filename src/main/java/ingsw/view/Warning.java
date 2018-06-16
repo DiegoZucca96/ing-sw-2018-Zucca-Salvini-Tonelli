@@ -24,11 +24,14 @@ public class Warning {
     static int i = 0;
 
     public Warning(String alert, String title){
+        int duration = 3;
         Stage stage= new Stage();
         Pane root = new Pane();
         root.setPrefSize(300, 100);
         final Scene scene = new Scene(root);
-        PauseTransition delay = new PauseTransition(Duration.seconds(3));
+        if(alert.equalsIgnoreCase("Timeout scaduto!"))
+            duration = 2;
+        PauseTransition delay = new PauseTransition(Duration.seconds(duration));
         delay.setOnFinished( event -> stage.close() );
         delay.play();
         Text text = new Text(alert);
@@ -98,6 +101,22 @@ public class Warning {
                 delay.play();
             }
         });
+        delay.play();
+    }
+
+    public Warning(String message, int round) {
+        Stage stage = new Stage();
+        Pane root = new Pane();
+        Scene scene = new Scene(root, 300, 100);
+        Label label = new Label(message);
+        label.setLayoutX(100);
+        label.setLayoutY(50);
+        root.getChildren().addAll(label);
+        stage.setTitle("Round "+round);
+        stage.setScene(scene);
+        stage.show();
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished( event -> stage.close() );
         delay.play();
     }
 

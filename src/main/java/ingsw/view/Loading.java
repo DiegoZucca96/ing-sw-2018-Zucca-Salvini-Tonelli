@@ -83,6 +83,10 @@ public class Loading {
                                     new WPRendering().display(client.getRandomWps(), client);
                                     primaryStage.close();
                                 }
+                                else{
+                                    if(client.getListOfPlayers().size()==0)
+                                        timeline.stop();
+                                }
                             }
                             if (myWindow!=null) {
                                 if (client.readyToPlay()){
@@ -112,7 +116,8 @@ public class Loading {
             stopBtn.setLayoutX(400);
             stopBtn.setLayoutY(200);
             stopBtn.setOnAction(e->{
-                //da impl
+                client.removePlayer(client.getName());
+                timeline.stop();
                 primaryStage.close();
                 new GUI().display(client);
             });

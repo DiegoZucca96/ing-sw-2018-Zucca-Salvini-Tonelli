@@ -191,38 +191,44 @@ public class GridPaneDraftPool extends GridPane {
         Button button = new Button("Ok");
         root.add(button, 1, 1);
         ToolView toolView = new ToolView();
+        boolean clockwise = client.getClockwiseRound();
         button.setOnAction(event -> {
-            if(card == 1){
-                if(value!=spinner.getValue()){
+            if(client.getPlayerState().equalsIgnoreCase("enabled") && client.getClockwiseRound()==clockwise){
+                if(card == 1){
+                    if(value!=spinner.getValue()){
+                        toolView.setDieModified(spinner.getValue());
+                        toolView.setStartRow1(row);
+                        toolView.setStartCol1(col);
+                        if(client.useToolCard(1,toolView)){
+                            updateDP(client.updateView().getDraftPoolDice());
+                            dieInfo = new DieInfo(b.getBackground(), row, col);
+                            buttonDieSelected.setBackground(b.getBackground());
+                            buttonDieSelected.setOpacity(1);
+                            playGame.setUsingTool(false);
+                            playGame.setCardSelected(0);
+                        }
+                        stage.close();
+                    }
+                    else {
+                        Toolkit.getDefaultToolkit().beep();
+                    }
+                }else if(card == 11){
                     toolView.setDieModified(spinner.getValue());
-                    toolView.setStartRow1(row);
-                    toolView.setStartCol1(col);
-                    if(client.useToolCard(1,toolView)){
+                    toolView.setPhase(1);
+                    if(client.useToolCard(11, toolView)){
                         updateDP(client.updateView().getDraftPoolDice());
-                        dieInfo = new DieInfo(b.getBackground(), row, col);
-                        buttonDieSelected.setBackground(b.getBackground());
+                        buttonDieSelected.setBackground(getButton(row, col).getBackground());
                         buttonDieSelected.setOpacity(1);
-                        playGame.setUsingTool(false);
-                        playGame.setCardSelected(0);
+                        playGame.getGridWindow().setAccessWindow(true);
+                        client.takeDie(row, col);
                     }
                     stage.close();
-                }
-                else {
+                }else
                     Toolkit.getDefaultToolkit().beep();
-                }
-            }else if(card == 11){
-                toolView.setDieModified(spinner.getValue());
-                toolView.setPhase(1);
-                if(client.useToolCard(11, toolView)){
-                    updateDP(client.updateView().getDraftPoolDice());
-                    buttonDieSelected.setBackground(getButton(row, col).getBackground());
-                    buttonDieSelected.setOpacity(1);
-                    playGame.getGridWindow().setAccessWindow(true);
-                    client.takeDie(row, col);
-                }
+            }
+            else{
                 stage.close();
-            }else
-                Toolkit.getDefaultToolkit().beep();
+            }
         });
         if(card == 1)
             stage.setTitle("Use tool 1");

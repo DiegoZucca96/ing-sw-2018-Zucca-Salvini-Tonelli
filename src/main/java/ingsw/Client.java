@@ -143,6 +143,14 @@ public interface Client {
 
     boolean setName(String userName);
 
+    //Da usare solo lato RMI
     void handleConnectionError();
 
+    //Per annullare la ricerca del giocatore
+    boolean removePlayer(String name);
+
+    //Per notificare se un giocatore è uscito o rientrato
+    ArrayList<String> someoneLeftGame();
+
+    ArrayList<String> someoneRejoinedGame();
 }

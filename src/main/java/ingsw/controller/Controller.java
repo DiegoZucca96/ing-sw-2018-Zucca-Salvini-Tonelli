@@ -29,6 +29,9 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     private boolean active;
     private int turn;
     private boolean isFinish;
+    private ArrayList<String> playersLeft;
+    private int playerNotifiedExit = 0;
+    private int playerNotifiedEntry = 0;
 
 
     public Controller(Server server) throws RemoteException {
@@ -50,6 +53,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         this.active=false;
         this.turn=0;
         this.isFinish=false;
+        this.playersLeft = new ArrayList<>();
     }
 
     //Lista dei vari metodi invocabili da grafica che vanno a interagire con il model
@@ -257,9 +261,11 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             controllerTimer.setTimeSearch(timeSearch);
         }
         if(getPlayerState(clientName).equals("enabled")) {
+            setNullPlayer();
             if (!active) {
-                if(!getInactiveList().contains(clientName))
+                if(!getInactiveList().contains(clientName)){
                     timeout(clientName);
+                }
                 disconnectClient(clientName);
             }
             timer.cancel();
@@ -320,6 +326,68 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     @Override
     public int getStartTimeMove() throws RemoteException {
         return playerMoveTime;
+    }
+
+    @Override
+    public boolean removerPlayer(String name) throws RemoteException {
+        if(server.removePlayer(name))
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public ArrayList<String> someoneLeftGame() throws RemoteException {
+        ArrayList<String> serverInactive = server.getInactivePlayer();
+        ArrayList<String> playerOut = new ArrayList<>();
+        if(serverInactive.isEmpty())
+            return playerOut;
+        else{
+            for(String s : serverInactive){
+                if (!playersLeft.contains(s)){
+                    playerOut.add(s);
+                }
+            }
+            playerNotifiedExit++;
+            if(playerNotifiedExit < getSizeOfPlayers()-serverInactive.size()){
+                return playerOut;
+            }
+            else{
+                playerNotifiedExit =0;
+                for(String s : serverInactive){
+                    if (!playersLeft.contains(s)){
+                        playersLeft.add(s);
+                    }
+                }
+                return playerOut;
+            }
+        }
+    }
+
+    @Override
+    public ArrayList<String> someoneRejoinedGame() throws RemoteException {
+        ArrayList<String> serverInactive = server.getInactivePlayer();
+        ArrayList<String> playerIn = new ArrayList<>();
+        for(String s : playersLeft){
+            if (!serverInactive.contains(s)){
+                playerIn.add(s);
+            }
+        }
+        if(playerIn.isEmpty())
+            return playerIn;
+        playerNotifiedEntry++;
+        if(playerNotifiedEntry < getSizeOfPlayers()-serverInactive.size()){
+            return playerIn;
+        }
+        else{
+            playerNotifiedEntry=0;
+            for(int i=0; i< playersLeft.size();i++){
+                if (!serverInactive.contains(playersLeft.get(i))){
+                    playersLeft.remove(i);
+                }
+            }
+            return playerIn;
+        }
     }
 
     @Override
@@ -402,6 +470,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
                 pt.setListOfCoordinateY(toolView.getListOfCoordinateY());
                 break;
             }case 8:{
+                pt=null;
                 break;
             }case 9:{
                 pt.setC1(new Coordinate(toolView.getStartRow1(), toolView.getStartCol1()));
@@ -453,12 +522,14 @@ public class Controller extends UnicastRemoteObject implements RMIController {
 
     @Override
     public synchronized boolean waitForPlayers() throws RemoteException{
-        if(getSizeOfPlayers()==1 && access == 0){
+        if(access == 0){
             access++;
-        }
-        if(getSizeOfPlayers()==2 && access == 1){
             controllerTimer.search(this,timer);
-            access++;
+        }
+        if(getSizeOfPlayers()==0){
+            timer.cancel();
+            access--;
+            return false;
         }
         if(getTimeRemaining()<=0){
             timer.cancel();
@@ -542,7 +613,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
 
     @Override
     public synchronized void orderWPChoise() throws RemoteException {
-        if(access==2){
+        if(access==1){
             ArrayList<ViewWP> windowOrdered = new ArrayList<>();
             ArrayList<String> players = server.getListOfPlayers();
             for(String p : players){
