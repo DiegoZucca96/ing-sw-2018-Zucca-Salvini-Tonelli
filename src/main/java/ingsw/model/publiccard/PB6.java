@@ -29,4 +29,13 @@ public class PB6 implements PBStrategy {
         p.addScore(points*min(num3,num4));
 
     }
+
+    /**Author: Elio Salvini
+     *
+     * CLI support
+     */
+    @Override
+    public String toString() {
+        return title + '\n' + comment + "\nPoints: " + points + '\n';
+    }
 }

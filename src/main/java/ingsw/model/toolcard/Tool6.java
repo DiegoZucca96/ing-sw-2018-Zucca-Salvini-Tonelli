@@ -46,4 +46,13 @@ public class Tool6 implements ToolStrategy {
     public int getNumTokenUsed() {
         return numTokenUsed;
     }
+
+    /** Author: Elio Salvini
+     *
+     * CLI support
+     */
+    @Override
+    public String toString() {
+        return title +'\n' + comment + '\n';
+    }
 }

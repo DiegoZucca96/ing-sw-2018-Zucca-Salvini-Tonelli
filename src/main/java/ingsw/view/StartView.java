@@ -29,8 +29,9 @@ public class StartView extends Application {
             try {
                 client.startClient();
             } catch (IOException e) {
-                e.printStackTrace();
+                e.printStackTrace(); //TODO possibile errore di connesione
             }
+            new GUI().display(client);
         }
     }
 

@@ -80,11 +80,7 @@ public class Loading {
                             if(myWindow==null){
                                 if(client.waitForPlayers()){
                                     timeline.stop();
-                                    try {
-                                        new WPRendering().display(client.getRandomWps(), client);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
+                                    new WPRendering().display(client.getRandomWps(), client);
                                     primaryStage.close();
                                 }
                             }

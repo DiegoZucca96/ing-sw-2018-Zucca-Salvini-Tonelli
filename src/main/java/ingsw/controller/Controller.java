@@ -642,6 +642,29 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return init;
     }
 
+    /**Author: Elio Salvini
+     *
+     *CLI support
+     */
+    //Metodo uguale a initializeView(), eccetto per la parte segnalata
+    @Override
+    public synchronized ViewData initializeViewCLI() throws RemoteException {
+        match = istanceMatch();
+        ViewData init = match.getInit();
+        init.setWps(windowChosen);
+        //new lines
+        init.setToolCards(match.toolCardsToString());
+        init.setPbCards(match.pbCardsToString());
+        //end new lines
+        enableClient(getCurrentPlayerName());
+        if(startTimer==0){
+            timer = new Timer();
+            controllerTimer.startPlayerTimer(this,timer);
+            startTimer++;
+        }
+        return init;
+    }
+    /**End CLI support*/
 
     private Match istanceMatch() throws RemoteException {
         if(match == null)

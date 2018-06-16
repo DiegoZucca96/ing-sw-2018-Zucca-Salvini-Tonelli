@@ -76,4 +76,16 @@ public class ViewData implements Serializable {
     public ArrayList<String> getRoundTrack() {
         return roundTrack;
     }
+
+    /**Author: Elio Salvini
+     *
+     * CLI support
+     */
+    public void setToolCards(ArrayList<String> toolCards) {
+        this.toolCards = toolCards;
+    }
+
+    public void setPbCards(ArrayList<String> pbCards) {
+        this.pbCards = pbCards;
+    }
 }

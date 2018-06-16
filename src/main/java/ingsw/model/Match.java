@@ -373,4 +373,24 @@ public class Match {
     public int getRound() {
         return roundTrack.getRound();
     }
+
+    /**Author: Elio Salvini
+     *
+     * CLI support
+     */
+    public ArrayList<String> pbCardsToString(){
+        ArrayList<String> cards = new ArrayList<>();
+        for (PBObjectiveCard card: pbCards){
+            cards.add(card.toString());
+        }
+        return cards;
+    }
+
+    public ArrayList<String> toolCardsToString(){
+        ArrayList<String> cards = new ArrayList<>();
+        for (ToolCard card: tools){
+            cards.add(card.toStringCLI());
+        }
+        return cards;
+    }
 }

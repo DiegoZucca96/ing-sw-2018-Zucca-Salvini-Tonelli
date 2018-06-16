@@ -54,4 +54,13 @@ public class PB9 implements PBStrategy {
         }
         p.addScore(countedDie.size());
     }
+
+    /**Author: Elio Salvini
+     *
+     * CLI support
+     */
+    @Override
+    public String toString() {
+        return title + '\n' + comment + "\nPoints: " + points + '\n';
+    }
 }

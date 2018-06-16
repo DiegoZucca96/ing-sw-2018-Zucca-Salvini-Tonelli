@@ -22,7 +22,7 @@ public interface Client {
     boolean register(String nickname);
 
     //Metodo che crea le 4 WP da scegliere ritornando le informazioni per creare il background dei bottoni
-    ArrayList<ViewWP> getRandomWps() throws IOException;
+    ArrayList<ViewWP> getRandomWps();
 
     boolean addWP(ViewWP wp);
 
@@ -65,6 +65,8 @@ public interface Client {
     //restituisce una lista di stringhe rappresentanti gli oggetti da inizializzare nella view
     ViewData initializeView();
 
+    ViewData initializeViewCLI();
+
     //restituisce una lista di stringhe rappresentanti gli oggetti da aggiornare nella view
     ViewData updateView();
 
@@ -104,7 +106,7 @@ public interface Client {
     ViewWP getWP(String userName);
 
     //Ordina le windowChosen
-    boolean orderWPChoise();
+    boolean orderWPChoise();    //si scrive Choice...
 
     //Va a controllare se la partita è giunta al termine
     boolean isFinish();

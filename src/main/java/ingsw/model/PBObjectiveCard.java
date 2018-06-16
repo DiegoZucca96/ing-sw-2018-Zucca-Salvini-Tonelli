@@ -112,4 +112,9 @@ public class PBObjectiveCard {
         }
         return numPBcards;
     }
+
+    @Override
+    public String toString() {
+        return pbStrategy.toString();
+    }
 }

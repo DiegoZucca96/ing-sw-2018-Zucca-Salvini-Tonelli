@@ -4,6 +4,7 @@ import ingsw.model.ViewWP;
 import ingsw.model.ViewData;
 import ingsw.view.GUI;
 import ingsw.view.ToolView;
+import ingsw.view.Warning;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -41,7 +42,7 @@ public class ClientSocket implements Client {
         //...
     }
 
-    private void setupConnection(){
+    private boolean setupConnection(){
         try {
             socket = new Socket(ip, port);
             in = new Scanner(socket.getInputStream());
@@ -49,10 +50,10 @@ public class ClientSocket implements Client {
             os = new ObjectOutputStream(socket.getOutputStream());
             is = new ObjectInputStream(socket.getInputStream());
         } catch (IOException e) {
-            //notify lost connection to player
-            new GUI().display(new ClientSocket("127.0.0.1", 1080));
+            return false;
         }
         out.println(name);
+        return true;
     }
 
     private void handleSetupConnectionError(){
@@ -109,7 +110,8 @@ public class ClientSocket implements Client {
         setupConnection();
         out.println("skip:" + name);
         closeConnection();
-        return false;
+        //TODO
+        return true;
     }
 
     @Override
@@ -174,6 +176,23 @@ public class ClientSocket implements Client {
     }
 
     @Override
+    public ViewData initializeViewCLI() {
+        setupConnection();
+        out.println("initializeViewCLI:");
+        try {
+            ViewData response =  (ViewData) is.readObject();
+            closeConnection();
+            return response;
+        } catch (ClassNotFoundException e) {
+            closeConnection();
+            return null;
+        } catch (IOException e) {
+            closeConnection();
+            return null;
+        }
+    }
+
+    @Override
     public ViewData updateView() {
         setupConnection();
         out.println("updateView:");
@@ -210,7 +229,7 @@ public class ClientSocket implements Client {
         out.println("createHash:"+Integer.toString(nameWindow)+','+nameClient);
         closeConnection();
         //TODO
-        return false;
+        return true;
     }
 
     @Override
@@ -228,7 +247,7 @@ public class ClientSocket implements Client {
         out.println("setActive:"+Boolean.toString(active));
         closeConnection();
         //TODO
-        return false;
+        return true;
     }
 
     @Override
@@ -242,10 +261,10 @@ public class ClientSocket implements Client {
 
     @Override
     public int getTimeMove() {
-        setupConnection();
+        if(!setupConnection()) return -1000;
         out.println("getTimeMove:");
         int response = Integer.parseInt(in.nextLine());
-        closeConnection();
+        if (!closeConnection()) return -1000;
         return response;
     }
 
@@ -303,9 +322,9 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public boolean orderWPChoise(){
+    public boolean orderWPChoise(){ //--> Choice
         setupConnection();
-        out.println("orderWPChoise:");
+        out.println("orderWPChoice:");
         closeConnection();
         //TODO
         return false;
@@ -528,16 +547,16 @@ public class ClientSocket implements Client {
         return response;
     }
 
-    public void closeConnection() {
+    public boolean closeConnection() {
         try {
             in.close();
             out.close();
             os.close();
             is.close();
             socket.close();
+            return true;
         } catch (IOException e) {
-            //notify lost connection to player
-            new GUI().display(new ClientSocket("127.0.0.1", 1080));
+            return false;
         }
     }
 

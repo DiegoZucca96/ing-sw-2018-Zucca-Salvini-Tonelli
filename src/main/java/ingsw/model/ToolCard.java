@@ -174,4 +174,12 @@ public class ToolCard {
     public void notifyViewObserver(){
         viewObserver.update(this, ViewData.instance());
     }
+
+    /** Author: Elio Salvini
+     *
+     * CLI support
+     */
+    public String toStringCLI(){
+        return toolStrategy.toString();
+    }
 }

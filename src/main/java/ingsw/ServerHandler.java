@@ -81,7 +81,7 @@ public class ServerHandler implements Runnable {
             else if (command.equals("getRound")) getRound();
             else if (command.equals("getCoordinateSelectedY")) getCoordinateSelectedY();
             else if (command.equals("getWP")) getWP(parameter);
-            else if (command.equals("orderWPChoise")) orderWPChoise();
+            else if (command.equals("orderWPChoice")) orderWPChoise();
             else if (command.equals("matchFound")) matchFound();
             else if (command.equals("isFinish")) isFinish();
             else if (command.equals("getScore")) getScore(parameter);
@@ -94,6 +94,7 @@ public class ServerHandler implements Runnable {
             else if (command.equals("getClockwiseRound")) getClockwiseRound();
             else if (command.equals("getTokenRemaining")) getTokenRemaining(parameter);
             else if (command.equals("useToolCard")) useToolCard(parameter);
+            else if (command.equals("initializeViewCLI")) initializeViewCLI();
             closeConnection();
         }
          catch (IOException e) {
@@ -310,5 +311,11 @@ public class ServerHandler implements Runnable {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private void initializeViewCLI() throws IOException {
+        os.writeObject(controller.initializeViewCLI());
+        os.flush();
+        os.reset();
     }
 }

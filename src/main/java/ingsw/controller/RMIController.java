@@ -136,4 +136,6 @@ public interface RMIController extends Remote {
     boolean iAmAlone() throws RemoteException;
 
     int getStartTimeMove() throws RemoteException;
+
+    ViewData initializeViewCLI() throws RemoteException;
 }

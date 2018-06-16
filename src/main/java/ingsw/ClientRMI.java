@@ -28,7 +28,6 @@ public class ClientRMI implements Client {
         } catch (NotBoundException e) {
             e.printStackTrace();
         }
-        new GUI().display(this);
     }
 
     public void setController(RMIController controller) {
@@ -129,6 +128,16 @@ public class ClientRMI implements Client {
     public ViewData initializeView() {
         try {
             return controller.initializeView();
+        } catch (RemoteException e) {
+            handleConnectionError();
+            return null;
+        }
+    }
+
+    @Override
+    public ViewData initializeViewCLI() {
+        try {
+            return controller.initializeViewCLI();
         } catch (RemoteException e) {
             handleConnectionError();
             return null;

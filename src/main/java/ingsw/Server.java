@@ -25,6 +25,7 @@ public class Server {
 
 
     public static void main(String[] args) throws RemoteException {
+
         Server server = Server.instance(1080);
 
         //cambio la policy per grantire l'accesso ad RMI
