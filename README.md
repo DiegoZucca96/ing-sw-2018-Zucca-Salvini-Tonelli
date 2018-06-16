@@ -115,9 +115,19 @@ us to perform only the part of the tool card's code we need.
 
 ## How to play
 
-Come to play!
+Screen is divided in three columns : 
 
+1) There are three tool cards which drop out when game started.
 
+2) This column is a little bit complicated. In the upper part there is the Roundtrack which contains all the extra dice which remain from rounds which finish. Going down on the screen we see the enemies' maps and dice on them. Further more, there are three horizontal objects: player's map, buttons through which player can interact with images, and last player's private card. DraftPool is on the buttom part of the screen.
 
+3) There are three public cards which drop out when game started required to count final score.
 
+So when player gets his turn (he is enable), he is able to do some moves, icluding take a die, using a tool card, skip turn
+or even exit from the game.
 
+If you don't click on "take die" button, player is not enable to take a die from draftpool grid.
+Same reasoning would apply to using tools. He must click on "using tool" in order to choose the card he wants.
+It is also important that when a player has chosen a tool card he follows all the instruction the tool card asks in order to be used correctly.
+
+There is nothing else to say ... JUST ENJOY YOURSELF !
