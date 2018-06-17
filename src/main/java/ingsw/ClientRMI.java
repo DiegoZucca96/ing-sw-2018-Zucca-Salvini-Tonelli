@@ -428,13 +428,11 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public boolean addWP(ViewWP wp){
+    public void addWP(ViewWP wp){
         try {
             controller.addWindow(wp);
-            return true;
         } catch (RemoteException e) {
             handleConnectionError();
-            return false;
         }
     }
 

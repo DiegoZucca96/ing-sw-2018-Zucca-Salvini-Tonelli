@@ -23,7 +23,7 @@ public interface Client {
     //Metodo che crea le 4 WP da scegliere ritornando le informazioni per creare il background dei bottoni
     ArrayList<ViewWP> getRandomWps();
 
-    boolean addWP(ViewWP wp);
+    void addWP(ViewWP wp);
 
     //Restituisce la lista dei nomi dei giocatori
     ArrayList<String> getListOfPlayers();

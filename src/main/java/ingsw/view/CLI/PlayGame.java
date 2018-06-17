@@ -180,6 +180,7 @@ public class PlayGame {
         int i =1;
         for(String card: init.getPbCard()){
             System.out.println(i + " - " + card);
+            i++;
         }
     }
 
@@ -199,6 +200,7 @@ public class PlayGame {
                     } else System.out.println("Cost: 2 token\n");
                 }
             }
+            i++;
         }
     }
 

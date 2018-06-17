@@ -48,6 +48,7 @@ public class ClientSocket implements Client {
             os = new ObjectOutputStream(socket.getOutputStream());
             is = new ObjectInputStream(socket.getInputStream());
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             return false;
         }
         out.println(name);
@@ -113,15 +114,18 @@ public class ClientSocket implements Client {
     @Override
     public boolean useToolCard(int i, ToolView parameter) {
         setupConnection();
-        out.println("uesToolCard:" + i);
-        in.nextLine();
-        try {
-            os.writeObject(parameter);
-            os.flush();
-            os.reset();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        out.println("useToolCard:" + i);
+        if (parameter != null){
+            out.println("not null");
+            try {
+                in.nextLine();
+                os.writeObject(parameter);
+                os.flush();
+                os.reset();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else out.println("null");
         boolean response = Boolean.parseBoolean(in.nextLine());
         closeConnection();
         return response;
@@ -535,7 +539,7 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public boolean addWP(ViewWP wp) {
+    public void addWP(ViewWP wp) {
         setupConnection();
         out.println("addWP:");
         try {
@@ -547,8 +551,6 @@ public class ClientSocket implements Client {
             e.printStackTrace();
         }
         closeConnection();
-        //TODO
-        return false;
     }
 
     @Override

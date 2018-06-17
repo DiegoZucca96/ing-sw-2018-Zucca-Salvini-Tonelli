@@ -312,12 +312,16 @@ public class ServerHandler implements Runnable {
 
     private void useToolCard(String parameter) throws IOException{
         ToolView toolView;
-        out.println("ok");
-        try {
-            toolView = (ToolView)is.readObject();
-            out.println(controller.useToolCard(Integer.parseInt(parameter), toolView));
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        if (in.nextLine().equals("not null")){
+            out.println("ok");
+            try {
+                toolView = (ToolView)is.readObject();
+                out.println(controller.useToolCard(Integer.parseInt(parameter), toolView));
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            out.println(controller.useToolCard(Integer.parseInt(parameter), null));
         }
     }
 
