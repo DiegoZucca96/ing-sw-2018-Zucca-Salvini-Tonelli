@@ -6,12 +6,12 @@ import ingsw.model.ViewWP;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class AccesGame {
+public class AccessGame {
 
     private Client client;
     private Scanner in;
 
-    public AccesGame(Client client){
+    public AccessGame(Client client){
         this.client = client;
         in = new Scanner(System.in);
     }

@@ -10,26 +10,24 @@ import java.util.Scanner;
 public class Main {
 
     private static Scanner in;
-    private static AccesGame accesGame;
+    private static AccessGame accessGame;
     private static Client client;
+    private static boolean endGame = false;
+
 
     public static void main(String[] args) {
+        System.out.println("--------------------------------------------------------------------------------------");
+        System.out.println("                                   WELCOME TO SAGRADA                                 ");
+        System.out.println("--------------------------------------------------------------------------------------");
         in = new Scanner(System.in);
         chooseConnection();
+    }
 
-        //Access game (registration, login, window pattern choice,...)
-        accesGame = new AccesGame(client);
-        while (!accesGame.register());
-        while (!accesGame.login());
-        accesGame.waitForPlayers();
-        accesGame.chooseWPs();
-        accesGame.waitForPlay();
-
-        //Play a match
-        boolean endGame = false;
+    //Play a match
+    private static void playGame() {
         PlayGame playGame = new PlayGame(client);
+        playGame.initializeView();
         while(!endGame){
-            playGame.initializeView();
             playGame.availableCommands();
         }
     }
@@ -55,5 +53,21 @@ public class Main {
                 e.printStackTrace(); //TODO handle connection error
             }
         }
+        accessGame(false);
+    }
+
+    public static void setEndGame(boolean endGame) {
+        Main.endGame = endGame;
+    }
+
+    //Access game (registration, login, window pattern choice,...)
+    public static void accessGame(Boolean onlyLogin){
+        accessGame = new AccessGame(client);
+        if (!onlyLogin) while (!accessGame.register());
+        while (!accessGame.login());
+        accessGame.waitForPlayers();
+        accessGame.chooseWPs();
+        accessGame.waitForPlay();
+        playGame();
     }
 }
