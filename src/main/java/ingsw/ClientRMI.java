@@ -3,7 +3,6 @@ package ingsw;
 import ingsw.controller.RMIController;
 import ingsw.model.ViewWP;
 import ingsw.model.ViewData;
-import ingsw.view.GUI;
 import ingsw.view.ToolView;
 import ingsw.view.Warning;
 import java.io.IOException;
@@ -12,7 +11,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.concurrent.ScheduledExecutorService;
 
 public class ClientRMI implements Client {
@@ -35,9 +33,8 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public boolean setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return true;
     }
 
     @Override
@@ -72,13 +69,11 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public boolean skip() {
+    public void skip() {
         try {
             controller.skip(name);
-            return true;
         } catch (RemoteException e) {
             handleConnectionError();
-            return false;
         }
     }
 
@@ -168,13 +163,11 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public boolean createHash(int numberWP, String nameClient) {
+    public void createHash(int numberWP, String nameClient) {
         try {
             controller.createHash(numberWP,nameClient);
-           return true;
         } catch (RemoteException e) {
             handleConnectionError();
-            return false;
         }
     }
 
@@ -189,13 +182,11 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public boolean setActive(Boolean active) {
+    public void setActive(Boolean active) {
         try {
             controller.setActive(active);
-            return true;
         } catch (RemoteException e) {
             handleConnectionError();
-            return false;
         }
     }
 
@@ -229,13 +220,11 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public boolean nullSelection() {
+    public void nullSelection() {
         try {
             controller.setNullPlayer();
-            return true;
         } catch (RemoteException e) {
             handleConnectionError();
-            return false;
         }
     }
 
@@ -274,13 +263,11 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public boolean orderWPChoise() {
+    public void orderWPChoise() {
         try {
             controller.orderWPChoise();
-            return true;
         } catch (RemoteException e) {
             handleConnectionError();
-            return false;
         }
     }
 
@@ -304,13 +291,11 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public boolean calculateScore() {
+    public void calculateScore() {
         try {
             controller.calculateScore();
-            return true;
         } catch (RemoteException e) {
             handleConnectionError();
-            return false;
         }
     }
 
@@ -345,24 +330,20 @@ public class ClientRMI implements Client {
     }
 
     @Override
-    public boolean setInsertedDie(boolean b) {
+    public void setInsertedDie(boolean b) {
         try {
             controller.setInsertedDie(b);
-            return true;
         } catch (RemoteException e) {
             handleConnectionError();
-            return false;
         }
     }
 
     @Override
-    public boolean setTool8Used(boolean b) {
+    public void setTool8Used(boolean b) {
         try {
             controller.setTool8Used(b);
-            return true;
         } catch (RemoteException e) {
             handleConnectionError();
-            return false;
         }
     }
 

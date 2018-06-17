@@ -2,9 +2,7 @@ package ingsw;
 
 import ingsw.model.ViewWP;
 import ingsw.model.ViewData;
-import ingsw.view.GUI;
 import ingsw.view.ToolView;
-import ingsw.view.Warning;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -106,12 +104,10 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public boolean skip() {
+    public void skip() {
         setupConnection();
         out.println("skip:" + name);
         closeConnection();
-        //TODO
-        return true;
     }
 
     @Override
@@ -224,12 +220,10 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public boolean createHash(int nameWindow, String nameClient) {
+    public void createHash(int nameWindow, String nameClient) {
         setupConnection();
         out.println("createHash:"+Integer.toString(nameWindow)+','+nameClient);
         closeConnection();
-        //TODO
-        return true;
     }
 
     @Override
@@ -242,12 +236,10 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public boolean setActive(Boolean active) {
+    public void setActive(Boolean active) {
         setupConnection();
         out.println("setActive:"+Boolean.toString(active));
         closeConnection();
-        //TODO
-        return true;
     }
 
     @Override
@@ -278,12 +270,10 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public boolean nullSelection() {
+    public void nullSelection() {
         setupConnection();
         out.println("nullSelection:");
         closeConnection();
-        //TODO
-        return false;
     }
 
     @Override
@@ -322,12 +312,10 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public boolean orderWPChoise(){ //--> Choice
+    public void orderWPChoise(){ //--> Choice
         setupConnection();
         out.println("orderWPChoice:");
         closeConnection();
-        //TODO
-        return false;
     }
 
     @Override
@@ -349,12 +337,10 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public boolean calculateScore() {
+    public void calculateScore() {
         setupConnection();
         out.println("calculateScore:");
         closeConnection();
-        //TODO
-        return false;
     }
 
     @Override
@@ -394,21 +380,17 @@ public class ClientSocket implements Client {
     }
 
     @Override
-    public boolean setInsertedDie(boolean b) {
+    public void setInsertedDie(boolean b) {
         setupConnection();
         out.println("setInsertedDie" + b);
         closeConnection();
-        //TODO
-        return false;
     }
 
     @Override
-    public boolean setTool8Used(boolean isTool8Used) {
+    public void setTool8Used(boolean isTool8Used) {
         setupConnection();
         out.println("setTool8Used:" + isTool8Used);
         closeConnection();
-        //TODO
-        return false;
     }
 
     @Override
@@ -431,20 +413,25 @@ public class ClientSocket implements Client {
 
     @Override
     public boolean iAmAlone() {
-        //TODO
-        return false;
+        setupConnection();
+        out.println("iAmAlone:");
+        boolean response = in.nextBoolean();
+        closeConnection();
+        return response;
     }
 
     @Override
     public int getStartTimeMove() {
-        //TODO
-        return -1;
+        setupConnection();
+        out.println("getStartTimeMove:");
+        int response = in.nextInt();
+        closeConnection();
+        return response;
     }
 
     @Override
-    public boolean setName(String userName) {
-        //TODO
-        return false;
+    public void setName(String userName) {
+        this.name = userName;
     }
 
     @Override
@@ -454,20 +441,45 @@ public class ClientSocket implements Client {
 
     @Override
     public boolean removePlayer(String name) {
-        //TODO
-        return false;
+        setupConnection();
+        out.println("removePlayer:" + name);
+        boolean response = in.nextBoolean();
+        closeConnection();
+        return response;
     }
 
     @Override
     public ArrayList<String> someoneLeftGame() {
-        //TODO
-        return null;
+        setupConnection();
+        out.println("someoneLeftGame:");
+        try {
+            ArrayList<String> response = (ArrayList<String>) is.readObject();
+            closeConnection();
+            return response;
+        } catch (IOException e) {
+            closeConnection();
+            return null;
+        } catch (ClassNotFoundException e) {
+            closeConnection();
+            return null;
+        }
     }
 
     @Override
     public ArrayList<String> someoneRejoinedGame() {
-        //TODO
-        return null;
+        setupConnection();
+        out.println("someoneRejoinedGame:");
+        try {
+            ArrayList<String> response = (ArrayList<String>) is.readObject();
+            closeConnection();
+            return response;
+        } catch (IOException e) {
+            closeConnection();
+            return null;
+        } catch (ClassNotFoundException e) {
+            closeConnection();
+            return null;
+        }
     }
 
     @Override

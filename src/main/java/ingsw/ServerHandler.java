@@ -1,6 +1,7 @@
 package ingsw;
 
 import ingsw.controller.RMIController;
+import ingsw.model.PlayerToolParameter;
 import ingsw.model.ViewWP;
 import ingsw.view.ToolView;
 
@@ -95,6 +96,11 @@ public class ServerHandler implements Runnable {
             else if (command.equals("getTokenRemaining")) getTokenRemaining(parameter);
             else if (command.equals("useToolCard")) useToolCard(parameter);
             else if (command.equals("initializeViewCLI")) initializeViewCLI();
+            else if (command.equals("iAmAlone")) iAmAlone();
+            else if (command.equals("getStartTimeMove")) getStartTimeMove();
+            else if (command.equals("removePlayer")) removePlayer(parameter);
+            else if (command.equals("someoneLeftGame")) someoneLeftGame();
+            else if (command.equals("someoneRejoinedGame")) someoneRejoinedGame();
             closeConnection();
         }
          catch (IOException e) {
@@ -305,9 +311,11 @@ public class ServerHandler implements Runnable {
     }
 
     private void useToolCard(String parameter) throws IOException{
+        ToolView toolView;
         out.println("ok");
         try {
-            out.println(controller.useToolCard(Integer.parseInt(parameter),(ToolView)is.readObject()));
+            toolView = (ToolView)is.readObject();
+            out.println(controller.useToolCard(Integer.parseInt(parameter), toolView));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -315,6 +323,30 @@ public class ServerHandler implements Runnable {
 
     private void initializeViewCLI() throws IOException {
         os.writeObject(controller.initializeViewCLI());
+        os.flush();
+        os.reset();
+    }
+
+    private void iAmAlone() throws RemoteException {
+        out.println(controller.iAmAlone());
+    }
+
+    private void getStartTimeMove() throws RemoteException {
+        out.println(controller.getStartTimeMove());
+    }
+
+    private void removePlayer(String parameter) throws RemoteException {
+        out.println(controller.removerPlayer(parameter));
+    }
+
+    private void someoneLeftGame() throws IOException {
+        os.writeObject(controller.someoneLeftGame());
+        os.flush();
+        os.reset();
+    }
+
+    private void someoneRejoinedGame() throws IOException {
+        os.writeObject(controller.someoneRejoinedGame());
         os.flush();
         os.reset();
     }

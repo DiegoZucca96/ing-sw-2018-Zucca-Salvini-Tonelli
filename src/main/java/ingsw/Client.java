@@ -5,7 +5,6 @@ import ingsw.model.ViewData;
 import ingsw.view.ToolView;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Author: Elio Salvini*/
@@ -44,7 +43,7 @@ public interface Client {
     boolean positionDie(int row, int column);
 
     //passa il turno
-    boolean skip();
+    void skip();
 
     //utilizza la tool card, parameter è una stringa che serve per creare l'oggetto di tipo PlayerUseTool
     //restituisce false se la carta non può essere usata
@@ -77,12 +76,12 @@ public interface Client {
     String getName();
 
     //crea un hash di valori player-WP scelta (credo aggiunga la wp scelta all'hashmap del controller)
-    boolean createHash(int nameWindow, String nameClient);
+    void createHash(int nameWindow, String nameClient);
 
     String getPVCard(String name);
 
     //serve per controllare che il client sia attivo
-    boolean setActive(Boolean active);
+    void setActive(Boolean active);
 
     //attivo o no?
     boolean getActive();
@@ -94,7 +93,7 @@ public interface Client {
     String getCurrentPlayer();
 
     //Setta i valori di selection player a null in caso di annullamento della mossa
-    boolean nullSelection();
+    void nullSelection();
 
     //Restituisce il round
     int getRound();
@@ -106,7 +105,7 @@ public interface Client {
     ViewWP getWP(String userName);
 
     //Ordina le windowChosen
-    boolean orderWPChoise();    //si scrive Choice...
+    void orderWPChoise();    //si scrive Choice...
 
     //Va a controllare se la partita è giunta al termine
     boolean isFinish();
@@ -115,7 +114,7 @@ public interface Client {
     int getScore(String name);
 
     //Avvia il calcolo dei punteggi giocatore
-    boolean calculateScore();
+    void calculateScore();
 
     //Trova il vincitore
     String findWinner();
@@ -126,9 +125,9 @@ public interface Client {
     //i tre metodi sotto tengono conto del fatto che il giocatore abbia posizionato un dado o meno e se ha usato la tool8(per saltare il turno)
     boolean getInsertedDie();
 
-    boolean setInsertedDie(boolean b);
+    void setInsertedDie(boolean b);
 
-    boolean setTool8Used(boolean isTool8Used);
+    void setTool8Used(boolean isTool8Used);
 
     //Stabilire il turno in cui ci si trova
     boolean getClockwiseRound();
@@ -141,7 +140,7 @@ public interface Client {
 
     int getStartTimeMove();
 
-    boolean setName(String userName);
+    void setName(String userName);
 
     //Da usare solo lato RMI
     void handleConnectionError();
