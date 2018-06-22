@@ -32,18 +32,26 @@ public class Main {
         }
     }
 
-    public static int validateIntegerInput(int from, int to, int input){
+    public static int validateIntegerInput(int from, int to){
+        int input;
+        try{
+            input = Integer.parseInt(in.nextLine());
+        } catch(Exception e){
+            System.out.println(ToString.printColored(ToString.ANSI_RED,"Invalid input"));
+            System.out.println("Enter a valid input:");
+            return validateIntegerInput(from,to);
+        }
         if (input > to || input < from) {
             System.out.println(ToString.printColored(ToString.ANSI_RED,"Invalid input"));
             System.out.println("Enter a valid input:");
-            return validateIntegerInput(from,to, in.nextInt());
+            return validateIntegerInput(from,to);
         }
         return input;
     }
 
     private static void chooseConnection(){
         System.out.println("Choose type of connection:\n1 - RMI\n2 - Socket");
-        int choice = validateIntegerInput(1,2,in.nextInt());
+        int choice = validateIntegerInput(1,2);
         if (choice == 2) client = new ClientSocket("127.0.0.1", 1080);
         else {
             client = new ClientRMI();
@@ -69,5 +77,24 @@ public class Main {
         accessGame.chooseWPs();
         accessGame.waitForPlay();
         playGame();
+    }
+
+    public static String validateCoordinates() {
+        int row, column;
+        String coordinates = in.nextLine();
+        try{
+            row = Integer.parseInt(coordinates.substring(0,1))-1;
+            column = Integer.parseInt(String.valueOf(coordinates.charAt(2)))-1;
+        } catch (Exception e) {
+            System.out.println(ToString.printColored(ToString.ANSI_RED,"Invalid input"));
+            System.out.println("Enter a valid input:");
+            return validateCoordinates();
+        }
+        if(coordinates.length()!=3 || coordinates.charAt(1) != ',' || row > 4 || column > 5){
+            System.out.println(ToString.printColored(ToString.ANSI_RED,"Invalid input"));
+            System.out.println("Enter a valid input:");
+            return validateCoordinates();
+        }
+        return coordinates;
     }
 }

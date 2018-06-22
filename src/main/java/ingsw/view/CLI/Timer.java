@@ -18,6 +18,7 @@ public class Timer extends Thread {
         while(remainingSeconds > 0){
             try {
                 Thread.sleep(1000);
+                if (playGame.isTimerStopped()) return;
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

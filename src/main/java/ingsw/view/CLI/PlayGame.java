@@ -13,13 +13,16 @@ public class PlayGame {
     private Scanner in;
     private ViewData init;
     private ViewData update;
-    private Boolean timerAlreadyStarted;
-    private Boolean newTurn;
+    private boolean timerAlreadyStarted;
+    private boolean newTurn;
+    private boolean dieAlreadyTaken;
+    private boolean timerStopped;
 
     public PlayGame(Client client){
         this.client = client;
         in = new Scanner(System.in);
         newTurn = true;
+        dieAlreadyTaken = false;
     }
 
     public void setTimerAlreadyStarted(Boolean timerAlreadyStarted) {
@@ -28,6 +31,10 @@ public class PlayGame {
 
     public void setNewTurn(Boolean newTurn) {
         this.newTurn = newTurn;
+    }
+
+    public boolean isTimerStopped() {
+        return timerStopped;
     }
 
     public boolean myTurn(){
@@ -39,6 +46,7 @@ public class PlayGame {
             printTurnSeparator();
             newTurn = false;
             timerAlreadyStarted = false;
+            timerStopped = true;
         }
         if (myTurn()) {
             myTurnCommands();
@@ -58,10 +66,16 @@ public class PlayGame {
             new Timer(turnDuration, client, this).start();
             timerAlreadyStarted = true;
         }
-        int choice = Main.validateIntegerInput(1, 2, in.nextInt());
+        int choice = Main.validateIntegerInput(1, 2);
         switch (choice) {
-            case 1:  refreshView(); break;
-            case 2:  exitGame(); break;
+            case 1:
+                printCommandSeparator();
+                refreshView();
+                break;
+            case 2:
+                printCommandSeparator();
+                exitGame();
+                break;
         }
     }
 
@@ -72,22 +86,38 @@ public class PlayGame {
         System.out.println("Choose a command:");
         System.out.println("1 - Take die");
         System.out.println("2 - Use tool card");
-        System.out.println("3 - Drop die");
-        System.out.println("4 - Refresh view");
-        System.out.println("5 - End turn");
-        System.out.println("6 - Exit");
+        System.out.println("3 - Refresh view");
+        System.out.println("4 - End turn");
+        System.out.println("5 - Exit");
         if (!timerAlreadyStarted) {
             new Timer(turnDuration, client, this).start();
             timerAlreadyStarted = true;
         }
-        int choice = Main.validateIntegerInput(1, 5, in.nextInt());
+        int choice = Main.validateIntegerInput(1, 5);
         switch (choice) {
-            case 1: takeDie(); break;
-            case 2: useToolCard(); break;
-            case 3: dropDie(); break;
-            case 4: refreshView(); break;
-            case 5: endTurn(); break;
-            case 6: exitGame(); break;
+            case 1:
+                printCommandSeparator();
+                client.setActive(true);
+                takeDie();
+                break;
+            case 2:
+                printCommandSeparator();
+                client.setActive(true);
+                useToolCard();
+                break;
+            case 3:
+                printCommandSeparator();
+                refreshView();
+                break;
+            case 4:
+                printCommandSeparator();
+                client.setActive(true);
+                endTurn();
+                break;
+            case 5:
+                printCommandSeparator();
+                exitGame();
+                break;
         }
     }
 
@@ -102,11 +132,11 @@ public class PlayGame {
         printSeparator();
         printRoundTrack(update);
         printSeparator();
-        printDraftPool(update);
-        printSeparator();
         printWPs();
         printSeparator();
         printPlayerWP();
+        printSeparator();
+        printDraftPool(update);
         printSeparator();
         printPVCard();
         printTokens();
@@ -114,23 +144,71 @@ public class PlayGame {
     }
 
     private void endTurn() {
-
+        client.skip();
+        dieAlreadyTaken = false;
+        newTurn = true;
+        refreshView();
     }
 
-    private void dropDie() {
-
-    }
 
     private void useToolCard() {
+
 
     }
 
     private void takeDie() {
+        if (dieAlreadyTaken) {
+            printCommandSeparator();
+            System.out.println("Command not available");
+            return;
+        }
+        System.out.println("Select a die:");
+        //cleanScanner();
+        int selectedDie = Main.validateIntegerInput(1,9)-1;
+        while (client.updateView().getDraftPoolDice().get(selectedDie).equals("die(0,WHITE)") || !client.takeDie(0,selectedDie)){
+            stillInGame();
+            System.out.println(ToString.printColored(ToString.ANSI_RED,"Invalid input"));
+            System.out.println("Select a die:");
+            selectedDie = in.nextInt()-1;
+        }
+        System.out.println("You have selected die number" + selectedDie+1);
+        dieAlreadyTaken = true;
+        positionDie();
+    }
+
+    private void cleanScanner() {
+        in.nextLine();
+
+    }
+
+    private void positionDie() {
+        System.out.println("Insert coordinates where you wish to place the die:\n(Coordinates format \"row,column\")");
+        String coordinates = Main.validateCoordinates();
+        int row = Integer.parseInt(coordinates.substring(0,1))-1;
+        int column = Integer.parseInt(String.valueOf(coordinates.charAt(2)))-1;
+        while (!client.positionDie(row,column)){
+            stillInGame();
+            System.out.println(ToString.printColored(ToString.ANSI_RED,"Invalid input"));
+            System.out.println("Insert coordinates where you wish to place the die:");
+            coordinates = Main.validateCoordinates();
+            row = Integer.parseInt(coordinates.substring(0,1))-1;
+            column = Integer.parseInt(String.valueOf(coordinates.charAt(2)))-1;
+        }
+        System.out.println("Die positioned successfully");
+        refreshView();
+    }
+
+    private void stillInGame(){
+        if (!client.getActive()) {
+            System.out.println(ToString.printColored(ToString.ANSI_RED,"You have lost your turn"));
+            Main.accessGame(true);
+        }
 
     }
 
     private void exitGame(){
-        Main.setEndGame(true);
+        System.out.println("Are you sure?\n1 - Yes\n2 - No");
+        if (Main.validateIntegerInput(1,2) == 1) Main.setEndGame(true);
     }
 
     public void initializeView(){
@@ -144,11 +222,11 @@ public class PlayGame {
         printSeparator();
         printRoundTrack(init);
         printSeparator();
-        printDraftPool(init);
-        printSeparator();
         printWPs();
         printSeparator();
         printPlayerWP();
+        printSeparator();
+        printDraftPool(init);
         printSeparator();
         printPVCard();
         printTokens();
@@ -205,12 +283,16 @@ public class PlayGame {
     }
 
     private void printRoundTrack(ViewData viewData){
-        int i = 1;
-        System.out.println("Round track:");
+        int i = 0;
+        System.out.print("Round track:");
         for (String die: viewData.getRoundTrack()){
-            System.out.println("Round " + i + " - " + ToString.viewDieToString(die));
-            i++;
+            if(Integer.parseInt(die.substring(0,1)) != i) {
+                i++;
+                System.out.print("\nRound " + i + " - ");
+            }
+            System.out.print(ToString.viewDieToString(die) + " ");
         }
+        System.out.print("\n");
     }
 
     private void printDraftPool(ViewData viewData){
@@ -240,4 +322,5 @@ public class PlayGame {
     private void printTokens(){
         System.out.println("Tokens: " + client.getTokenRemaining(client.getName()));
     }
+
 }

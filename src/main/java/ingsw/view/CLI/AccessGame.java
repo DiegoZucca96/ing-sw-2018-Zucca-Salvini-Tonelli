@@ -23,7 +23,7 @@ public class AccessGame {
             return true;
         }
         else {
-            System.out.println("Login failed");
+            System.out.println(ToString.printColored(ToString.ANSI_RED, "Login failed"));
             return false;
         }
     }
@@ -35,7 +35,7 @@ public class AccessGame {
             return true;
         }
         else {
-            System.out.println("Registration failed");
+            System.out.println(ToString.printColored(ToString.ANSI_RED, "Registration failed"));
             return false;
         }
     }
@@ -65,7 +65,7 @@ public class AccessGame {
             System.out.println(i + " - \n" + ToString.viewWPToString(wp));
             i++;
         }
-        int choice = Main.validateIntegerInput(1,4,in.nextInt()) -1;
+        int choice = Main.validateIntegerInput(1,4) -1;
         client.createHash(wps.get(choice).getNumberWP(), client.getName());
         client.addWP(wps.get(choice));
     }

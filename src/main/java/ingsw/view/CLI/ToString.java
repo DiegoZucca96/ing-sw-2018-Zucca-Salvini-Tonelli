@@ -57,7 +57,7 @@ public class ToString {
     }
 
     public static String viewDieToString(String die){
-        if (die.substring(die.indexOf('(')+1, die.indexOf(',')).equals("0")) return null;
+        if (die.substring(die.indexOf('(')+1, die.indexOf(',')).equals("0")) return "empty";
         String result = "";
         switch (die.substring(die.indexOf(',')+1, die.indexOf(')'))){
             case "RED": result = result + ANSI_RED; break;
