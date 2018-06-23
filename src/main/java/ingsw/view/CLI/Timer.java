@@ -15,6 +15,14 @@ public class Timer extends Thread {
     }
 
     public void run(){
+        String playerState = client.getPlayerState();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        remainingSeconds -= 2;
+        playGame.setTimerStopped(false);
         while(remainingSeconds > 0){
             try {
                 Thread.sleep(1000);
@@ -24,10 +32,10 @@ public class Timer extends Thread {
             }
             remainingSeconds--;
         }
-        if (client.getPlayerState().equals("enabled")){
+        if (playerState.equals("enabled")){
             if (!client.getActive()) {
                 System.out.println(ToString.printColored(ToString.ANSI_RED,"Time's out!"));
-                Main.accessGame(true);
+                playGame.setTimeOut(true);
             }
         }
         playGame.setNewTurn(true);

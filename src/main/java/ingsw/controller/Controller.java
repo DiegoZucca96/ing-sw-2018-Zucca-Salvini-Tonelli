@@ -724,7 +724,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         ViewData init = match.getInit();
         init.setWps(windowChosen);
         //new lines
-        init.setToolCards(match.toolCardsToString());
+        init.setToolCardsCLI(match.toolCardsToString());
         init.setPbCards(match.pbCardsToString());
         //end new lines
         enableClient(getCurrentPlayerName());

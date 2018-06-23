@@ -9,6 +9,12 @@ public class ViewData implements Serializable {
     private ArrayList<ViewWP> wps;
     private ArrayList<String> pbCards;
     private ArrayList<String> toolCards;
+
+    /** Author: Elio Salvini; support for CLI */
+    private ArrayList<String> toolCardsCLI;     //per mantenere inalterato il campo toolCards al fine di evitare malfunzionameni
+                                                //legati alla manipolazione di stringhe negli observer delle tool card
+    /** end support for CLI*/
+
     private ArrayList<String> draftPoolDice;
     private ArrayList<String> roundTrack;
     private static ViewData instance;
@@ -81,11 +87,15 @@ public class ViewData implements Serializable {
      *
      * CLI support
      */
-    public void setToolCards(ArrayList<String> toolCards) {
-        this.toolCards = toolCards;
+    public void setToolCardsCLI(ArrayList<String> toolCards) {
+        this.toolCardsCLI = toolCards;
     }
 
     public void setPbCards(ArrayList<String> pbCards) {
         this.pbCards = pbCards;
+    }
+
+    public ArrayList<String> getToolCardsCLI() {
+        return toolCardsCLI;
     }
 }

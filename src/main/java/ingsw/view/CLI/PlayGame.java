@@ -9,24 +9,36 @@ import java.util.Scanner;
 public class PlayGame {
 
     private Client client;
-    private String gameState;
     private Scanner in;
     private ViewData init;
     private ViewData update;
     private boolean timerAlreadyStarted;
     private boolean newTurn;
     private boolean dieAlreadyTaken;
+    private boolean toolCardAlreadyUsed;
     private boolean timerStopped;
+    private boolean timeOut;
 
     public PlayGame(Client client){
         this.client = client;
         in = new Scanner(System.in);
         newTurn = true;
         dieAlreadyTaken = false;
+        toolCardAlreadyUsed = false;
+        timerStopped = false;
+        timeOut = false;
     }
 
     public void setTimerAlreadyStarted(Boolean timerAlreadyStarted) {
         this.timerAlreadyStarted = timerAlreadyStarted;
+    }
+
+    public void setTimeOut(boolean timeOut) {
+        this.timeOut = timeOut;
+    }
+
+    public void setTimerStopped(boolean timerStopped) {
+        this.timerStopped = timerStopped;
     }
 
     public void setNewTurn(Boolean newTurn) {
@@ -37,18 +49,25 @@ public class PlayGame {
         return timerStopped;
     }
 
+    public Client getClient() {
+        return client;
+    }
+
     public boolean myTurn(){
         return client.getPlayerState().equals("enabled");
     }
 
     public void availableCommands() {
-        if(newTurn) {
+        if (timeOut) Main.accessGame(true); //time's out, return to login
+
+        if(newTurn) {                               //initializing new turn
             printTurnSeparator();
             newTurn = false;
             timerAlreadyStarted = false;
-            timerStopped = true;
         }
-        if (myTurn()) {
+
+        if (myTurn()) {                             //prints available commands
+            timerStopped = true;
             myTurnCommands();
         } else {
             waitingForMyTurnCommands();
@@ -146,34 +165,63 @@ public class PlayGame {
     private void endTurn() {
         client.skip();
         dieAlreadyTaken = false;
+        toolCardAlreadyUsed = false;
+        timerStopped = true;
         newTurn = true;
         refreshView();
     }
 
 
     private void useToolCard() {
-
-
+        if(toolCardAlreadyUsed) {
+            System.out.println("Command not available");
+            return;
+        }
+        System.out.println("Choose tool card:");
+        int toolCardChoosen = Main.validateIntegerInput(1,3);
+        String toolCard = init.getToolCardsCLI().get(toolCardChoosen-1);
+        String toolCardName = toolCard.substring(0,toolCard.indexOf('\n'));
+        switch (toolCardName){
+            case "Pinza Sgrossatrice": ToolCard.toolCard1(this); break;
+            case "Pennello per Eglomise": ToolCard.toolCard2(); break;
+            case "Alesatore per lamina di rame": ToolCard.toolCard3(); break;
+            case "Lathekin": ToolCard.toolCard4(); break;
+            case "Taglierina circolare": ToolCard.toolCard5(); break;
+            case "Pennello per Pasta Salda": ToolCard.toolCard6(); break;
+            case "Martelletto": ToolCard.toolCard7(); break;
+            case "Tenaglia a Rotelle": ToolCard.toolCard8(); break;
+            case "Riga in Sughero": ToolCard.toolCard9(); break;
+            case "Tampone Diamantato": ToolCard.toolCard10(this); break;
+            case "Diluente per Pasta Salda": ToolCard.toolCard11(); break;
+            case "Taglierina Manuale": ToolCard.toolCard12(); break;
+            default: break;
+        }
     }
 
     private void takeDie() {
         if (dieAlreadyTaken) {
-            printCommandSeparator();
             System.out.println("Command not available");
             return;
         }
+        int selectedDie = selectDie();
+        System.out.println("You have selected die number" + selectedDie+1);
+        dieAlreadyTaken = true;
+        positionDie();
+    }
+
+    public int dpDieValue(int selectedDie){
+        return Integer.parseInt(client.updateView().getDraftPoolDice().get(selectedDie).substring(4,5));
+    }
+    public int selectDie() {
         System.out.println("Select a die:");
-        //cleanScanner();
         int selectedDie = Main.validateIntegerInput(1,9)-1;
         while (client.updateView().getDraftPoolDice().get(selectedDie).equals("die(0,WHITE)") || !client.takeDie(0,selectedDie)){
             stillInGame();
             System.out.println(ToString.printColored(ToString.ANSI_RED,"Invalid input"));
             System.out.println("Select a die:");
-            selectedDie = in.nextInt()-1;
+            selectedDie = Main.validateIntegerInput(1,9);
         }
-        System.out.println("You have selected die number" + selectedDie+1);
-        dieAlreadyTaken = true;
-        positionDie();
+        return selectedDie;
     }
 
     private void cleanScanner() {
@@ -265,11 +313,11 @@ public class PlayGame {
     private void printToolCards(Boolean initialization){
         int i = 1;
         System.out.println("Tool cards:\n");
-        for(String card: init.getToolCard()){
+        for(String card: init.getToolCardsCLI()){
             System.out.print(i + " - " + card);
             if(initialization) System.out.println("Cost: 1 token\n");
             else {
-                String toolCard = update.getToolCard().get(i - 1);
+                String toolCard = update.getToolCardsCLI().get(i - 1);
                 int stringIndex = toolCard.indexOf('+') + 1;
                 if (stringIndex == 0) System.out.println("Cost: 1 token\n");
                 else {
@@ -323,4 +371,7 @@ public class PlayGame {
         System.out.println("Tokens: " + client.getTokenRemaining(client.getName()));
     }
 
+    public void setToolCardAlreadyUsed(boolean toolCardAlreadyUsed) {
+        this.toolCardAlreadyUsed = toolCardAlreadyUsed;
+    }
 }
