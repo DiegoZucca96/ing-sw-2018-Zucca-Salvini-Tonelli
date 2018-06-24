@@ -79,8 +79,10 @@ public class Main {
         playGame();
     }
 
-    public static String validateCoordinates() {
+    public static String validateCoordinates(boolean placeDie) {
         int row, column;
+        if(placeDie) System.out.println("Insert coordinates where you wish to place the die:\n(Coordinates format = \"row,column\")");
+        else System.out.println("Insert coordinates of the die you want to take:\n(Coordinates format = \"row,column\")");
         String coordinates = in.nextLine();
         try{
             row = Integer.parseInt(coordinates.substring(0,1))-1;
@@ -88,12 +90,20 @@ public class Main {
         } catch (Exception e) {
             System.out.println(ToString.printColored(ToString.ANSI_RED,"Invalid input"));
             System.out.println("Enter a valid input:");
-            return validateCoordinates();
+            return validateCoordinates(placeDie);
+        }
+        if(!placeDie) {
+            String takenDie = client.getWP(client.getName()).getWp()[row][column].getDie();
+            if( takenDie == null || takenDie.equals("die(0,WHITE)")) {
+                System.out.println(ToString.printColored(ToString.ANSI_RED,"Invalid input"));
+                System.out.println("Enter a valid input:");
+                return validateCoordinates(placeDie);
+            }
         }
         if(coordinates.length()!=3 || coordinates.charAt(1) != ',' || row > 4 || column > 5){
             System.out.println(ToString.printColored(ToString.ANSI_RED,"Invalid input"));
             System.out.println("Enter a valid input:");
-            return validateCoordinates();
+            return validateCoordinates(placeDie);
         }
         return coordinates;
     }

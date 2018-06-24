@@ -178,8 +178,8 @@ public class PlayGame {
             return;
         }
         System.out.println("Choose tool card:");
-        int toolCardChoosen = Main.validateIntegerInput(1,3);
-        String toolCard = init.getToolCardsCLI().get(toolCardChoosen-1);
+        int toolCardChosen = Main.validateIntegerInput(1,3);
+        String toolCard = init.getToolCardsCLI().get(toolCardChosen-1);
         String toolCardName = toolCard.substring(0,toolCard.indexOf('\n'));
         switch (toolCardName){
             case "Pinza Sgrossatrice": ToolCard.toolCard1(this); break;
@@ -192,8 +192,8 @@ public class PlayGame {
             case "Tenaglia a Rotelle": ToolCard.toolCard8(); break;
             case "Riga in Sughero": ToolCard.toolCard9(); break;
             case "Tampone Diamantato": ToolCard.toolCard10(this); break;
-            case "Diluente per Pasta Salda": ToolCard.toolCard11(); break;
-            case "Taglierina Manuale": ToolCard.toolCard12(); break;
+            case "Diluente per Pasta Salda": ToolCard.toolCard11(this); break;
+            case "Taglierina Manuale": ToolCard.toolCard12(this); break;
             default: break;
         }
     }
@@ -204,7 +204,7 @@ public class PlayGame {
             return;
         }
         int selectedDie = selectDie();
-        System.out.println("You have selected die number" + selectedDie+1);
+        System.out.println("You have selected die number " + selectedDie+1);
         dieAlreadyTaken = true;
         positionDie();
     }
@@ -230,15 +230,13 @@ public class PlayGame {
     }
 
     private void positionDie() {
-        System.out.println("Insert coordinates where you wish to place the die:\n(Coordinates format \"row,column\")");
-        String coordinates = Main.validateCoordinates();
+        String coordinates = Main.validateCoordinates(true);
         int row = Integer.parseInt(coordinates.substring(0,1))-1;
         int column = Integer.parseInt(String.valueOf(coordinates.charAt(2)))-1;
         while (!client.positionDie(row,column)){
             stillInGame();
             System.out.println(ToString.printColored(ToString.ANSI_RED,"Invalid input"));
-            System.out.println("Insert coordinates where you wish to place the die:");
-            coordinates = Main.validateCoordinates();
+            coordinates = Main.validateCoordinates(true);
             row = Integer.parseInt(coordinates.substring(0,1))-1;
             column = Integer.parseInt(String.valueOf(coordinates.charAt(2)))-1;
         }
@@ -285,7 +283,7 @@ public class PlayGame {
         System.out.println("Round: " + client.getRound());
     }
 
-    private void printSeparator(){
+    public void printSeparator(){
         System.out.println("--------------------------------------------------------------------------------------");
     }
 
@@ -343,7 +341,7 @@ public class PlayGame {
         System.out.print("\n");
     }
 
-    private void printDraftPool(ViewData viewData){
+    public void printDraftPool(ViewData viewData){
         int i = 1;
         System.out.println("Draft Pool:");
         for (String die: viewData.getDraftPoolDice()){
