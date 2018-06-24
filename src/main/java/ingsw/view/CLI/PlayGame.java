@@ -58,20 +58,40 @@ public class PlayGame {
     }
 
     public void availableCommands() {
-        if (timeOut) Main.accessGame(true); //time's out, return to login
+        //the match is finished
+        if (client.isFinish()){
+            endGame();
+        }
 
-        if(newTurn) {                               //initializing new turn
+        //time's out, return to login
+        if (timeOut) Main.accessGame(true);
+
+        //initializing new turn
+        if(newTurn) {
             printTurnSeparator();
             newTurn = false;
             timerAlreadyStarted = false;
         }
 
-        if (myTurn()) {                             //prints available commands
+        //prints available commands
+        if (myTurn()) {
             timerStopped = true;
             myTurnCommands();
         } else {
             waitingForMyTurnCommands();
         }
+    }
+
+    private void endGame() {
+        client.calculateScore();
+        for (String player: client.getListOfPlayers()){
+            System.out.println(player + "'s score is: " + ToString.printColored(ToString.ANSI_BLUE, Integer.toString(client.getScore(player))));
+        }
+        String winner = client.findWinner();
+        if(winner.equals(client.getName())) System.out.println("You are the winner");
+        else System.out.println("\nThe winner is " + winner);
+        Main.setEndGame(true);
+        timerStopped = true;
     }
 
     private void waitingForMyTurnCommands() {
@@ -186,11 +206,11 @@ public class PlayGame {
             case "Pennello per Eglomise": ToolCard.toolCard2(this); break;
             case "Alesatore per lamina di rame": ToolCard.toolCard3(this); break;
             case "Lathekin": ToolCard.toolCard4(this); break;
-            case "Taglierina circolare": ToolCard.toolCard5(); break;
-            case "Pennello per Pasta Salda": ToolCard.toolCard6(); break;
-            case "Martelletto": ToolCard.toolCard7(); break;
-            case "Tenaglia a Rotelle": ToolCard.toolCard8(); break;
-            case "Riga in Sughero": ToolCard.toolCard9(); break;
+            case "Taglierina circolare": ToolCard.toolCard5(this); break;
+            case "Pennello per Pasta Salda": ToolCard.toolCard6(this); break;
+            case "Martelletto": ToolCard.toolCard7(this); break;
+            case "Tenaglia a Rotelle": ToolCard.toolCard8(this); break;
+            case "Riga in Sughero": ToolCard.toolCard9(this); break;
             case "Tampone Diamantato": ToolCard.toolCard10(this); break;
             case "Diluente per Pasta Salda": ToolCard.toolCard11(this); break;
             case "Taglierina Manuale": ToolCard.toolCard12(this); break;
