@@ -183,9 +183,9 @@ public class PlayGame {
         String toolCardName = toolCard.substring(0,toolCard.indexOf('\n'));
         switch (toolCardName){
             case "Pinza Sgrossatrice": ToolCard.toolCard1(this); break;
-            case "Pennello per Eglomise": ToolCard.toolCard2(); break;
-            case "Alesatore per lamina di rame": ToolCard.toolCard3(); break;
-            case "Lathekin": ToolCard.toolCard4(); break;
+            case "Pennello per Eglomise": ToolCard.toolCard2(this); break;
+            case "Alesatore per lamina di rame": ToolCard.toolCard3(this); break;
+            case "Lathekin": ToolCard.toolCard4(this); break;
             case "Taglierina circolare": ToolCard.toolCard5(); break;
             case "Pennello per Pasta Salda": ToolCard.toolCard6(); break;
             case "Martelletto": ToolCard.toolCard7(); break;
@@ -254,7 +254,10 @@ public class PlayGame {
 
     private void exitGame(){
         System.out.println("Are you sure?\n1 - Yes\n2 - No");
-        if (Main.validateIntegerInput(1,2) == 1) Main.setEndGame(true);
+        if (Main.validateIntegerInput(1,2) == 1) {
+            Main.setEndGame(true);
+            timerStopped = true;
+        }
     }
 
     public void initializeView(){
