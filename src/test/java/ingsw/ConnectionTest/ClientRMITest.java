@@ -1,5 +1,6 @@
-package ingsw;
+package ingsw.ConnectionTest;
 
+import ingsw.ClientRMI;
 import ingsw.controller.RMIController;
 import junit.framework.TestCase;
 import org.junit.Before;

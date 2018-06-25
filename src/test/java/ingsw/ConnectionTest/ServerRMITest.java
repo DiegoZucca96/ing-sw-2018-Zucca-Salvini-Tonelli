@@ -1,5 +1,6 @@
-package ingsw;
+package ingsw.ConnectionTest;
 
+import ingsw.Server;
 import ingsw.controller.RMIController;
 import org.junit.Before;
 import org.junit.Test;

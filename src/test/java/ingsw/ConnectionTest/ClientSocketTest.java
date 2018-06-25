@@ -1,5 +1,6 @@
-package ingsw;
+package ingsw.ConnectionTest;
 
+import ingsw.ClientSocket;
 import org.junit.Before;
 import org.junit.Test;
 
