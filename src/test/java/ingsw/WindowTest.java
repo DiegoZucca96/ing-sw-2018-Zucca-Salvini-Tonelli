@@ -23,7 +23,7 @@ class WindowTest extends TestCase {
     private Die die4 = new Die(2, Color.BLUE);
     private Die die5 = new Die(3,Color.YELLOW);
 
-    //Test dei metodi di verifica nella WP (non vanno nel progetto originale causa errori)
+    //Test dei metodi di verifica nella WP
     @Test
     public void testVerifyPosition() {
         window.addDie(dieCoordinate1, die4, window.getCellMatrix());

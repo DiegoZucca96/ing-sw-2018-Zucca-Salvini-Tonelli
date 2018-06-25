@@ -1,20 +1,17 @@
 package ingsw.UnitTests;
 
 import ingsw.model.*;
+import junit.framework.TestCase;
 import org.junit.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
-
-public class RoundTrackTest{
+public class RoundTrackTest extends TestCase{
 
     private  RoundTrack rt;
-    private  Die die1;
-    private  Die die2;
-    private  Die die3;
+    private  Die die1 = new Die(1,Color.BLUE);
+    private  Die die2 = new Die(2,Color.BLUE);
+    private  Die die3 = new Die(3,Color.BLUE);
+    private  Die die4 = new Die(5,Color.VIOLET);
 
     public RoundTrackTest() {
         rt = new RoundTrack();
@@ -23,18 +20,6 @@ public class RoundTrackTest{
     @Before
     public void setUpTests(){
         rt = new RoundTrack();
-        die1 = mock(Die.class);
-        die2 = mock(Die.class);
-        die3 = mock(Die.class);
-        when(die1.getNumber()).thenReturn(1);
-        when(die1.getColor()).thenReturn(Color.BLUE);
-        when(die1.toString()).thenReturn("Die(1,BLUE)");
-        when(die2.getNumber()).thenReturn(2);
-        when(die2.getColor()).thenReturn(Color.BLUE);
-        when(die2.toString()).thenReturn("Die(2,BLUE)");
-        when(die3.getNumber()).thenReturn(3);
-        when(die3.getColor()).thenReturn(Color.BLUE);
-        when(die3.toString()).thenReturn("Die(3,BLUE)");
     }
 
 
@@ -60,15 +45,15 @@ public class RoundTrackTest{
         assertEquals(die2, rt.getDie(1, 1));
         assertEquals(die3, rt.getDie(1, 2));
 
-        //verifica che venga rimosso il dado
-        //assertEquals(die1, rt.takeDie(1, 0));
-        assertNull(rt.getDie(1, 2));
-
         //verifica che il rep venga aggiornato correttamente in caso di inserimento di dadi appartenenti a round non consecutivi
         rt.addDie(die1, 7);
         assertNull(rt.getDie(3, 0));
         assertNull(rt.getDie(5, 0));
         assertEquals(die1, rt.getDie(7, 0));
+
+        //Verifica nel caso si modifichi la roundtrack per scambio o rimozione dadi
+        assertEquals(rt.replaceDie(1, 1, die4).getNumber(),2);
+        assertTrue(rt.getDie(1,1).getColor().equals(Color.VIOLET));
     }
 
     @Test
@@ -78,7 +63,14 @@ public class RoundTrackTest{
         rt.addDie(die1,2);
         rt.addDie(die3,4);
         rt.addDie(die1,10);
-        assertEquals("RoundTrack:\n1:Die(2,BLUE),Die(3,BLUE)\n2:Die(1,BLUE)\n3:\n4:Die(3,BLUE)\n5:\n6:\n7:\n8:\n9:\n10:Die(1,BLUE)", rt.toString());
+        ViewData viewData = ViewData.instance();
+        rt.notifyViewObserver();
+        assertEquals("1die(2,BLUE)",viewData.getRoundTrack().get(0));
+        assertEquals("1die(3,BLUE)",viewData.getRoundTrack().get(1));
+        assertEquals("2die(1,BLUE)",viewData.getRoundTrack().get(2));
+        assertEquals("4die(3,BLUE)",viewData.getRoundTrack().get(3));
+        assertEquals("10die(1,BLUE)",viewData.getRoundTrack().get(4));
+
     }
 
 }

@@ -19,7 +19,6 @@ public class Tool7 implements ToolStrategy {
         this.idCard=idCard;
     }
 
-    //La carta specifica prima di prendere il secondo dado, questo è ancora da gestire in qualche modo
     public boolean doOp(ObjectiveTool object){
        if((object!=null)){
            ArrayList<Coordinate> coordinates = object.getListOfCoordinateY();
