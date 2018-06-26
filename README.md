@@ -1,5 +1,15 @@
 # ing-sw-2018-Zucca-Salvini-Tonelli
 
+## Group members
+
+* Zucca Diego, 843617, 10503482
+* Salvini Elio,
+* Tonelli Alessio,
+
+## Coverage Test and UML
+
+See the Coverage Test folder and UML image in repository.
+
 ## Introduction
 
 The project has the target to develop "Sagrada" game. In particular, as we are students, the aim of the project is to 
