@@ -26,7 +26,12 @@ operational decision.
 
 ## Model
 
-Design Pattern : State , Strategy , Singleton , Observer , Factory
+Design Pattern : 
+* State 
+* Strategy 
+* Singleton 
+* Observer 
+* Factory
 
 There are two main classes: Match and Player. They have the responsability to contain all data of the game.
 
