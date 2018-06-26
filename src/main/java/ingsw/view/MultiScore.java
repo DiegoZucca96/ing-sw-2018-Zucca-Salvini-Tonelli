@@ -10,7 +10,7 @@ import java.util.Random;
 
 /**Author : Alessio Tonelli
  *
- * this class is invoked by Victory in order to count parallel score
+ * this class is invoked by Victory in order to count parallel score.
  *
  * */
 

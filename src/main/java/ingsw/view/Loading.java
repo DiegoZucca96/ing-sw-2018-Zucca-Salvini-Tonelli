@@ -22,9 +22,9 @@ import java.io.IOException;
  *
  * this class is used two times :
  *
- * first: case parameter i = 1 ___ client must wait other clients enter the game
+ * first: case parameter myWindow is null ___ client must wait other clients enter the game.
  *
- * second: case parameter i = 2 ___ after choosing window pattern wait for other players' choice
+ * second: case parameter myWindow is not null because it was chosen ___ wait for other players' choice.
  * */
 
 public class Loading {
@@ -38,6 +38,9 @@ public class Loading {
         this.client=c;
     }
 
+    /**
+     * Simple time function to make the progress circle.
+     */
     private static Task createWorker(final int numFiles) {
         return new Task() {
             @Override
@@ -50,6 +53,13 @@ public class Loading {
         };
     }
 
+    /**Timeline on the progress circle and on label showing comment.
+     * Button "Annulla" which allow client to exit from lobby.
+     *
+     * @param primaryStage is the main stage of the class
+     * @param comment is the message which has to be shown while waiting
+     * @param myWindow is the information passed from controller regarded to my window pattern
+     */
     public void display(Stage primaryStage, String comment, ViewWP myWindow) {
 
         //MANAGE CYCLE PROGRESS
@@ -132,5 +142,4 @@ public class Loading {
         primaryStage.setOpacity(0.7);
         primaryStage.showAndWait();
     }
-
 }

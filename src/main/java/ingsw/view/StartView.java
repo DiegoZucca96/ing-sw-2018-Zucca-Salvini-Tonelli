@@ -11,6 +11,13 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import java.io.IOException;
 
+/**
+ * First class of Gui which allows client to choose connection
+ *
+ * @see ClientRMI
+ * @see ClientSocket
+ */
+
 public class StartView extends Application {
 
     private Client client;
@@ -19,7 +26,12 @@ public class StartView extends Application {
         Application.launch();
     }
 
-    //Avvia la connessione RMI se connectionType = "RMI", avvia la connessione socket se connectionType = "socket"
+    /**Start RMI connection if param is "RMI", else
+     * start socket connection if "socket".
+     *
+     * @param connectionType
+     * @see GUI
+     */
     public void setupConnection(String connectionType){
         if(connectionType.equals("socket")){
             client = new ClientSocket("127.0.0.1",1080);
@@ -34,6 +46,13 @@ public class StartView extends Application {
             new GUI().display(client);
         }
     }
+
+    /**Simple stage in which the client must choose the connection.
+     *
+     * Two button : rmi and socket.
+     *
+     * @param primaryStage
+     */
 
     @Override
     public void start(Stage primaryStage) {

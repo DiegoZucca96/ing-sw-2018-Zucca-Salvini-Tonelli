@@ -14,12 +14,13 @@ import java.util.ArrayList;
 
 /**Author : Alessio Tonelli
  *
- *
  * CHOOSE WINDOW PATTERN
  *
- * this is the class which makes rendering of the window pattern from XML file
+ * This is the class which makes rendering of the window pattern from XML file by using an other class: PaneView.
  *
- * Each window is a GridPane makes by 20 Button
+ * Each window is a GridPane makes by 20 Button.
+ *
+ * @see PaneView
  * */
 
 public class WPRendering {
@@ -27,6 +28,11 @@ public class WPRendering {
     private Client client;
     private static final String styleSheet = "-fx-text-fill: goldenrod; -fx-font: italic 15 \"serif\"; -fx-padding: 0 0 20 0; -fx-text-alignment: center";
 
+    /**Method displays the stage with windows, their names and difficulties.
+     *
+     * @param displayWindow are four windows, including the one client must choose.
+     * @param c
+     */
     public void display(ArrayList<ViewWP> displayWindow, Client c) {
 
         this.client=c;
@@ -220,6 +226,18 @@ public class WPRendering {
         windowPattern.show();
     }
 
+    /**
+     * Why static? Since we need a method to make rendering of dice even in classes invoked during game is running,
+     * this method must be reached by them without any association between classes.
+     *
+     * Parameters are input which determinate the Image of dice
+     *
+     * ATTENTION: some controls are completely useless since PaneView has been added. In fact, the ones which are regarded to cells
+     * won't be never reached.
+     * @param number
+     * @param color
+     * @return path of Image
+     */
     public static String path(String number, String color) {
         if (number == null || color == null)
             return null;

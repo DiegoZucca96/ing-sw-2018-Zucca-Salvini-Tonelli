@@ -26,7 +26,7 @@ import java.util.NoSuchElementException;
 
 /**Author : Alessio Tonelli _ Diego Zucca _ Elio Salvini
  *
- * GUI: start first Scene
+ * GUI is the menu where client has to log in or sign up
  *
  * */
 
@@ -38,6 +38,10 @@ public class GUI  {
     private Client client;
     private String userName;
 
+    /**
+     * Main method which initializes the scene with a timeline for button
+     * @param c
+     */
     public void display(Client c) {
         this.client=c;
         window = new Stage();
@@ -84,7 +88,16 @@ public class GUI  {
         window.show();
     }
 
-    //NUOVO STAGE PER EFFETTUARE IL LOGIN, SE è LA PRIMA VOLTA PUò REGISTRARSI
+    /**
+     * Manage log in.
+     *
+     * This method ask controller the rights in order to allow client get inside the game.
+     *
+     * If everything goes well, loading class can run.
+     * Otherwise a restriction has been found: too many players in the game, match finished, match just began, lost connection.
+     *
+     */
+
     private Stage loginStage (Client client) {
         Stage stage = new Stage();
         GridPane grid = new GridPane();
@@ -108,7 +121,7 @@ public class GUI  {
             }
         });
 
-        //IMMAGINE DI OK PER LOG IN
+        //OK IMAGE FOR LOG IN
         final ImageView imageOk = new ImageView();
         Label warning1 = new Label("");
         grid.add(warning1, 1,4);
@@ -119,7 +132,7 @@ public class GUI  {
         warning1.setText("Register now to play");
         warning1.setTextFill(Color.RED);
         btnLogin.setOnAction(e->{
-            // SERVER VERIFICA LE CREDENZIALI
+            // SERVER VERIFY CREDENTIALS
             userName = tfName.getText();
             if (!userName.isEmpty()) {
                 try{
@@ -177,7 +190,15 @@ public class GUI  {
         return stage;
     }
 
-    //REGISTRAZIONE AL SERVER
+    /**
+     * Register to the server.
+     *
+     * This stage will return if the client click on the link of login's stage
+     * The oldStage is log in which must be still open when the registration finishes
+     * @param oldStage
+     *
+     * @return stage
+     */
     private Stage signUp (Stage oldStage, Client client) {
         Stage stage = new Stage();
         Pane root = new Pane();
@@ -193,7 +214,7 @@ public class GUI  {
         Label lblName = new Label("User name:");
         TextField tfName = new TextField();
 
-        //IMMAGINE DI BACKGROUND
+        //BACKGROUND IMAGE
         final ImageView backgrundImage = new ImageView();
         Label warning1 = new Label("");
         grid.add(warning1, 1,4);
@@ -201,7 +222,7 @@ public class GUI  {
         Image image = new Image(imagePath, 450, 600, false, false);
         backgrundImage.setImage(image);
 
-        //Verifca che non ci sia nessun altro utente con lo stesso nickname
+        //VERIFY NO OTHER USER IS REGISTERED WITH THE SAME NICKNAME
         btnSubmit.setOnAction(e-> {
             saveUsername = tfName.getText();
             if (!saveUsername.isEmpty()) {
@@ -240,5 +261,4 @@ public class GUI  {
         stage.show();
         return stage;
     }
-
 }

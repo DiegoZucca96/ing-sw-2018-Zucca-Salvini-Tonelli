@@ -4,8 +4,25 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
+/** Author : Alessio Tonelli
+ *
+ * This is how we manage rendering.
+ *
+ * Since in PlayGame, class regarded to create the table on which we play, windows are a grid made of 20 panes on which
+ * we create an other grid made of buttons, we create a pane for each cell with a specific background.
+ *
+ * This background is made of a color and a set of circles disposed like in a real die.
+ * When pane is created, two dimensions are available. This is because a distinction between me and my enemies in
+ * the game when Playgame is invoked.
+ */
 public class PaneView extends Pane {
 
+    /**
+     * Create pane with a dimension.
+     * @param number , value of cell.
+     * @param color , value of cell.
+     * @param me , 0 if me, 1 if others.
+     */
     PaneView(String number, String color, int me){
         if(me==0)
             this.setPrefSize(50, 50);
@@ -14,6 +31,12 @@ public class PaneView extends Pane {
         createCell(number, color,me);
     }
 
+    /**
+     * Set background to pane and call method to set circles
+     * @param number
+     * @param color
+     * @param me
+     */
     private void createCell(String number, String color, int me) {
         if(number.equalsIgnoreCase("0") && color.equalsIgnoreCase("WHITE"))
             this.setStyle("-fx-background-color: white");
@@ -38,6 +61,12 @@ public class PaneView extends Pane {
         }
     }
 
+    /**Create circleNum circles in two different way.
+     * It depends on me.
+     *
+     * @param circleNum , number of circle to create.
+     * @param me
+     */
     private void setCircle(int circleNum, int me) {
         if(me == 0){
             switch (circleNum) {

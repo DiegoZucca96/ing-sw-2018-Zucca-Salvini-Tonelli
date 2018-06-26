@@ -27,6 +27,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * This is class in which you play actually.
+ */
 public class PlayGame {
 
     private Label clockLbl;
@@ -66,9 +69,20 @@ public class PlayGame {
 
     public PlayGame(Client client){
         this.client=client;
-        init= null;
+        init= null;        //don't know why it doesn't work here-> prefer to create a very thin constructor to avoid the problem
     }
 
+    /**
+     * The most important part of it is the timeline.
+     * This thread shows countdown and the current player.
+     * Then it calls the update and makes control on status of disconnection of client.
+     * @param myWindow , contains information regarded only to cells.
+     * @see ViewData , take info from the update.
+     * @see GridPaneWindow
+     * @see GridPaneRound
+     * @see GridPaneWEnemy
+     * @see GridPaneDraftPool
+     */
     public void display(ViewWP myWindow){
         this.myWindow=myWindow;
         Stage stage=new Stage();
@@ -78,7 +92,7 @@ public class PlayGame {
         Scene scene = new Scene(root);
         stage.setOnCloseRequest(event -> event.consume());
 
-        //IMMAGINE BACKGROUND
+        //BACKGROUND IMAGE
         final ImageView backGround = new ImageView();
         String imagePathB = "/backgroundtable.jpg";
         Image imageB = new Image(imagePathB, 1200, 700, false, false);
@@ -92,7 +106,7 @@ public class PlayGame {
         clockLbl.setStyle(styleSheet);
         currentInfo.getChildren().add(clockLbl);
 
-        //DADO SCELTO
+        //DIE CHOSEN
         Pane currentInfo2 = new Pane();
         currentInfo2.setLayoutX(820);
         currentInfo2.setLayoutY(580);
@@ -309,7 +323,7 @@ public class PlayGame {
         title.setLayoutX(300);
         title.setLayoutY(550);
 
-        //WP AVVERSARIE
+        //WP ENEMY
         GridPane eachGrid = new GridPane();
         eachGrid.setHgap(40);
         eachGrid.setPrefSize(720, 200);
@@ -335,7 +349,7 @@ public class PlayGame {
         }
         secondGrid.setHgap(40);
 
-        //BOTTONI
+        //BUTTONS
         GridPane btnGrid = new GridPane();
         btnGrid.setVgap(20);
         skipBtn = new Button("End Turn");
@@ -447,6 +461,10 @@ public class PlayGame {
         stage.show();
     }
 
+    /**
+     * Create grid for cells of my window pattern
+     * @return GridPane
+     */
     private GridPane addGridPane() {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(3);
@@ -464,6 +482,11 @@ public class PlayGame {
         return gridPane;
     }
 
+    /**
+     * Create a pane for my private card.
+     * @param stringPvCard , contains color of the card.
+     * @return Pane
+     */
     private Pane pvPane(String stringPvCard){
         Pane pane = new Pane();
         pane.setLayoutY(200);
@@ -594,7 +617,11 @@ public class PlayGame {
         return view;
     }
 
-    //CREA LA GRIGLIA AVVERSARIA DI SOLE CELLE SENZA DADI
+    /**
+     * Create enemy grid made of only cells.
+     * @param player , could be 0, 1, 2 based on which is the position in the array of controller.
+     * @return GridPane
+     */
     private GridPane createGridEn(int player) {
         GridPane grid = new GridPane();
         grid.setVgap(1.5);
@@ -613,6 +640,10 @@ public class PlayGame {
         return grid;
     }
 
+    /**
+     * This is the method with is devoted to update some parts of the view.
+     * There are : wos enemy, draftpool, roundtrack and toolcard.
+     */
     public void update() {
         updateView = client.updateView();
         for(int i = 0; i<client.getNumberOfPlayers()-1; i++){
@@ -665,6 +696,14 @@ public class PlayGame {
             return "nessuno";
     }
 
+    /**
+     * method used to delete a circle token from the table when a tool card is used and
+     * increment the number of tokens associated to.
+     * @param toolCards
+     * @param gridTks
+     * @param tokenUsed
+     * @param name
+     */
     private void updateTool(ArrayList<String> toolCards, GridPane gridTks, GridPane tokenUsed, String name){
         for(int i=0; i<toolCards.size();i++){
             String tool = toolCards.get(i);
