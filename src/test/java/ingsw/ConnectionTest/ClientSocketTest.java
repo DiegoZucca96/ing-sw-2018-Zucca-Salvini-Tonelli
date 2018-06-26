@@ -38,7 +38,8 @@ public class ClientSocketTest {
     @Test
     public void getPlayerStateTest() throws IOException {
         try{
-            assertEquals("enabled",clientSocket.getPlayerState());
+            clientSocket.setName("Norma");
+            assertEquals("disabled",clientSocket.getPlayerState());
         } catch(NoSuchElementException e){
             System.err.println(e.getMessage());
         }
@@ -51,9 +52,6 @@ public class ClientSocketTest {
     @Test
     public void getListOfPlayersTest() throws IOException {
         ArrayList<String> players = new ArrayList<String>();
-        players.add("Elio");
-        players.add("Alessio");
-        players.add("Diego");
         players.add("Norma");
         try{
             assertEquals(players,clientSocket.getListOfPlayers());
