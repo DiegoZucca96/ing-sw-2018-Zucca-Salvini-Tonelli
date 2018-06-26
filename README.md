@@ -169,20 +169,21 @@ Screen is divided in three columns :
 
 3) The middle column is a little bit complicated. In the upper part there is the Roundtrack which contains all the extra dice which remain from rounds which finish. Going down on the screen we see the enemies' maps and dice on them. Further more, there are three horizontal objects: player's map, buttons through which player can interact with images, and your personal private card (only you can see that). DraftPool is on the bottom part of the screen.
 
-So when player gets his turn (he is enable), he is able to do some moves, icluding take a die, using a tool card, skip turn
+So when player gets his turn (he is enable), he is able to do some moves, such as take a die, using a tool card, skip turn
 or even exit from the game.
 
--Take die: you can place a die only once in a turn (except for Tool 8). To make this, press "Take Die" button, then click on the dice that you want in DraftPool and finally click on the cell of your WP to place it.
+Now we explain how buttons work:
+* Take die: you can place a die only once in a turn (except for Tool 8). To make this, press "Take Die" button, then click on the dice that you want in DraftPool and finally click on the cell of your WP to place it.
 
--Using a tool card: Tool card that says "After drafting" can be used once in a turn and only before placing a dice, while the others can be used when you want and every time you want (if you have enough tokens or there are no particular restrictions).
+* Using a tool card: Tool card that says "After drafting" can be used once in a turn and only before placing a dice, while the others can be used when you want and every time you want (if you have enough tokens or there are no particular restrictions).
 To use it, click "Use Tool" button, then select the tool you want to use. After select it, your token will be consumed, so pay attention to your choice.
 Every tool has different operations to do, but in general if it says "After drafting" the first thing to do is select a dice from DraftPool, then follow the istructions of the tool (for Tool 12 you have to select first the color of the dice from RoundTrack and after that you can move dice from WP).
 
--Skip turn: if you click it, your turn is finished.
+* Skip turn: if you click it, your turn is finished.
 
--Cancel: this button undo your selection of dice or can interrupt a tool card (in this case tokens will not be returned, so pay attention!)
+* Cancel: this button undo your selection of dice or can interrupt a tool card (in this case tokens will not be returned, so pay attention!)
 
--Exit Game: with this button you can exit from the game before it is over.
+* Exit Game: with this button you can exit from the game before it is over.
 
 If you don't click on "take die" button, player is not enable to take a die from draftpool grid.
 Same reasoning would apply to using tools. He must click on "using tool" in order to choose the card he wants.
