@@ -10,6 +10,13 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * This interface contains all controller's methods.
+ * To see the description of each one go to Controller class.
+ *
+ * @see Controller
+ */
+
 public interface RMIController extends Remote {
 
     //Qua ci vanno tutti i metodi che il controller implementerà
@@ -17,16 +24,10 @@ public interface RMIController extends Remote {
 
     int getSizeOfPlayers() throws RemoteException;
 
-    int getTimeSearch() throws RemoteException;
-
-    int getPlayerTimeMove() throws RemoteException;
-
     ArrayList<ViewWP> getWindowChosen() throws RemoteException;
 
     //per associare ad un giocatore la sua wp è sufficiente una stringa, o un int
     void addWindow(ViewWP wpmodel) throws RemoteException;
-
-    void addWindowName(String wpmodel) throws RemoteException;
 
     String getCurrentPlayerName() throws RemoteException;
 
@@ -52,15 +53,9 @@ public interface RMIController extends Remote {
 
     boolean login(String account) throws RemoteException;
 
-    void setWindowChosen(ArrayList<ViewWP> windowChosen) throws RemoteException;
-
     HashMap<String, Integer> getHashPlayers() throws RemoteException;
 
-    void setHashPlayers(HashMap<String, Integer> hashPlayers) throws RemoteException;
-
     int getCoordinateSelectedY() throws RemoteException;
-
-    int getCoordinateSelectedX() throws RemoteException;
 
     boolean takeDie(int row, int column) throws RemoteException;
 

@@ -11,6 +11,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
 
+/**
+ * This class makes possible the interaction between a generic client and the model of the game.
+ * It contains all necessary methods to control if an operation is allowed or not and to change the model of the game.
+ * Controller has a lot of parameters, in order to control everything in a correct and simple way.
+ *
+ * @see ControllerTimer
+ * @see WindowPFactory
+ * @see Match
+ */
+
 public class Controller extends UnicastRemoteObject implements RMIController {
 
     private Timer timer;
@@ -21,19 +31,23 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     private static Match match = null;
     private int timeSearch;
     private int playerMoveTime;
-    private static int access=0;
-    private static int startTimer = 0;
+    private static int access=0;  //Parameter used to avoid multiple run of the same method during the beginning of the match
+    private static int startTimer = 0;  //Parameter used to start the timer of each player
     private ArrayList<ViewWP> windowChosen;
-    private ArrayList<String> nameWPChosen;
-    private HashMap<String,Integer> hashPlayers; //Associa ogni player alla sua WP selezionata (usata nella costruzione di match)
+    private HashMap<String,Integer> hashPlayers; //Contains a player and his WP chosen
     private boolean active;
     private int turn;
     private boolean isFinish;
-    private ArrayList<String> playersLeft;
-    private int playerNotifiedExit = 0;
-    private int playerNotifiedEntry = 0;
+    private ArrayList<String> playersLeft;  //Contains all players that had left the game
+    private int playerNotifiedExit = 0;     //Parameter used to notify all players about an exit player
+    private int playerNotifiedEntry = 0;    //Parameter used to notify all players about an entry player
 
-
+    /**
+     * Constructor of Controller, it initialized every parameter
+     *
+     * @param server is the istance of the server
+     * @throws RemoteException if there is a problem to get "wpFactory" parameter
+     */
     public Controller(Server server) throws RemoteException {
         super();
         this.server= server;
@@ -44,7 +58,6 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         }
         this.rg = new RandomGenerator(wpFactory.getNumOfWPs());
         this.windowChosen = new ArrayList<>();
-        this.nameWPChosen = new ArrayList<>();
         this.hashPlayers = new HashMap<>();
         this.timeSearch = server.getTimeSearch();
         this.playerMoveTime = server.getPlayerTimeMove();
@@ -56,51 +69,50 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         this.playersLeft = new ArrayList<>();
     }
 
-    //Lista dei vari metodi invocabili da grafica che vanno a interagire con il model
+    /**
+     * Simple getter method
+     * @return list of active players that are playing the match
+     * @throws RemoteException if the server is not reachable
+     */
     @Override
     public ArrayList<String> getListOfPlayers() throws RemoteException{
         return server.getListOfPlayers();    }
 
+    /**
+     * Simple getter method
+     * @return size of the list of active players that are playing the match
+     * @throws RemoteException if the server is not reachable
+     */
     @Override
     public int getSizeOfPlayers() throws RemoteException {
         return getListOfPlayers().size();
     }
 
-    @Override
-    public int getTimeSearch() throws RemoteException {
-        return server.getTimeSearch();
-    }
-
-    @Override
-    public int getPlayerTimeMove() throws RemoteException {
-        return server.getPlayerTimeMove();
-    }
-
+    /**
+     * Simple getter method
+     * @return a list of window chosen by all players
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
     @Override
     public ArrayList<ViewWP> getWindowChosen() throws RemoteException {
         return windowChosen;
     }
 
-    @Override
-    public void setWindowChosen(ArrayList<ViewWP> windowChosen) {
-        this.windowChosen = windowChosen;
-    }
-
+    /**
+     * Simple getter method
+     * @return the HashMap with association player - window chosen
+     */
     @Override
     public HashMap<String, Integer> getHashPlayers() {
         return hashPlayers;
     }
 
-    @Override
-    public void setHashPlayers(HashMap<String, Integer> hashPlayers) {
-        this.hashPlayers = hashPlayers;
-    }
-
-    @Override
-    public int getCoordinateSelectedX(){
-        return match.getCurrentPlayer().getCoordinateDieSelected().getX();
-    }
-
+    /**
+     * Getter method, it tries to get coordinate about the selected die of current player
+     * It returns only Y coordinate because in our model the X coordinate is always zero in DraftPool.
+     * @return -1 if player didn't select any die, otherwise the Y coordinate
+     * @see DraftPool
+     */
     @Override
     public int getCoordinateSelectedY(){
         if(match.getCurrentPlayer().getCoordinateDieSelected()==null)
@@ -109,6 +121,14 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             return match.getCurrentPlayer().getCoordinateDieSelected().getY();
     }
 
+    /**
+     * It allows a player to select a die from DraftPool after a control, to avoid that he could select more than one.
+     * After that it sets the value of die and coordinate selected by the player
+     * @param row it is the X coordinate
+     * @param column it is the Y coordinate
+     * @return true if the player can make this action, otherwise false
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
     @Override
     public boolean takeDie(int row, int column) throws RemoteException{
         if(match.getCurrentPlayer().getDieSelected()==null && !match.getCurrentPlayer().getInsertedDie()){
@@ -121,6 +141,15 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return false;
     }
 
+    /**
+     * It allows a player to select a die from the window of the player after a control, to avoid that he could select more than one.
+     * After that it sets the value of die and coordinate selected by the player.
+     * This method is called only when a tool card is used.
+     * @param row it is the X coordinate
+     * @param column it is the Y coordinate
+     * @return true if the player can make this action, otherwise false
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
     @Override
     public boolean takeWPDie(int row, int column) throws RemoteException {
         if(match.getCurrentPlayer().getCoordinateDieSelected()==null){
@@ -132,6 +161,15 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             return false;
     }
 
+    /**
+     * This method allows player to place his selected die into his window, only if all restriction is verified.
+     * It also verifies that only one die can be inserted and that the selected die is not null.
+     * To remove the selected die from DraftPool it will be set on white color and zero number
+     * @param row it is the X destination coordinate
+     * @param column it is the destination Y coordinate
+     * @return true if the player can make this action, otherwise false
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
     @Override
     public boolean positionDie(int row, int column) throws RemoteException{
         if(match.getCurrentPlayer().getDieSelected()!=null && !match.getCurrentPlayer().getInsertedDie()){
@@ -147,7 +185,14 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return false;
     }
 
-
+    /**
+     * This method is synchronized in order to avoid players with same nickname registered.
+     * It controls if the input nickname is already registered into the server, if not the registration will be done.
+     * @param account it is the input nickname of the new player
+     * @return true if player can use this nickname, otherwise false
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
+     * @see Server
+     */
     @Override
     public synchronized boolean register(String account) throws RemoteException{
         if (server.getListOfClient().contains(account))
@@ -158,6 +203,16 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         }
     }
 
+    /**
+     * This method is synchronized in order to avoid players with same nickname registered.
+     * It controls if the input nickname is already registered into the server, if not the registration will be done.
+     * It is used with Socket connection
+     * @param account it is the input nickname of the new player
+     * @param serverHandler it is used in Socket connection to manage all messages exchanged between client and controller
+     * @return true if player can use this nickname, otherwise false
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
+     * @see ServerHandler
+     */
     @Override
     public synchronized boolean register(String account, ServerHandler serverHandler) throws RemoteException{
         if (server.getListOfClient().contains(account))
@@ -168,7 +223,14 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         }
     }
 
-    //Inserisce l'account tra i giocatori disabilitandolo, verrà attivato solo il primo entrato
+    /**
+     * This method is synchronized in order to avoid players with same nickname in the same match.
+     * It used the private method access to verify if a player can join the game or not.
+     * Every player who joins the game is disabled (as Client state).
+     * @param account it is the input nickname of the player
+     * @return true if player can join the game, otherwise false
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
+     */
     @Override
     public synchronized boolean login(String account) throws RemoteException {
         if(access(account)){
@@ -179,8 +241,13 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             return false;
     }
 
+    /**
+     * It controls if the nickname is already used or if is registered in the server.
+     * It allows also to players that has left the game (because of inactivity, voluntary exit or connection lost) to rejoin the match.
+     * @param account it is the input nickname of the player
+     * @return true if player can join the game, otherwise false
+     */
     private boolean access(String account){
-        //se esiste già il nome salvato nel server non puoi accedere
         if(server.getListOfClient().contains(account)){
             if(!server.getListOfPlayers().contains(account) && server.getListOfPlayers().size()<4 && getTimeRemaining()>0){
                 server.addPlayers(account);
@@ -203,6 +270,11 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return false;
     }
 
+    /**
+     * This method create four random windows to show to the players.
+     * The synchronized method is used to ensure that every player will have different and no repeated window.
+     * @return a list of four windows
+     */
     public synchronized ArrayList<ViewWP> getRandomWPs(){
         ArrayList<ViewWP> wps = new ArrayList<>();
         for(int i=0; i<4; i++){
@@ -218,6 +290,11 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return wps;
     }
 
+    /**
+     * It is used to start the match when every player has made his choice about the choice of the window
+     * @return true if all players is ready, otherwise false
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
     @Override
     public boolean readyToPlay() throws RemoteException {
         if(windowChosen.size()<getSizeOfPlayers())
@@ -241,11 +318,6 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     @Override
     public void addWindow(ViewWP wpmodel){
         windowChosen.add(wpmodel);
-    }
-    //Aggiunge il nome della finestra scelta
-    @Override
-    public void addWindowName (String wpmodel){
-        nameWPChosen.add(wpmodel);
     }
 
     @Override
