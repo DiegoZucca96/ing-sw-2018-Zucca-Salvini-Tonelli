@@ -8,6 +8,7 @@ import java.util.ArrayList;
 /**
  * Class that represents the round track of the game. It contains the dice in excess at the end of each round,
  * it memorizes the current round
+ * Author: Elio Salvini
  */
 public class RoundTrack {
 

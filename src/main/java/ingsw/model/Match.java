@@ -3,23 +3,36 @@ package ingsw.model;
 import ingsw.observers.*;
 import java.util.ArrayList;
 
+/**
+ * Class that represent a match in Sagrada, it links all components of the game and players. This class allow
+ * communication between model classes and also provides several main functionalities of the game
+ * (like the turns management or score calculation and research of winner)
+ * Author: Elio Salvini, Diego Zucca
+ */
 public class Match {
-    private int id;
-    private int nPlayers;
-    private Player currentPlayer;
-    private boolean clockwiseRound;              //verso del round, se true "orario"
-    private ArrayList<Player> players;
-    private ArrayList<ToolCard> tools;           //ingsw.model.toolcard relative alla partita
-    private ArrayList<PBObjectiveCard> pbCards;  //public objective card relative alla partita
-    private RoundTrack roundTrack;
-    private DraftPool draftPool;
-    private ViewData init;
-    private Observer viewObserver = null;
+    private int id;                                 // identifier of the current match
+    private int nPlayers;                           // number of players
+    private Player currentPlayer;                   // player who has the right to take the next move
+    private boolean clockwiseRound;                 /* true if the next turn is of the next player in the list players
+                                                       false if the next turn goes to the previous player in the list*/
+    private ArrayList<Player> players;              //list of player of this match
+    private ArrayList<ToolCard> tools;              //tool cards of this match
+    private ArrayList<PBObjectiveCard> pbCards;     //public objective cards of this match
+    private RoundTrack roundTrack;                  //reference to round track of this match
+    private DraftPool draftPool;                    //reference to draft pool of this match
+    private ViewData init;                          //???
+    private Observer viewObserver = null;           //observer of the state of the match, related to view
 
+    /**
+     * Constructor that creates all the necessary objects for playing a match
+     * @param id            identifier of the match
+     * @param playersNames  list of players names
+     * @param playersWP     list of players windows pattern
+     */
     public Match(int id, ArrayList<String> playersNames, ArrayList<Integer> playersWP) {    //viene passato l'id dal Server per identificare il match
         this.id = id;
 
-        //Inizializzazione dei giocatori sulla base dei dati ricevuti dal costruttore
+        //Initialization of players
         players = new ArrayList<>();
         RandomGenerator rg = new RandomGenerator(4);
         for (int i = 0; i < playersNames.size(); i++) {
@@ -30,7 +43,7 @@ public class Match {
         clockwiseRound = true;
         currentPlayer = players.get(0);
 
-        //Inizializzazione delle componenti del gioco lato model e grafico
+        //Initialization of game's components model side and of necessary components for view
         tools = new ArrayList<>();
         pbCards = new ArrayList<>();
         roundTrack = new RoundTrack();
@@ -52,81 +65,103 @@ public class Match {
             init.getDraftPoolDice().add(die.toString());
     }
 
+    /**
+     * ???
+     * @return
+     */
     //Metodo che istanzia il gioco lato model e restituisce a lato view
     public ViewData getInit(){
         return init;
     }
 
+    //simple getter
     public boolean getClockwiseRound() {
         return clockwiseRound;
     }
 
+    //simple getter
     public int getNumOfPlayers() {
         return nPlayers;
     }
 
+    //simple getter
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
+    //simple getter
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
-    //NB --> metodo ad uso esclusivo dei test
+    //simple setter
+    //exclusive use of this method for testing
     public void setDraftPool(DraftPool draftPool) {
         this.draftPool = draftPool;
     }
 
-    //NB --> metodo ad uso esclusivo dei test
+    //simple setter
+    //exclusive use of this method for testing
     public void setRoundTrack(RoundTrack roundTrack) {
         this.roundTrack = roundTrack;
     }
 
-    //NB --> metodo ad uso esclusivo dei test
+    //simple setter
+    //exclusive use of this method for testing
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
     }
 
-    //NB --> metodo ad uso esclusivo dei test
+    //simple setter
+    //exclusive use of this method for testing
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
 
-    //NB --> metodo ad uso esclusivo dei test
+    //simple setter
+    //exclusive use of this method for testing
     public void setPbCards(ArrayList<PBObjectiveCard> pbCards) {
         this.pbCards = pbCards;
     }
 
-    //NB --> metodo ad uso esclusivo dei test
+    //simple setter
+    //exclusive use of this method for testing
     public void setTools(ArrayList<ToolCard> tools) {
         this.tools = tools;
     }
 
-    //inizia il round (lancia i dadi), con turno già sul primo giocatore
+    /**
+     * This method begins round throwing dice
+     * @return thrown dice
+     */
     public ArrayList<Die> startRound() {
         return draftPool.throwsDice(nPlayers * 2 + 1);
     }
 
-    //termina il round e setta a tutti i giocatori il loro primo turno
+    /**
+     * This method ends a round and it changes players order
+     */
     public void endRound() {
         draftPool.cleanDraftPool();
         roundTrack.nextRound();
         clockwiseRound = true;
-        //il primo giocatore viene messo in fondo alla lista in quanto diventa l'ultimo
+        //first player is put at the end of the list, he becomes the last player
         players.remove(currentPlayer);
         players.add(currentPlayer);
         currentPlayer = players.get(0);
         draftPool.throwsDice(getNumOfPlayers()*2 + 1);
     }
 
-    //NB nextTurn va chiamata 7 volte con 4 giocatori, al termine si chiama endRound (tengo conto se è il primo o secondo turno tramite clockwiseRound)
-    //il turno va al prossimo giocatore
+    /**
+     * This method gives the turn to the next player who has the right to play.
+     * This method has to be called seven times in a round with 4 players.
+     */
     public void nextTurn() {
         if (currentPlayer == players.get(players.size()-1) && clockwiseRound) {
             clockwiseRound = false;
         } else {
             try {
+                //clockwiseRound is used to recognise if this is the first or the second turn of player in this round
                 if (clockwiseRound) {
                     currentPlayer = players.get(players.indexOf(currentPlayer) + 1);
                 } else {
@@ -138,23 +173,41 @@ public class Match {
         }
     }
 
-    //riceve indice del dado nella draft pool che si vuole posizionare e destinazione sulla WP del currentPlayer
+    /**
+     * Method that allow a player tot take a die from the draft pool
+     * @param dieIndex  sequential position of the requested die
+     * @return  die in position dieIndex in draft pool
+     */
     public Die playerTakeDie(int dieIndex) {
         return draftPool.getDie(dieIndex);
     }
 
-    //Mette un dado fittizio per mantenere la dimensione della draftpool (non viene mai più preso)
+    /**
+     * Method that puts an "empty die" in order to remove a die from the draft pool and let its dimension unchanged
+     * @param dieIndex  sequential position of the die that has to be removed
+     * @return  removed die
+     */
     public Die draftpoolRemoveDie(int dieIndex) {
         return draftPool.takeDie(dieIndex);
     }
 
-    //posiziona un dado nella wp del current player
+    /**
+     * This method allows to put a die in current player's window pattern
+     * @param die   die you want to put in the window pattern
+     * @param destination   coordinates where you want to put the die
+     * @return true if die can be placed in the specified destination
+     */
     public boolean positionDie(Die die, Coordinate destination){
         return currentPlayer.positionDie(die, destination);
     }
 
-    //raccoglie i dati necessari per l'utilizzo di una tool card in un oggetto di tipo ObjectiveTool
-    //se non è possibile utilizzare la carta indicata in pTParameter restituisce null
+    /**
+     * This method takes all necessary data for using a tool card
+     * @param idCard    tool card you want to use
+     * @param pTParameter   parameter that contains players indications for using the specified tool card
+     * @return  an object that contains all necessary data for using the specified tool card;
+     *          if the tool card can't be used it returns null
+     */
     private ObjectiveTool createToolParameter(int idCard, PlayerToolParameter pTParameter) {
         ObjectiveTool toolParameter = new ObjectiveTool();
         switch (idCard) {
@@ -274,7 +327,12 @@ public class Match {
         return toolParameter;
     }
 
-    //usa la ingsw.model.toolcard passata come parametro, restituisce false se non può essere usata
+    /**
+     * This method allows the using of a match tool card
+     * @param tool  identifier of the match tool card you want to use
+     * @param pTParameter object that contains all necessary data for using the specified tool card
+     * @return false if the tool card can't be used
+     */
     public boolean playerUseTool(int tool, PlayerToolParameter pTParameter) {
         if(pTParameter==null){
             for(ToolCard t : tools) {
@@ -317,6 +375,9 @@ public class Match {
         return false;
     }
 
+    /**
+     * This method notifies all last changes in match to an observer for view side
+     */
     public void notifyViewObserver() {
         viewObserver = new DraftPoolObserver();
         viewObserver.update(draftPool, ViewData.instance());
@@ -330,7 +391,9 @@ public class Match {
         viewObserver = null;
     }
 
-    //calcola e setta il punteggio a tutti i giocatori
+    /**
+     * This method calculates and memorizes the score of all players
+     */
     public void playersScore() {
         for (Player p : players) {
             pbCards.get(0).doPBStrategy(p);
@@ -340,13 +403,16 @@ public class Match {
         }
     }
 
-    //trova il vincitore
+    /**
+     * This method finds a winner of the match
+     * @return name of the winner
+     */
     public Player findWinner() {
         ArrayList<Player> ties = new ArrayList<Player>();
         ArrayList<Player> tiesTmp = new ArrayList<Player>();
         Player winner = players.get(0);
 
-        //ricerca giocatore con un punteggio più alto
+        //search for player with most high score
         for (Player p : players) {
             if (p.getScore() > winner.getScore()) winner = p;
         }
@@ -355,7 +421,7 @@ public class Match {
         }
         if (ties.size() == 1) return winner;
 
-        //ricerca giocatore in parità con punteggio dovuto ad obiettivi privati più alto
+        //search for player in tie with most high score due to private objective cards
         for (Player p : ties) {
             if (p.getPVScore() > winner.getPVScore()) winner = p;
         }
@@ -364,7 +430,7 @@ public class Match {
         }
         if (ties.size() == 1) return winner;
 
-        //ricerca giocatore in parità con numero di token maggiore
+        //search for player in tie with the greatest number of token
         for (Player p: tiesTmp){
             if (p.getTokens() > winner.getTokens()) winner = p;
         }
@@ -374,7 +440,7 @@ public class Match {
         }
         if (ties.size() == 1) return winner;
 
-        //ricerca del giocatore in parità con posizione minore
+        //search for player in tie in lower position
         for (Player p: ties){
             if(players.indexOf(p) < players.indexOf(winner)) winner = p;
         }
@@ -389,6 +455,10 @@ public class Match {
      *
      * CLI support
      */
+
+    /**
+     * @return list of strings that represents match public objective cards 
+     */
     public ArrayList<String> pbCardsToString(){
         ArrayList<String> cards = new ArrayList<>();
         for (PBObjectiveCard card: pbCards){
@@ -397,6 +467,9 @@ public class Match {
         return cards;
     }
 
+    /**
+     * @return list of strings that represents match tool cards
+     */
     public ArrayList<String> toolCardsToString(){
         ArrayList<String> cards = new ArrayList<>();
         for (ToolCard card: tools){

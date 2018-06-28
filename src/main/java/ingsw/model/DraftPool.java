@@ -7,6 +7,7 @@ import java.util.ArrayList;
 /**
  * This class represents the draft pool of the game. Through diceBag this class throws dice
  * and puts the ones in excess in te RoundTrack.
+ * Author: Elio Salvini
  *
  * @see RoundTrack
  * @see DiceBag
@@ -38,7 +39,7 @@ public class DraftPool {
     }
 
     //simple setter
-    //exclusive use of this method fot testing
+    //exclusive use of this method for testing
     public void setDiceBag(DiceBag diceBag) {
         this.diceBag = diceBag;
     }

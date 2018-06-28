@@ -3,11 +3,14 @@ package ingsw.model;
 import java.util.ArrayList;
 import java.util.Random;
 
+
+/**
+ * This class generates random numbers.
+ * Author: Elio Salvini
+ */
 public class RandomGenerator {
 
-    //Classe che genera numeri casuali tra 1 e n senza mai restituire due volte lo stesso numero
-
-    private ArrayList<Integer> values;
+    private ArrayList<Integer> values;  //list of available numbers
 
     public RandomGenerator(int n){
         values = new ArrayList<Integer>();
@@ -16,14 +19,28 @@ public class RandomGenerator {
         }
     }
 
+    /**
+     * This method allow you to add a new number among the available that can be returned
+     * @param newValue the number added
+     * @return true if the operation is correctly completed
+     */
     public boolean add(Integer newValue){
         return values.add(newValue);
     }
 
+    /**
+     * This method allow you to remove a number among the available that can be returned
+     * @param value number you want to be removed
+     * @return true if the operation is correctly completed
+     */
     public boolean remove(Object value){
         return value == values.remove(values.indexOf(value));
     }
 
+    /**
+     * It generates a random number
+     * @return  random number. It never returns two times the same number
+     */
     public int random(){
         if(values.isEmpty())
             return 0;

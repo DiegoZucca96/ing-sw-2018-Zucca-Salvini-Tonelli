@@ -1,9 +1,14 @@
 package ingsw.model;
 import static ingsw.model.Color.*;
 
-public class DiceBag{           //classe che tiene traccia dei dati relativi alle probabilità di uscita dei dadi.
+/**
+ * Class that contains data linked to the probability of dice draw
+ * Author: Elio Salvini
+ * @see RandomGenerator
+ */
+public class DiceBag{
 
-    private int totDice;
+    private int totDice;            //number of dice in the bag
     private RandomGenerator rg;
 
     public DiceBag(){
@@ -11,6 +16,10 @@ public class DiceBag{           //classe che tiene traccia dei dati relativi all
      rg = new RandomGenerator(totDice);
     }
 
+    /**
+     * This method draws a random die among the available without replacement
+     * @return drawn die
+     */
     public Die randomDice() {   //estrae un dado a caso tra quelli disponibili, senza reinseririlo nella dice bag.
         int randomNumber = rg.random();
         if(randomNumber<=18) return new Die(new RandomGenerator(6).random(), BLUE);
@@ -21,7 +30,10 @@ public class DiceBag{           //classe che tiene traccia dei dati relativi all
         return null;
     }
 
-    //Metodo che sistema la randomicità con cui escono i dadi, reinserisco il dado nella borsa
+    /**
+     * This method allows to replace a die in the bag
+     * @param die   die you want to replace
+     */
     public void insertDie (Die die){
         switch (die.getColor()){
             case BLUE: {
