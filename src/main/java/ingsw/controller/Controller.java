@@ -44,7 +44,6 @@ public class Controller extends UnicastRemoteObject implements RMIController {
 
     /**
      * Constructor of Controller, it initialized every parameter
-     *
      * @param server is the istance of the server
      * @throws RemoteException if there is a problem to get "wpFactory" parameter
      */
@@ -302,30 +301,54 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         else return true;
     }
 
-    //Crea una corrispondenza Player-WP sfruttata nel model per assegnare la giusta WP
+    /**
+     * It creates an HashMap with the name of client as key and the number of the window chosen by him as value.
+     * @param numberWP it is the number associated to the window
+     * @param nameClient it is the name of the client
+     */
     @Override
     public void createHash(int numberWP, String nameClient) {
         hashPlayers.put(nameClient,numberWP);
     }
 
-    //Deve aggiornare il tutto, da fare con gli observer
+    /**
+     * This method simply return an istance of ViewData that contains all modified objects.
+     * It is used to update all players.
+     * @return a ViewData instance
+     * @see ViewData
+     */
     @Override
     public ViewData updateView() {
         return ViewData.instance();
     }
 
-    //Aggiunge la finestra scelta
+    /**
+     * It simply add the window chosen by the client into a list
+     * @param wpmodel it is the window chosen
+     */
     @Override
     public void addWindow(ViewWP wpmodel){
         windowChosen.add(wpmodel);
     }
 
+    /**
+     * Simply getter method
+     * @return the name of the current player in the game
+     */
     @Override
     public String getCurrentPlayerName(){
         return match.getCurrentPlayer().getName();
     }
 
-    //Salta volontariamente il turno oppure forzatamente dalla fine del timer de giocatore
+    /**
+     * This method is used when the player's turn is over and the next player will play.
+     * It is used also when a player leaves the game (voluntary or not) or when the skip button is pressed.
+     * If a player cannot play (maybe because he used the tool card number 8 or because is disconnected or inactive) he will be
+     * skipped automatically, and that will be repeated since an "enabled" player will be found.
+     * It also manages the disconnection of a player and controls if the match is over or not.
+     * @param clientName it is the name of the "enabled" client
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
+     */
     @Override
     public void skip(String clientName) throws RemoteException{
         if(iAmAlone()){
@@ -387,6 +410,11 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         }
     }
 
+    /**
+     * It controls if there is only one player remaining in the match.
+     * @return true if it is alone, otherwise false
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
+     */
     @Override
     public boolean iAmAlone() throws RemoteException{
         if(getSizeOfPlayers()-1 == getInactiveList().size())
@@ -395,11 +423,22 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             return false;
     }
 
+    /**
+     * Simply getter method
+     * @return the time that a player has to make his turn
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
     @Override
     public int getStartTimeMove() throws RemoteException {
         return playerMoveTime;
     }
 
+    /**
+     * It removes a player from the server's list
+     * @param name it is the name of player that has to be removed
+     * @return true if no exception has thrown
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
+     */
     @Override
     public boolean removerPlayer(String name) throws RemoteException {
         if(server.removePlayer(name))
@@ -408,6 +447,11 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             return false;
     }
 
+    /**
+     * This method is used to notify the other players if someone has left the game, for any reason
+     * @return a list of the player's name that left the game
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
+     */
     @Override
     public ArrayList<String> someoneLeftGame() throws RemoteException {
         ArrayList<String> serverInactive = server.getInactivePlayer();
@@ -436,6 +480,11 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         }
     }
 
+    /**
+     * This method is used to notify the other players if someone has rejoined the game
+     * @return a list of the player's name that has rejoined into the match
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
+     */
     @Override
     public ArrayList<String> someoneRejoinedGame() throws RemoteException {
         ArrayList<String> serverInactive = server.getInactivePlayer();
@@ -462,42 +511,84 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         }
     }
 
+    /**
+     * Simply getter method, it says if the match is over or not
+     * @return true if the match is over, otherwise false
+     */
     @Override
     public boolean isFinish() {
         return isFinish;
     }
 
-    //Serve a segnalare il giocatore inattivo oppure uscito dalla partita
+    /**
+     * Private method used by skip method, it adds the inactive player in a server's list of inactive players
+     * @param clientName it is the name of the inactive player
+     */
     private void timeout(String clientName) {
         server.addInactivePlayers(clientName);
     }
 
+    /**
+     * Simply getter method
+     * @param clientName it is the name of the player i want to know the state
+     * @return the state of this player
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
+     * @see ClientState
+     */
     @Override
     public String getPlayerState(String clientName) throws RemoteException{
         return server.getClientState(clientName).toString();
     }
 
-    //disabilita il client (il server ignora le sue richieste)
+    /**
+     * This method makes a player enabled, so he can play his turn.
+     * @param clientName it is the name of the player that will be "enabled"
+     * @return a new enabled client with the same name that he has before
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
+     * @see EnableClient
+     */
     @Override
     public ClientState enableClient(String clientName) throws RemoteException {
         return new EnableClient().setState(clientName);
     }
 
-    //attiva il client (il server ascolta le sue richieste
+    /**
+     * This method makes a player disabled, he can't make any kind of move except leave the game.
+     * @param clientName it is the name of the player that will be "disabled"
+     * @return a new disabled client with the same name that he has before
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
+     * @see DisableClient
+     */
     @Override
     public ClientState disableClient(String clientName) throws RemoteException {
         return new DisableClient().setState(clientName);
     }
 
+    /**
+     * This method makes a player disconnected, this happens when that player leaves the game or loses the connection.
+     * @param clientName it is the name of the player that will be "disconnected"
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
+     * @see DisconnectedClient
+     */
     @Override
     public void disconnectClient(String clientName) throws RemoteException {
          new DisconnectedClient().setState(clientName);
     }
 
+    /**
+     * This method makes two main things.
+     * The first one, it consumes the player's token if he can use that tool card.
+     * The second one, it takes a ToolView object that contains some inputs from the player and converts it into a model object.
+     * Each tool card needs different inputs, to manage this we used a switch on the number of the tool card selected.
+     * When everything is ready this object is passed to match method that will execute the tool card method
+     * @param idCard it is the number of tool card selected
+     * @param toolView it is an object that contains all input form the player
+     * @return true if everything goes well, otherwise false
+     */
     @Override
     public boolean useToolCard(int idCard, ToolView toolView){
         PlayerToolParameter pt = null;
-        //Serve per consumare i token quando clicco sulla carta, se posso usarla
+        //This "if" is used to consume tokens when a tool card is clicked, only if it is usable
         if(idCard!=8){
             if(toolView==null){
                 if(match.playerUseTool(idCard,null))
@@ -592,6 +683,14 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             return false;
     }
 
+    /**
+     * This method is synchronized in order to avoid multiple access.
+     * It starts the research timer only if the client that calls this method is the first one, this restriction is made with
+     * the "access" parameter.
+     * This parameter is used to prevent many timers from starting at the same time
+     * @return true when the timer is over and at least two players are found, otherwise false
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
+     */
     @Override
     public synchronized boolean waitForPlayers() throws RemoteException{
         if(access == 0){
@@ -611,12 +710,21 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             return false;
     }
 
+    /**
+     * Simply getter method
+     * @return the research time remaining
+     */
     @Override
     public int getTimeRemaining() {
         return controllerTimer.getTimeRemaining();
     }
 
-
+    /**
+     * This method return the enemy's windows using the HashMap
+     * @param name it is the name of the player that wants to know the enemy's windows
+     * @return a list of the enemy's windows
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
+     */
     @Override
     public synchronized ArrayList<ViewWP> getPlayersWPs(String name) throws RemoteException{
         ArrayList<ViewWP> enemyWPs = new ArrayList<>();
@@ -628,16 +736,30 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return enemyWPs;
     }
 
+    /**
+     * Simply setter method
+     * @param active it is the boolean value to set
+     */
     @Override
     public void setActive(Boolean active) {
         this.active=active;
     }
 
+    /**
+     * Simply getter method, it says if the player is active or not
+     * @return true if the player is active, otherwise false
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
     @Override
     public boolean getActive() throws RemoteException {
         return active;
     }
 
+    /**
+     * This method removes a player that rejoined in the game from the server's list of inactive player
+     * @param name it is the name of the player that rejoins in the game
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
+     */
     @Override
     public void rejoinedPlayer(String name) throws RemoteException {
         if(server.getInactivePlayer().contains(name)){
@@ -645,27 +767,52 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         }
     }
 
+    /**
+     * Simply getter method
+     * @return the time remaining to player to make a move
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
     @Override
     public int getTimeMove() throws RemoteException {
         return controllerTimer.getTimeMoveRemaining();
     }
 
+    /**
+     * Simply setter method, it cancels the informations about the die and the coordinate selected by the player
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
     @Override
     public void setNullPlayer() throws RemoteException {
         match.getCurrentPlayer().setDieSelected(null);
         match.getCurrentPlayer().setCoordinateDieSelected(null);
     }
 
+    /**
+     * Simply getter method
+     * @return the round of the match
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
     @Override
     public int getRound() throws RemoteException {
         return match.getRound();
     }
 
+    /**
+     * Simply getter method
+     * @return a list of inactive players contained into the server
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
+     */
     @Override
     public ArrayList<String> getInactiveList() {
         return server.getInactivePlayer();
     }
 
+    /**
+     * Simply getter method
+     * @param userName it is the name of the player
+     * @return the window chosen by the player required by userName
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
+     */
     @Override
     public ViewWP getWP(String userName) throws RemoteException {
         String nameWP = null;
@@ -683,6 +830,11 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return null;
     }
 
+    /**
+     * This method is used during the creation of the match.
+     * It orders the windows chosen by the players, following the order of server's list of players
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
+     */
     @Override
     public synchronized void orderWPChoise() throws RemoteException {
         if(access==1){
@@ -700,22 +852,41 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         }
     }
 
+    /**
+     * Simply getter method
+     * @param name it is the name of the player
+     * @return the score made by the player
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
     @Override
     public Integer getScore(String name) throws RemoteException {
         int indexPlayer = getListofMatchPlayers().indexOf(name);
         return match.getPlayers().get(indexPlayer).getScore();
     }
 
+    /**
+     * This method calls a match method to calculate players' score
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
+     */
     @Override
     public void calculateScore() throws RemoteException {
         match.playersScore();
     }
 
+    /**
+     * This method calls a match method to find the winner of the match
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
+     */
     @Override
     public String findWinner() throws RemoteException {
         return match.findWinner().getName();
     }
 
+    /**
+     * Simply getter method, is different from the "getListOfPlayers" method because the match list is different based on the round
+     * @return a list of players ordered by their turn
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
+     */
     @Override
     public ArrayList<String> getListofMatchPlayers() throws RemoteException {
         ArrayList<String> nameMatchPlayers = new ArrayList<>();
@@ -726,38 +897,74 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return nameMatchPlayers;
     }
 
+    /**
+     * Simply getter method
+     * @return true if the player has already inserted a die in his turn
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
     @Override
     public boolean getInsertedDie() throws RemoteException {
         return match.getCurrentPlayer().getInsertedDie();
     }
 
+    /**
+     * Simply setter method
+     * @param b it is the value to be assigned
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
     @Override
     public void setInsertedDie(boolean b) throws RemoteException {
         match.getCurrentPlayer().setInsertedDie(b);
     }
 
+    /**
+     * Simply getter method
+     * @return true if the player has used the tool card number 8
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
     @Override
     public boolean getTool8Used() throws RemoteException {
         return match.getCurrentPlayer().getTool8Used();
     }
 
+    /**
+     * Simply setter method
+     * @param b it is the value to be assigned
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
     @Override
     public void setTool8Used(boolean b) throws RemoteException {
         match.getCurrentPlayer().setTool8Used(b);
     }
 
+    /**
+     * Simply getter method
+     * @return true if the turn is clockwise, otherwise false
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
     @Override
     public boolean getClockwiseRound() throws RemoteException {
         return match.getClockwiseRound();
     }
 
+    /**
+     * Simply getter method
+     * @param name it is the name of the player
+     * @return the number of token remaining at that player
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
     @Override
     public int getTokenRemaining(String name) throws RemoteException {
         int index = getListofMatchPlayers().indexOf(name);
         return match.getPlayers().get(index).getTokens();
     }
 
-
+    /**
+     * Simply getter method
+     * @param name it is the name of the player
+     * @return the color of the private card of that player
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
     @Override
     public String getPVCard(String name) throws RemoteException {
         String colorPV = null;
@@ -770,10 +977,14 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         return colorPV;
     }
 
-    //Chiama il metodo inizializzatore del Match, restituisce le WP grafiche, le PBCard e le ToolCard (PVCard da prendere a parte dopo)
+    /**
+     * This method creates the match, with windows chosen, public card and tool card, and the instance of ViewData.
+     * @return the ViewData object that will be used from the view to shows everything correctly
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
     @Override
     public synchronized ViewData initializeView() throws RemoteException {
-        match = istanceMatch();
+        match = instanceMatch();
         ViewData init = match.getInit();
         init.setWps(windowChosen);
         enableClient(getCurrentPlayerName());
@@ -788,11 +999,13 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     /**Author: Elio Salvini
      *
      *CLI support
+     *
+     * ???
      */
     //Metodo uguale a initializeView(), eccetto per la parte segnalata
     @Override
     public synchronized ViewData initializeViewCLI() throws RemoteException {
-        match = istanceMatch();
+        match = instanceMatch();
         ViewData init = match.getInit();
         init.setWps(windowChosen);
         //new lines
@@ -809,12 +1022,22 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
     /**End CLI support*/
 
-    private Match istanceMatch() throws RemoteException {
+    /**
+     * Simple method that creates the instance of the match only if it not exists, otherwise it returns that instance
+     * @return the instance of the match
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
+    private Match instanceMatch() throws RemoteException {
         if(match == null)
             match = new Match(1,getListOfPlayers(),reorderWPandPlayer());
         return match;
     }
 
+    /**
+     * This method is used to associate the correct window to his real chooser
+     * @return an ordered list with the number of windows chosen
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
     private ArrayList<Integer> reorderWPandPlayer() throws RemoteException {
         ArrayList<Integer> ordinateWPs = new ArrayList<>();
         for(String player : getListOfPlayers()){
