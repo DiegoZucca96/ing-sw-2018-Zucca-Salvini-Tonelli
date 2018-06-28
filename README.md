@@ -3,7 +3,7 @@
 ## Group members
 
 * Zucca Diego, 843617, 10503482
-* Salvini Elio,
+* Salvini Elio, 844936, 10490058
 * Tonelli Alessio,
 
 ## Coverage Test and UML
@@ -151,6 +151,15 @@ us to perform only the part of the tool card's code we need.
 
 ## Connectivity
 
+Sagrada supports both RMI and socket connection. The two kinds of connection offer the same methods through the interface “Client”, in this way controller is able to communicate with view independently from the type of connection chosen by the user.
+
+RMI connection:
+client can directly communicate with the controller calling its methods.
+
+Socket connection:
+in this case client communicates with server that creates a thread “ServerHandler” (one for each client that tries to connect) that manage the connection between client and controller. In order to request the execution of the correct method, both client and server handler uses a simple protocol that consist in sending strings containing the name of the controller’s method requested.
+
+Client, server and controller to communicate also uses some specific objects as containers of data (exploiting serialization via socket) to avoid the built and read of long and complex strings. These objects are the only ones both present on client and server side.  
 
 ## How to play
 
