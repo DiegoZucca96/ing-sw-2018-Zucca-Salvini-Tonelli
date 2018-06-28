@@ -14,6 +14,9 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.util.ArrayList;
 
+
+/**This is class dedicated to generate a GridPane for DraftPool.
+ */
 public class GridPaneDraftPool extends GridPane {
 
     private DieInfo dieInfo;
@@ -22,7 +25,13 @@ public class GridPaneDraftPool extends GridPane {
     private Button buttonDieSelected;
     private PlayGame playGame;
 
-
+    /**Create GridPane made of buttons.
+     *
+     * @param client
+     * @param diceList , list of dice coming from ViewData.
+     * @param buttonDieSelected , if true i can access to list.
+     * @param playGame , i need some infos from this class.
+     */
     public GridPaneDraftPool(Client client, ArrayList<String> diceList,Button buttonDieSelected, PlayGame playGame) {
         this.client = client;
         int diceThrows = client.getNumberOfPlayers()*2+1;
@@ -51,6 +60,10 @@ public class GridPaneDraftPool extends GridPane {
         }
     }
 
+    /** Simply add a button whith some characteristics.
+     * @param col , position.
+     * @return Button
+     */
     private Button addButtonDP( int col) {
         Button button = new Button();
         button.setOpacity(1);
@@ -59,10 +72,16 @@ public class GridPaneDraftPool extends GridPane {
         return button;
     }
 
+    /** Action of the button.
+     * There are some cases : first if i have to take a die simply, second if i am using a tool
+     * @param button
+     * @param row
+     * @param col
+     */
     private void action(Button button, int row, int col){
         button.setOnAction(e->{
             if(button.getOpacity()!=0){
-                if(playGame.getChoosePressed()){
+                if(playGame.getChoosePressed()){        /**I am taking a die*/
                     if(client.takeDie( row, col)){
                         dieInfo = new DieInfo(button.getBackground(), row, col);
                         buttonDieSelected.setBackground(button.getBackground());
@@ -70,7 +89,7 @@ public class GridPaneDraftPool extends GridPane {
                     }else{
                         Toolkit.getDefaultToolkit().beep();
                     }
-                }else if(playGame.getUsingTool()){
+                }else if(playGame.getUsingTool()){          /**I am using a tool*/
                     switch (playGame.getCardSelected()){
                         case 1 :{
                             client.takeDie(row,col);
@@ -146,13 +165,20 @@ public class GridPaneDraftPool extends GridPane {
                         default:
                             break;
                     }
-                }else{
+                }else{              /**I do not have rights*/
                     Toolkit.getDefaultToolkit().beep();
                 }
             }
         });
     }
 
+    /** Method used for Tool 1 and Tool 11.
+     *
+     * @param b , changes background when player choose new value for die.
+     * @param row
+     * @param col
+     * @param card , in order to choose which action has to be done.
+     */
     private void changeValueDie(Button b, int row, int col, int card) {
         Stage stage = new Stage();
         GridPane root = new GridPane();
@@ -238,6 +264,7 @@ public class GridPaneDraftPool extends GridPane {
         stage.show();
     }
 
+    /** Useful to find Button in a GridPane*/
     public Button getButton(int row, int col){
         for(Node node : this.getChildren()){
             if(GridPaneDraftPool.getRowIndex(node)==row && GridPaneDraftPool.getColumnIndex(node)== col){
@@ -247,6 +274,7 @@ public class GridPaneDraftPool extends GridPane {
         return null;
     }
 
+    /**Method which updates draftPool, changes background*/
     public void updateDP(ArrayList<String> draftPoolDice) {
         for(int i=0; i<draftPoolDice.size();i++){
             Button b = getButton(0,i);
