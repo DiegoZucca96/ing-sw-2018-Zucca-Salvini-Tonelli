@@ -13,6 +13,8 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.util.ArrayList;
 
+
+/** Class dedicated to RoundTrack*/
 public class GridPaneRound extends GridPane {
     private Client client;
     private ArrayList<String> roundTrack;
@@ -24,6 +26,7 @@ public class GridPaneRound extends GridPane {
     private PlayGame playGame;
     private Stage stage;
 
+    /**Constructor : Grid made of Buttons*/
     public GridPaneRound(Client client, ArrayList<String> roundTrack, int round, PlayGame playGame){
         this.client=client;
         this.roundTrack=roundTrack;
@@ -40,6 +43,10 @@ public class GridPaneRound extends GridPane {
         }
     }
 
+    /** Add Button to GridPane in specific position.
+     * @param currentRound , position of Button.
+     * @return Button
+     */
     private Button buttonRound(int currentRound){
         Button button = new Button(Integer.toString(currentRound));
         button.setFont(new Font("Tahoma", 20));
@@ -47,6 +54,11 @@ public class GridPaneRound extends GridPane {
         return button;
     }
 
+    /**Called by PlayGame when game needs to update.
+     * It calls updateButton for each round.
+     * @param roundTrack , coming from ViewData.
+     * @param round , current round
+     */
     public void updateRound(ArrayList<String> roundTrack, int round){
         this.roundTrack = roundTrack;
         this.significantRound=round;
@@ -55,6 +67,10 @@ public class GridPaneRound extends GridPane {
             updateButton(i);
     }
 
+    /** First thing, it modifies background of Round's last button.
+     * Second, when pressed, it updates gridpane on an other stage, in siceRoundTrack(roundPressed).
+     * @param currentRound , doe selected
+     */
     private void updateButton(int currentRound) {
         for(Node node : getChildren()){
             if(GridPaneRound.getColumnIndex(node) == currentRound){
@@ -78,6 +94,9 @@ public class GridPaneRound extends GridPane {
         }
     }
 
+    /**Makes the update of dice in a round.
+     * @param i , round
+     */
     private void diceRoundTrack(int i){
         stage = new Stage();
         Pane root = new Pane();
@@ -118,6 +137,11 @@ public class GridPaneRound extends GridPane {
         stage.show();
     }
 
+    /**Method which calls ToolView in order to use a Tool Card.
+     * When a die is pressed there are some case: card is 5 or 12.
+     * @param numDice , die's position in grid.
+     * @param i , round
+     */
     private Button addDieBtn(int numDice,int i) {
         Button button = new Button();
         button.setOnAction(e -> {

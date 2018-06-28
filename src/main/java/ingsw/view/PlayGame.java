@@ -27,11 +27,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * This is class in which you play actually.
- */
+/**This is class in which you play actually.*/
 public class PlayGame {
-
     private Label clockLbl;
     private int timeseconds;
     private int timeBegin;
@@ -67,13 +64,15 @@ public class PlayGame {
     private ImageView viewUsed;
     private int playersLeft = 0;
 
+    /**Constructor.
+     * (don't know why it doesn't work here-> prefer to create a very thin constructor to avoid the problem)
+     */
     public PlayGame(Client client){
         this.client=client;
-        init= null;        //don't know why it doesn't work here-> prefer to create a very thin constructor to avoid the problem
+        init= null;
     }
 
-    /**
-     * The most important part of it is the timeline.
+    /**The most important part of it is the timeline.
      * This thread shows countdown and the current player.
      * Then it calls the update and makes control on status of disconnection of client.
      * @param myWindow , contains information regarded only to cells.
@@ -130,6 +129,7 @@ public class PlayGame {
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
 
+        /**Manage time with countdown, label, update*/
         timeline.getKeyFrames().add(
                 new KeyFrame(Duration.millis(1000),
                         event -> {
@@ -501,6 +501,18 @@ public class PlayGame {
         return pane;
     }
 
+    /**
+     * Method which allows player to use Tool Card. In particular, it makes attribute "usingTool" false because card
+     * could not be used an other time unless you don't click button "Uning Tool".
+     * When one tool is pressed it sets cardSelected to the value of the card chosen in the GridPane.
+     * Some cards could be used immediately without accessing to neither DraftPool or Window or RoundTrack, so ToolView
+     * is called.
+     * @param stringCard , value of Tool Card which comes from ViewData.
+     * @param i, position in the gridPane.
+     * @return ImageView , contains image of card in that position.
+     * @see ViewData
+     * @see ToolView
+     */
     private ImageView Images(ArrayList<String> stringCard, int i){
         final ImageView view = new ImageView();
         String imagePathT = stringCard.get(i);
@@ -642,7 +654,7 @@ public class PlayGame {
 
     /**
      * This is the method with is devoted to update some parts of the view.
-     * There are : wos enemy, draftpool, roundtrack and toolcard.
+     * There are : windows enemy, draftpool, roundtrack and toolcard.
      */
     public void update() {
         updateView = client.updateView();
@@ -697,7 +709,7 @@ public class PlayGame {
     }
 
     /**
-     * method used to delete a circle token from the table when a tool card is used and
+     * Method used to delete a circle token from the table when a tool card is used and
      * increment the number of tokens associated to.
      * @param toolCards
      * @param gridTks
@@ -727,14 +739,26 @@ public class PlayGame {
         }
     }
 
+    /** Need to GridPaneDraftPool in order to access dice and take them if the value is true.
+     * @see GridPaneDraftPool
+     */
     public boolean getChoosePressed(){
         return choosePressed;
     }
 
+    /** Need to GridPaneDraftPool in order to use a Tool Card by accessing dice and take them if the value is true.
+     * @see GridPaneDraftPool
+     */
     public boolean getUsingTool() {
         return usingTool;
     }
 
+    /** Need to the following classes in order to use a Tool Card.
+     * Return value of the card.
+     * @see GridPaneDraftPool
+     * @see GridPaneRound
+     * @see GridPaneWindow
+     */
     public int getCardSelected(){
         return cardSelected;
     }
