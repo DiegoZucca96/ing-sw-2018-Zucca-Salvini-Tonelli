@@ -4,9 +4,16 @@ import ingsw.model.publiccard.*;
 import ingsw.model.publiccard.PB9;
 import java.util.ArrayList;
 
+/**
+ * This class creates in a random way the public cards of the match and it implements the pattern Strategy
+ */
 public class PBObjectiveCard {
     private PBStrategy pbStrategy;
 
+    /**
+     * Constructor, it uses the Strategy pattern
+     * @param idCard it is the number of the public card
+     */
     public PBObjectiveCard(int idCard){
         switch(idCard){
             case 1 : {
@@ -45,10 +52,19 @@ public class PBObjectiveCard {
         }
     }
 
+    /**
+     * It runs the public card's method
+     * @param p it is the player that has called this method
+     */
     public void doPBStrategy(Player p){
         pbStrategy.doOp(p);
     }
 
+    /**
+     * This method creates in a random way the public cards of the match
+     * @param init it is the VIewData object that will contains the informations about the default match
+     * @return the list of the number of public cards created
+     */
     public static ArrayList<Integer> generatePBCard(ViewData init) {
         RandomGenerator rg = new RandomGenerator(10);
         ArrayList<Integer> numPBcards = new ArrayList<>();

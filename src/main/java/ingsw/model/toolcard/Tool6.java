@@ -3,6 +3,9 @@ package ingsw.model.toolcard;
 import ingsw.model.*;
 import java.util.Random;
 
+/**
+ * Tool card number 6
+ */
 public class Tool6 implements ToolStrategy {
     private String title;
     private String comment;
@@ -10,6 +13,10 @@ public class Tool6 implements ToolStrategy {
     private int idCard;
     private int numTokenUsed;
 
+    /**
+     * Constructor
+     * @param idCard it is the number of the tool card
+     */
     public Tool6(int idCard) {
         this.title ="Pennello per Pasta Salda";
         this.comment = "Dopo aver scelto un dado, tira\n" + "nuovamente quel dado\n" + "Se non puoi piazzarlo, riponilo\n" + "nella Riserva";
@@ -17,7 +24,11 @@ public class Tool6 implements ToolStrategy {
         this.idCard=idCard;
     }
 
-//Tiro di nuovo un dado, poi verifico se non posso inserirlo allora lo rimetto nella riserva
+    /**
+     * This card changes the number of the selected die of the player.
+     * @param object it contains all the informations to use correctly the tool card
+     * @return true if everything goes right, otherwise false
+     */
     public boolean doOp(ObjectiveTool object){
         DraftPool dp = object.getDp();
         Die die = dp.getDie(object.getC1().getY());

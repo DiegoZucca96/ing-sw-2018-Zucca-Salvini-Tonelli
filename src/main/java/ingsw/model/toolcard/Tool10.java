@@ -4,6 +4,9 @@ import ingsw.model.Die;
 import ingsw.model.DraftPool;
 import ingsw.model.ObjectiveTool;
 
+/**
+ * Tool card number 10
+ */
 public class Tool10 implements ToolStrategy {
     private String title;
     private String comment;
@@ -13,6 +16,10 @@ public class Tool10 implements ToolStrategy {
     private DraftPool dp;
     private int numTokenUsed;
 
+    /**
+     * Constructor
+     * @param idCard it is the number of the tool card
+     */
     public Tool10(int idCard) {
         this.title ="Tampone Diamantato";
         this.comment = "Dopo aver scelto un dado, giralo\n" + "sulla faccia opposta\n" + "6 diventa 1, 5 diventa 2, 4\n" + "diventa 3 ecc.";
@@ -20,6 +27,11 @@ public class Tool10 implements ToolStrategy {
         this.idCard=idCard;
     }
 
+    /**
+     * This card turns the selected die of the player on the opposite side.
+     * @param object it contains all the informations to use correctly the tool card
+     * @return true if everything goes right, otherwise false
+     */
     public boolean doOp(ObjectiveTool object){
         dp = object.getDp();
         die = dp.getDie(object.getC1().getY());

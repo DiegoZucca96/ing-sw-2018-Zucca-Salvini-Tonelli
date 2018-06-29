@@ -3,6 +3,9 @@ package ingsw.model.toolcard;
 import ingsw.model.*;
 import ingsw.model.windowpattern.WindowPattern;
 
+/**
+ * Tool card number 9
+ */
 public class Tool9 implements ToolStrategy{
     private String title;
     private String comment;
@@ -14,7 +17,10 @@ public class Tool9 implements ToolStrategy{
     private Coordinate d1;
     private Coordinate c1;
 
-
+    /**
+     * Constructor
+     * @param idCard it is the number of the tool card
+     */
     public Tool9(int idCard) {
         this.title ="Riga in Sughero";
         this.comment = "Dopo aver scelto un dado,\n" + "piazzalo in una casella che non\n" + "sia adiacente a un altro dado\n" + "Devi rispettare tutte le restrizioni\n" + "di piazzamento";
@@ -22,6 +28,12 @@ public class Tool9 implements ToolStrategy{
         this.idCard=idCard;
     }
 
+    /**
+     * It allows the player to place a dice in his window while ignoring the adjacency restriction.
+     * However, the player must comply with all other placement restrictions.
+     * @param object it contains all the informations to use correctly the tool card
+     * @return true if everything goes right, otherwise false
+     */
     public boolean doOp(ObjectiveTool object){
        dp = object.getDp();
        window = object.getWindow();

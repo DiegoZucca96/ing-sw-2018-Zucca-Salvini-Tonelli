@@ -4,6 +4,9 @@ import ingsw.model.Coordinate;
 import ingsw.model.Die;
 import ingsw.model.ObjectiveTool;
 
+/**
+ * Tool card number 1
+ */
 public class Tool1 implements ToolStrategy {
     private String title;
     private String comment;
@@ -11,13 +14,22 @@ public class Tool1 implements ToolStrategy {
     private int idCard;
     private int numTokenUsed;
 
+    /**
+     * Constructor
+     * @param idCard it is the number of the tool card
+     */
     public Tool1(int idCard){
         this.title ="Pinza Sgrossatrice";
         this.comment = "Dopo aver scelto un dado,\n" + "aumenta o dominuisci il valore\n" + "del dado scelto di 1\n" + "Non puoi cambiare\n" + "un 6 in 1 o un 1 in 6";
         this.alreadyUsed=false;
         this.idCard=idCard;
     }
-    //Modifica il numero del dado scelto di 1 aumentandolo o diminuendolo in base al valore di getUp()
+
+    /**
+     * It modifies the selected die by increasing or decreasing its number by one
+     * @param object it contains all the informations to use correctly the tool card
+     * @return true if everything goes right, otherwise false
+     */
     public boolean doOp(ObjectiveTool object){
         Coordinate c = object.getC1();
         Die die = object.getDp().getDie(c.getY());

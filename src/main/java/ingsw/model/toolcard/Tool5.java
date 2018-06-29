@@ -2,6 +2,9 @@ package ingsw.model.toolcard;
 
 import ingsw.model.*;
 
+/**
+ * Tool card number 5
+ */
 public class Tool5 implements ToolStrategy {
     private String title;
     private String comment;
@@ -9,6 +12,10 @@ public class Tool5 implements ToolStrategy {
     private int idCard;
     private int numTokenUsed;
 
+    /**
+     * Constructor
+     * @param idCard it is the number of the tool card
+     */
     public Tool5(int idCard) {
         this.title ="Taglierina circolare";
         this.comment = "Dopo aver scelto un dado,\n" + "scambia quel dado con un dado\n" + "sul Tracciato dei Round";
@@ -16,7 +23,11 @@ public class Tool5 implements ToolStrategy {
         this.idCard=idCard;
     }
 
-    //Va a scambiare un dado dalla riserva con uno presente nel RoundTrack, indipendentemente dal round
+    /**
+     * It allows the player to change the selected die with another one contained in the RoundTrack
+     * @param object it contains all the informations to use correctly the tool card
+     * @return true if everything goes right, otherwise false
+     */
     public boolean doOp(ObjectiveTool object){
         Coordinate dpCoordinate = object.getC1();
         Coordinate rtCoordinate = object.getD1();

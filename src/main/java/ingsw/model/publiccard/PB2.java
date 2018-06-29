@@ -5,17 +5,27 @@ import ingsw.model.Color;
 import ingsw.model.Player;
 import java.util.ArrayList;
 
+/**
+ * Public card number 2
+ */
 public class PB2 implements PBStrategy {
     private String title;
     private String comment;
     private final int points;
 
+    /**
+     * Constructor
+     */
     public PB2(){
         this.title = "Colori diversi - Colonna";
         this.comment = "Colonne senza colori ripetuti";
         this.points = 5;
     }
 
+    /**
+     *This method assigns five points for every column without repeated colors found in window.
+     * @param p it is the player who is calculating his own score
+     */
     public void doOp(Player p) {
         Cell [][] cellMatrix = p.getWindowPattern().getCellMatrix();
         for(int i=0;i<5;i++){
@@ -27,7 +37,7 @@ public class PB2 implements PBStrategy {
                 else {
                     Color color = cellMatrix[j][i].getDie().getColor();
                     if (color==null || list.contains(color))
-                        j=8;           //Metto un valore alto in modo da differenziare il caso in cui esco perchè trovata la colonna di colori diversi
+                        j=8;        //I put a high value in order to differentiate the case in which I leave the "for" because I found the column of different colors
                     else
                         list.add(color);
                 }

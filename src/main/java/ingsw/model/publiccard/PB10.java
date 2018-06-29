@@ -4,17 +4,27 @@ import ingsw.model.Cell;
 import ingsw.model.Player;
 import ingsw.model.Color;
 
+/**
+ * Public card number 10
+ */
 public class PB10 implements PBStrategy {
     private String title;
     private String comment;
     private final int points;
 
+    /**
+     * Constructor
+     */
     public PB10(){
         this.title = "Varietà di colore";
         this.comment = "Set di dadi di ogni colore ovunque";
         this.points = 4;
     }
 
+    /**
+     *This method assigns four points for every set of dice of every color found in window
+     * @param p it is the player who is calculating his own score
+     */
     public void doOp(Player p) {
         Cell [][] cellMatrix = p.getWindowPattern().getCellMatrix();
         int values[] = new int[]{0,0,0,0,0};

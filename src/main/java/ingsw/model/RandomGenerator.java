@@ -12,8 +12,12 @@ public class RandomGenerator {
 
     private ArrayList<Integer> values;  //list of available numbers
 
+    /**
+     * Constructor
+     * @param n it is the number of random values to generate
+     */
     public RandomGenerator(int n){
-        values = new ArrayList<Integer>();
+        values = new ArrayList<>();
         for(int i=1; i<=n; i++){
             values.add(i);
         }

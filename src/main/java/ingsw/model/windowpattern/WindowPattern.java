@@ -1,6 +1,6 @@
 package ingsw.model.windowpattern;
 
-import ingsw.controller.InfoCell;
+import ingsw.model.InfoCell;
 import ingsw.model.*;
 import ingsw.observers.Observer;
 import ingsw.observers.WindowPatternObserver;
@@ -22,6 +22,11 @@ public class WindowPattern implements Serializable {
     private boolean wpEmpty;
     private Observer viewObserver;
 
+    /**
+     * Constructor
+     * @param parser it contains all informations about the window
+     * @param select it is the number of the window
+     */
     public WindowPattern(SAXParser parser, int select ){
 
         this.id=select;
@@ -42,28 +47,57 @@ public class WindowPattern implements Serializable {
         viewObserver = new WindowPatternObserver();
     }
 
+    /**
+     * Simply getter method
+     * @return the title of the window
+     */
     public String getTitle() {
         return this.title;
     }
 
+    /**
+     * Simply getter method
+     * @return the number of the window
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Simply getter method
+     * @return the difficulty of the window
+     */
     public int getDifficulty() {
         return this.difficulty;
     }
 
+    /**
+     * Simply getter method
+     * @return true if the window is empty, otherwise false
+     */
     public boolean isWpEmpty() {
         return this.wpEmpty;
     }
 
+    /**
+     * Simply getter method
+     * @return the window's matrix of cells
+     */
     public Cell[][] getCellMatrix() {
         return this.cellMatrix;
     }
 
+    /**
+     * Simply setter method
+     * @param wpEmpty it is the boolean value to assign
+     */
     public void setWpEmpty (boolean wpEmpty) { this.wpEmpty = wpEmpty;}
 
+    /**
+     * This method is used to count the empty cells
+     * @param cellMatrix it is the window's matrix of cells
+     * @return the number of empty cells
+     */
     public int countEmptyCells(Cell[][] cellMatrix){
         int count=0;
         for(int i=0; i<5; i++){
@@ -74,7 +108,13 @@ public class WindowPattern implements Serializable {
         return count;
     }
 
-    public int countDie(Color color, Cell[][] cellMatrix){ // Si potrebbe fare un unico metodo per entrambi? E' ripetitivo
+    /**
+     * This method is used to obtain the sum of the dice which have the same color of the private card
+     * @param color it is the color of the private card
+     * @param cellMatrix it is the window's matrix of cells
+     * @return the sum obtained
+     */
+    public int countDie(Color color, Cell[][] cellMatrix){
         int count =0;
         for(int i=0; i<5; i++){
             for(int j=0; j<4; j++){
@@ -87,6 +127,14 @@ public class WindowPattern implements Serializable {
         return count;
     }
 
+    /**
+     * This is the method that controls all the placement restrictions.
+     * If they are all respected the die will be placed at its destination.
+     * @param destination it is the destination's coordinate
+     * @param die it is the die that has to be placed
+     * @param cellMatrix it is the window's matrix of cells
+     * @return true if the die can be placed, otherwise false
+     */
     public boolean addDie(Coordinate destination, Die die, Cell[][] cellMatrix) {
         if(isWpEmpty()){
             if(verifyOnBoard(destination)){
@@ -132,6 +180,12 @@ public class WindowPattern implements Serializable {
         }
     }
 
+    /**
+     * It removes a die from a specific cell.
+     * @param destination it is the destination's coordinate
+     * @param cellMatrix it is the window's matrix of cells
+     * @return true if everything goes well, otherwise false
+     */
     public boolean removeDie(Coordinate destination, Cell[][] cellMatrix) {
         if (getCell(destination, cellMatrix).isEmpty()) {
             System.out.println("Cella vuota");
@@ -143,22 +197,32 @@ public class WindowPattern implements Serializable {
         }
     }
 
-    public Die takeDie(Coordinate diePosition){
-        if(getCell(diePosition, cellMatrix).isEmpty()) return null;
-        Die die = getDie(diePosition);
-        removeDie(diePosition,cellMatrix);
-        return  die;
-    }
-
+    /**
+     * Simply getter method
+     * @param diePosition it is the position of the returned die
+     * @return a die
+     */
     public Die getDie(Coordinate diePosition){
         return getCell(diePosition, cellMatrix).getDie();
     }
 
+    /**
+     * Simply getter method
+     * @param coordinate it is the coordinate of the cell
+     * @param cellMatrix it is the window's matrix of cells
+     * @return a cell
+     */
     public Cell getCell(Coordinate coordinate, Cell[][] cellMatrix) {
         return cellMatrix[coordinate.getX()][coordinate.getY()];
     }
 
-    //VERIFICA CHE LA CELLA DI DESTINAZIONE ABBIA COLORE UGUALE AL DADO
+    /**
+     * This is the cell color restriction, it verifies that the destination cell has the same color as the selected die
+     * @param destination it is the destination's coordinate
+     * @param die it is the die that has to be placed
+     * @param cellMatrix it is the window's matrix of cells
+     * @return true if the restriction is respected, otherwise false
+     */
     public boolean verifyCellColorConstraint(Coordinate destination, Die die, Cell[][] cellMatrix){
         int x =destination.getX();
         int y =destination.getY();
@@ -171,7 +235,13 @@ public class WindowPattern implements Serializable {
             return false;
     }
 
-    //VERIFICA CHE LA CELLA DI DESTINAZIONE ABBIA NUMERO UGUALE AL DADO
+    /**
+     * This is the cell number restriction, it verifies that the destination cell has the same number as the selected die
+     * @param destination it is the destination's coordinate
+     * @param die it is the die that has to be placed
+     * @param cellMatrix it is the window's matrix of cells
+     * @return true if the restriction is respected, otherwise false
+     */
     public boolean verifyCellNumberConstraint(Coordinate destination, Die die, Cell[][] cellMatrix){
         int x =destination.getX();
         int y =destination.getY();
@@ -183,7 +253,14 @@ public class WindowPattern implements Serializable {
             return false;
     }
 
-    //VERIFICA CHE LE CELLE ORTOGONALMENTE ADIACENTI AL DADO CHE SI VUOLE POSIZIONARE NON ABBIANO DADI CON LO STESSO COLORE
+    /**
+     * This is the die color restriction.
+     * It verifies that the orthogonally adjacent cells at the destination do not have dice with the same color
+     * @param destination it is the destination's coordinate
+     * @param die it is the die that has to be placed
+     * @param cellMatrix it is the window's matrix of cells
+     * @return true if the restriction is respected, otherwise false
+     */
     public boolean verifyDieColorConstraint(Coordinate destination, Die die, Cell[][] cellMatrix){
         int x =destination.getX();
         int y =destination.getY();
@@ -198,7 +275,14 @@ public class WindowPattern implements Serializable {
         return true;
     }
 
-    //VERIFICA CHE LE CELLE ORTOGONALMENTE ADIACENTI AL DADO CHE SI VUOLE POSIZIONARE NON ABBIANO DADI CON LO STESSO NUMERO
+    /**
+     * This is the die number restriction.
+     * It verifies that the orthogonally adjacent cells at the destination do not have dice with the same number
+     * @param destination it is the destination's coordinate
+     * @param die it is the die that has to be placed
+     * @param cellMatrix it is the window's matrix of cells
+     * @return true if the restriction is respected, otherwise false
+     */
     public boolean verifyDieNumberConstraint(Coordinate destination, Die die, Cell[][] cellMatrix){
         int x =destination.getX();
         int y =destination.getY();
@@ -207,6 +291,14 @@ public class WindowPattern implements Serializable {
         else return true;
     }
 
+    /**
+     * This is the position restriction.
+     * It verifies that the destination cell has at least an other cell that touches the first one orthogonally or diagonally,
+     * and this cell is not empty.
+     * @param destination it is the destination's coordinate
+     * @param cellMatrix it is the window's matrix of cells
+     * @return true if the restriction is respected, otherwise false
+     */
     //VERIFICA CHE IL DADO CHE STAI INSERENDO TOCCA ALMENO UN DADO ATTORNO; caso base i vertici della finestra
     public boolean verifyPosition(Coordinate destination, Cell[][] cellMatrix) {
         int x = destination.getX();
@@ -241,12 +333,20 @@ public class WindowPattern implements Serializable {
             return false;
     }
 
+    /**
+     * It verifies that the destination cell is on the board of the window
+     * @param destination it is the destination's coordinate
+     * @return true if the restriction is respected, otherwise false
+     */
     public boolean verifyOnBoard(Coordinate destination) {
         if(destination.getX()==0 || destination.getX()==3 || destination.getY()==0 || destination.getY()==4) return true;
         else return false;
     }
 
-
+    /**
+     * This method convert a window into an unique string that contains all its informations
+     * @return a string
+     */
     @Override
     public String toString() {
         String result="windowpattern:";
@@ -260,6 +360,10 @@ public class WindowPattern implements Serializable {
         return result;
     }
 
+    /**
+     * This method convert a window into an InfoCell object
+     * @return an InfoCell object
+     */
     public InfoCell [][] toMatrix(){
         InfoCell[][] matrix = new InfoCell[4][5];
         for(int row = 0; row < 4; row++) {
@@ -276,6 +380,9 @@ public class WindowPattern implements Serializable {
         return matrix;
     }
 
+    /**
+     * This method updates changes in this object into the ViewData instance
+     */
     public ViewWP toViewWP(){
         ViewWP viewWP = new ViewWP();
         viewWP.setDifficulty(Integer.toString(getDifficulty()));
@@ -285,6 +392,9 @@ public class WindowPattern implements Serializable {
         return viewWP;
     }
 
+    /**
+     * This method notifies changes in this object to viewObserver
+     */
     public void notifyViewObserver(){
         viewObserver.update(this, ViewData.instance());
     }

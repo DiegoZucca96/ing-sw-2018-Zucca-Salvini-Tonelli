@@ -1,6 +1,6 @@
 package ingsw.view.CLI;
 
-import ingsw.controller.InfoCell;
+import ingsw.model.InfoCell;
 import ingsw.model.ViewWP;
 
 public class ToString {

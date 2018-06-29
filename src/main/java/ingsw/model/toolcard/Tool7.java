@@ -5,6 +5,9 @@ import ingsw.model.DraftPool;
 import ingsw.model.ObjectiveTool;
 import java.util.ArrayList;
 
+/**
+ * Tool card number 7
+ */
 public class Tool7 implements ToolStrategy {
     private String title;
     private String comment;
@@ -12,6 +15,10 @@ public class Tool7 implements ToolStrategy {
     private int idCard;
     private int numTokenUsed;
 
+    /**
+     * Constructor
+     * @param idCard it is the number of the tool card
+     */
     public Tool7(int idCard) {
         this.title ="Martelletto";
         this.comment = "Tira nuovamente\n" + "tutti i dadi della Riserva\n" + "Questa carta può essera usata\n" + "solo durante il tuo secondo turno,\n" + "prima di scegliere il secondo dado";
@@ -19,11 +26,16 @@ public class Tool7 implements ToolStrategy {
         this.idCard=idCard;
     }
 
+    /**
+     * This card changes all dice of the DraftPool.
+     * @param object it contains all the informations to use correctly the tool card
+     * @return true if everything goes right, otherwise false
+     */
     public boolean doOp(ObjectiveTool object){
        if((object!=null)){
            ArrayList<Coordinate> coordinates = object.getListOfCoordinateY();
            DraftPool dp = object.getDp();
-           dp.refreshDraftPool(coordinates); //Metodo che ritira i dadi
+           dp.refreshDraftPool(coordinates);
            return true;
        }
         return false;
