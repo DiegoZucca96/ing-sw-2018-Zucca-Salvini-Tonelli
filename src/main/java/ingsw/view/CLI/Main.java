@@ -50,8 +50,16 @@ public class Main {
     }
 
     private static void chooseConnection(){
-        System.out.println("Insert server IP address:\n");
+        System.out.println("Insert server IP address:");
         String hostAddress = in.nextLine();
+
+        //validating ip address
+        while (!validateIPAddress(hostAddress)){
+            System.out.println(ToString.printColored(ToString.ANSI_RED,"Invalid input"));
+            System.out.println("Enter a valid input:");
+            hostAddress = in.nextLine();
+        }
+
         System.out.println("Choose type of connection:\n1 - RMI\n2 - Socket");
         int choice = validateIntegerInput(1,2);
         if (choice == 2) client = new ClientSocket(hostAddress, 1080);
@@ -108,5 +116,29 @@ public class Main {
             return validateCoordinates(placeDie);
         }
         return coordinates;
+    }
+
+    /**
+     * This method validates ip address format
+     * @param ipAddress ip address you want to validate
+     * @return  true if the ip address format is correct
+     */
+    public static boolean validateIPAddress(String ipAddress){
+        String tmp;
+        try {
+            for (int i=0; i<4; i++){
+                if(i==3){
+                    if (Integer.parseInt(ipAddress) < 0 || Integer.parseInt(ipAddress) > 255) return false;
+                    break;
+                }
+                tmp = ipAddress.substring(0,ipAddress.indexOf('.'));
+                ipAddress = ipAddress.substring(ipAddress.indexOf('.')+1);
+                if (Integer.parseInt(tmp) < 0 || Integer.parseInt(tmp) > 255) return false;
+            }
+        }catch (Exception e){
+            return false;
+        }
+
+        return true;
     }
 }
