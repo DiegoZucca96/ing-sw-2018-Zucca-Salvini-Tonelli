@@ -5,6 +5,9 @@ import ingsw.observers.Observer;
 import ingsw.observers.ToolCardsObserver;
 import java.util.ArrayList;
 
+/**
+ * This class creates in a random way the tool cards of the match and it implements the pattern Strategy
+ */
 public class ToolCard {
 
     private ToolStrategy toolStrategy;
@@ -12,6 +15,10 @@ public class ToolCard {
     private Observer viewObserver;
     private int numTokenUsed;
 
+    /**
+     * Constructor, it uses the Strategy pattern
+     * @param idCard it is the number of the tool card
+     */
     public ToolCard(int idCard){
         viewObserver = new ToolCardsObserver();
         numTokenUsed=0;
@@ -57,21 +64,26 @@ public class ToolCard {
                 break;
         }
     }
-//Metodi che servono per utilizzare le ToolCard e permettere di creare nello switch case del Player i parametri di ObjectiveCard
-    public int getIdCard() {
-        return toolStrategy.getIdCard();
-    }
 
+    /**
+     * It runs the tool card's method
+     * @param objective it is the object that contains all the information to use correctly the tool card
+     */
     public boolean doToolStrategy(ObjectiveTool objective){
         boolean b = toolStrategy.doOp(objective);
         notifyViewObserver();
         return b;
     }
 
+    /**
+     * This method creates in a random way the tool cards of the match
+     * @param init it is the VIewData object that will contains the informations about the default match
+     * @return the list of the number of tool cards created
+     */
     public static ArrayList<Integer> generateToolCard(ViewData init) {
         RandomGenerator rg = new RandomGenerator(10);
         ArrayList<Integer> numToolCards = new ArrayList<>();
-        //Righe da decommentare se si vogliono provare le ToolCard
+        //uncomment these lines of code and change the "i" value from 0 to 3 to have specific tool cards (for testing)
         //init.getToolCard().add("/Tool10+0.png");
         //numToolCards.add(10);
         //init.getToolCard().add("/Tool11+0.png");
@@ -154,6 +166,10 @@ public class ToolCard {
         return "/Tool"+getIdCard()+"+"+getNumTokenUsed()+".png";
     }
 
+    public int getIdCard() {
+        return toolStrategy.getIdCard();
+    }
+
     public void setAlreadyUsed(boolean alreadyUsed) {
         toolStrategy.setAlreadyUsed(alreadyUsed);
     }
@@ -171,6 +187,9 @@ public class ToolCard {
        notifyViewObserver();
     }
 
+    /**
+     * This method notifies changes in this object to viewObserver
+     */
     public void notifyViewObserver(){
         viewObserver.update(this, ViewData.instance());
     }

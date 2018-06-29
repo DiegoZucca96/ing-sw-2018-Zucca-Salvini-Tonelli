@@ -5,17 +5,27 @@ import ingsw.model.Coordinate;
 import ingsw.model.Player;
 import java.util.ArrayList;
 
+/**
+ * Public card number 9
+ */
 public class PB9 implements PBStrategy {
     private String title;
     private String comment;
     private final int points;
 
+    /**
+     * Constructor
+     */
     public PB9(){
         this.title = "Diagonali Colorate";
         this.comment = "Numero di dadi dello stesso\n" + "colore diagonalmente adiacenti";
         this.points = 0;
     }
 
+    /**
+     *This method assigns points based on the number of dice with the same color that are diagonally adjacent
+     * @param p it is the player who is calculating his own score
+     */
     public void doOp(Player p) {
         Cell[][] cellMatrix = p.getWindowPattern().getCellMatrix();
         ArrayList<Coordinate> countedDie = new ArrayList<Coordinate>();

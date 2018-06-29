@@ -20,7 +20,7 @@ public class Match {
     private ArrayList<PBObjectiveCard> pbCards;     //public objective cards of this match
     private RoundTrack roundTrack;                  //reference to round track of this match
     private DraftPool draftPool;                    //reference to draft pool of this match
-    private ViewData init;                          //???
+    private ViewData init;                          //object that contains the informations about the default match
     private Observer viewObserver = null;           //observer of the state of the match, related to view
 
     /**
@@ -29,7 +29,7 @@ public class Match {
      * @param playersNames  list of players names
      * @param playersWP     list of players windows pattern
      */
-    public Match(int id, ArrayList<String> playersNames, ArrayList<Integer> playersWP) {    //viene passato l'id dal Server per identificare il match
+    public Match(int id, ArrayList<String> playersNames, ArrayList<Integer> playersWP) {
         this.id = id;
 
         //Initialization of players
@@ -66,66 +66,89 @@ public class Match {
     }
 
     /**
-     * ???
-     * @return
+     * Simply getter method
+     * @return an instance of init (used by view to create the graphic elements)
      */
-    //Metodo che istanzia il gioco lato model e restituisce a lato view
     public ViewData getInit(){
         return init;
     }
 
-    //simple getter
+    /**
+     * Simply getter method
+     * @return true if the turn is clockwise, otherwise false
+     */
     public boolean getClockwiseRound() {
         return clockwiseRound;
     }
 
-    //simple getter
+    /**
+     * Simply getter method
+     * @return the number of players
+     */
     public int getNumOfPlayers() {
         return nPlayers;
     }
 
-    //simple getter
+    /**
+     * Simply getter method
+     * @return the current player
+     */
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
-    //simple getter
+    /**
+     * Simply getter method
+     * @return the list of players
+     */
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
-    //simple setter
-    //exclusive use of this method for testing
+    /**
+     * Simply setter method, exclusively used for testing
+     * @param draftPool it is the draftpool that has to be assign
+     */
     public void setDraftPool(DraftPool draftPool) {
         this.draftPool = draftPool;
     }
 
-    //simple setter
-    //exclusive use of this method for testing
+    /**
+     * Simply setter method, exclusively used for testing
+     * @param roundTrack it is the roundTrack that has to be assign
+     */
     public void setRoundTrack(RoundTrack roundTrack) {
         this.roundTrack = roundTrack;
     }
 
-    //simple setter
-    //exclusive use of this method for testing
+    /**
+     * Simply setter method, exclusively used for testing
+     * @param players it is the list of players that has to be assign
+     */
     public void setPlayers(ArrayList<Player> players) {
         this.players = players;
     }
 
-    //simple setter
-    //exclusive use of this method for testing
+    /**
+     * Simply setter method, exclusively used for testing
+     * @param currentPlayer it is the current player that has to be assign
+     */
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
 
-    //simple setter
-    //exclusive use of this method for testing
+    /**
+     * Simply setter method, exclusively used for testing
+     * @param pbCards it is the list of public cards that has to be assign
+     */
     public void setPbCards(ArrayList<PBObjectiveCard> pbCards) {
         this.pbCards = pbCards;
     }
 
-    //simple setter
-    //exclusive use of this method for testing
+    /**
+     * Simply setter method, exclusively used for testing
+     * @param tools it is the list of tool card that has to be assign
+     */
     public void setTools(ArrayList<ToolCard> tools) {
         this.tools = tools;
     }
@@ -408,8 +431,8 @@ public class Match {
      * @return name of the winner
      */
     public Player findWinner() {
-        ArrayList<Player> ties = new ArrayList<Player>();
-        ArrayList<Player> tiesTmp = new ArrayList<Player>();
+        ArrayList<Player> ties = new ArrayList<>();
+        ArrayList<Player> tiesTmp = new ArrayList<>();
         Player winner = players.get(0);
 
         //search for player with most high score
@@ -447,6 +470,10 @@ public class Match {
         return winner;
     }
 
+    /**
+     * Simply getter method
+     * @return the current round
+     */
     public int getRound() {
         return roundTrack.getRound();
     }

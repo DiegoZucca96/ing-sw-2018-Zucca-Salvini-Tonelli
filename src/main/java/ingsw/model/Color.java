@@ -1,6 +1,8 @@
 package ingsw.model;
 
-//Le celle e le carte hanno dei colori
+/**
+ * A simple enumeration class used with dice and private card
+ */
 public enum Color {
     BLUE, VIOLET, GREEN, RED, YELLOW , WHITE
 }

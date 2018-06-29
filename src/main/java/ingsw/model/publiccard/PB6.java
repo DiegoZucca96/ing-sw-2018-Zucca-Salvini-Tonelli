@@ -4,17 +4,27 @@ import ingsw.model.Cell;
 import ingsw.model.Player;
 import static java.lang.Math.min;
 
+/**
+ * Public card number 6
+ */
 public class PB6 implements PBStrategy {
     private String title;
     private String comment;
     private final int points;
 
+    /**
+     * Constructor
+     */
     public PB6(){
         this.title = "Sfumature medie";
         this.comment = "Set di 3 & 4 ovunque";
         this.points = 2;
     }
 
+    /**
+     *This method assigns two points for every couple "3-4" found in window
+     * @param p it is the player who is calculating his own score
+     */
     public void doOp(Player p) {
         Cell [][] cellMatrix = p.getWindowPattern().getCellMatrix();
         int num3=0,num4=0;

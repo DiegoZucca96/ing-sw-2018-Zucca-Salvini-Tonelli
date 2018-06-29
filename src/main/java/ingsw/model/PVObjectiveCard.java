@@ -1,12 +1,18 @@
 package ingsw.model;
 
-// A partire dal creare la PVCard, passo il parametro randomico per restituire al Player la PVCard corrispondente
+/**
+ * This class creates in a random way the private cards of every player
+ */
 public class PVObjectiveCard {
 
     private String comment;
     private String title;
     private Color color;
 
+    /**
+     * Constructor
+     * @param color it is the color of the private card
+     */
     public PVObjectiveCard (Color color){
         switch(color){
             case RED:{
@@ -34,6 +40,11 @@ public class PVObjectiveCard {
         this.color = color;
     }
 
+    /**
+     * Simply getter method
+     * @param select it is the selected color
+     * @return the name of the private card
+     */
     public static String getPVCard(Color select) {
         switch(select){
             case RED:{
@@ -57,14 +68,26 @@ public class PVObjectiveCard {
         }
     }
 
+    /**
+     * Simply getter method
+     * @return the title of the private card
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Simply getter method
+     * @return the comment of the private card
+     */
     public String getComment() {
         return comment;
     }
 
+    /**
+     * Simply getter method
+     * @return the color of the private card
+     */
     public Color getColor() {
         return color;
     }

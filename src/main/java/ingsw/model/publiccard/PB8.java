@@ -3,17 +3,27 @@ package ingsw.model.publiccard;
 import ingsw.model.Cell;
 import ingsw.model.Player;
 
+/**
+ * Public card number 8
+ */
 public class PB8 implements PBStrategy {
     private String title;
     private String comment;
     private final int points;
 
+    /**
+     * Constructor
+     */
     public PB8(){
         this.title = "Sfumature diverse";
         this.comment = "Set di dadi di ogni valore ovunque";
         this.points = 5;
     }
 
+    /**
+     *This method assigns five points for every set of dice of every number found in window
+     * @param p it is the player who is calculating his own score
+     */
     public void doOp(Player p) {
         Cell [][] cellMatrix = p.getWindowPattern().getCellMatrix();
         int values[] = new int[]{0,0,0,0,0,0};

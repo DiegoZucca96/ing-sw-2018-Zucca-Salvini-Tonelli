@@ -16,13 +16,19 @@ public class RoundTrack {
     private ArrayList<ArrayList<Die>> extraDice;    //dice in excess at the end of ech round
     private Observer viewObserver;
 
+    /**
+     * Constructor
+     */
     public RoundTrack() {
         currentRound = 1;
         extraDice = new ArrayList<>();
         viewObserver = new RoundTrackObserver();
     }
 
-    //simple getter
+    /**
+     * Simply getter method
+     * @return the round
+     */
     public int getRound() {
         return currentRound;
     }
@@ -59,10 +65,10 @@ public class RoundTrack {
     }
 
     /**
-     * getter
+     * Getter method
      * @param round round of the requested die
      * @param index position (sequential number) of the requested die in the round specified
-     * @return die that belong to the round requested. in position index
+     * @return die that belong to the round requested in position index
      */
     public Die getDie(int round, int index){
         if(round<1 || round>10) return null;
@@ -74,13 +80,13 @@ public class RoundTrack {
     }
 
     /**
-     * ???
-     * @param round
-     * @param index
-     * @param dpDie
-     * @return
+     * This method is used with tool card number 5.
+     * It changes a die in the RoundTrack with the selected die from the DraftPool
+     * @param round it is the number of the round chosen
+     * @param index it is the position of the die that the player wants to exchange
+     * @param dpDie it is the selected die of the player
+     * @return the RoundTrack die that has been exchanged
      */
-    //esegue getDie e rimuove il riferiemento al dado dalla lista.
     public Die replaceDie(int round, int index, Die dpDie){
         Die result = getDie(round, index);
         if(result == null) return null;

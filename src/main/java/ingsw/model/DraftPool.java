@@ -33,13 +33,18 @@ public class DraftPool {
         begin = 0;
     }
 
-    //simple getter
+    /**
+     * Simply getter method
+     * @return the dicebag
+     */
     public DiceBag getDiceBag() {
         return diceBag;
     }
 
-    //simple setter
-    //exclusive use of this method for testing
+    /**
+     * Simply setter method, exclusively used for testing
+     * @param diceBag it is the dicebag that has to be set
+     */
     public void setDiceBag(DiceBag diceBag) {
         this.diceBag = diceBag;
     }
@@ -60,10 +65,10 @@ public class DraftPool {
         return diceList;
     }
 
-    /** ???
-     *
-     * @param index
-     * @return
+    /**
+     * This method change a single die with a new one
+     * @param index it is the position of the die that has to be set
+     * @return the new die
      */
     public Die reThrowsDie(int index){
         Die die = diceBag.randomDice();
@@ -90,7 +95,6 @@ public class DraftPool {
      * @param index position of the requested die
      * @return die in position index in diceList
      */
-    //fa get(index), aggiunge un dado finto per riempire la griglia
     public Die takeDie(int index){
         Die result = getDie(index);
         try{
@@ -113,16 +117,15 @@ public class DraftPool {
     }
 
     /**
-     * ???
-     * @return
+     * Simply getter method
+     * @return the size of the dicelist
      */
-    //Metodo che serve nella Tool11 per prendere il nuovo dado estratto con throwsDice
     public int getDiceListSize(){
         return diceList.size();
     }
 
     /**
-     * This method puts dice that are in diceList in roundTrack
+     * This method puts dice that are in diceList in roundTrack, excluding the fake ones
      */
     public void cleanDraftPool(){
         if(!diceList.isEmpty()){
@@ -143,7 +146,7 @@ public class DraftPool {
 
     /**
      * It throws again all dice in diceList without taking others dice from diceBag
-     * @param coordinates ???
+     * @param coordinates it is a list of coordinate about the real dice (not the fake ones)
      * @see ingsw.model.toolcard.Tool7
      */
     public void refreshDraftPool(ArrayList<Coordinate> coordinates){

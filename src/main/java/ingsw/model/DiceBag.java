@@ -11,6 +11,9 @@ public class DiceBag{
     private int totDice;            //number of dice in the bag
     private RandomGenerator rg;
 
+    /**
+     * Constructor
+     */
     public DiceBag(){
      totDice = 90;
      rg = new RandomGenerator(totDice);
@@ -20,7 +23,7 @@ public class DiceBag{
      * This method draws a random die among the available without replacement
      * @return drawn die
      */
-    public Die randomDice() {   //estrae un dado a caso tra quelli disponibili, senza reinseririlo nella dice bag.
+    public Die randomDice() {
         int randomNumber = rg.random();
         if(randomNumber<=18) return new Die(new RandomGenerator(6).random(), BLUE);
         if(randomNumber<=36) return new Die(new RandomGenerator(6).random(), VIOLET);
@@ -31,8 +34,8 @@ public class DiceBag{
     }
 
     /**
-     * This method allows to replace a die in the bag
-     * @param die   die you want to replace
+     * This method allows to reinsert a die in the bag
+     * @param die  it is the die you want to reinsert
      */
     public void insertDie (Die die){
         switch (die.getColor()){

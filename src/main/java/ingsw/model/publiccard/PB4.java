@@ -4,17 +4,27 @@ import ingsw.model.Cell;
 import ingsw.model.Player;
 import java.util.ArrayList;
 
+/**
+ * Public card number 4
+ */
 public class PB4 implements PBStrategy {
     private String title;
     private String comment;
     private final int points;
 
+    /**
+     * Constructor
+     */
     public PB4(){
         this.title = "Sfumature diverse - Colonna";
         this.comment = "Colonne senza sfumature ripetute";
         this.points = 4;
     }
 
+    /**
+     *This method assigns four points for every column without repeated numbers found in window.
+     * @param p it is the player who is calculating his own score
+     */
     public void doOp(Player p) {
         Cell [][] cellMatrix = p.getWindowPattern().getCellMatrix();
         for(int i=0;i<5;i++){
@@ -26,7 +36,7 @@ public class PB4 implements PBStrategy {
                 else {
                     Integer num = cellMatrix[j][i].getDie().getNumber();
                     if(list.contains(num) || num==0)
-                        j=8;           //Metto un valore alto in modo da differenziare il caso in cui esco perchè trovata la colonna di colori diversi
+                        j=8;           //I put a high value in order to differentiate the case in which I leave the "for" because I found the column of different numbers
                     else
                         list.add(num);
                 }
