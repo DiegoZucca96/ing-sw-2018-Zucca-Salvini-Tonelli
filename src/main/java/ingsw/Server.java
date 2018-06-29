@@ -3,8 +3,10 @@ package ingsw;
 import ingsw.controller.Controller;
 import ingsw.controller.RMIController;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -28,6 +30,13 @@ public class Server {
 
         Server server = Server.instance(1080);
 
+        try {
+            System.out.println("Server name: " + InetAddress.getLocalHost().getHostName());
+            System.out.println("Server address: " + ipToString(InetAddress.getLocalHost().getAddress()));
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
         //cambio la policy per grantire l'accesso ad RMI
         System.setProperty("java.security.policy", "src/policy/sagrada.policy");
         System.setSecurityManager(new SecurityManager());
@@ -40,6 +49,18 @@ public class Server {
         server.startServerSocket();
     }
 
+    private static String ipToString(byte arrayAddress[]){
+        String address = "";
+        for ( byte i: arrayAddress){
+            address = address + unsignedToBytes(i) + ".";
+        }
+        address = address.substring(0,address.length()-1);
+        return address;
+    }
+
+    public static int unsignedToBytes(byte b) {
+        return b & 0xFF;
+    }
 
     private Server(int port) {
         listOfClients = new ArrayList<>();

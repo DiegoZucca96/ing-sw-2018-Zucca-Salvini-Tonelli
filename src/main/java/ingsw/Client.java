@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public interface Client {
 
     //avvia il client,fa setup della connessione
-    void startClient() throws IOException;
+    void startClient(String hostAddress) throws IOException;
 
     //permette al gicatore di fare login, restituisce false se l'utente non è registrato
     boolean login(String nickname);

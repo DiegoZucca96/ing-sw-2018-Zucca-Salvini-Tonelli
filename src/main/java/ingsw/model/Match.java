@@ -457,7 +457,7 @@ public class Match {
      */
 
     /**
-     * @return list of strings that represents match public objective cards 
+     * @return list of strings that represents match public objective cards
      */
     public ArrayList<String> pbCardsToString(){
         ArrayList<String> cards = new ArrayList<>();

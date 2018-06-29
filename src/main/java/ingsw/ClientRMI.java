@@ -6,11 +6,14 @@ import ingsw.model.ViewData;
 import ingsw.view.ToolView;
 import ingsw.view.Warning;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.net.InetAddress;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.ScheduledExecutorService;
 
 public class ClientRMI implements Client {
@@ -19,8 +22,11 @@ public class ClientRMI implements Client {
     private RMIController controller;
     private ScheduledExecutorService executorService = null;
 
-    public void startClient() throws IOException{
-        Registry registry = LocateRegistry.getRegistry("localhost",1081);
+    public void startClient(String hostAddress) throws IOException{
+        Registry registry = LocateRegistry.getRegistry(hostAddress,1081);
+        /*System.out.println(InetAddress.getLocalHost().getHostName());
+        System.out.println(Arrays.toString(InetAddress.getLocalHost().getAddress()));
+        */
         try {
             controller = (RMIController) registry.lookup("controller");
         } catch (NotBoundException e) {

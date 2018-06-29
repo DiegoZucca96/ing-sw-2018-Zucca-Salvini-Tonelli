@@ -50,13 +50,15 @@ public class Main {
     }
 
     private static void chooseConnection(){
+        System.out.println("Insert server IP address:\n");
+        String hostAddress = in.nextLine();
         System.out.println("Choose type of connection:\n1 - RMI\n2 - Socket");
         int choice = validateIntegerInput(1,2);
-        if (choice == 2) client = new ClientSocket("127.0.0.1", 1080);
+        if (choice == 2) client = new ClientSocket(hostAddress, 1080);
         else {
             client = new ClientRMI();
             try {
-                client.startClient();
+                client.startClient(hostAddress);
             } catch (IOException e) {
                 e.printStackTrace(); //TODO handle connection error
             }

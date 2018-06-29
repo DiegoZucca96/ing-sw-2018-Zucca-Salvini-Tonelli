@@ -31,12 +31,12 @@ public class ClientSocket implements Client {
 
     public static void main(String[] args) throws Exception{
         ClientSocket clientSocket = new ClientSocket("127.0.0.1", 1080);
-        clientSocket.startClient();
+        clientSocket.startClient("127.0.0.1");
     }
 
 
     @Override
-    public void startClient() throws IOException {
+    public void startClient(String hostAddress) throws IOException {
         //...
     }
 

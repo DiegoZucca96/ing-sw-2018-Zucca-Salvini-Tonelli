@@ -39,7 +39,7 @@ public class StartView extends Application {
         } else if(connectionType.equals("RMI")){
             client = new ClientRMI();
             try {
-                client.startClient();
+                client.startClient("127.0.0.1");
             } catch (IOException e) {
                 e.printStackTrace(); //TODO possibile errore di connesione
             }
