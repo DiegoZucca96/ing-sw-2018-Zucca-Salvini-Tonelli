@@ -187,6 +187,7 @@ public class GridPaneRound extends GridPane {
         return button;
     }
 
+    /**Round is accessible (value is true) only when card 12 is used*/
     public void setAccessRound(boolean accessRound) {
         this.accessRound = accessRound;
     }

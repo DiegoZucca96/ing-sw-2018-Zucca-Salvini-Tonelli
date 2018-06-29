@@ -3,6 +3,10 @@ package ingsw.view;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**Class which connects Gui with Tool Cards in model.
+ * It enrich its information with setter methods. This information is passed to model through Controller.
+ * @see ingsw.controller.Controller
+ */
 public class ToolView implements Serializable {
     private int startRow1;
     private int startCol1;
@@ -16,7 +20,7 @@ public class ToolView implements Serializable {
     private int round;
     private String color;
     private ArrayList<String> listOfCoordinateY = new ArrayList<>();
-    private int phase = 0;
+    private int phase = 0;      /**Important: some tool cards need to be executed partially. This attribute defines in which phase we must let start the card and where to stop it.*/
 
 
     public int getStartRow1() {
@@ -107,10 +111,16 @@ public class ToolView implements Serializable {
         this.color = color;
     }
 
+    /**Since we need in tool card 7 save position in DraftPool of dice which must be thrown again,
+     * this method returns array of positions.
+     * */
     public ArrayList<String> getListOfCoordinateY() {
         return listOfCoordinateY;
     }
 
+    /**Since we need in tool card 7 save position in DraftPool of dice which must be thrown again,
+     * this method saves positions in an array.
+     * */
     public void setListOfCoordinateY(String listOfCoordinateY) {
         this.listOfCoordinateY.add(listOfCoordinateY);
     }

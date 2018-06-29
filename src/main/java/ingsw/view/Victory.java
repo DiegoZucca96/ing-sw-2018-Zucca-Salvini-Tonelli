@@ -12,19 +12,16 @@ import javafx.stage.Stage;
 /**Author : Alessio Tonelli
  *
  * this is the last class used in GUI to display the winner
- *
- * click one time and it will calculate the score
- *
- * click the second time and it will give you the winner
+ * @see MultiScore , class to generate random numbers display
  * */
 
 public class Victory {
 
     private Label timerLabel ;
-    private static int event =1;
     private final String styleSheet ="-fx-text-fill: goldenrod; -fx-font: italic 70 \"serif\"; -fx-padding: 0 0 20 0";
     private Client client;
 
+    /**Displays image and calls MultiScore for each player.*/
     public void start(Client c) {
 
         this.client=c;
@@ -46,8 +43,6 @@ public class Victory {
         final ImageView background= new ImageView();
         background.setImage(image);
         scene.setOnMouseEntered( e-> {
-            if(event==1){
-                event++;
                 for (int i=0; i<client.getNumberOfPlayers(); i++) {
                     timerLabel=new Label();
                     timerLabel.setStyle(styleSheet);
@@ -55,7 +50,7 @@ public class Victory {
                     MultiScore threadScore = new MultiScore(client.getListOfMatchPlayers().get(i),timerLabel, client,grid);
                     threadScore.start();
                 }
-            }
+
         });
         root.getChildren().addAll(background, grid);
         primaryStage.setScene(scene);

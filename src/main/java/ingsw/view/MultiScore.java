@@ -24,6 +24,7 @@ class MultiScore implements Runnable {
     private Client client;
     private String namePlayer;
 
+    /**Constructor*/
     MultiScore(String s, Label label, Client c, GridPane grid) {
         this.label= label;
         this.client=c;
@@ -32,6 +33,7 @@ class MultiScore implements Runnable {
         this.grid = grid;
     }
 
+    /**Creates timeline to generate random number at same time for each players and at the end of time prints the winner.*/
     public synchronized void run() {
         if (timeline != null) {
             timeline.stop();
@@ -58,6 +60,7 @@ class MultiScore implements Runnable {
         timeline.playFromStart();
     }
 
+    /**Create new Thread which runs whit method run.*/
     public void start() {
         if (myThread == null) {
             myThread = new Thread(this);

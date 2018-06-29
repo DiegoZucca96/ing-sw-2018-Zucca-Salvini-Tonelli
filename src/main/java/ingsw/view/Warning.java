@@ -15,6 +15,13 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+/**Class which helps user in some case:
+ * - Timer ended without user touch anything;
+ * - Connection lost by Client;
+ * - Connection lost by Server;
+ * - Start new Round;
+ * - Exit from game.
+ */
 public class Warning {
 
     static boolean answer;
@@ -23,6 +30,10 @@ public class Warning {
     Stage stage;
     static int i = 0;
 
+    /** Case timeout is ended.
+     * @param alert , comment of warning on scene
+     * @param title , title of the stage
+     */
     public Warning(String alert, String title){
         int duration = 3;
         Stage stage= new Stage();
@@ -47,6 +58,10 @@ public class Warning {
         stage.show();
     }
 
+    /** Case Connection lost by Client.
+     * @param playgame , stage
+     * @param c , client
+     */
     public Warning(Stage playgame, Client c){
         Stage stage = new Stage();
         Pane root = new Pane();
@@ -66,6 +81,9 @@ public class Warning {
         stage.show();
     }
 
+    /** Case Connection lost by Server.
+     * @param c , client
+     */
     public Warning(Client c){
         stage = new Stage();
         Pane root = new Pane();
@@ -104,6 +122,10 @@ public class Warning {
         delay.play();
     }
 
+    /** Start new Round.
+     * @param message , comment on the scene
+     * @param round , start a new round of the game
+     */
     public Warning(String message, int round) {
         Stage stage = new Stage();
         Pane root = new Pane();
@@ -120,10 +142,14 @@ public class Warning {
         delay.play();
     }
 
+    /**Constructor used with display*/
     public Warning(String message){
         textMessage = message;
     }
 
+    /**Display Stage to decide whether exit or not.
+     * @return boolean
+     */
     public Boolean display(){
         Stage window = new Stage();
 
@@ -155,10 +181,12 @@ public class Warning {
         return answer;
     }
 
+    /**Getter*/
     public Stage getStage(){
         return stage;
     }
 
+    /**Stop when connection is established.*/
     public static void setStop(boolean stop) {
         Warning.stop = stop;
     }

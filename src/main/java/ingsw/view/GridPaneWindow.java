@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**This is the class dedicated to my Window Pattern*/
 public class GridPaneWindow extends GridPane {
 
     private ArrayList<DieInfo> dieInfos = new ArrayList<>();
@@ -24,6 +25,7 @@ public class GridPaneWindow extends GridPane {
     private ToolView toolView ;
     private ViewWP myWindow;
 
+    /**Constructor, it creates empty button which stands on gridpane which is in PlayGame (attribute is myWindowGrid)*/
     public GridPaneWindow( ViewWP myWindow, Client client, GridPaneDraftPool draftPool, PlayGame playGame) {
 
         this.client=client;
@@ -57,6 +59,14 @@ public class GridPaneWindow extends GridPane {
         }
     }
 
+    /** Button is created and is managed its action.
+     * If accessWindow is true it means we are using a Tool Card so a ToolView will be created.
+     * If not we can simply press on Button and put die chosen
+     *
+     * @param i , row
+     * @param j , column
+     * @return Button
+     */
     private Button addButtonWp(int i, int j) {
         Button button = new Button();
         button.setOnAction(e -> {
@@ -314,6 +324,7 @@ public class GridPaneWindow extends GridPane {
         return button;
     }
 
+    /**Used in sme tool card. More specific where tool allows to move more than one die.*/
     private void makeAnotherMove() {
         Stage stage = new Stage();
         GridPane root = new GridPane();
@@ -356,6 +367,7 @@ public class GridPaneWindow extends GridPane {
         stage.show();
     }
 
+    /**Call the real update below on each Button of my Window*/
     private void updateMyself() {
         int index = client.getListOfPlayers().indexOf(client.getName());
         myWindow = client.updateView().getWps().get(index);
@@ -366,6 +378,7 @@ public class GridPaneWindow extends GridPane {
         }
     }
 
+    /**Update background whith infos coming from ViewData after something to the model has changed.*/
     private void updateButton(int i, int j, ViewWP myWindow) {
         for(Node node : this.getChildren()){
             if(GridPaneWindow.getRowIndex(node)==i && GridPaneWindow.getColumnIndex(node)== j){
@@ -387,23 +400,28 @@ public class GridPaneWindow extends GridPane {
         }
     }
 
+    /**Get info from Die Info*/
     public ArrayList<DieInfo> getDieInfos(){
         return dieInfos;
     }
 
+    /**Add info to DieInfo.*/
     public void addDieInfo(Background image, int i, int j) {
         DieInfo dieInfo = new DieInfo(image, i, j);
         dieInfos.add(dieInfo);
     }
 
+    /**Setter in order to use a tool.*/
     public void setAccessWindow(boolean accessWindow) {
         this.accessWindow= accessWindow;
     }
 
+    /**If I do not press button on window yet and this would be the first time.*/
     public void setFirstChoice(boolean b) {
         this.firstChoice = b;
     }
 
+    /**Getter*/
     public Button getButton(int row, int col){
         for(Node node : this.getChildren()){
             if(GridPaneDraftPool.getRowIndex(node)==row && GridPaneDraftPool.getColumnIndex(node)== col){
@@ -413,6 +431,7 @@ public class GridPaneWindow extends GridPane {
         return null;
     }
 
+    /**Interrupt execution of saving information in order to use a tool card if cancel is pressed.*/
     public void abortToolView() {
         this.toolView = null;
     }

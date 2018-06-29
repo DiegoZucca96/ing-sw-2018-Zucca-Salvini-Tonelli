@@ -294,14 +294,17 @@ public class GridPaneDraftPool extends GridPane {
         }
     }
 
+    /**Getter method*/
     public DieInfo getDieInfo(){
         return dieInfo;
     }
 
+    /**Getter method*/
     public Button getButtonDieSelected() {
         return buttonDieSelected;
     }
 
+    /**Deselect button in order to avoid accessibility to draftpool*/
     public void deselectBtn(){
         buttonDieSelected.setOpacity(0);
     }

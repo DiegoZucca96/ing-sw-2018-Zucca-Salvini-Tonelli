@@ -753,7 +753,7 @@ public class PlayGame {
         return usingTool;
     }
 
-    /** Need to the following classes in order to use a Tool Card.
+    /** Attribute used by the following classes in order to use a Tool Card.
      * Return value of the card.
      * @see GridPaneDraftPool
      * @see GridPaneRound
@@ -763,11 +763,12 @@ public class PlayGame {
         return cardSelected;
     }
 
+    /**Setter method*/
     public void setCardSelected(int cardSelected) {
         this.cardSelected = cardSelected;
     }
 
-
+    /**Activate all buttons*/
     public void resetOnButton(){
         skipBtn.setDisable(false);
         useToolBtn.setDisable(false);
@@ -776,6 +777,7 @@ public class PlayGame {
         cancelBtn.setDisable(false);
     }
 
+    /**Disactivate all buttons*/
     public void resetOffButton(){
         skipBtn.setDisable(true);
         useToolBtn.setDisable(true);
@@ -784,6 +786,9 @@ public class PlayGame {
         cancelBtn.setDisable(true);
     }
 
+    /**
+     * When a die is put on window these buttons are activated or disabled
+     */
     public void onPositionWPButton() {
         skipBtn.setDisable(false);
         useToolBtn.setDisable(false);
