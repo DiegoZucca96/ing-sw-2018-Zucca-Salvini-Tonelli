@@ -21,7 +21,6 @@ public class ClientSocket implements Client {
     private PrintWriter out;
     private ObjectInputStream is;
     private ObjectOutputStream os;
-
     private Socket socket;
 
     public ClientSocket(String ip, int port) {
