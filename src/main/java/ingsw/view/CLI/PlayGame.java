@@ -4,6 +4,7 @@ import ingsw.Client;
 import ingsw.model.ViewData;
 import ingsw.model.ViewWP;
 
+import java.lang.reflect.Array;
 import java.util.Scanner;
 
 public class PlayGame {
@@ -18,6 +19,7 @@ public class PlayGame {
     private boolean toolCardAlreadyUsed;
     private boolean timerStopped;
     private boolean timeOut;
+    private boolean[] toolCardsUsedOnce;
 
     public PlayGame(Client client){
         this.client = client;
@@ -27,10 +29,18 @@ public class PlayGame {
         toolCardAlreadyUsed = false;
         timerStopped = false;
         timeOut = false;
+        toolCardsUsedOnce = new boolean[3];
+        toolCardsUsedOnce[0] = false;
+        toolCardsUsedOnce[1] = false;
+        toolCardsUsedOnce[2] = false;
     }
 
     public void setTimerAlreadyStarted(Boolean timerAlreadyStarted) {
         this.timerAlreadyStarted = timerAlreadyStarted;
+    }
+
+    public void setToolCardsUsedOnce(int toolCardIndex) {
+        toolCardsUsedOnce[toolCardIndex] = true;
     }
 
     public void setTimeOut(boolean timeOut) {
@@ -43,6 +53,10 @@ public class PlayGame {
 
     public void setNewTurn(Boolean newTurn) {
         this.newTurn = newTurn;
+    }
+
+    public void setDieAlreadyTaken(boolean dieAlreadyTaken) {
+        this.dieAlreadyTaken = dieAlreadyTaken;
     }
 
     public boolean isTimerStopped() {
@@ -61,6 +75,7 @@ public class PlayGame {
         //the match is finished
         if (client.isFinish()){
             endGame();
+            return;
         }
 
         //time's out, return to login
@@ -75,6 +90,9 @@ public class PlayGame {
 
         //prints available commands
         if (myTurn()) {
+            if(client.getRound() == 10 && !client.getClockwiseRound()){
+                client.calculateScore();
+            }
             timerStopped = true;
             myTurnCommands();
         } else {
@@ -83,12 +101,12 @@ public class PlayGame {
     }
 
     private void endGame() {
-        client.calculateScore();
+        System.out.println("");
         for (String player: client.getListOfPlayers()){
             System.out.println(player + "'s score is: " + ToString.printColored(ToString.ANSI_BLUE, Integer.toString(client.getScore(player))));
         }
         String winner = client.findWinner();
-        if(winner.equals(client.getName())) System.out.println("You are the winner");
+        if(winner.equals(client.getName())) System.out.println("\nYou are the winner");
         else System.out.println("\nThe winner is " + winner);
         Main.setEndGame(true);
         timerStopped = true;
@@ -115,6 +133,7 @@ public class PlayGame {
                 printCommandSeparator();
                 exitGame();
                 break;
+            default: System.out.println("Forbidden operation");
         }
     }
 
@@ -157,6 +176,7 @@ public class PlayGame {
                 printCommandSeparator();
                 exitGame();
                 break;
+            default: System.out.println("Forbidden operation");
         }
     }
 
@@ -199,23 +219,25 @@ public class PlayGame {
         }
         System.out.println("Choose tool card:");
         int toolCardChosen = Main.validateIntegerInput(1,3);
+        if (toolCardChosen == 0) return;
         String toolCard = init.getToolCardsCLI().get(toolCardChosen-1);
         String toolCardName = toolCard.substring(0,toolCard.indexOf('\n'));
         switch (toolCardName){
-            case "Pinza Sgrossatrice": ToolCard.toolCard1(this); break;
-            case "Pennello per Eglomise": ToolCard.toolCard2(this); break;
-            case "Alesatore per lamina di rame": ToolCard.toolCard3(this); break;
-            case "Lathekin": ToolCard.toolCard4(this); break;
-            case "Taglierina circolare": ToolCard.toolCard5(this); break;
-            case "Pennello per Pasta Salda": ToolCard.toolCard6(this); break;
-            case "Martelletto": ToolCard.toolCard7(this); break;
-            case "Tenaglia a Rotelle": ToolCard.toolCard8(this); break;
-            case "Riga in Sughero": ToolCard.toolCard9(this); break;
-            case "Tampone Diamantato": ToolCard.toolCard10(this); break;
-            case "Diluente per Pasta Salda": ToolCard.toolCard11(this); break;
-            case "Taglierina Manuale": ToolCard.toolCard12(this); break;
+            case "Pinza Sgrossatrice": ToolCard.toolCard1(this, toolCardChosen); break;
+            case "Pennello per Eglomise": ToolCard.toolCard2(this, toolCardChosen); break;
+            case "Alesatore per lamina di rame": ToolCard.toolCard3(this, toolCardChosen); break;
+            case "Lathekin": ToolCard.toolCard4(this, toolCardChosen); break;
+            case "Taglierina circolare": ToolCard.toolCard5(this, toolCardChosen); break;
+            case "Pennello per Pasta Salda": ToolCard.toolCard6(this, toolCardChosen); break;
+            case "Martelletto": ToolCard.toolCard7(this, toolCardChosen); break;
+            case "Tenaglia a Rotelle": ToolCard.toolCard8(this, toolCardChosen); break;
+            case "Riga in Sughero": ToolCard.toolCard9(this, toolCardChosen); break;
+            case "Tampone Diamantato": ToolCard.toolCard10(this, toolCardChosen); break;
+            case "Diluente per Pasta Salda": ToolCard.toolCard11(this, toolCardChosen); break;
+            case "Taglierina Manuale": ToolCard.toolCard12(this, toolCardChosen); break;
             default: break;
         }
+        refreshView();
     }
 
     private void takeDie() {
@@ -224,9 +246,10 @@ public class PlayGame {
             return;
         }
         int selectedDie = selectDie();
+        if(selectedDie == -1) return;
         System.out.println("You have selected die number " + selectedDie+1);
-        dieAlreadyTaken = true;
         positionDie();
+        dieAlreadyTaken = true;
     }
 
     public int dpDieValue(int selectedDie){
@@ -235,6 +258,7 @@ public class PlayGame {
     public int selectDie() {
         System.out.println("Select a die:");
         int selectedDie = Main.validateIntegerInput(1,9)-1;
+        if(selectedDie == -1) return -1;
         while (client.updateView().getDraftPoolDice().get(selectedDie).equals("die(0,WHITE)") || !client.takeDie(0,selectedDie)){
             stillInGame();
             System.out.println(ToString.printColored(ToString.ANSI_RED,"Invalid input"));
@@ -251,12 +275,20 @@ public class PlayGame {
 
     private void positionDie() {
         String coordinates = Main.validateCoordinates(true);
+        if (coordinates.equals("0")) {
+            client.nullSelection();
+            return;
+        }
         int row = Integer.parseInt(coordinates.substring(0,1))-1;
         int column = Integer.parseInt(String.valueOf(coordinates.charAt(2)))-1;
         while (!client.positionDie(row,column)){
             stillInGame();
             System.out.println(ToString.printColored(ToString.ANSI_RED,"Invalid input"));
             coordinates = Main.validateCoordinates(true);
+            if(coordinates.equals("0")) {
+                client.nullSelection();
+                return;
+            }
             row = Integer.parseInt(coordinates.substring(0,1))-1;
             column = Integer.parseInt(String.valueOf(coordinates.charAt(2)))-1;
         }
@@ -282,6 +314,7 @@ public class PlayGame {
 
     public void initializeView(){
         init = client.initializeViewCLI();
+        client.initializeView();
         printSeparator();
         printCurrentRound();
         printSeparator();
@@ -338,14 +371,8 @@ public class PlayGame {
             System.out.print(i + " - " + card);
             if(initialization) System.out.println("Cost: 1 token\n");
             else {
-                String toolCard = update.getToolCardsCLI().get(i - 1);
-                int stringIndex = toolCard.indexOf('+') + 1;
-                if (stringIndex == 0) System.out.println("Cost: 1 token\n");
-                else {
-                    if (toolCard.substring(stringIndex, stringIndex + 1).equals("0")) {
-                        System.out.println("Cost: 1 token\n");
-                    } else System.out.println("Cost: 2 token\n");
-                }
+                if(toolCardsUsedOnce[i-1]) System.out.println("Cost: 2 token\n");
+                else System.out.println("Cost: 1 token\n");
             }
             i++;
         }

@@ -1002,7 +1002,6 @@ public class Controller extends UnicastRemoteObject implements RMIController {
      *
      * ???
      */
-    //Metodo uguale a initializeView(), eccetto per la parte segnalata
     @Override
     public synchronized ViewData initializeViewCLI() throws RemoteException {
         match = instanceMatch();

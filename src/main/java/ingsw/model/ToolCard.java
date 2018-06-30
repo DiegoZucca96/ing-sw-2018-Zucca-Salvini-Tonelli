@@ -84,12 +84,12 @@ public class ToolCard {
         RandomGenerator rg = new RandomGenerator(10);
         ArrayList<Integer> numToolCards = new ArrayList<>();
         //uncomment these lines of code and change the "i" value from 0 to 3 to have specific tool cards (for testing)
-        //init.getToolCard().add("/Tool10+0.png");
-        //numToolCards.add(10);
-        //init.getToolCard().add("/Tool11+0.png");
-        //numToolCards.add(11);
-        //init.getToolCard().add("/Tool12+0.png");
-        //numToolCards.add(12);
+        init.getToolCard().add("/Tool8+0.png");
+        numToolCards.add(8);
+        init.getToolCard().add("/Tool9+0.png");
+        numToolCards.add(9);
+        init.getToolCard().add("/Tool4+0.png");
+        numToolCards.add(4);
         for(int i=0;i<3;i++){
             int select = rg.random();
             switch(select){

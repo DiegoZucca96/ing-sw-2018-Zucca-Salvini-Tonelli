@@ -423,6 +423,7 @@ public class Match {
             pbCards.get(1).doPBStrategy(p);
             pbCards.get(2).doPBStrategy(p);
             p.personalScore();
+            if(p.getScore()<0) p.setScore(0);   //score can't be negative
         }
     }
 

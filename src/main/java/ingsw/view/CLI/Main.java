@@ -35,7 +35,9 @@ public class Main {
     public static int validateIntegerInput(int from, int to){
         int input;
         try{
-            input = Integer.parseInt(in.nextLine());
+            String inputString = in.nextLine();
+            if (inputString.equals("back")) return 0;
+            input = Integer.parseInt(inputString);
         } catch(Exception e){
             System.out.println(ToString.printColored(ToString.ANSI_RED,"Invalid input"));
             System.out.println("Enter a valid input:");
@@ -94,6 +96,7 @@ public class Main {
         if(placeDie) System.out.println("Insert coordinates where you wish to place the die:\n(Coordinates format = \"row,column\")");
         else System.out.println("Insert coordinates of the die you want to take:\n(Coordinates format = \"row,column\")");
         String coordinates = in.nextLine();
+        if (coordinates.equals("back")) return "0";
         try{
             row = Integer.parseInt(coordinates.substring(0,1))-1;
             column = Integer.parseInt(String.valueOf(coordinates.charAt(2)))-1;

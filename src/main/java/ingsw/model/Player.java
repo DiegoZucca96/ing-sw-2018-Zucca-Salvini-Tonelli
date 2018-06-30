@@ -129,6 +129,14 @@ public class Player {
     }
 
     /**
+     * simple setter method
+     * @param score player's score
+     */
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    /**
      * Simply setter method, exclusively used for testing
      * @param pvObjectiveCard it is the private card that has to be assign
      */
