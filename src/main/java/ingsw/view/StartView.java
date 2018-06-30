@@ -7,8 +7,11 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
 /**
@@ -17,7 +20,6 @@ import java.io.IOException;
  * @see ClientRMI
  * @see ClientSocket
  */
-
 public class StartView extends Application {
 
     private Client client;
@@ -53,30 +55,65 @@ public class StartView extends Application {
      *
      * @param primaryStage
      */
-
     @Override
     public void start(Stage primaryStage) {
         GridPane chooser = new GridPane();
         Scene scene = new Scene(chooser);
-        chooser.setPrefSize(250, 100);
+        chooser.setPrefSize(450, 100);
         chooser.setPadding(new Insets(50));
         chooser.setHgap(20);
+        chooser.setVgap(50);
         Button rmiBtn = new Button("RMI");
         Button socketBtn = new Button ("Socket");
+        Label lblServer = new Label("Server IP:");
+        TextField tfIPServer = new TextField();
 
         rmiBtn.setOnAction(e->{
-            setupConnection("RMI");
-            primaryStage.close();
+            if(!validateIPAddress(tfIPServer.getText())){
+               new Warning("Incorrect IP", -1);
+            }else{
+                setupConnection("RMI");
+                primaryStage.close();
+            }
         });
         socketBtn.setOnAction(e->{
-            setupConnection("socket");
-            primaryStage.close();
+            if(!validateIPAddress(tfIPServer.getText())){
+                new Warning("Incorrect IP", -1);
+            }else{
+                setupConnection("socket");
+                primaryStage.close();
+            }
         });
 
-        chooser.add(rmiBtn, 0, 0);
-        chooser.add(socketBtn, 1, 0);
+        chooser.add(lblServer, 0, 0);
+        chooser.add(tfIPServer, 1, 0);
+        chooser.add(rmiBtn, 0, 1);
+        chooser.add(socketBtn, 2, 1);
         primaryStage.setTitle("Choose connection");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    /** Same control in CLI
+     * This method validates ip address format
+     * @param ipAddress ip address you want to validate
+     * @return  true if the ip address format is correct
+     */
+    public static boolean validateIPAddress(String ipAddress){
+        String tmp;
+        try {
+            for (int i=0; i<4; i++){
+                if(i==3){
+                    if (Integer.parseInt(ipAddress) < 0 || Integer.parseInt(ipAddress) > 255) return false;
+                    break;
+                }
+                tmp = ipAddress.substring(0,ipAddress.indexOf('.'));
+                ipAddress = ipAddress.substring(ipAddress.indexOf('.')+1);
+                if (Integer.parseInt(tmp) < 0 || Integer.parseInt(tmp) > 255) return false;
+            }
+        }catch (Exception e){
+            return false;
+        }
+        return true;
     }
 }

@@ -134,7 +134,10 @@ public class Warning {
         label.setLayoutX(100);
         label.setLayoutY(50);
         root.getChildren().addAll(label);
-        stage.setTitle("Round "+round);
+        if(round==-1)
+            stage.setTitle("Invalid argument");
+        else
+            stage.setTitle("Round "+round);
         stage.setScene(scene);
         stage.show();
         PauseTransition delay = new PauseTransition(Duration.seconds(2));
