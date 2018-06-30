@@ -8,7 +8,7 @@
 
 ## Coverage Test and UML
 
-See the Coverage Test folder and UML image in repository.
+See the Coverage Test folder and UML image (or pdf) in repository.
 
 ## Introduction
 
