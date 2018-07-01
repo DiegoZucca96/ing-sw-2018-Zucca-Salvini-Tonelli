@@ -487,7 +487,9 @@ public class ClientSocket implements Client {
 
     @Override
     public void stopTimer() {
-        //TODO
+        setupConnection();
+        out.println("stopTimer:");
+        closeConnection();
     }
 
     @Override

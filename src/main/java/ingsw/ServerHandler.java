@@ -101,6 +101,7 @@ public class ServerHandler implements Runnable {
             else if (command.equals("removePlayer")) removePlayer(parameter);
             else if (command.equals("someoneLeftGame")) someoneLeftGame();
             else if (command.equals("someoneRejoinedGame")) someoneRejoinedGame();
+            else if (command.equals("stopTimer")) stopTimer();
             closeConnection();
         }
          catch (IOException e) {
@@ -353,5 +354,9 @@ public class ServerHandler implements Runnable {
         os.writeObject(controller.someoneRejoinedGame());
         os.flush();
         os.reset();
+    }
+
+    private void stopTimer() throws RemoteException {
+        controller.stopTimer();
     }
 }
