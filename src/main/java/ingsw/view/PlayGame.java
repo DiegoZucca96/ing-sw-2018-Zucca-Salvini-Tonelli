@@ -221,6 +221,19 @@ public class PlayGame {
                                             new Warning("I giocatori " + entryPlayer + "sono entrati nel gioco", client.getRound());
                                         }
                                     }
+                                    if(timeseconds%2==0){
+                                        if(client.isFinish()){
+                                            client.calculateScore();
+                                            new Victory().start(client);
+                                            PauseTransition delay = new PauseTransition(Duration.seconds(1));
+                                            delay.setOnFinished( e -> {
+                                                client.stopTimer();
+                                                timeline.stop();
+                                                stage.close();
+                                            });
+                                            delay.play();
+                                        }
+                                    }
                                     if(timeseconds%5==0){
                                         this.updateView = client.updateView();
                                         if(updateView!=null)
@@ -360,17 +373,19 @@ public class PlayGame {
                 gridRound.setAccessRound(false);
                 myWindowGrid.setDisable(true);
                 getGridWindow().setAccessWindow(false);
+                resetOffButton();
                 client.setActive(true);
                 if(client.iAmAlone()){
+                    timeline.stop();
                     new VictoryAlone().start(client.getName());
                     client.skip();
-                    timeline.stop();
                     stage.close();
                 }else{
                     client.skip();
                     if(client.isFinish()){
                         client.calculateScore();
                         new Victory().start(client);
+                        timeline.stop();
                         stage.close();
                     }
                 }
@@ -414,6 +429,7 @@ public class PlayGame {
             if(answer){
                 client.setActive(false);
                 client.skip();
+                timeline.stop();
                 Platform.exit();
             }
         });
@@ -452,6 +468,8 @@ public class PlayGame {
         btnGrid.add(infoBtn, 0, 5);
         btnGrid.setLayoutX(600);
         btnGrid.setLayoutY(330);
+
+        resetOffButton();
 
         //ATTACH DI TUTTO
         root.getChildren().addAll(backGround, toolGrid, pbGrid, gridRound, divideGrids, myWindowGrid, title, btnGrid, eachGrid, secondGrid, pvPane, draftPoolGrid, gridTks,currentInfo,currentInfo2, currentInfo3,tokenUsed);

@@ -491,6 +491,15 @@ public class ClientRMI implements Client {
     }
 
     @Override
+    public void stopTimer() {
+        try {
+            controller.stopTimer();
+        } catch (RemoteException e) {
+            handleConnectionError();
+        }
+    }
+
+    @Override
     public void handleConnectionError(){
         Registry registry;
         try {

@@ -25,7 +25,7 @@ public class Victory {
     public void start(Client c) {
 
         this.client=c;
-
+        final int[] singleShowPoints = {0};
         // Setup the Stage and the Scene (the scene graph)
         Stage primaryStage = new Stage();
         primaryStage.setTitle("Victory");
@@ -43,6 +43,8 @@ public class Victory {
         final ImageView background= new ImageView();
         background.setImage(image);
         scene.setOnMouseEntered( e-> {
+            if(singleShowPoints[0] == 0){
+                singleShowPoints[0]++;
                 for (int i=0; i<client.getNumberOfPlayers(); i++) {
                     timerLabel=new Label();
                     timerLabel.setStyle(styleSheet);
@@ -50,7 +52,13 @@ public class Victory {
                     MultiScore threadScore = new MultiScore(client.getListOfMatchPlayers().get(i),timerLabel, client,grid);
                     threadScore.start();
                 }
+            }
 
+        });
+
+        primaryStage.setOnCloseRequest(e -> {
+            singleShowPoints[0]--;
+            primaryStage.close();
         });
         root.getChildren().addAll(background, grid);
         primaryStage.setScene(scene);

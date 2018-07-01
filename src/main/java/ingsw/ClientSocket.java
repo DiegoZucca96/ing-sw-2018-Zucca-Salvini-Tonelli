@@ -486,6 +486,11 @@ public class ClientSocket implements Client {
     }
 
     @Override
+    public void stopTimer() {
+        //TODO
+    }
+
+    @Override
     public ArrayList<ViewWP> getPlayerWPs(String name){
         setupConnection();
         out.println("getPlayersWPs:"+name);

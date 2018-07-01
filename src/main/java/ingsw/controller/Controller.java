@@ -363,13 +363,12 @@ public class Controller extends UnicastRemoteObject implements RMIController {
                 }
                 disconnectClient(clientName);
             }
-            timer.cancel();
             if(getPlayerState(clientName).equalsIgnoreCase("enabled"))
                 disableClient(getCurrentPlayerName());
             turn++;
             active=false;
             if (turn == getSizeOfPlayers() * 2) {
-                if (match.getRound() == 10) isFinish = true;
+                if (match.getRound() == 2) isFinish = true;
                 else {
                     setInsertedDie(false);
                     match.endRound();
@@ -395,6 +394,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
                     turn = 0;
                 }
                 if(!isFinish){
+                    timer.cancel();
                     enableClient(getCurrentPlayerName());
                     controllerTimer.setTimeMoveRemaining(playerMoveTime);
                     timer = new Timer();
@@ -509,6 +509,15 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             }
             return playerIn;
         }
+    }
+
+    /**
+     * This method stops the timer of the match, when it is over
+     * @throws RemoteException if the controller is not usable, maybe because of lost connection
+     */
+    @Override
+    public void stopTimer() throws RemoteException {
+        timer.cancel();
     }
 
     /**

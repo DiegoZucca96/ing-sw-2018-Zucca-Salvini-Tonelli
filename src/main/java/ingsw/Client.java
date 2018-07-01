@@ -152,4 +152,6 @@ public interface Client {
     ArrayList<String> someoneLeftGame();
 
     ArrayList<String> someoneRejoinedGame();
+
+    void stopTimer();
 }

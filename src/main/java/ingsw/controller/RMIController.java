@@ -123,7 +123,9 @@ public interface RMIController extends Remote {
 
     boolean removerPlayer(String name) throws RemoteException;
 
-    ArrayList<String> someoneLeftGame()throws RemoteException;
+    ArrayList<String> someoneLeftGame() throws RemoteException;
 
-    ArrayList<String> someoneRejoinedGame()throws RemoteException;
+    ArrayList<String> someoneRejoinedGame() throws RemoteException;
+
+    void stopTimer() throws RemoteException;
 }
