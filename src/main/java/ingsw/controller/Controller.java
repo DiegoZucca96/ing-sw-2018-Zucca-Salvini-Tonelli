@@ -368,7 +368,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
             turn++;
             active=false;
             if (turn == getSizeOfPlayers() * 2) {
-                if (match.getRound() == 2) isFinish = true;
+                if (match.getRound() == 10) isFinish = true;
                 else {
                     setInsertedDie(false);
                     match.endRound();
