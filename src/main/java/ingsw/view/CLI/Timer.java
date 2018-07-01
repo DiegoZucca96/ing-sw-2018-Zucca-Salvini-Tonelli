@@ -2,6 +2,9 @@ package ingsw.view.CLI;
 
 import ingsw.Client;
 
+/**
+ * Author: Elio Salvini
+ */
 public class Timer extends Thread {
 
     private int remainingSeconds;

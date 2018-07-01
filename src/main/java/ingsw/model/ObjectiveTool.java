@@ -4,6 +4,8 @@ import ingsw.model.windowpattern.WindowPattern;
 import java.util.ArrayList;
 
 /**
+ * Author : Diego Zucca - Alessio Tonelli
+ *
  * This class contains all the information necessary to use the tool cards
  */
 public class ObjectiveTool {

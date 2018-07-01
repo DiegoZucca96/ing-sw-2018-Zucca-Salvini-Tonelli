@@ -6,6 +6,8 @@ import ingsw.model.ObjectiveTool;
 import java.util.ArrayList;
 
 /**
+ * Author : Diego Zucca - Alessio Tonelli
+ *
  * Tool card number 7
  */
 public class Tool7 implements ToolStrategy {

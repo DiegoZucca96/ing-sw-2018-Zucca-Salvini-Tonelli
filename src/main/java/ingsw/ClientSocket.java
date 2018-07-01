@@ -12,6 +12,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Author: Elio Salvini
+ */
 public class ClientSocket implements Client {
 
     private String name;

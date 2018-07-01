@@ -3,6 +3,9 @@ package ingsw.view.CLI;
 import ingsw.model.ViewData;
 import ingsw.view.ToolView;
 
+/**
+ * Author: Elio Salvini
+ */
 public class ToolCard {
 
 

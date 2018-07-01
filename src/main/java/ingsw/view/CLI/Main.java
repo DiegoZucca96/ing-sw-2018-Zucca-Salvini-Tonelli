@@ -7,6 +7,9 @@ import ingsw.ClientSocket;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Author: Elio Salvini
+ */
 public class Main {
 
     private static Scanner in;

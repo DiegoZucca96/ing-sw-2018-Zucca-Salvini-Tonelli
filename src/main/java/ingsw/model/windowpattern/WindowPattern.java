@@ -7,7 +7,7 @@ import ingsw.observers.WindowPatternObserver;
 import java.io.Serializable;
 import java.util.List;
 
-/**Author : Alessio Tonelli _ Diego Zucca
+/**Author : Alessio Tonelli - Diego Zucca
  *
  * Create and Constraint of Window Pattern
  *

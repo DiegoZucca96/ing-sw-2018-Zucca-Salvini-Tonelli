@@ -3,6 +3,9 @@ package ingsw.view.CLI;
 import ingsw.model.InfoCell;
 import ingsw.model.ViewWP;
 
+/**
+ * Author: Elio Salvini
+ */
 public class ToString {
 
     public static final String ANSI_RESET = "\u001B[0m";

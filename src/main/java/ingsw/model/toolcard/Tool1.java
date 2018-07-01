@@ -5,6 +5,8 @@ import ingsw.model.Die;
 import ingsw.model.ObjectiveTool;
 
 /**
+ * Author : Diego Zucca - Alessio Tonelli
+ *
  * Tool card number 1
  */
 public class Tool1 implements ToolStrategy {

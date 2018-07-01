@@ -4,6 +4,8 @@ import ingsw.model.ToolCard;
 import ingsw.model.ViewData;
 
 /**
+ * Author : Diego Zucca - Elio Salvini
+ *
  * This is the ToolCard observer
  */
 public class ToolCardsObserver implements Observer {

@@ -7,6 +7,9 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
+/**
+ * Author : Alessio Tonelli - Diego Zucca
+ * Class dedicated to enemy's Windows*/
 public class GridPaneWEnemy extends GridPane {
 
     private final int numberWP;

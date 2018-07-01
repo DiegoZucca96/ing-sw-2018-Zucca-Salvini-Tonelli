@@ -3,6 +3,7 @@ package ingsw.model;
 import java.io.Serializable;
 
 /**
+ * Author : Alessio Tonelli
  * Class that contains the info of a cell
  */
 public class InfoCell  implements Serializable {

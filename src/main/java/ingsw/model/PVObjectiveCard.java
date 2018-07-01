@@ -1,6 +1,8 @@
 package ingsw.model;
 
 /**
+ * Author : Diego Zucca
+ *
  * This class creates in a random way the private cards of every player
  */
 public class PVObjectiveCard {

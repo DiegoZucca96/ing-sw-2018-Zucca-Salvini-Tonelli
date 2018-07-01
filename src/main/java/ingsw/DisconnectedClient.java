@@ -3,6 +3,9 @@ package ingsw;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+/**
+ * Author: Diego Zucca
+ */
 public class DisconnectedClient extends UnicastRemoteObject implements ClientState {
 
     private Server server;

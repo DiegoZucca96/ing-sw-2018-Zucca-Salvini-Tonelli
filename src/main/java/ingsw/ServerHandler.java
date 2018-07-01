@@ -14,6 +14,9 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Author: Elio Salvini
+ */
 public class ServerHandler implements Runnable {
 
     private Server server;

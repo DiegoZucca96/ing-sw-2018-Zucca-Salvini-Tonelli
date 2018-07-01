@@ -5,6 +5,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
+ * Author : Diego Zucca
+ *
  * This class is dedicated to manage the research time and the action time of players
  */
 public class ControllerTimer {

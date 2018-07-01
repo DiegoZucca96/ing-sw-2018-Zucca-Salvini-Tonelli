@@ -5,6 +5,8 @@ import ingsw.model.Player;
 import java.util.ArrayList;
 
 /**
+ * Author : Diego Zucca
+ *
  * Public card number 3
  */
 public class PB3 implements PBStrategy {

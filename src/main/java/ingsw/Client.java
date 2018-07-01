@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Author: Elio Salvini*/
+ * Author: Elio Salvini
+ */
 
 public interface Client {
 

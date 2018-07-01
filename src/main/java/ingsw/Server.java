@@ -14,6 +14,9 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Author: Elio Salvini - Diego Zucca
+ */
 public class Server {
 
     private ArrayList<ClientData> listOfClients; //associa ad ogni nome di un client il relativo stato

@@ -2,7 +2,9 @@ package ingsw.view;
 
 import javafx.scene.layout.Background;
 
-/**Class useful to save infos like background of die, his row and column in Window, DraftPool and RoundTrack.*/
+/**
+ * Author : Alessio Tonelli
+ * Class useful to save infos like background of die, his row and column in Window, DraftPool and RoundTrack.*/
 public class DieInfo {
 
     private Background background;

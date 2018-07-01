@@ -9,7 +9,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-/**This is class which display the winner in case he is the last remained.*/
+/**
+ * Author : Diego Zucca
+ * This is class which display the winner in case he is the last remained.*/
 public class VictoryAlone {
 
     public void start(String c) {

@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
+ * Author : Diego Zucca
+ *
  * This interface contains all controller's methods.
  * To see the description of each one go to Controller class.
  *

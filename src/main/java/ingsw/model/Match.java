@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Class that represent a match in Sagrada, it links all components of the game and players. This class allow
  * communication between model classes and also provides several main functionalities of the game
  * (like the turns management or score calculation and research of winner)
- * Author: Elio Salvini, Diego Zucca
+ * Author: Elio Salvini - Diego Zucca
  */
 public class Match {
     private int id;                                 // identifier of the current match
@@ -22,6 +22,7 @@ public class Match {
     private DraftPool draftPool;                    //reference to draft pool of this match
     private ViewData init;                          //object that contains the informations about the default match
     private Observer viewObserver = null;           //observer of the state of the match, related to view
+    private boolean calculatedScore;                //used to avoid multiple scoring calculations
 
     /**
      * Constructor that creates all the necessary objects for playing a match
@@ -418,12 +419,15 @@ public class Match {
      * This method calculates and memorizes the score of all players
      */
     public void playersScore() {
-        for (Player p : players) {
-            pbCards.get(0).doPBStrategy(p);
-            pbCards.get(1).doPBStrategy(p);
-            pbCards.get(2).doPBStrategy(p);
-            p.personalScore();
-            if(p.getScore()<0) p.setScore(0);   //score can't be negative
+        if(!calculatedScore){
+            for (Player p : players) {
+                pbCards.get(0).doPBStrategy(p);
+                pbCards.get(1).doPBStrategy(p);
+                pbCards.get(2).doPBStrategy(p);
+                p.personalScore();
+                if(p.getScore()<0) p.setScore(0);   //score can't be negative
+            }
+            calculatedScore=true;
         }
     }
 

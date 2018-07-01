@@ -18,7 +18,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import java.io.IOException;
 
-/**Author : Alessio Tonelli
+/**Author : Alessio Tonelli - Diego Zucca
  *
  * this class is used two times :
  *

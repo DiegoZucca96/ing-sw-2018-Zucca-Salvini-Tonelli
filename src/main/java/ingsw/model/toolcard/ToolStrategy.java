@@ -3,6 +3,8 @@ package ingsw.model.toolcard;
 import ingsw.model.ObjectiveTool;
 
 /**
+ * Author : Diego Zucca
+ *
  * This interface is used to exploit the Strategy pattern.
  * To see the description of "doOp" method go to toolcard package, because it is different for every tool card
  * @see ingsw.model.ToolCard

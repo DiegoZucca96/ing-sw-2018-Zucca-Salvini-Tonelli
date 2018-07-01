@@ -4,6 +4,8 @@ import ingsw.model.RoundTrack;
 import ingsw.model.ViewData;
 
 /**
+ * Author : Diego Zucca - Elio Salvini
+ *
  * This is the RoundTrack observer
  */
 public class RoundTrackObserver implements Observer {

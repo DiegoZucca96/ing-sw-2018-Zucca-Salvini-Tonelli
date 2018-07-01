@@ -4,6 +4,8 @@ import ingsw.model.Cell;
 import ingsw.model.Player;
 
 /**
+ * Author : Diego Zucca
+ *
  * Public card number 8
  */
 public class PB8 implements PBStrategy {

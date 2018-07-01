@@ -6,6 +6,8 @@ import ingsw.observers.ToolCardsObserver;
 import java.util.ArrayList;
 
 /**
+ * Author : Diego Zucca
+ *
  * This class creates in a random way the tool cards of the match and it implements the pattern Strategy
  */
 public class ToolCard {

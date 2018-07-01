@@ -3,6 +3,8 @@ package ingsw.model.toolcard;
 import ingsw.model.*;
 
 /**
+ * Author : Diego Zucca - Alessio Tonelli
+ *
  * Tool card number 8
  */
 public class Tool8 implements ToolStrategy {

@@ -4,6 +4,8 @@ import ingsw.model.windowpattern.WindowPattern;
 import java.io.IOException;
 
 /**
+ * Author : Diego Zucca - Elio Salvini
+ *
  * This class contains the information about a player of the match
  */
 public class Player {

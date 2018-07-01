@@ -6,6 +6,8 @@ import ingsw.model.ObjectiveTool;
 import ingsw.model.windowpattern.WindowPattern;
 
 /**
+ * Author : Diego Zucca - Alessio Tonelli
+ *
  * Tool card number 3
  */
 public class Tool3 implements ToolStrategy {

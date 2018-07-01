@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
+ * Author : Alessio Tonelli - Elio Salvini
  * First class of Gui which allows client to choose connection
  *
  * @see ClientRMI

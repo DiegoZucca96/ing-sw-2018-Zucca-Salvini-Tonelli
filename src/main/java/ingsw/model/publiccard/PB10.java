@@ -5,6 +5,8 @@ import ingsw.model.Player;
 import ingsw.model.Color;
 
 /**
+ * Author : Diego Zucca
+ *
  * Public card number 10
  */
 public class PB10 implements PBStrategy {

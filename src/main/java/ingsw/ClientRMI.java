@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.ScheduledExecutorService;
 
+/**
+ * Author : Diego Zucca
+ */
 public class ClientRMI implements Client {
 
     private String name;

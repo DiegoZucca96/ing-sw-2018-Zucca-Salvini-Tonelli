@@ -7,6 +7,9 @@ import ingsw.model.ViewWP;
 import java.lang.reflect.Array;
 import java.util.Scanner;
 
+/**
+ * Author: Elio Salvini
+ */
 public class PlayGame {
 
     private Client client;

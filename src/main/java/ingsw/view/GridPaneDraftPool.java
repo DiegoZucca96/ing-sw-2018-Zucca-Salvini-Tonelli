@@ -15,7 +15,9 @@ import java.awt.*;
 import java.util.ArrayList;
 
 
-/**This is class dedicated to generate a GridPane for DraftPool.
+/**
+ * Author : Alessio Tonelli - Diego Zucca
+ * This is class dedicated to generate a GridPane for DraftPool.
  */
 public class GridPaneDraftPool extends GridPane {
 

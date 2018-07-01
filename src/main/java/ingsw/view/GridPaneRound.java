@@ -13,8 +13,9 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.util.ArrayList;
 
-
-/** Class dedicated to RoundTrack*/
+/**
+ * Author : Alessio Tonelli - Diego Zucca
+ * Class dedicated to RoundTrack*/
 public class GridPaneRound extends GridPane {
     private Client client;
     private ArrayList<String> roundTrack;

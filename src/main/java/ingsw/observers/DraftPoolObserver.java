@@ -4,6 +4,8 @@ import ingsw.model.DraftPool;
 import ingsw.model.ViewData;
 
 /**
+ * Author : Diego Zucca - Elio Salvini
+ *
  * This is the DraftPool observer
  */
 

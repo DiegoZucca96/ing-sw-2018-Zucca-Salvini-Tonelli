@@ -3,7 +3,9 @@ package ingsw.view;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**Class which connects Gui with Tool Cards in model.
+/**
+ * Author : Alessio Tonelli - Diego Zucca
+ * Class which connects Gui with Tool Cards in model.
  * It enrich its information with setter methods. This information is passed to model through Controller.
  * @see ingsw.controller.Controller
  */

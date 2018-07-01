@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.Timer;
 
 /**
+ * Author : Diego Zucca
+ *
  * This class makes possible the interaction between a generic client and the model of the game.
  * It contains all necessary methods to control if an operation is allowed or not and to change the model of the game.
  * Controller has a lot of parameters, in order to control everything in a correct and simple way.
@@ -878,7 +880,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
      * @throws RemoteException if the controller is not usable, maybe because of lost connection, or if server is not reachable
      */
     @Override
-    public void calculateScore() throws RemoteException {
+    public synchronized void calculateScore() throws RemoteException {
         match.playersScore();
     }
 

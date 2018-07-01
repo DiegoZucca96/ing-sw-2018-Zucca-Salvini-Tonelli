@@ -15,7 +15,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
-/**Class which helps user in some case:
+/**
+ * Author : Alessio Tonelli - Diego Zucca
+ * Class which helps user in some case:
  * - Timer ended without user touch anything;
  * - Connection lost by Client;
  * - Connection lost by Server;

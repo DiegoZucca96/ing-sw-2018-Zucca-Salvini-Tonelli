@@ -9,7 +9,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-/**Author : Alessio Tonelli
+/**Author : Alessio Tonelli - Diego Zucca
  *
  * this is the last class used in GUI to display the winner
  * @see MultiScore , class to generate random numbers display

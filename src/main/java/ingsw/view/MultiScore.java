@@ -8,7 +8,7 @@ import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import java.util.Random;
 
-/**Author : Alessio Tonelli
+/**Author : Alessio Tonelli - Diego Zucca
  *
  * this class is invoked by Victory in order to count parallel score.
  *

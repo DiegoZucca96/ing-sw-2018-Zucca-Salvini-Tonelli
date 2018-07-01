@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
+ * Author : Diego Zucca - Alessio Tonelli
+ *
  * This class brings the graphic informations from model to view
  */
 public class ViewData implements Serializable {

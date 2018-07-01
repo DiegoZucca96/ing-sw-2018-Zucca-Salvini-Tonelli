@@ -4,6 +4,8 @@ import ingsw.model.*;
 import java.util.Random;
 
 /**
+ * Author : Diego Zucca - Alessio Tonelli
+ *
  * Tool card number 6
  */
 public class Tool6 implements ToolStrategy {

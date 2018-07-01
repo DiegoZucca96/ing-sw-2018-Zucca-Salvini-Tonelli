@@ -5,6 +5,8 @@ import ingsw.model.DraftPool;
 import ingsw.model.ObjectiveTool;
 
 /**
+ * Author : Diego Zucca - Alessio Tonelli
+ *
  * Tool card number 10
  */
 public class Tool10 implements ToolStrategy {

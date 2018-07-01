@@ -5,6 +5,8 @@ import ingsw.model.Player;
 import static java.lang.Math.min;
 
 /**
+ * Author : Diego Zucca
+ *
  * Public card number 7
  */
 public class PB7 implements PBStrategy {

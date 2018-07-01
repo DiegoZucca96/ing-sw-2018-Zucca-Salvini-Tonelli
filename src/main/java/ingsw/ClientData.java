@@ -1,5 +1,8 @@
 package ingsw;
 
+/**
+ * Author: Elio Salvini
+ */
 public class ClientData {
 
     private String name;            //nome dell'account

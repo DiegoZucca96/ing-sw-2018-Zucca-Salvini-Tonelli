@@ -27,7 +27,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**This is class in which you play actually.*/
+/**
+ * Author : Alessio Tonelli - Diego Zucca
+ * This is class in which you play actually.*/
 public class PlayGame {
     private Label clockLbl;
     private int timeseconds;

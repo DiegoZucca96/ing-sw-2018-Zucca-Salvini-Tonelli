@@ -4,6 +4,8 @@ import ingsw.model.ViewData;
 import ingsw.model.windowpattern.WindowPattern;
 
 /**
+ * Author : Diego Zucca - Elio Salvini
+ *
  * This is the Window observer
  */
 public class WindowPatternObserver implements Observer {

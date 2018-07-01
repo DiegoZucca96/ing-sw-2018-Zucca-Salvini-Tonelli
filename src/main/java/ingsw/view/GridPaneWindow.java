@@ -13,7 +13,9 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.util.ArrayList;
 
-/**This is the class dedicated to my Window Pattern*/
+/**
+ * Author : Alessio Tonelli - Diego Zucca
+ * This is the class dedicated to my Window Pattern*/
 public class GridPaneWindow extends GridPane {
 
     private ArrayList<DieInfo> dieInfos = new ArrayList<>();

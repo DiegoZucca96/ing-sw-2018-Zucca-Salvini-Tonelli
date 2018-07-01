@@ -5,6 +5,8 @@ import ingsw.model.publiccard.PB9;
 import java.util.ArrayList;
 
 /**
+ * Author : Diego Zucca
+ *
  * This class creates in a random way the public cards of the match and it implements the pattern Strategy
  */
 public class PBObjectiveCard {

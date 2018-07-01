@@ -6,6 +6,9 @@ import ingsw.model.ViewWP;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Author: Elio Salvini
+ */
 public class AccessGame {
 
     private Client client;

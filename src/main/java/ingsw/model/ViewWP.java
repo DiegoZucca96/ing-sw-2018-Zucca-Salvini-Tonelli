@@ -3,6 +3,8 @@ package ingsw.model;
 import java.io.Serializable;
 
 /**
+ * Author : Diego Zucca - Alessio Tonelli
+ *
  * This class contains the graphic information of the windows
  */
 public class ViewWP implements Serializable {

@@ -3,6 +3,8 @@ package ingsw.model;
 import java.util.ArrayList;
 
 /**
+ * Author : Diego Zucca - Alessio Tonelli
+ *
  * Class that stores the parameters coming from the client for the use of tool cards
  */
 public class PlayerToolParameter {
