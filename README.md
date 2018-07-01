@@ -85,7 +85,7 @@ Factory has been adopted due to the choice of the map. When a user chooses Wp be
 instance of WindowPFactory which has method createWindowPattern(parameter).
 Every Wp is identified by a number, so in this case using this number as parameter the Match can create the correct Wp and assign it to the correct player.
 
-### Rendering
+### Dynamic Rendering (Advanced Feature)
 
 Window Patterns' item requires a more specific description. In fact, there is a detailed work done on it.
 One of the Advanced Feature required by Politecnico di Milano is to realize a system able to upload dynamic Wps and makes 
