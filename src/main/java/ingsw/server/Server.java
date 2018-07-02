@@ -1,5 +1,8 @@
-package ingsw;
+package ingsw.server;
 
+import ingsw.ClientData;
+import ingsw.ClientState;
+import ingsw.ServerHandler;
 import ingsw.controller.Controller;
 import ingsw.controller.RMIController;
 import java.io.IOException;

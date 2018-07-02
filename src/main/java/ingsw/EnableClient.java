@@ -1,5 +1,7 @@
 package ingsw;
 
+import ingsw.server.Server;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 

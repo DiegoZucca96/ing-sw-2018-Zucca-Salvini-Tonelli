@@ -1,6 +1,6 @@
 package ingsw.ConnectionTest;
 
-import ingsw.Server;
+import ingsw.server.Server;
 import ingsw.ServerHandler;
 import ingsw.controller.Controller;
 import ingsw.controller.RMIController;

@@ -1,6 +1,6 @@
 package ingsw.ConnectionTest;
 
-import ingsw.Server;
+import ingsw.server.Server;
 import ingsw.controller.RMIController;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,8 +8,6 @@ import org.junit.Test;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.ArrayList;
-
 
 
 public class ServerRMITest {
