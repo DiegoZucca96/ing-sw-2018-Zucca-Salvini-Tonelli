@@ -1,9 +1,8 @@
 package ingsw;
 
 import ingsw.controller.RMIController;
-import ingsw.model.PlayerToolParameter;
 import ingsw.model.ViewWP;
-import ingsw.view.ToolView;
+import ingsw.view.GUI.ToolView;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

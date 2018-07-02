@@ -3,7 +3,7 @@ package ingsw.controller;
 import ingsw.*;
 import ingsw.model.*;
 import ingsw.model.windowpattern.WindowPattern;
-import ingsw.view.ToolView;
+import ingsw.view.GUI.ToolView;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
