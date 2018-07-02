@@ -1,4 +1,4 @@
-package ingsw.view;
+package ingsw.view.GUI;
 
 import javafx.scene.layout.Background;
 

@@ -3,17 +3,14 @@ package ingsw;
 import ingsw.controller.RMIController;
 import ingsw.model.ViewWP;
 import ingsw.model.ViewData;
-import ingsw.view.ToolView;
-import ingsw.view.Warning;
+import ingsw.view.GUI.ToolView;
+import ingsw.view.GUI.Warning;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.net.InetAddress;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.ScheduledExecutorService;
 
 /**

@@ -1,4 +1,4 @@
-package ingsw.view;
+package ingsw.view.GUI;
 
 import javafx.animation.Transition;
 import javafx.scene.Group;

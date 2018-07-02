@@ -1,4 +1,4 @@
-package ingsw.view;
+package ingsw.view.GUI;
 
 
 import ingsw.Client;
@@ -25,7 +25,6 @@ import javafx.util.Duration;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Author : Alessio Tonelli - Diego Zucca

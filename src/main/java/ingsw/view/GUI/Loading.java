@@ -1,4 +1,4 @@
-package ingsw.view;
+package ingsw.view.GUI;
 
 import ingsw.Client;
 import ingsw.model.ViewWP;
@@ -16,7 +16,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import java.io.IOException;
 
 /**Author : Alessio Tonelli - Diego Zucca
  *

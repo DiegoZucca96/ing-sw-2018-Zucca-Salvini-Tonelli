@@ -1,4 +1,4 @@
-package ingsw.view;
+package ingsw.view.GUI;
 
 import ingsw.Client;
 import javafx.scene.Scene;

@@ -1,4 +1,4 @@
-package ingsw.view;
+package ingsw.view.GUI;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -2,7 +2,7 @@ package ingsw;
 
 import ingsw.model.ViewWP;
 import ingsw.model.ViewData;
-import ingsw.view.ToolView;
+import ingsw.view.GUI.ToolView;
 import java.io.IOException;
 import java.util.ArrayList;
 

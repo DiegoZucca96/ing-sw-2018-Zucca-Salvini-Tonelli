@@ -1,4 +1,4 @@
-package ingsw.view;
+package ingsw.view.GUI;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
