@@ -44,7 +44,7 @@ public class PB5 implements PBStrategy {
 
     /**Author: Elio Salvini
      *
-     * CLI support
+     * cli support
      */
     @Override
     public String toString() {

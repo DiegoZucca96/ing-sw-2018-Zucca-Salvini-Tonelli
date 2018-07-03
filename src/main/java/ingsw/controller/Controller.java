@@ -4,7 +4,7 @@ import ingsw.*;
 import ingsw.model.*;
 import ingsw.model.windowpattern.WindowPattern;
 import ingsw.server.Server;
-import ingsw.view.GUI.ToolView;
+import ingsw.view.gui.ToolView;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -1010,7 +1010,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
 
     /**Author: Elio Salvini
      *
-     *CLI support
+     *cli support
      *
      * ???
      */
@@ -1031,7 +1031,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
         }
         return init;
     }
-    /**End CLI support*/
+    /**End cli support*/
 
     /**
      * Simple method that creates the instance of the match only if it not exists, otherwise it returns that instance

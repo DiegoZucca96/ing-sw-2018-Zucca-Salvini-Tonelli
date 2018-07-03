@@ -4,7 +4,7 @@ import ingsw.ClientState;
 import ingsw.ServerHandler;
 import ingsw.model.ViewData;
 import ingsw.model.ViewWP;
-import ingsw.view.GUI.ToolView;
+import ingsw.view.gui.ToolView;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;

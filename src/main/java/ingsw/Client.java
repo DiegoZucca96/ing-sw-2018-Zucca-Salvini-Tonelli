@@ -2,7 +2,7 @@ package ingsw;
 
 import ingsw.model.ViewWP;
 import ingsw.model.ViewData;
-import ingsw.view.GUI.ToolView;
+import ingsw.view.gui.ToolView;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -123,19 +123,19 @@ public interface Client {
 
     /**
      *
-     * @return an object containing all necessary data to render view GUI side
+     * @return an object containing all necessary data to render view gui side
      */
     ViewData initializeView();
 
     /**
      *
-     * @return an object containing all necessary data to render view CLI side
+     * @return an object containing all necessary data to render view cli side
      */
     ViewData initializeViewCLI();
 
     /**
      *
-     * @return an object containing all necessary data to update view GUI and CLI side
+     * @return an object containing all necessary data to update view gui and cli side
      */
     ViewData updateView();
 

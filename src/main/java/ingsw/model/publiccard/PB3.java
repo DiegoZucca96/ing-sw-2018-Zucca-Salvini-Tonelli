@@ -50,7 +50,7 @@ public class PB3 implements PBStrategy {
 
     /**Author: Elio Salvini
      *
-     * CLI support
+     * cli support
      */
     @Override
     public String toString() {

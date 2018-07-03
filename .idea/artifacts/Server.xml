@@ -89,8 +89,8 @@
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/codehaus/plexus/plexus-interpolation/1.11/plexus-interpolation-1.11.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/ow2/asm/asm-analysis/6.0/asm-analysis-6.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.2/commons-codec-1.2.jar" path-in-jar="/" />
-      <element id="dir-copy" path="$PROJECT_DIR$/src/main/java/images" />
       <element id="dir-copy" path="$PROJECT_DIR$/target/classes/ingsw" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src/main/java/images" />
     </root>
   </artifact>
 </component>

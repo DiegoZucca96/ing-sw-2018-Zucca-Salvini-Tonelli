@@ -3,7 +3,7 @@ package ingsw;
 import ingsw.controller.RMIController;
 import ingsw.model.ViewWP;
 import ingsw.server.Server;
-import ingsw.view.GUI.ToolView;
+import ingsw.view.gui.ToolView;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

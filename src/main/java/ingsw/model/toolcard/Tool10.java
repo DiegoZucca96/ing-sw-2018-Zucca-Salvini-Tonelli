@@ -92,7 +92,7 @@ public class Tool10 implements ToolStrategy {
 
     /** Author: Elio Salvini
      *
-     * CLI support
+     * cli support
      */
     @Override
     public String toString() {

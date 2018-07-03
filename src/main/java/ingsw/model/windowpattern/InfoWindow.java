@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**Author : Alessio Tonelli
  *
  *
- * TAKE WP'S INFO FROM XML FILE AND SEND IT TO THE GUI AND MODEL*/
+ * TAKE WP'S INFO FROM XML FILE AND SEND IT TO THE gui AND MODEL*/
 public class InfoWindow implements Serializable {
 
     private String name;

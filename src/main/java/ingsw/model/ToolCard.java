@@ -198,7 +198,7 @@ public class ToolCard {
 
     /** Author: Elio Salvini
      *
-     * CLI support
+     * cli support
      */
     public String toStringCLI(){
         return toolStrategy.toString();
