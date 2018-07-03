@@ -17,6 +17,14 @@ public class ToString {
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
+    public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
+    public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
+    public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
+    public static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
+    public static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
+    public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
+    public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
+    public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
     public static String printColored(String color, String message){
         return color + message + ANSI_RESET;
@@ -39,20 +47,20 @@ public class ToString {
         if(infoCell.getDie() != null) return viewDieToString(infoCell.getDie());
         String result = "";
         switch (infoCell.getNum()){
-            case 1: result = "1"; break;
-            case 2: result = "2"; break;
-            case 3: result = "3"; break;
-            case 4: result = "4"; break;
-            case 5: result = "5"; break;
-            case 6: result = "6"; break;
+            case 1: result = " 1 "; break;
+            case 2: result = " 2 "; break;
+            case 3: result = " 3 "; break;
+            case 4: result = " 4 "; break;
+            case 5: result = " 5 "; break;
+            case 6: result = " 6 "; break;
             default:
                 switch (infoCell.getColor()){
-                    case GREEN: result = printColored(ANSI_GREEN,"G"); break;
-                    case BLUE: result = printColored(ANSI_CYAN,"B"); break;
-                    case RED: result = printColored(ANSI_RED,"R"); break;
-                    case YELLOW: result = printColored(ANSI_YELLOW,"Y"); break;
-                    case VIOLET: result = printColored(ANSI_PURPLE,"V"); break;
-                    case WHITE: result = printColored(ANSI_WHITE,"W"); break;
+                    case GREEN: result = printColored(ANSI_GREEN," G "); break;
+                    case BLUE: result = printColored(ANSI_CYAN," B "); break;
+                    case RED: result = printColored(ANSI_RED," R "); break;
+                    case YELLOW: result = printColored(ANSI_YELLOW," Y "); break;
+                    case VIOLET: result = printColored(ANSI_PURPLE," V "); break;
+                    case WHITE: result = printColored(ANSI_WHITE," W "); break;
             }
         }
 
@@ -63,14 +71,14 @@ public class ToString {
         if (die.substring(die.indexOf('(')+1, die.indexOf(',')).equals("0")) return "empty";
         String result = "";
         switch (die.substring(die.indexOf(',')+1, die.indexOf(')'))){
-            case "RED": result = result + ANSI_RED; break;
-            case "GREEN": result = result + ANSI_GREEN; break;
-            case "YELLOW": result = result + ANSI_YELLOW; break;
-            case "VIOLET": result = result + ANSI_PURPLE; break;
-            case "BLUE": result = result + ANSI_CYAN; break;
+            case "RED": result = result + ANSI_RED_BACKGROUND + ANSI_BLACK; break;
+            case "GREEN": result = result + ANSI_GREEN_BACKGROUND + ANSI_BLACK; break;
+            case "YELLOW": result = result + ANSI_YELLOW_BACKGROUND + ANSI_BLACK; break;
+            case "VIOLET": result = result + ANSI_PURPLE_BACKGROUND + ANSI_BLACK; break;
+            case "BLUE": result = result + ANSI_CYAN_BACKGROUND + ANSI_BLACK; break;
             default: break;
         }
-        return result + die.substring(die.indexOf('(')+1, die.indexOf(',')) + ANSI_RESET;
+        return result + " " + die.substring(die.indexOf('(')+1, die.indexOf(',')) + " " + ANSI_RESET;
     }
 
     public static String viewPVCardToString(String card){

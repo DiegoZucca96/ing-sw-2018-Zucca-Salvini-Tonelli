@@ -1,6 +1,6 @@
 package ingsw.view.cli;
 
-import ingsw.Client;
+import ingsw.client.Client;
 import ingsw.model.ViewData;
 import ingsw.model.ViewWP;
 
@@ -27,6 +27,7 @@ public class PlayGame {
         this.client = client;
         in = new Scanner(System.in);
         newTurn = true;
+        timerAlreadyStarted = false;
         dieAlreadyTaken = false;
         toolCardAlreadyUsed = false;
         timerStopped = false;
@@ -74,14 +75,19 @@ public class PlayGame {
     }
 
     public void availableCommands() {
-        //the match is finished
-        if (client.isFinish()){
-            endGame();
-            return;
-        }
 
         //time's out, return to login
-        if (timeOut) Main.accessGame(true);
+        if (timeOut) {
+            timeOut = false;
+            Main.accessGame(true);
+        }
+
+        //the match is finished
+        boolean onlyOnePlayer = client.iAmAlone();
+        if (client.isFinish() || onlyOnePlayer){
+            endGame(onlyOnePlayer);
+            return;
+        }
 
         //initializing new turn
         if(newTurn) {
@@ -95,14 +101,24 @@ public class PlayGame {
             if(client.getRound() == 10 && !client.getClockwiseRound()){
                 client.calculateScore();
             }
-            timerStopped = true;
             myTurnCommands();
         } else {
             waitingForMyTurnCommands();
         }
     }
 
-    private void endGame() {
+    private void endGame(boolean onlyOnePlayer) {
+
+        //victory due to retreat of others players
+        if(onlyOnePlayer){
+            System.out.println("\nAll others players has retreated from match");
+            System.out.println(ToString.printColored(ToString.ANSI_BLUE,"You are the winner"));
+            Main.setEndGame(true);
+            timerStopped = true;
+            return;
+        }
+
+        //standard victory
         System.out.println("");
         for (String player: client.getListOfPlayers()){
             System.out.println(player + "'s score is: " + ToString.printColored(ToString.ANSI_BLUE, Integer.toString(client.getScore(player))));
@@ -116,15 +132,24 @@ public class PlayGame {
 
     private void waitingForMyTurnCommands() {
         int turnDuration = client.getTimeMove();
+
+        //Connection error detected
+        if (turnDuration == -1000) Main.accessGame(true);
+
+        //Available commands
         System.out.println(ToString.printColored(ToString.ANSI_BLUE, "It's " + client.getCurrentPlayer() + "'s turn"));
         System.out.println("This turn will end in " + turnDuration + " seconds");
         System.out.println("Choose a command:");
         System.out.println("1 - Refresh view");
         System.out.println("2 - Exit");
+
+        /*start timer
         if (!timerAlreadyStarted) {
             new Timer(turnDuration, client, this).start();
             timerAlreadyStarted = true;
-        }
+        }*/
+
+        //player's commands
         int choice = Main.validateIntegerInput(1, 2);
         switch (choice) {
             case 1:
@@ -141,6 +166,11 @@ public class PlayGame {
 
     private void myTurnCommands() {
         int turnDuration = client.getTimeMove();
+
+        //Connection error detected
+        if (turnDuration == -1000) Main.accessGame(true);
+
+        //Available commands
         System.out.println(ToString.printColored(ToString.ANSI_BLUE, "It's your turn"));
         System.out.println("Your turn will end in " + turnDuration + " seconds");
         System.out.println("Choose a command:");
@@ -149,11 +179,16 @@ public class PlayGame {
         System.out.println("3 - Refresh view");
         System.out.println("4 - End turn");
         System.out.println("5 - Exit");
+
+        //start timer
         if (!timerAlreadyStarted) {
             new Timer(turnDuration, client, this).start();
             timerAlreadyStarted = true;
         }
+
+        //player's commands
         int choice = Main.validateIntegerInput(1, 5);
+        if(timeOut) return;
         switch (choice) {
             case 1:
                 printCommandSeparator();
@@ -224,6 +259,7 @@ public class PlayGame {
         if (toolCardChosen == 0) return;
         String toolCard = init.getToolCardsCLI().get(toolCardChosen-1);
         String toolCardName = toolCard.substring(0,toolCard.indexOf('\n'));
+        toolCardChosen -= 1;
         switch (toolCardName){
             case "Pinza Sgrossatrice": ToolCard.toolCard1(this, toolCardChosen); break;
             case "Pennello per Eglomise": ToolCard.toolCard2(this, toolCardChosen); break;
@@ -360,7 +396,7 @@ public class PlayGame {
     private void printPBCards(){
         System.out.println("Public objective cards:\n");
         int i =1;
-        for(String card: init.getPbCard()){
+        for(String card: init.getPbCardsCLI()){
             System.out.println(i + " - " + card);
             i++;
         }
@@ -373,7 +409,7 @@ public class PlayGame {
             System.out.print(i + " - " + card);
             if(initialization) System.out.println("Cost: 1 token\n");
             else {
-                if(toolCardsUsedOnce[i-1]) System.out.println("Cost: 2 token\n");
+                if(toolCardsUsedOnce[i-1]) System.out.println("Cost: 2 tokens\n");
                 else System.out.println("Cost: 1 token\n");
             }
             i++;

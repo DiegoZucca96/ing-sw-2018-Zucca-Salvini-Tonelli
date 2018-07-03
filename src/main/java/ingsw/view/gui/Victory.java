@@ -1,6 +1,6 @@
 package ingsw.view.gui;
 
-import ingsw.Client;
+import ingsw.client.Client;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;

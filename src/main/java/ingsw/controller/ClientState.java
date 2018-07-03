@@ -1,4 +1,4 @@
-package ingsw;
+package ingsw.controller;
 
 /**
  * Author: Elio Salvini

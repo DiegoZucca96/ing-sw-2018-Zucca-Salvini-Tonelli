@@ -1,4 +1,4 @@
-package ingsw;
+package ingsw.client;
 
 import ingsw.model.ViewWP;
 import ingsw.model.ViewData;
@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Author: Elio Salvini
+ * Author: Elio Salvini - Diego Zucca
  */
 
 public interface Client {

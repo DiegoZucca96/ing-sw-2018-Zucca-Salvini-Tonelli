@@ -1,4 +1,4 @@
-package ingsw;
+package ingsw.client;
 
 import ingsw.controller.RMIController;
 import ingsw.model.ViewWP;
@@ -14,19 +14,21 @@ import java.util.ArrayList;
 import java.util.concurrent.ScheduledExecutorService;
 
 /**
- * Author : Diego Zucca
+ * Author : Diego Zucca - Elio Salvini
  */
 public class ClientRMI implements Client {
 
-    private String name;
-    private RMIController controller;
-    private ScheduledExecutorService executorService = null;
+    private String name;                                        //player's nickname
+    private RMIController controller;                           //game's controller
+    private ScheduledExecutorService executorService = null;    //???
 
+    /**
+     * Method that launches the RMI client
+     * @param hostAddress   server IP address
+     * @throws IOException  in case of connection errors
+     */
     public void startClient(String hostAddress) throws IOException{
         Registry registry = LocateRegistry.getRegistry(hostAddress,1081);
-        /*System.out.println(InetAddress.getLocalHost().getHostName());
-        System.out.println(Arrays.toString(InetAddress.getLocalHost().getAddress()));
-        */
         try {
             controller = (RMIController) registry.lookup("controller");
         } catch (NotBoundException e) {
@@ -34,6 +36,10 @@ public class ClientRMI implements Client {
         }
     }
 
+    /**
+     * simple setter
+     * @param controller    new controller
+     */
     public void setController(RMIController controller) {
         this.controller = controller;
     }

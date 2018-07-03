@@ -1,11 +1,9 @@
 package ingsw.ConnectionTest;
 
-import ingsw.ClientRMI;
+import ingsw.client.ClientRMI;
 import ingsw.controller.RMIController;
-import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;

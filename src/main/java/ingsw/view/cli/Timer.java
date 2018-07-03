@@ -1,6 +1,6 @@
 package ingsw.view.cli;
 
-import ingsw.Client;
+import ingsw.client.Client;
 
 /**
  * Author: Elio Salvini
@@ -36,8 +36,8 @@ public class Timer extends Thread {
             remainingSeconds--;
         }
         if (playerState.equals("enabled")){
+            System.out.println(ToString.printColored(ToString.ANSI_RED,"Time's out!"));
             if (!client.getActive()) {
-                System.out.println(ToString.printColored(ToString.ANSI_RED,"Time's out!"));
                 playGame.setTimeOut(true);
             }
         }

@@ -1,8 +1,8 @@
-package ingsw;
+package ingsw.server;
 
+import ingsw.controller.DisconnectedClient;
 import ingsw.controller.RMIController;
 import ingsw.model.ViewWP;
-import ingsw.server.Server;
 import ingsw.view.gui.ToolView;
 
 import java.io.IOException;
@@ -16,18 +16,30 @@ import java.util.Scanner;
 
 /**
  * Author: Elio Salvini
+ *
+ * Class that manages the socket connection with one client.
+ * Each instance of this class answers only to one client's request, than the connection is closed
+ *
+ * @see Server
+ * @see ingsw.controller.Controller
  */
 public class ServerHandler implements Runnable {
 
-    private Server server;
-    private RMIController controller;
-    private String clientName;
-    private Socket socket;
+    private Server server;              //instance of server
+    private RMIController controller;   //reference to controller
+    private String clientName;          //nickname of player who is connected with this instance of ServerHandler
+    private Socket socket;              //socket started with the client connected to this instance
+
+    //Objects to support socket connection
     private Scanner in;
     private PrintWriter out;
     private ObjectInputStream is;
     private ObjectOutputStream os;
 
+    /**
+     * Constructor that sets up the connection
+     * @param socket
+     */
     public ServerHandler(Socket socket){
         this.socket=socket;
         server = Server.instance(1080);
@@ -40,24 +52,30 @@ public class ServerHandler implements Runnable {
         }catch(IOException e){
             System.err.println(e.getMessage());
             try {
-                server.setClientState(clientName, new DisconnectedClient());
+                server.setClientState(clientName, new DisconnectedClient());    //in case of connection error
             } catch (RemoteException e1) {
                 e1.printStackTrace();
             }
         }
     }
 
+    /**
+     * Method that processes the client's requests an through controller produces answers that sends back.
+     * This method is used to answer one client's request, than the connection is closed
+     */
     public void run(){
         String request;
         String command;
         String parameter;
 
+        //setup an reading of client's request
         setup();
         request = in.nextLine();
         command = request.substring(0,request.indexOf(':'));
         if(request.indexOf(':') != request.length()-1) parameter = request.substring(request.indexOf(':')+1, request.length());
         else parameter = null;
 
+        //processing client's request
         try{
             if (command.equals("login")) login(parameter);
             else if (command.equals("register")) register(parameter);
@@ -105,6 +123,8 @@ public class ServerHandler implements Runnable {
             else if (command.equals("someoneLeftGame")) someoneLeftGame();
             else if (command.equals("someoneRejoinedGame")) someoneRejoinedGame();
             else if (command.equals("stopTimer")) stopTimer();
+
+            //close connection
             closeConnection();
         }
          catch (IOException e) {
@@ -117,10 +137,17 @@ public class ServerHandler implements Runnable {
          }
     }
 
+    /**
+     * method that memorizes the nickname of player that is using the connected client
+     */
     private void setup(){
         clientName = in.nextLine();
     }
 
+    /**
+     * Method that closes the socket connection
+     * @throws IOException in case of connection errors
+     */
     private void closeConnection() throws IOException {
         socket.close();
         in.close();
@@ -128,6 +155,10 @@ public class ServerHandler implements Runnable {
         os.close();
         is.close();
     }
+
+    /**
+     * Series of private methods that completes the communication between client and controller
+     */
 
     private void login(String parameter) throws RemoteException {
         out.println(controller.login(parameter));

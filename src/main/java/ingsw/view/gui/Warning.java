@@ -1,6 +1,6 @@
 package ingsw.view.gui;
 
-import ingsw.Client;
+import ingsw.client.Client;
 import javafx.animation.PauseTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
