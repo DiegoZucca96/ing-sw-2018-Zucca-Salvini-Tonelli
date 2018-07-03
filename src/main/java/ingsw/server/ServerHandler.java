@@ -38,7 +38,7 @@ public class ServerHandler implements Runnable {
 
     /**
      * Constructor that sets up the connection
-     * @param socket
+     * @param socket    socket that refers to the connection between client and server
      */
     public ServerHandler(Socket socket){
         this.socket=socket;
