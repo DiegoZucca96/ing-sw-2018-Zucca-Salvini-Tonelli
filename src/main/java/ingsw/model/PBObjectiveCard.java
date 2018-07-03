@@ -74,52 +74,52 @@ public class PBObjectiveCard {
             int select = rg.random();
             switch(select){
                 case 1:{
-                    init.getPbCard().add("/Public1.png");
+                    init.getPbCard().add("/Public1.PNG");
                     numPBcards.add(select);
                     break;
                 }
                 case 2:{
-                    init.getPbCard().add("/Public2.png");
+                    init.getPbCard().add("/Public2.PNG");
                     numPBcards.add(select);
                     break;
                 }
                 case 3:{
-                    init.getPbCard().add("/Public3.png");
+                    init.getPbCard().add("/Public3.PNG");
                     numPBcards.add(select);
                     break;
                 }
                 case 4:{
-                    init.getPbCard().add("/Public4.png");
+                    init.getPbCard().add("/Public4.PNG");
                     numPBcards.add(select);
                     break;
                 }
                 case 5:{
-                    init.getPbCard().add("/Public5.png");
+                    init.getPbCard().add("/Public5.PNG");
                     numPBcards.add(select);
                     break;
                 }
                 case 6:{
-                    init.getPbCard().add("/Public6.png");
+                    init.getPbCard().add("/Public6.PNG");
                     numPBcards.add(select);
                     break;
                 }
                 case 7:{
-                    init.getPbCard().add("/Public7.png");
+                    init.getPbCard().add("/Public7.PNG");
                     numPBcards.add(select);
                     break;
                 }
                 case 8:{
-                    init.getPbCard().add("/Public8.png");
+                    init.getPbCard().add("/Public8.PNG");
                     numPBcards.add(select);
                     break;
                 }
                 case 9:{
-                    init.getPbCard().add("/Public9.png");
+                    init.getPbCard().add("/Public9.PNG");
                     numPBcards.add(select);
                     break;
                 }
                 case 10:{
-                    init.getPbCard().add("/Public10.png");
+                    init.getPbCard().add("/Public10.PNG");
                     numPBcards.add(select);
                     break;
                 }

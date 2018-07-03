@@ -116,42 +116,42 @@ public class ToolCard {
                     break;
                 }
                 case 5:{
-                    init.getToolCard().add("/Tool5+0.png");
+                    init.getToolCard().add("/Tool5+0.PNG");
                     numToolCards.add(select);
                     break;
                 }
                 case 6:{
-                    init.getToolCard().add("/Tool6+0.png");
+                    init.getToolCard().add("/Tool6+0.PNG");
                     numToolCards.add(select);
                     break;
                 }
                 case 7:{
-                    init.getToolCard().add("/Tool7+0.png");
+                    init.getToolCard().add("/Tool7+0.PNG");
                     numToolCards.add(select);
                     break;
                 }
                 case 8:{
-                    init.getToolCard().add("/Tool8+0.png");
+                    init.getToolCard().add("/Tool8+0.PNG");
                     numToolCards.add(select);
                     break;
                 }
                 case 9:{
-                    init.getToolCard().add("/Tool9+0.png");
+                    init.getToolCard().add("/Tool9+0.PNG");
                     numToolCards.add(select);
                     break;
                 }
                 case 10:{
-                    init.getToolCard().add("/Tool10+0.png");
+                    init.getToolCard().add("/Tool10+0.PNG");
                     numToolCards.add(select);
                     break;
                 }
                 case 11:{
-                    init.getToolCard().add("/Tool11+0.png");
+                    init.getToolCard().add("/Tool11+0.PNG");
                     numToolCards.add(select);
                     break;
                 }
                 case 12:{
-                    init.getToolCard().add("/Tool12+0.png");
+                    init.getToolCard().add("/Tool12+0.PNG");
                     numToolCards.add(select);
                     break;
                 }
