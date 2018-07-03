@@ -50,19 +50,19 @@ public class PVObjectiveCard {
     public static String getPVCard(Color select) {
         switch(select){
             case RED:{
-                return "/Private1.png";
+                return "/Private1.PNG";
             }
             case YELLOW:{
-                return "/Private2.png";
+                return "/Private2.PNG";
             }
             case GREEN:{
-                return "/Private3.png";
+                return "/Private3.PNG";
             }
             case BLUE:{
-                return "/Private4.png";
+                return "/Private4.PNG";
             }
             case VIOLET:{
-                return "/Private5.png";
+                return "/Private5.PNG";
             }
             default:{
                 return null;
