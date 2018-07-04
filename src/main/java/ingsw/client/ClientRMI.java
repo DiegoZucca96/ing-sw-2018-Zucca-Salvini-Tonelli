@@ -15,12 +15,14 @@ import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * Author : Diego Zucca - Elio Salvini
+ *
+ * This class contains all RMI methods to communicate with Controller
  */
 public class ClientRMI implements Client {
 
     private String name;                                        //player's nickname
     private RMIController controller;                           //game's controller
-    private ScheduledExecutorService executorService = null;    //???
+    private ScheduledExecutorService executorService = null;
 
     /**
      * Method that launches the RMI client

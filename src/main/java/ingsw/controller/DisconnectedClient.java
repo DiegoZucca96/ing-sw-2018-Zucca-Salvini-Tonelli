@@ -7,6 +7,8 @@ import java.rmi.server.UnicastRemoteObject;
 
 /**
  * Author: Diego Zucca
+ *
+ * This class is used to set the player's state to disconnected
  */
 public class DisconnectedClient extends UnicastRemoteObject implements ClientState {
 

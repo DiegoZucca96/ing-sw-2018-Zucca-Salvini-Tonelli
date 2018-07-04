@@ -326,7 +326,7 @@ public class Controller extends UnicastRemoteObject implements RMIController {
     }
 
     /**
-     * It simply add the window chosen by the client into a list
+     * It simply adds the window chosen by the client into a list
      * @param wpmodel it is the window chosen
      */
     @Override

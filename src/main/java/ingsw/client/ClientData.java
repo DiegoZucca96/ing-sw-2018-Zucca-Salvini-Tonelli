@@ -8,10 +8,10 @@ import ingsw.server.ServerHandler;
  */
 public class ClientData {
 
-    private String name;            //nome dell'account
-    private ClientState state;      //stato del client
-    private ServerHandler handler;  //thread che comunica con il client (solo pe socket)
-    private String connection;      //tipo di connessione
+    private String name;            //name of the account
+    private ClientState state;      //account's state
+    private ServerHandler handler;  //thread that communicates with client (only for socket)
+    private String connection;      //connection's type
 
     public ClientData(String name){
         this.name = name;

@@ -7,6 +7,8 @@ import java.rmi.server.UnicastRemoteObject;
 
 /**
  * Author: Elio Salvini
+ *
+ * This class is used to set the player's state to disable
  */
 public class DisableClient extends UnicastRemoteObject implements ClientState {
 

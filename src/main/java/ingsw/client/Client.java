@@ -40,28 +40,27 @@ public interface Client {
     ArrayList<ViewWP> getRandomWps();
 
     /**
-     * ???
-     * @param wp
+     * It adds the window chosen by the client into a Controller's list
+     * @param wp it is the window chosen
      */
     void addWP(ViewWP wp);
 
     /**
-     *
+     * Simply getter method
      * @return player's nickname list
      */
     ArrayList<String> getListOfPlayers();
 
     /**
-     * ???
-     * @return
+     * Simply getter method
+     * @return the Y coordinate selected by the player
      */
-    //Ritornano le coordinate cliccate dal giocatore
     int getCoordinateSelectedY();
 
     /**
      * This method allows player to take a die from the draft pool
-     * @param row   ???
-     * @param col   ???
+     * @param row it is the X coordinate of the DraftPool
+     * @param col it is the Y coordinate of the DraftPool
      * @return  false if player can't take the requested die
      */
     boolean takeDie(int row, int col);
@@ -96,22 +95,22 @@ public interface Client {
     boolean useToolCard(int i, ToolView parameter);
 
     /**
-     *
+     * Simply getter method
      * @return  player's state (during his turn the state is "enabled", if he's waiting for his turn the state
      *          is "disabled")
      */
     String getPlayerState();
 
     /**
-     *
+     * Simply getter method
      * @return number of match players
      */
     int getNumberOfPlayers();
 
     /**
-     *
-     * @param name  ???
-     * @return object used to render the windows pattern chosen by players
+     * Simply getter method
+     * @param name  it is the name of the player that wants to know the enemy's windows
+     * @return object used to render the windows pattern chosen by the other players
      */
     ArrayList<ViewWP> getPlayerWPs(String name);
 
@@ -122,55 +121,53 @@ public interface Client {
     boolean waitForPlayers();
 
     /**
-     *
+     * Simply getter method
      * @return an object containing all necessary data to render view gui side
      */
     ViewData initializeView();
 
     /**
-     *
+     * Simply getter method
      * @return an object containing all necessary data to render view cli side
      */
     ViewData initializeViewCLI();
 
     /**
-     *
+     * Simply getter method
      * @return an object containing all necessary data to update view gui and cli side
      */
     ViewData updateView();
 
     /**
-     *
+     * Simply getter method
      * @return true if the match can be started (after that players has chosen their windows pattern)
      */
     boolean readyToPlay();
 
     /**
-     *
+     * Simply getter method
      * @return client's name
      */
     String getName();
 
     /**
-     *  ???
-     * @param nameWindow
-     * @param nameClient
+     * It creates an HashMap with the name of client as key and the number of the window chosen by him as value.
+     * @param nameWindow it is the number associated to the window
+     * @param nameClient it is the name of the client
      */
-    //crea un hash di valori player-WP scelta (credo aggiunga la wp scelta all'hashmap del controller)
     void createHash(int nameWindow, String nameClient);
 
     /**
-     *
+     * Simply getter method
      * @param name player's name
      * @return  player's private objective card
      */
     String getPVCard(String name);
 
     /**
-     * ???
-     * @param active
+     * Simply setter method
+     * @param active it is the boolean value to set
      */
-    //serve per controllare che il client sia attivo
     void setActive(Boolean active);
 
     /**
@@ -181,31 +178,30 @@ public interface Client {
     boolean getActive();
 
     /**
-     *
+     * Simply getter method
      * @return seconds that player has to make a move
      */
     int getTimeMove();
 
     /**
-     *
+     * Simply getter method
      * @return player who has the right to play in the moment of the call of this method
      */
     String getCurrentPlayer();
 
     /**
-     * ???
+     * Simply setter method, it cancels the informations about the die and the coordinate selected by the player
      */
-    //Setta i valori di selection player a null in caso di annullamento della mossa
     void nullSelection();
 
     /**
-     *
+     * Simply getter method
      * @return current match round
      */
     int getRound();
 
     /**
-     *
+     * Simply getter method
      * @return true if match is already been found
      */
     boolean matchFound();
@@ -218,16 +214,14 @@ public interface Client {
     ViewWP getWP(String userName);
 
     /**
-     *  ???
+     * It orders the windows chosen by the players during the creation of the match
      */
-    //Ordina le windowChosen
-    void orderWPChoise();    //si scrive Choice...
+    void orderWPChoise();
 
     /**
-     *
+     * Simply getter method
      * @return true if match is finished
      */
-    //Va a controllare se la partita è giunta al termine
     boolean isFinish();
 
     /**
@@ -243,25 +237,27 @@ public interface Client {
     void calculateScore();
 
     /**
-     *
-     * @return match winner
+     * Simply getter method
+     * @return match's winner
      */
     String findWinner();
 
     /**
-     * ???
-     * @return
+     * Simply getter method
+     * @return a list of players ordered by their turn
      */
-    //Restituisce i nomi dei players (serve nella schermata finale di vittoria)
     ArrayList<String> getListOfMatchPlayers();
 
     /**
-     * ???
-     * @return
+     * Simply getter method
+     * @return true if the player has already inserted a die in his turn
      */
-    //i tre metodi sotto tengono conto del fatto che il giocatore abbia posizionato un dado o meno e se ha usato la tool8(per saltare il turno)
     boolean getInsertedDie();
 
+    /**
+     * Simply setter method
+     * @param b it is the value to be assigned
+     */
     void setInsertedDie(boolean b);
 
     /**
@@ -277,21 +273,21 @@ public interface Client {
     boolean getClockwiseRound();
 
     /**
-     *
+     * Simply getter method
      * @param name player's nickname
      * @return remaining player's tokens
      */
     int getTokenRemaining(String name);
 
     /**
-     *
+     * Simply getter method
      * @return true if player who calls this method is the only one active in game
      */
     boolean iAmAlone();
 
     /**
-     * ???
-     * @return
+     * Simply getter method
+     * @return the time that a player has to make his turn
      */
     int getStartTimeMove();
 
@@ -308,27 +304,25 @@ public interface Client {
 
     /**
      * This method allows player to stop the research of other players
-     * @param name ???
-     * @return ???
+     * @param name it is the name of the client
+     * @return true if the operation is done correctly
      */
-    //Per annullare la ricerca del giocatore
     boolean removePlayer(String name);
 
     /**
-     * Method to handle player's reconnection
-     * @return ???
+     * This method is used to notify the other players if someone has left the game, for any reason
+     * @return a list of the player's name that left the game
      */
-    //Per notificare se un giocatore è uscito o rientrato
     ArrayList<String> someoneLeftGame();
 
     /**
-     * Method to handle player's reconnection
-     * @return  ???
+     * This method is used to notify the other players if someone has rejoined the game
+     * @return a list of the player's name that has rejoined into the match
      */
     ArrayList<String> someoneRejoinedGame();
 
     /**
-     * This method allows to stop player's turn timer
+     * This method allows to stop player's turn timer (used to interrupt the timeline)
      */
     void stopTimer();
 }
