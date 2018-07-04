@@ -13,13 +13,6 @@ import java.util.ArrayList;
 public interface Client {
 
     /**
-     * This method begins connection with server
-     * @param hostAddress   server address
-     * @throws IOException  exception due to connection error
-     */
-    void startClient(String hostAddress) throws IOException;
-
-    /**
      * This method allows client to log in
      * @param nickname player's nickname (if he is registered)
      * @return false if player can't log in

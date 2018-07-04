@@ -38,18 +38,6 @@ public class ClientSocket implements Client {
         this.port = port;
     }
 
-    //deprecated
-    public static void main(String[] args) throws Exception{
-        ClientSocket clientSocket = new ClientSocket("127.0.0.1", 1080);
-        clientSocket.startClient("127.0.0.1");
-    }
-
-
-    @Override
-    public void startClient(String hostAddress) throws IOException {
-        //...
-    }
-
     /**
      * Method that set up the connection with server
      * @return  false in case of connection errors
