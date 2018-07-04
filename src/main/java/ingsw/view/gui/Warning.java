@@ -124,14 +124,14 @@ public class Warning {
         delay.play();
     }
 
-    /** Start new Round.
+    /** Notify when player esxits or enters.
      * @param message , comment on the scene
      * @param round , start a new round of the game
      */
     public Warning(String message, int round) {
         Stage stage = new Stage();
         Pane root = new Pane();
-        Scene scene = new Scene(root, 300, 100);
+        Scene scene = new Scene(root, 500, 100);
         Label label = new Label(message);
         label.setLayoutX(100);
         label.setLayoutY(50);
