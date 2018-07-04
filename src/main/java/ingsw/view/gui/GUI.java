@@ -56,6 +56,7 @@ public class GUI  {
         Image image1 = new Image(imagePath, 1200, 700, false, false);
         selectedImage.setImage(image1);
 
+
         //CREO BOTTONE PLAY
         Button btnPlay= new Button();
         btnPlay.setText("PLAY");
