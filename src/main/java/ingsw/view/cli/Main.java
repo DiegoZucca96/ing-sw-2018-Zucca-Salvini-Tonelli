@@ -89,6 +89,11 @@ public class Main {
         if (choice == 2) client = new ClientSocket(hostAddress, 1080);
         else {
             client = new ClientRMI();
+            try {
+                client.startClient(hostAddress);
+            } catch (Exception e) {
+                System.out.println(ToString.printColored(ToString.ANSI_RED, "Connection error detected"));
+            }
         }
         accessGame(false);
     }

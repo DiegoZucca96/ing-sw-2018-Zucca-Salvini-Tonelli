@@ -38,10 +38,15 @@ public class StartView extends Application {
      */
     public void setupConnection(String connectionType, String ip){
         if(connectionType.equals("socket")){
-            client = new ClientSocket(ip,1080);
+            client = new ClientSocket("127.0.0.1",1080);
             new GUI().display(client);
         } else if(connectionType.equals("RMI")){
             client = new ClientRMI();
+            try {
+                client.startClient("127.0.0.1");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             new GUI().display(client);
         }
     }

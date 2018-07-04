@@ -80,6 +80,11 @@ public class ClientSocket implements Client {
     }
 
     @Override
+    public void startClient(String hostAddress) throws IOException {
+        System.out.print("Client ready");
+    }
+
+    @Override
     public boolean login(String nickname) {
         setupConnection();
         name = nickname;

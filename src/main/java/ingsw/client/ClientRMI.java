@@ -6,6 +6,7 @@ import ingsw.model.ViewData;
 import ingsw.view.gui.ToolView;
 import ingsw.view.gui.Warning;
 import java.io.IOException;
+import java.rmi.ConnectException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -29,8 +30,9 @@ public class ClientRMI implements Client {
      * @param hostAddress   server IP address
      * @throws IOException  in case of connection errors
      */
-    public void startClient(String hostAddress) throws IOException{
-        Registry registry = LocateRegistry.getRegistry(hostAddress,1081);
+    @Override
+    public void startClient(String hostAddress) throws IOException {
+        Registry registry = LocateRegistry.getRegistry("localhost",1081);
         try {
             controller = (RMIController) registry.lookup("controller");
         } catch (NotBoundException e) {
