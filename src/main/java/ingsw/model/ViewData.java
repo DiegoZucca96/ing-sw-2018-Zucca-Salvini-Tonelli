@@ -15,8 +15,10 @@ public class ViewData implements Serializable {
     private ArrayList<String> toolCards;
 
     /** Author: Elio Salvini; support for cli */
-    private ArrayList<String> toolCardsCLI;     //to keep the toolCards field unchanged in order to avoid malfunctions related
-                                                //to the manipulation of strings in the tool card observers
+    /* this keeps the toolCards field unchanged in order to avoid malfunctions related
+       to the manipulation of strings in the tool card observers*/
+    private ArrayList<String> toolCardsCLI;
+    private ArrayList<String> pbCardsCLI;
     /** end support for cli*/
 
     private ArrayList<String> draftPoolDice;
@@ -143,11 +145,15 @@ public class ViewData implements Serializable {
         this.toolCardsCLI = toolCards;
     }
 
-    public void setPbCards(ArrayList<String> pbCards) {
-        this.pbCards = pbCards;
+    public void setPbCardsCLI(ArrayList<String> pbCards) {
+        this.pbCardsCLI = pbCards;
     }
 
     public ArrayList<String> getToolCardsCLI() {
         return toolCardsCLI;
+    }
+
+    public ArrayList<String> getPbCardsCLI() {
+        return pbCardsCLI;
     }
 }

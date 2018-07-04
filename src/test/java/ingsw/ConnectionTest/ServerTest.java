@@ -1,7 +1,7 @@
 package ingsw.ConnectionTest;
 
 import ingsw.server.Server;
-import ingsw.ServerHandler;
+import ingsw.server.ServerHandler;
 import ingsw.controller.Controller;
 import ingsw.controller.RMIController;
 import org.junit.Before;

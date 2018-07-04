@@ -1,4 +1,4 @@
-package ingsw;
+package ingsw.client;
 
 import ingsw.model.ViewWP;
 import ingsw.model.ViewData;
@@ -14,23 +14,31 @@ import java.util.Scanner;
 
 /**
  * Author: Elio Salvini
+ *
+ * Class that realizes socket connection with server
  */
 public class ClientSocket implements Client {
 
-    private String name;
-    private String ip;
-    private int port;
-    private Scanner in;
-    private PrintWriter out;
-    private ObjectInputStream is;
-    private ObjectOutputStream os;
-    private Socket socket;
+    private String name;            //player's nickname
+    private String ip;              //server IP address
+    private int port;               //server port
+    private Scanner in;             //scanner for socket connection
+    private PrintWriter out;        //printWriter for socket connection
+    private ObjectInputStream is;   //it is used to receive objects from server
+    private ObjectOutputStream os;  //it is used to send objects from server
+    private Socket socket;          //server socket
 
+    /**
+     * constructor
+     * @param ip server ip address
+     * @param port server port
+     */
     public ClientSocket(String ip, int port) {
         this.ip = ip;
         this.port = port;
     }
 
+    //deprecated
     public static void main(String[] args) throws Exception{
         ClientSocket clientSocket = new ClientSocket("127.0.0.1", 1080);
         clientSocket.startClient("127.0.0.1");
@@ -42,6 +50,10 @@ public class ClientSocket implements Client {
         //...
     }
 
+    /**
+     * Method that set up the connection with server
+     * @return  false in case of connection errors
+     */
     private boolean setupConnection(){
         try {
             socket = new Socket(ip, port);
@@ -57,6 +69,7 @@ public class ClientSocket implements Client {
         return true;
     }
 
+    //deprecated
     private void handleSetupConnectionError(){
         boolean setupError = true;
         while(setupError){
@@ -588,6 +601,10 @@ public class ClientSocket implements Client {
         return response;
     }
 
+    /**
+     * Method used to close the connection with server
+     * @return false in case of connection errors
+     */
     public boolean closeConnection() {
         try {
             in.close();

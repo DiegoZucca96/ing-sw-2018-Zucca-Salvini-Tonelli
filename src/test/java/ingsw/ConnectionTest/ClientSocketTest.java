@@ -1,14 +1,12 @@
 package ingsw.ConnectionTest;
 
-import ingsw.ClientSocket;
+import ingsw.client.ClientSocket;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

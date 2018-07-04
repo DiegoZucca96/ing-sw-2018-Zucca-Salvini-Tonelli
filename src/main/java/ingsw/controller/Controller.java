@@ -1,9 +1,9 @@
 package ingsw.controller;
 
-import ingsw.*;
 import ingsw.model.*;
 import ingsw.model.windowpattern.WindowPattern;
 import ingsw.server.Server;
+import ingsw.server.ServerHandler;
 import ingsw.view.gui.ToolView;
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -1010,18 +1010,19 @@ public class Controller extends UnicastRemoteObject implements RMIController {
 
     /**Author: Elio Salvini
      *
-     *cli support
+     *CLI support
      *
-     * ???
+     * This method is similar to initializeView(), it provides different data for rendering of
+     * public objective cards and tool cards
      */
     @Override
     public synchronized ViewData initializeViewCLI() throws RemoteException {
         match = instanceMatch();
         ViewData init = match.getInit();
         init.setWps(windowChosen);
-        //new lines
+        //new lines (respect initializeView())
         init.setToolCardsCLI(match.toolCardsToString());
-        init.setPbCards(match.pbCardsToString());
+        init.setPbCardsCLI(match.pbCardsToString());
         //end new lines
         enableClient(getCurrentPlayerName());
         if(startTimer==0){

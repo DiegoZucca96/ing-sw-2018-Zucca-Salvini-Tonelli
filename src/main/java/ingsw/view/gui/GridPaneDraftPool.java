@@ -1,6 +1,6 @@
 package ingsw.view.gui;
 
-import ingsw.Client;
+import ingsw.client.Client;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;

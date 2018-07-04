@@ -1,6 +1,6 @@
 package ingsw.view.gui;
 
-import ingsw.Client;
+import ingsw.client.Client;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.Label;

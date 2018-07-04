@@ -1,4 +1,7 @@
-package ingsw;
+package ingsw.client;
+
+import ingsw.controller.ClientState;
+import ingsw.server.ServerHandler;
 
 /**
  * Author: Elio Salvini

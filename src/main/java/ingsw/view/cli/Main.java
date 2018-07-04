@@ -1,8 +1,8 @@
 package ingsw.view.cli;
 
-import ingsw.Client;
-import ingsw.ClientRMI;
-import ingsw.ClientSocket;
+import ingsw.client.Client;
+import ingsw.client.ClientRMI;
+import ingsw.client.ClientSocket;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -66,14 +66,17 @@ public class Main {
         }
 
         System.out.println("Choose type of connection:\n1 - RMI\n2 - Socket");
-        int choice = validateIntegerInput(1,2);
+        int choice = 0;
+        while(choice == 0){
+            choice = validateIntegerInput(1,2);
+        }
         if (choice == 2) client = new ClientSocket(hostAddress, 1080);
         else {
             client = new ClientRMI();
             try {
                 client.startClient(hostAddress);
             } catch (IOException e) {
-                e.printStackTrace(); //TODO handle connection error
+                System.out.println(ToString.printColored(ToString.ANSI_RED, "Connection error detected"));
             }
         }
         accessGame(false);
@@ -84,10 +87,17 @@ public class Main {
     }
 
     //Access game (registration, login, window pattern choice,...)
-    public static void accessGame(Boolean onlyLogin){
+    public static void accessGame(Boolean reconnection){
+        boolean successfullyLoggedIn = false;
+        if (reconnection) System.out.println("\nReconnect to server");
         accessGame = new AccessGame(client);
-        if (!onlyLogin) while (!accessGame.register());
-        while (!accessGame.login());
+        while (!successfullyLoggedIn) {
+            System.out.println("Select operation:\n1 - Login\n2 - Registration");
+            int operation = validateIntegerInput(1, 2);
+            if (operation == 0) System.out.println(ToString.printColored(ToString.ANSI_RED, "Forbidden operation"));
+            if (operation == 1) successfullyLoggedIn = accessGame.login();
+            if (operation == 2) accessGame.register();
+        }
         accessGame.waitForPlayers();
         accessGame.chooseWPs();
         accessGame.waitForPlay();

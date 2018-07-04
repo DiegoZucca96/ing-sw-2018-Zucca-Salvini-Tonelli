@@ -1,7 +1,7 @@
 package ingsw.view.gui;
 
 
-import ingsw.Client;
+import ingsw.client.Client;
 import ingsw.model.ViewWP;
 import ingsw.model.ViewData;
 import javafx.animation.KeyFrame;

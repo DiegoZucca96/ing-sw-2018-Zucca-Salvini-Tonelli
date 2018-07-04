@@ -1,4 +1,4 @@
-package ingsw;
+package ingsw.controller;
 
 import ingsw.server.Server;
 
@@ -6,13 +6,13 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 /**
- * Author: Diego Zucca
+ * Author: Elio Salvini
  */
-public class DisconnectedClient extends UnicastRemoteObject implements ClientState {
+public class EnableClient extends UnicastRemoteObject implements ClientState {
 
     private Server server;
 
-    public DisconnectedClient() throws RemoteException {
+    public EnableClient() throws RemoteException {
         super();
         server = Server.instance(1080);
     }
@@ -24,6 +24,6 @@ public class DisconnectedClient extends UnicastRemoteObject implements ClientSta
     }
 
     public String toString(){
-        return "disconnected";
+        return "enabled";
     }
 }

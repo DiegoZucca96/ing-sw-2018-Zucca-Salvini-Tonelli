@@ -1,8 +1,8 @@
 package ingsw.view.gui;
 
-import ingsw.Client;
-import ingsw.ClientRMI;
-import ingsw.ClientSocket;
+import ingsw.client.Client;
+import ingsw.client.ClientRMI;
+import ingsw.client.ClientSocket;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;

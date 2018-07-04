@@ -1,6 +1,6 @@
 package ingsw.view.cli;
 
-import ingsw.Client;
+import ingsw.client.Client;
 import ingsw.model.ViewWP;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class AccessGame {
     public boolean login(){
         System.out.println("Login:\nEnter your username:");
         if (client.login(in.nextLine())){
-            System.out.println("Login successful");
+            System.out.println("Logged in successfully");
             return true;
         }
         else {
@@ -32,9 +32,9 @@ public class AccessGame {
     }
 
     public boolean register(){
-        System.out.println("Register:\nEnter your username:");
+        System.out.println("Registration:\nEnter your username:");
         if (client.register(in.nextLine())){
-            System.out.println("Register successful");
+            System.out.println("Registration completed successfully");
             return true;
         }
         else {
