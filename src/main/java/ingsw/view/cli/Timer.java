@@ -4,19 +4,30 @@ import ingsw.client.Client;
 
 /**
  * Author: Elio Salvini
+ *
+ * Timer used in PlayGame to verify that the player doesn't take too much time to make a move
  */
 public class Timer extends Thread {
 
-    private int remainingSeconds;
-    private Client client;
-    private PlayGame playGame;
+    private int remainingSeconds;   //remaining seconds before timeout
+    private Client client;          //player's client
+    private PlayGame playGame;      //reference to PlayGame
 
+    /**
+     * constructor
+     * @param remainingSeconds  remaining seconds before timeout
+     * @param client            player's client
+     * @param playGame          PlayGame reference
+     */
     public Timer(int remainingSeconds, Client client, PlayGame playGame){
         this.remainingSeconds = remainingSeconds;
         this.client = client;
         this.playGame = playGame;
     }
 
+    /**
+     * Execution of timer
+     */
     public void run(){
         String playerState = client.getPlayerState();
         try {
@@ -35,6 +46,8 @@ public class Timer extends Thread {
             }
             remainingSeconds--;
         }
+
+        //Time's out
         if (playerState.equals("enabled")){
             System.out.println(ToString.printColored(ToString.ANSI_RED,"Time's out!"));
             if (!client.getActive()) {
