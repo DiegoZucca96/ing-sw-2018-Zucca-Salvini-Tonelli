@@ -103,6 +103,8 @@ just to be sure the file will be found in the list.
 
 ## View
 
+#### GUI
+
 JavaFX and no fxml file used.
 
 Things begin with StartView. Simple Stage which allows the user to choose the connection (RMI or Socket).
@@ -125,7 +127,23 @@ be passed throws client.useTool(toolView) to controller and it will be elaborate
 
 Just to understand how it works we suggest you to read last paragraph and then try playing yourself.
 
+#### CLI
 
+The main way this CLI works is listing available commands to player, then it collects player’s input and validates it; if the input is incorrect the CLI requests player to insert a valid input, otherwise it executes the requested command.
+
+Whenever player wants, with the use of the special word “back”, he can return to the previous phase (when it’s possible).
+
+This CLI prints die using this format: 
+a number represents die’s value and the background colour represents die’s colour.
+
+It also prints windows pattern in this way:
+The character “|” separates two adjacent horizontal cells, the newline separates two adjacent vertical cells. Number constrains are represented with white coloured numbers; colour constrains are represented with the initial letter of the colour, this letter is coloured the same colour the constrain it refers. 
+
+Player’s view can be updated in any moment using the command “refresh view”.
+
+CLI structure:
+Main class runs the CLI using as support AccessGame and PlayGame classes. ToString class is used to convert objects sent by server in strings understandable by player. Timer class is used to notify timeouts. ToolCards class is used to contain code for the use of tool cards.   
+     
 ## Controller
 
 Controller has all the methods responsible for dialog between each component of the structure (timer, client, server, match...).
