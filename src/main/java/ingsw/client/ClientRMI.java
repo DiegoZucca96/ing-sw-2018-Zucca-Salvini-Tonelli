@@ -32,7 +32,7 @@ public class ClientRMI implements Client {
      */
     @Override
     public void startClient(String hostAddress) throws IOException {
-        Registry registry = LocateRegistry.getRegistry("localhost",1081);
+        Registry registry = LocateRegistry.getRegistry(hostAddress,1081);
         try {
             controller = (RMIController) registry.lookup("controller");
         } catch (NotBoundException e) {
