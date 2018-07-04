@@ -8,17 +8,27 @@ import java.util.Scanner;
 
 /**
  * Author: Elio Salvini
+ *
+ * Class that manages the player's access to game
  */
 public class AccessGame {
 
-    private Client client;
-    private Scanner in;
+    private Client client;  //player's client
+    private Scanner in;     //scanner to get player's input
 
+    /**
+     * constructor
+     * @param client    player's client
+     */
     public AccessGame(Client client){
         this.client = client;
         in = new Scanner(System.in);
     }
 
+    /**
+     * Method that manages the player's login to game
+     * @return true if player successfully logged in
+     */
     public boolean login(){
         System.out.println("Login:\nEnter your username:");
         if (client.login(in.nextLine())){
@@ -31,6 +41,10 @@ public class AccessGame {
         }
     }
 
+    /**
+     * Method that manages the player's registration to game
+     * @return true if player successfully registered to game
+     */
     public boolean register(){
         System.out.println("Registration:\nEnter your username:");
         if (client.register(in.nextLine())){
@@ -43,6 +57,9 @@ public class AccessGame {
         }
     }
 
+    /**
+     * Method that puts player on hold for window pattern choice
+     */
     public void waitForPlayers(){
         System.out.print("Waiting for players...");
         int loadingIndex = 0 ;
@@ -60,6 +77,9 @@ public class AccessGame {
         System.out.print("\n");
     }
 
+    /**
+     * Method that allows player to choice his window pattern
+     */
     public void chooseWPs(){
         System.out.println("Choose your window pattern:");
         ArrayList<ViewWP> wps = client.getRandomWps();
@@ -73,6 +93,9 @@ public class AccessGame {
         client.addWP(wps.get(choice));
     }
 
+    /**
+     * Method that puts player on hold for game's start
+     */
     public void waitForPlay(){
         System.out.print("Waiting for play...");
         int loadingIndex = 0 ;

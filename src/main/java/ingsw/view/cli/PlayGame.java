@@ -8,21 +8,27 @@ import java.util.Scanner;
 
 /**
  * Author: Elio Salvini
+ *
+ * Class that realizes the CLI of main game
  */
 public class PlayGame {
 
-    private Client client;
-    private Scanner in;
-    private ViewData init;
-    private ViewData update;
-    private boolean timerAlreadyStarted;
-    private boolean newTurn;
-    private boolean dieAlreadyTaken;
-    private boolean toolCardAlreadyUsed;
-    private boolean timerStopped;
-    private boolean timeOut;
-    private boolean[] toolCardsUsedOnce;
+    private Client client;                  //client used to communicate with server
+    private Scanner in;                     //scanner to collect player's input
+    private ViewData init;                  //view data used to print view the first time
+    private ViewData update;                //view data used to print view during game
+    private boolean timerAlreadyStarted;    //true if timer is already started, and isn't stopped yet
+    private boolean newTurn;                //true the first time view is printed after the beginning o the new turn
+    private boolean dieAlreadyTaken;        //true if player has already token a die during his turn
+    private boolean toolCardAlreadyUsed;    //true if player has already used a tool card during his turn
+    private boolean timerStopped;           //true if timer has to be stopped before timeout
+    private boolean timeOut;                //true if timer ended with a timeout
+    private boolean[] toolCardsUsedOnce;    //true if the related tool card has been used once
 
+    /**
+     * constructor
+     * @param client    player's client
+     */
     public PlayGame(Client client){
         this.client = client;
         in = new Scanner(System.in);
@@ -38,42 +44,80 @@ public class PlayGame {
         toolCardsUsedOnce[2] = false;
     }
 
+    /**
+     * simple setter
+     */
     public void setTimerAlreadyStarted(Boolean timerAlreadyStarted) {
         this.timerAlreadyStarted = timerAlreadyStarted;
     }
 
+    /**
+     * simple setter
+     */
     public void setToolCardsUsedOnce(int toolCardIndex) {
         toolCardsUsedOnce[toolCardIndex] = true;
     }
 
+    /**
+     * simple setter
+     */
+    public void setToolCardAlreadyUsed(boolean toolCardAlreadyUsed) {
+        this.toolCardAlreadyUsed = toolCardAlreadyUsed;
+    }
+
+    /**
+     * simple setter
+     */
     public void setTimeOut(boolean timeOut) {
         this.timeOut = timeOut;
     }
 
+    /**
+     * simple setter
+     */
     public void setTimerStopped(boolean timerStopped) {
         this.timerStopped = timerStopped;
     }
 
+    /**
+     * simple setter
+     */
     public void setNewTurn(Boolean newTurn) {
         this.newTurn = newTurn;
     }
 
+    /**
+     * simple setter
+     */
     public void setDieAlreadyTaken(boolean dieAlreadyTaken) {
         this.dieAlreadyTaken = dieAlreadyTaken;
     }
 
+    /**
+     * simple getter
+     */
     public boolean isTimerStopped() {
         return timerStopped;
     }
 
+    /**
+     * simple getter
+     */
     public Client getClient() {
         return client;
     }
 
+    /**
+     *
+     * @return  true if player has the right to play
+     */
     public boolean myTurn(){
         return client.getPlayerState().equals("enabled");
     }
 
+    /**
+     * Method that prints the next available commands and initializes variable for a new turn
+     */
     public void availableCommands() {
 
         //time's out, return to login
@@ -107,6 +151,10 @@ public class PlayGame {
         }
     }
 
+    /**
+     * It manages the end of the game
+     * @param onlyOnePlayer     true if player won because all others players has retreated from game
+     */
     private void endGame(boolean onlyOnePlayer) {
 
         //victory due to retreat of others players
@@ -130,6 +178,9 @@ public class PlayGame {
         timerStopped = true;
     }
 
+    /**
+     * This method prints commands available if the current turn isn't of the player (who's running this CLI)
+     */
     private void waitingForMyTurnCommands() {
         int turnDuration = client.getTimeMove();
 
@@ -164,6 +215,9 @@ public class PlayGame {
         }
     }
 
+    /**
+     * This method prints available commands if the current turn is of the player (who's running this CLI)
+     */
     private void myTurnCommands() {
         int turnDuration = client.getTimeMove();
 
@@ -217,6 +271,10 @@ public class PlayGame {
         }
     }
 
+    /**
+     * This method prints a new time the game's view (using updateView() of client)
+     *
+     */
     private void refreshView() {
         update = client.updateView();
         printSeparator();
@@ -239,6 +297,9 @@ public class PlayGame {
         printSeparator();
     }
 
+    /**
+     * This command ends player's turn
+     */
     private void endTurn() {
         client.skip();
         dieAlreadyTaken = false;
@@ -249,6 +310,9 @@ public class PlayGame {
     }
 
 
+    /**
+     * Method that allows the use of a tool card
+     */
     private void useToolCard() {
         if(toolCardAlreadyUsed) {
             System.out.println("Command not available");
@@ -278,21 +342,33 @@ public class PlayGame {
         refreshView();
     }
 
+    /**
+     * Method that allows player to take and position a die from the draft pool to the window pattern
+     */
     private void takeDie() {
         if (dieAlreadyTaken) {
             System.out.println("Command not available");
             return;
         }
-        int selectedDie = selectDie();
-        if(selectedDie == -1) return;
-        System.out.println("You have selected die number " + selectedDie+1);
+        int selectedDie = selectDie() + 1;
+        if(selectedDie == 0) return;
+        System.out.println("You have selected die number " + selectedDie);
         positionDie();
-        dieAlreadyTaken = true;
     }
 
+    /**
+     *
+     * @param selectedDie   number (positional index in draft pool) of the selected die
+     * @return              selected die's value
+     */
     public int dpDieValue(int selectedDie){
         return Integer.parseInt(client.updateView().getDraftPoolDice().get(selectedDie).substring(4,5));
     }
+
+    /**
+     *
+     * @return selected die index, -1 if player inserted key word "back"
+     */
     public int selectDie() {
         System.out.println("Select a die:");
         int selectedDie = Main.validateIntegerInput(1,9)-1;
@@ -306,11 +382,9 @@ public class PlayGame {
         return selectedDie;
     }
 
-    private void cleanScanner() {
-        in.nextLine();
-
-    }
-
+    /**
+     * Method that allows player to position a die on his window patterns
+     */
     private void positionDie() {
         String coordinates = Main.validateCoordinates(true);
         if (coordinates.equals("0")) {
@@ -331,9 +405,13 @@ public class PlayGame {
             column = Integer.parseInt(String.valueOf(coordinates.charAt(2)))-1;
         }
         System.out.println("Die positioned successfully");
+        dieAlreadyTaken = true;
         refreshView();
     }
 
+    /**
+     * Method that verifies if player is considered inactive, and manages the situation if he is it
+     */
     private void stillInGame(){
         if (!client.getActive()) {
             System.out.println(ToString.printColored(ToString.ANSI_RED,"You have lost your turn"));
@@ -342,6 +420,9 @@ public class PlayGame {
 
     }
 
+    /**
+     * Command used to quit game
+     */
     private void exitGame(){
         System.out.println("Are you sure?\n1 - Yes\n2 - No");
         if (Main.validateIntegerInput(1,2) == 1) {
@@ -350,6 +431,9 @@ public class PlayGame {
         }
     }
 
+    /**
+     * Method used to print game's view for the first time
+     */
     public void initializeView(){
         init = client.initializeViewCLI();
         client.initializeView();
@@ -373,26 +457,41 @@ public class PlayGame {
         printSeparator();
     }
 
+    /**
+     * Method that prints the current round
+     */
     private void printCurrentRound() {
         System.out.println("Round: " + client.getRound());
     }
 
+    /**
+     * It prints a generic separator
+     */
     public void printSeparator(){
         System.out.println("--------------------------------------------------------------------------------------");
     }
 
+    /**
+     * It prints a turn separator
+     */
     private void printTurnSeparator(){
         System.out.println("--------------------------------------------------------------------------------------");
         System.out.println("                                        NEW TURN                                      ");
         System.out.println("--------------------------------------------------------------------------------------");
     }
 
+    /**
+     * It prints a command separator
+     */
     private void printCommandSeparator(){
         System.out.println("--------------------------------------------------------------------------------------");
         System.out.println("//////////////////////////////////////////////////////////////////////////////////////");
         System.out.println("--------------------------------------------------------------------------------------");
     }
 
+    /**
+     * Method that collects data from a viewData object to print public objective cards
+     */
     private void printPBCards(){
         System.out.println("Public objective cards:\n");
         int i =1;
@@ -402,6 +501,10 @@ public class PlayGame {
         }
     }
 
+    /**
+     * Method that prints tool cards
+     * @param initialization    true if it is the first time that tool cards are printed
+     */
     private void printToolCards(Boolean initialization){
         int i = 1;
         System.out.println("Tool cards:\n");
@@ -416,6 +519,10 @@ public class PlayGame {
         }
     }
 
+    /**
+     * Method that prints round track
+     * @param viewData  object containing data used to print the round track
+     */
     private void printRoundTrack(ViewData viewData){
         int i = 0;
         System.out.print("Round track:");
@@ -429,6 +536,10 @@ public class PlayGame {
         System.out.print("\n");
     }
 
+    /**
+     * Method that prints the draft pool
+     * @param viewData  object containing data used to print the draft pool
+     */
     public void printDraftPool(ViewData viewData){
         int i = 1;
         System.out.println("Draft Pool:");
@@ -438,26 +549,40 @@ public class PlayGame {
         }
     }
 
+    /**
+     * Method that prints windows pattern
+     *
+     * @see ToString
+     */
     private void printWPs(){
-        System.out.println("Players window patterns:\n");
+        System.out.println("Players windows pattern:\n");
         for (ViewWP wp: client.getPlayerWPs(client.getName())){
             System.out.println(ToString.viewWPToString(wp));
         }
     }
 
+    /**
+     * Method used to print player's window pattern
+     * @see ToString
+     */
     private void printPlayerWP(){
         System.out.println("My window pattern:\n\n" + ToString.viewWPToString(client.getWP(client.getName())));
     }
 
+    /**
+     * Method used to print PV objective cards
+     *
+     * @see ToString
+     */
     private void printPVCard(){
         System.out.println("Your private objective card: " + ToString.viewPVCardToString(client.getPVCard(client.getName())));
     }
 
+    /**
+     * Method used to print player's remaining tokens
+     */
     private void printTokens(){
         System.out.println("Tokens: " + client.getTokenRemaining(client.getName()));
     }
 
-    public void setToolCardAlreadyUsed(boolean toolCardAlreadyUsed) {
-        this.toolCardAlreadyUsed = toolCardAlreadyUsed;
-    }
 }

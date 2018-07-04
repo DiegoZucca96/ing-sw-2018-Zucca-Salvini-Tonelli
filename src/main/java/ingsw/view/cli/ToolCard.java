@@ -5,10 +5,20 @@ import ingsw.view.gui.ToolView;
 
 /**
  * Author: Elio Salvini
+ *
+ * Class that collects player's input to use tool cards, it also manages the communication between player
+ * and server to use the tool cards.
  */
 public class ToolCard {
 
+    /**
+     * Series of methods with similar signature representing the use of a specific tool card
+     * /
 
+
+    /* @param playGame          reference to PlayGame
+     * @param toolCardIndex     tool card number
+     */
     public static void toolCard1(PlayGame playGame, int toolCardIndex) {
         playGame.getClient().useToolCard(1,null);
         int selectedDie = playGame.selectDie();
@@ -301,6 +311,14 @@ public class ToolCard {
         }
     }
 
+
+    /**
+     * Private method used to communicate (through playGame's client) with server to use tool cards
+     * @param toolCard  tool card number
+     * @param playGame  reference to PlayGame
+     * @param toolView  object containing players choice for the use of the specified tool card
+     * @return          true if the tool card is successfully used, false if the tool can't be used
+     */
     private static boolean useToolCard(int toolCard, PlayGame playGame, ToolView toolView){
         if(playGame.getClient().useToolCard(toolCard,toolView)) {
             System.out.println("Tool card successfully used");

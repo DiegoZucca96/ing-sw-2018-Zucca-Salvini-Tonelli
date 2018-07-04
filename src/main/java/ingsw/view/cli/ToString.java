@@ -5,9 +5,12 @@ import ingsw.model.ViewWP;
 
 /**
  * Author: Elio Salvini
+ *
+ * Class used to convert game's objects to strings
  */
 public class ToString {
 
+    //ANSI codes used to change color and background of console's output
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -26,10 +29,23 @@ public class ToString {
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
+    /**
+     * Method used to obtain a colored string
+     * @param color     ANSI code that refers to wanted color
+     * @param message   message you want to print
+     * @return          colored string
+     */
     public static String printColored(String color, String message){
         return color + message + ANSI_RESET;
     }
 
+    /**
+     * Method that converts viewWP's data referring to windows patterns to a string
+     * @param viewWP    object containing windows pattern data
+     * @return          a string representing the window pattern
+     *
+     * @see ViewWP
+     */
     public static String viewWPToString(ViewWP viewWP){
         String result = viewWP.getName() + "\n" + "Difficulty: " + viewWP.getDifficulty() + "\n";
         InfoCell[][] wp = viewWP.getWp();
@@ -43,6 +59,13 @@ public class ToString {
         return result;
     }
 
+    /**
+     * Method that converts infoCell's data referring to windows patterns to a string
+     * @param infoCell  object containing window pattern's cell data
+     * @return          a string representing the window pattern's cell
+     *
+     * @see InfoCell
+     */
     public static String infoCellToString(InfoCell infoCell){
         if(infoCell.getDie() != null) return viewDieToString(infoCell.getDie());
         String result = "";
@@ -67,6 +90,13 @@ public class ToString {
         return result;
     }
 
+    /**
+     * Method that converts view die's data to a string
+     * @param die   die to convert in a string for the CLI
+     * @return      a string representing the die
+     *
+     * @see ingsw.model.ViewData
+     */
     public static String viewDieToString(String die){
         if (die.substring(die.indexOf('(')+1, die.indexOf(',')).equals("0")) return "empty";
         String result = "";
@@ -81,6 +111,13 @@ public class ToString {
         return result + " " + die.substring(die.indexOf('(')+1, die.indexOf(',')) + " " + ANSI_RESET;
     }
 
+    /**
+     * Method that converts view private objective cards's data referring to windows patterns to a string
+     * @param card  private card from viewData
+     * @return      a string representing the private cards
+     *
+     * @see ingsw.model.ViewData
+     */
     public static String viewPVCardToString(String card){
         switch(card){
             case "/Private1.png": return printColored(ANSI_RED,"RED");
