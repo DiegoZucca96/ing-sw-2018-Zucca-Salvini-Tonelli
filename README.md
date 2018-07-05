@@ -181,9 +181,27 @@ Client, server and controller to communicate also uses some specific objects as 
 
 ## How to play
 
-First of all you have to launch the server, initializing it with an input of search time and move time of the game.
+First of all you have to launch the server. To do this, open the command prompt and access the folder containing the project. 
+After that, type "java -jar <<Insert here the path of the JAR file of the server>>" and initializing the server with an input of search time and move time of the game.
+It will appears an ip address, that will be the ip that other players will have to digit to connect to the server and start the game.
+Only the host player has to make this process, the other players only need to know the IP of the server.
 
-After that, launch the game. You have to choice between two connectivity, RMI or Socket, choose what you prefer.
+For example:
+> C:\Users\Diego>cd Desktop\ing-sw-2018-Zucca-Salvini-Tonelli
+> C:\Users\Diego\Desktop\ing-sw-2018-Zucca-Salvini-Tonelli>java -jar C:\Users\Diego\Desktop\ing-sw-2018-Zucca-Salvini-Tonelli\JAR\Server.jar
+> Inserisci tempo di ricerca massimo:
+> 5
+> Inserisci tempo massimo per fare una mossa:
+> 100
+> Server name: LAPTOP-OSFMJ32C
+> Server address: 192.168.1.21
+> Server ready
+
+After that, launch the game.
+If you want to play with CLI you have to launch the ClientCLI.jar from command prompt,while if you want to play with a graphical interface you have to open with a simple click the ClientGUI.jar file.
+In both case you have to insert the ip address of the server an you have to choice between two connectivity, RMI or Socket, choose what you prefer.
+
+The following description refers to the graphical interface, because the CLI gameplay is more simple and guided.
 In the main menu you have to log in, but only if you are just registered. If you not, sign up and then make log in to play.
 
 When a match is found, you have to choose between 4 different WP and then you have to wait until all other users have made their choices. Now the game is started, the first player will be the one who started first the research of the match.
@@ -217,3 +235,10 @@ Same reasoning would apply to using tools. He must click on "using tool" in orde
 It is also important that when a player has chosen a tool card he follows all the instruction the tool card asks in order to be used correctly.
 
 There is nothing else to say ... JUST ENJOY YOURSELF !
+
+## Limitations
+
+* There are problems with reconnection with CLI. In particular, RMI reconnection due to the loss of connection doesn't work, while Socket reconnection due to the loss of connection is working only if the connection loss does not occur while taking/placing a die or using a toolcard.
+
+* The GUI reconnection is working with RMI and Socket. The server never pings the client, so if a client loses the connection the server will notice its absence and will notify the other players only if at the end of the turn the player will be inactive.
+At this point the player who exit the game can rejoin the game.
