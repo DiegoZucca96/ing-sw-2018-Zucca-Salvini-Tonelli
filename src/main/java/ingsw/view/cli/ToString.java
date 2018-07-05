@@ -119,13 +119,11 @@ public class ToString {
      * @see ingsw.model.ViewData
      */
     public static String viewPVCardToString(String card){
-        switch(card){
-            case "/Private1.png": return printColored(ANSI_RED,"RED");
-            case "/Private2.png": return printColored(ANSI_YELLOW,"YELLOW");
-            case "/Private3.png": return printColored(ANSI_GREEN,"GREEN");
-            case "/Private4.png": return printColored(ANSI_CYAN,"BLUE");
-            case "/Private5.png": return printColored(ANSI_PURPLE,"VIOLET");
-            default: return "Card not found";
-        }
+        if(card.equalsIgnoreCase("/Private1.png")) return printColored(ANSI_RED,"RED");
+        if(card.equalsIgnoreCase("/Private2.png")) return printColored(ANSI_YELLOW,"YELLOW");
+        if(card.equalsIgnoreCase("/Private3.png")) return printColored(ANSI_GREEN,"GREEN");
+        if(card.equalsIgnoreCase("/Private4.png")) return printColored(ANSI_CYAN,"BLUE");
+        if(card.equalsIgnoreCase("/Private5.png")) return printColored(ANSI_PURPLE,"VIOLET");
+        return "Card not found";
     }
 }

@@ -86,20 +86,20 @@ public class ClientSocket implements Client {
 
     @Override
     public boolean login(String nickname) {
-        setupConnection();
+        if(!setupConnection()) return false;
         name = nickname;
         out.println("login:" + nickname);
         boolean response = Boolean.parseBoolean(in.nextLine());
-        closeConnection();
+        if(!closeConnection()) return false;
         return response;
     }
 
     @Override
     public boolean register(String nickname) {
-        setupConnection();
+        if(!setupConnection()) return false;
         out.println("register:" + nickname);
         boolean response = Boolean.parseBoolean(in.nextLine());
-        closeConnection();
+        if(!closeConnection()) return false;
         return response;
     }
 

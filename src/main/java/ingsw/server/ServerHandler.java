@@ -295,8 +295,13 @@ public class ServerHandler implements Runnable {
         os.reset();
     }
 
-    private void matchFound(){
-        out.println(false);
+    /**
+     * Method used during reconnection, it responses true if a match already exists
+     * @throws RemoteException
+     */
+    private void matchFound() throws RemoteException {
+        if(controller.getTimeRemaining()>0) out.println(false);
+        else out.println(true);
     }
 
     private void orderWPChoise() throws RemoteException {

@@ -3,6 +3,7 @@ package ingsw.view.cli;
 import ingsw.client.Client;
 import ingsw.model.ViewData;
 import ingsw.model.ViewWP;
+import jdk.nashorn.internal.ir.IdentNode;
 
 import java.util.Scanner;
 
@@ -159,6 +160,7 @@ public class PlayGame {
 
         //victory due to retreat of others players
         if(onlyOnePlayer){
+            client.skip();
             System.out.println("\nAll others players has retreated from match");
             System.out.println(ToString.printColored(ToString.ANSI_BLUE,"You are the winner"));
             Main.setEndGame(true);
@@ -202,6 +204,10 @@ public class PlayGame {
 
         //player's commands
         int choice = Main.validateIntegerInput(1, 2);
+
+        //connection lost
+        if(client.getTimeMove() == -1000) Main.accessGame(true);
+
         switch (choice) {
             case 1:
                 printCommandSeparator();
@@ -242,6 +248,11 @@ public class PlayGame {
 
         //player's commands
         int choice = Main.validateIntegerInput(1, 5);
+
+        //connection lost
+        if(client.getTimeMove() == -1000) Main.accessGame(true);
+
+        //time's out
         if(timeOut) return;
         switch (choice) {
             case 1:
@@ -377,7 +388,8 @@ public class PlayGame {
             stillInGame();
             System.out.println(ToString.printColored(ToString.ANSI_RED,"Invalid input"));
             System.out.println("Select a die:");
-            selectedDie = Main.validateIntegerInput(1,9);
+            selectedDie = Main.validateIntegerInput(1,9)-1;
+            if (selectedDie == -1) return -1;
         }
         return selectedDie;
     }
@@ -510,13 +522,17 @@ public class PlayGame {
         System.out.println("Tool cards:\n");
         for(String card: init.getToolCardsCLI()){
             System.out.print(i + " - " + card);
-            if(initialization) System.out.println("Cost: 1 token\n");
+            if (initialization) System.out.println("Cost: 1 token\n");
             else {
-                if(toolCardsUsedOnce[i-1]) System.out.println("Cost: 2 tokens\n");
+                String cost = update.getToolCard().get(i-1);
+                cost = cost.substring(cost.indexOf('+') + 1, cost.indexOf('.'));
+                if(Integer.parseInt(cost) != 0) System.out.println("Cost: 2 tokens\n");
                 else System.out.println("Cost: 1 token\n");
             }
             i++;
         }
+
+
     }
 
     /**

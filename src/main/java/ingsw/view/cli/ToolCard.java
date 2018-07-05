@@ -32,9 +32,12 @@ public class ToolCard {
         if (operation == 1) toolView.setDieModified(playGame.dpDieValue(selectedDie)+1);
         else toolView.setDieModified(playGame.dpDieValue(selectedDie)-1);
         if (toolView.getDieModified() < 1 || toolView.getDieModified() >6) System.out.println(ToString.printColored(ToString.ANSI_RED,"Forbidden operation"));
-        else if (useToolCard(1, playGame, toolView)) {
-            playGame.setToolCardAlreadyUsed(true);
-            playGame.setToolCardsUsedOnce(toolCardIndex);
+        else {
+            playGame.getClient().useToolCard(1, null);
+            if (useToolCard(1, playGame, toolView)) {
+                playGame.setToolCardAlreadyUsed(true);
+                playGame.setToolCardsUsedOnce(toolCardIndex);
+            }
         }
     }
 
@@ -49,6 +52,7 @@ public class ToolCard {
         if(diePosition.equals("0")) return;
         toolView.setEndRow1(Integer.parseInt(diePosition.substring(0,1))-1);
         toolView.setEndCol1(Integer.parseInt(String.valueOf(diePosition.charAt(2)))-1);
+        playGame.getClient().useToolCard(2, null);
         if (useToolCard(2, playGame, toolView)) {
             playGame.setToolCardAlreadyUsed(true);
             playGame.getClient().nullSelection();
@@ -67,6 +71,7 @@ public class ToolCard {
         if(diePosition.equals("0")) return;
         toolView.setEndRow1(Integer.parseInt(diePosition.substring(0,1))-1);
         toolView.setEndCol1(Integer.parseInt(String.valueOf(diePosition.charAt(2)))-1);
+        playGame.getClient().useToolCard(3, null);
         if (useToolCard(3, playGame, toolView)) {
             playGame.setToolCardAlreadyUsed(true);
             playGame.getClient().nullSelection();
@@ -97,6 +102,7 @@ public class ToolCard {
         toolView.setPhase(1);
         diePosition = "0";
         while (diePosition.equals("0")) {
+            if(!playGame.getClient().getPlayerState().equals("enabled")) return;
             diePosition = Main.validateCoordinates(false);
         }
         toolView.setStartRow2(Integer.parseInt(diePosition.substring(0,1))-1);
@@ -104,10 +110,12 @@ public class ToolCard {
         playGame.getClient().takeWPDie(toolView.getStartRow2(), toolView.getStartCol2());
         diePosition = "0";
         while (diePosition.equals("0")) {
-            diePosition = Main.validateCoordinates(false);
+            if(!playGame.getClient().getPlayerState().equals("enabled")) return;
+            diePosition = Main.validateCoordinates(true);
         }
         toolView.setEndRow2(Integer.parseInt(diePosition.substring(0,1))-1);
         toolView.setEndCol2(Integer.parseInt(String.valueOf(diePosition.charAt(2)))-1);
+        playGame.getClient().useToolCard(4, null);
         if(useToolCard(4, playGame, toolView)) {
             playGame.setToolCardAlreadyUsed(true);
             playGame.getClient().nullSelection();
@@ -138,6 +146,7 @@ public class ToolCard {
         if(die == -1) return;
         toolView.setEndRow1(0);
         toolView.setEndCol1(die);
+        playGame.getClient().useToolCard(5, null);
         if(useToolCard(5, playGame, toolView)) {
             playGame.setToolCardAlreadyUsed(true);
             playGame.getClient().nullSelection();
@@ -151,6 +160,7 @@ public class ToolCard {
         if(selectedDie == -1) return;
         toolView.setStartRow1(0);
         toolView.setStartCol1(selectedDie);
+        playGame.getClient().useToolCard(6, null);
         if(useToolCard(6, playGame, toolView)) {
             playGame.setToolCardAlreadyUsed(true);
             playGame.setToolCardsUsedOnce(toolCardIndex);
@@ -169,6 +179,7 @@ public class ToolCard {
             if(!die.equals("die(0,WHITE)")) toolView.setListOfCoordinateY(Integer.toString(dieIndex));
             dieIndex ++;
         }
+        playGame.getClient().useToolCard(7, null);
         if(useToolCard(7, playGame, toolView)) {
             playGame.setToolCardAlreadyUsed(true);
             playGame.setToolCardsUsedOnce(toolCardIndex);
@@ -180,6 +191,7 @@ public class ToolCard {
             System.out.println("Tool card not available");
             return;
         }
+        playGame.getClient().useToolCard(8, null);
         if (useToolCard(8, playGame, null)) {
             playGame.setToolCardAlreadyUsed(true);
             playGame.getClient().setTool8Used(true);
@@ -197,6 +209,7 @@ public class ToolCard {
         String diePosition = Main.validateCoordinates(true);
         toolView.setEndRow1(Integer.parseInt(diePosition.substring(0,1))-1);
         toolView.setEndCol1(Integer.parseInt(String.valueOf(diePosition.charAt(2)))-1);
+        playGame.getClient().useToolCard(9, null);
         if(useToolCard(9, playGame, toolView)) {
             playGame.setToolCardAlreadyUsed(true);
             playGame.getClient().nullSelection();
@@ -211,6 +224,7 @@ public class ToolCard {
         ToolView toolView = new ToolView();
         toolView.setStartRow1(0);
         toolView.setStartCol1(selectedDie);
+        playGame.getClient().useToolCard(10, null);
         if(useToolCard(10, playGame, toolView)) {
             playGame.setToolCardAlreadyUsed(true);
             playGame.setToolCardsUsedOnce(toolCardIndex);
@@ -232,6 +246,7 @@ public class ToolCard {
         System.out.println("Choose value for the new die:");
         int newValue = 0;
         while (newValue == 0){
+            if(!playGame.getClient().getPlayerState().equals("enabled")) return;
             newValue = Main.validateIntegerInput(1,6);
         }
         toolView.setDieModified(newValue);
@@ -239,11 +254,13 @@ public class ToolCard {
         if(!useToolCard(11, playGame, toolView)) return;
         String diePosition = "0";
         while (diePosition.equals("0")) {
+            if(!playGame.getClient().getPlayerState().equals("enabled")) return;
             diePosition = Main.validateCoordinates(false);
         }
         toolView.setStartRow1(Integer.parseInt(diePosition.substring(0,1))-1);
         toolView.setStartCol1(Integer.parseInt(String.valueOf(diePosition.charAt(2)))-1);
         toolView.setPhase(2);
+        playGame.getClient().useToolCard(11, null);
         if (useToolCard(11, playGame, toolView)) {
             playGame.setToolCardAlreadyUsed(true);
             playGame.getClient().nullSelection();
@@ -277,12 +294,14 @@ public class ToolCard {
         toolView.setPhase(1);
         String diePosition = "0";
         while (diePosition.equals("0")) {
+            if(!playGame.getClient().getPlayerState().equals("enabled")) return;
             diePosition = Main.validateCoordinates(false);
         }
         toolView.setStartRow1(Integer.parseInt(diePosition.substring(0,1))-1);
         toolView.setStartCol1(Integer.parseInt(String.valueOf(diePosition.charAt(2)))-1);
         diePosition = "0";
         while (diePosition.equals("0")) {
+            if(!playGame.getClient().getPlayerState().equals("enabled")) return;
             diePosition = Main.validateCoordinates(false);
         }
         toolView.setEndRow1(Integer.parseInt(diePosition.substring(0,1))-1);
@@ -294,16 +313,19 @@ public class ToolCard {
         toolView.setPhase(2);
         diePosition = "0";
         while (diePosition.equals("0")) {
+            if(!playGame.getClient().getPlayerState().equals("enabled")) return;
             diePosition = Main.validateCoordinates(false);
         }
         toolView.setStartRow2(Integer.parseInt(diePosition.substring(0,1))-1);
         toolView.setStartCol2(Integer.parseInt(String.valueOf(diePosition.charAt(2)))-1);
         diePosition = "0";
         while (diePosition.equals("0")) {
+            if(!playGame.getClient().getPlayerState().equals("enabled")) return;
             diePosition = Main.validateCoordinates(false);
         }
         toolView.setEndRow2(Integer.parseInt(diePosition.substring(0,1))-1);
         toolView.setEndCol2(Integer.parseInt(String.valueOf(diePosition.charAt(2)))-1);
+        playGame.getClient().useToolCard(12, null);
         if(useToolCard(12, playGame, toolView)) {
             playGame.setToolCardAlreadyUsed(true);
             playGame.getClient().nullSelection();

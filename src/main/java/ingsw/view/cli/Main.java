@@ -120,10 +120,17 @@ public class Main {
             if (operation == 1) successfullyLoggedIn = accessGame.login();
             if (operation == 2) accessGame.register();
         }
-        accessGame.waitForPlayers();
-        accessGame.chooseWPs();
-        accessGame.waitForPlay();
-        playGame();
+
+        //in case of reconnection
+        if (client.matchFound()) playGame();
+
+        //access to game for the first time
+        else {
+            accessGame.waitForPlayers();
+            accessGame.chooseWPs();
+            accessGame.waitForPlay();
+            playGame();
+        }
     }
 
     /**
