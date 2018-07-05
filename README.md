@@ -188,14 +188,20 @@ Only the host player has to make this process, the other players only need to kn
 
 For example:
 > C:\Users\Diego>cd Desktop\ing-sw-2018-Zucca-Salvini-Tonelli
-C:\Users\Diego\Desktop\ing-sw-2018-Zucca-Salvini-Tonelli>java -jar C:\Users\Diego\Desktop\ing-sw-2018-Zucca-Salvini-Tonelli\JAR\Server.jar
-Inserisci tempo di ricerca massimo:
+
+> C:\Users\Diego\Desktop\ing-sw-2018-Zucca-Salvini-Tonelli>java -jar C:\Users\Diego\Desktop\ing-sw-2018-Zucca-Salvini-Tonelli\JAR\Server.jar
+
+> Inserisci tempo di ricerca massimo:
 5
-Inserisci tempo massimo per fare una mossa:
+
+> Inserisci tempo massimo per fare una mossa:
 100
-Server name: LAPTOP-OSFMJ32C
-Server address: 192.168.1.21
-Server ready
+
+> Server name: LAPTOP-OSFMJ32C
+
+> Server address: 192.168.1.21
+
+> Server ready
 
 After that, launch the game.
 If you want to play with CLI you have to launch the ClientCLI.jar from command prompt,while if you want to play with a graphical interface you have to open with a simple click the ClientGUI.jar file.
