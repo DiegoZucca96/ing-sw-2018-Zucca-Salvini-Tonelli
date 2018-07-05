@@ -144,7 +144,6 @@ public class GUI  {
                             client.setName(userName);
                             new Loading(client).display(new Stage(), "LOADING MATCH", null);
                         } else {
-                            //NB! Viene ricreata la schermata iniziale del gioco, ma non è sincronizzato con tutto il resto
                             stage.close();
                             window.close();
                             client.setName(userName);

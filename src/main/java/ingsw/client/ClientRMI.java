@@ -267,7 +267,6 @@ public class ClientRMI implements Client {
         }
     }
 
-    //Da implementare la equals di questo metodo
     @Override
     public ViewWP getWP(String userName) {
         try {
